@@ -7,7 +7,7 @@ const navLinks = [
   { label: "About", to: "/about" },
   { label: "Experience", to: "/experience" },
   { label: "Projects", to: "/projects" },
-  { label: "Services", to: "/services/ai-product" },
+  { label: "Solutions", to: "/solutions" },
   { label: "Insights", to: "/insights" },
   { label: "Contact", to: "/contact" },
 ];
@@ -46,7 +46,7 @@ const Navbar = () => {
                 key={link.to}
                 to={link.to}
                 className={`font-mono text-xs tracking-wider uppercase transition-all hover:text-foreground ${
-                  location.pathname === link.to || (link.to.startsWith("/services") && location.pathname.startsWith("/services"))
+                  location.pathname === link.to || (link.to === "/solutions" && location.pathname.startsWith("/solutions"))
                     ? "text-foreground" : "text-muted-foreground"
                 }`}
               >
