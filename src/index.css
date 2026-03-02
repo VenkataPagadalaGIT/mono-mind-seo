@@ -100,3 +100,8 @@
     perspective-origin: 50% 50%;
   }
 }
+
+@keyframes float-block {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}

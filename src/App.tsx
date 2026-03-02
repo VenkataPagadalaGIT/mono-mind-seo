@@ -12,6 +12,7 @@ import Publications from "./pages/Publications";
 import Insights from "./pages/Insights";
 import PillarPage from "./pages/PillarPage";
 import BlogPostPage from "./pages/BlogPostPage";
+import ServiceLanding from "./pages/ServiceLanding";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="/insights" element={<Insights />} />
           <Route path="/insights/:slug" element={<PillarPage />} />
           <Route path="/insights/:pillarSlug/:postSlug" element={<BlogPostPage />} />
+          <Route path="/services/:slug" element={<ServiceLanding />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
