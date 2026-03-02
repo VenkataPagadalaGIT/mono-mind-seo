@@ -87,20 +87,6 @@ export const services = [
       "CRO Audits & Optimization",
     ],
   },
-  {
-    title: "AI Product",
-    slug: "ai-product",
-    pillarSlug: "ai-agents-automation",
-    tagline: "Systems that save time and money",
-    items: [
-      "AI Agents & Workflow Automation",
-      "Custom AI/ML Pipelines",
-      "RAG Engines & Knowledge Graphs",
-      "Process Automation & SOPs",
-      "Cost Optimization via AI",
-      "End-to-End SaaS Solutions",
-    ],
-  },
 ];
 
 interface ServicesGridProps {
