@@ -753,6 +753,290 @@ Tracking conversion rates by content cohort reveals which content strategies dri
     tags: ["CRO", "Conversion Optimization", "Analytics", "KPI Tracking", "Performance"],
     date: "2025-02-28",
   },
+  // Advanced AI Topics — for ranking on cutting-edge terms
+  {
+    slug: "knowledge-graphs-enterprise-seo",
+    title: "Knowledge Graphs for Enterprise SEO: From Raw Queries to Structured Intelligence",
+    metaTitle: "Knowledge Graphs for Enterprise SEO | 5.3M Keywords Classified | Venkata Pagadala",
+    metaDescription: "How to build knowledge graphs that classify millions of search queries into structured taxonomies — entity resolution, semantic relationships, and SEO at scale.",
+    pillarSlug: "ai-agents-automation",
+    excerpt: "How we structured 5.3M raw queries into a 5-level taxonomy with 913 L1 categories and sub-millisecond classification speed.",
+    content: `Knowledge graphs are the backbone of intelligent SEO at enterprise scale. They transform unstructured search data into structured intelligence that powers every decision.
+
+## The Problem with Flat Keyword Lists
+
+Traditional keyword research produces flat lists — thousands of keywords with volume and difficulty metrics, but no structure. At 50M+ pages, flat lists are useless. You need hierarchy, relationships, and machine-readable taxonomy.
+
+## Our Knowledge Graph Architecture
+
+We structured 5.3M raw queries into a 5-level taxonomy:
+- **L1**: 913 Categories (e.g., "Wireless Plans", "Internet Service")
+- **L2**: Subcategories with intent classification
+- **L3**: Intent groups (informational, commercial, transactional)
+- **L4**: Topic clusters with entity relationships
+- **L5**: Individual keywords with semantic vectors
+
+Classification speed: <1ms per query. What would take 2 hours for 1,000 keywords manually, this system processes 5.3M instantly.
+
+## Entity Resolution at Scale
+
+The graph doesn't just classify — it resolves entities. "iPhone 15 Pro Max" and "Apple's latest flagship phone" map to the same entity node. This enables:
+- **Content deduplication**: Identifying pages targeting the same entity
+- **Internal linking**: Connecting content through entity relationships, not just keyword overlap
+- **Gap analysis**: Finding entities with search demand but no content coverage
+
+## Building the Graph
+
+The pipeline uses a combination of:
+- **Vector embeddings** (sentence-transformers) for semantic clustering
+- **Named Entity Recognition** (spaCy + custom models) for entity extraction
+- **Graph databases** (Neo4j) for relationship storage and traversal
+- **Cosine similarity** for cluster membership scoring
+
+## SEO Applications
+
+Once built, the knowledge graph powers:
+1. **Automated content briefs** — pull all entities, related topics, and user intents for any topic
+2. **Internal linking recommendations** — link pages through entity relationships
+3. **Content gap identification** — find high-demand entities with no content
+4. **Programmatic page generation** — auto-generate pages for entity clusters
+5. **Schema markup** — generate precise JSON-LD from entity data`,
+    tags: ["Knowledge Graphs", "Entity Resolution", "NLP", "Taxonomy", "Enterprise SEO"],
+    date: "2025-06-01",
+  },
+  {
+    slug: "context-graphs-next-evolution-search",
+    title: "Context Graphs: The Next Evolution Beyond Knowledge Graphs in Search",
+    metaTitle: "Context Graphs for SEO | Beyond Knowledge Graphs | Venkata Pagadala",
+    metaDescription: "Context graphs add temporal, behavioral, and situational dimensions to knowledge graphs — enabling truly personalized search optimization at enterprise scale.",
+    pillarSlug: "ai-agents-automation",
+    excerpt: "Why knowledge graphs aren't enough — and how context graphs add temporal, behavioral, and situational intelligence to search optimization.",
+    content: `Knowledge graphs tell you WHAT entities exist and HOW they relate. Context graphs tell you WHEN, WHERE, WHY, and FOR WHOM those relationships matter.
+
+## Knowledge Graphs vs. Context Graphs
+
+A knowledge graph stores: "iPhone 15 Pro → is_a → Smartphone → made_by → Apple"
+
+A context graph adds:
+- **Temporal context**: Search demand for this entity peaks in September (launch month)
+- **Behavioral context**: Users searching this entity from mobile have 3x higher purchase intent
+- **Situational context**: Users in Atlanta searching this entity are likely comparing AT&T vs. Verizon plans
+- **Competitive context**: Competitor X ranks for this entity with comparison content, not product pages
+
+## Architecture of a Context Graph
+
+Building on top of knowledge graph infrastructure:
+
+### Layer 1: Entity Graph (Knowledge)
+Static relationships between entities — taxonomy, attributes, synonyms.
+
+### Layer 2: Temporal Graph
+Time-series data overlaid on entities — seasonality patterns, trend velocity, decay rates.
+
+### Layer 3: Behavioral Graph
+User interaction patterns — click-through rates by entity, scroll depth, conversion paths.
+
+### Layer 4: Competitive Graph
+Competitor entity coverage — who ranks for what, content format distribution, gap opportunities.
+
+### Layer 5: Intent Graph
+Dynamic intent mapping — how user intent for an entity shifts based on time, location, and device.
+
+## Implementation for SEO
+
+Context graphs enable:
+- **Dynamic content prioritization** — surface content that matches current temporal and behavioral context
+- **Personalized internal linking** — recommend links based on user journey context, not just topical relevance
+- **Predictive content planning** — create content BEFORE demand peaks based on temporal patterns
+- **Competitive response automation** — trigger content creation when competitors gain entity coverage
+
+## The Technical Stack
+
+- Knowledge graph: Neo4j with custom ontology
+- Temporal layer: BigQuery time-series with Python forecasting models
+- Behavioral layer: GA4 + BigQuery event streams
+- Competitive layer: Automated crawl + SERP monitoring
+- Intent classification: Fine-tuned BERT models for multi-label intent prediction`,
+    tags: ["Context Graphs", "Knowledge Graphs", "Behavioral SEO", "Temporal Analysis", "Enterprise AI"],
+    date: "2025-06-15",
+  },
+  {
+    slug: "a2a-agent-to-agent-seo-automation",
+    title: "A2A (Agent-to-Agent): How Autonomous AI Agents Are Replacing SEO Workflows",
+    metaTitle: "A2A Agent-to-Agent SEO Automation | Multi-Agent Workflows | Venkata Pagadala",
+    metaDescription: "How Agent-to-Agent (A2A) communication protocols enable autonomous multi-step SEO workflows — from technical audits to content optimization without human handoffs.",
+    pillarSlug: "ai-agents-automation",
+    excerpt: "A2A communication protocols enable autonomous multi-step SEO workflows — technical audits, content optimization, and competitive analysis without human handoffs.",
+    content: `Agent-to-Agent (A2A) is a communication protocol that allows AI agents to collaborate autonomously. In SEO, this means entire workflows — from identifying issues to implementing fixes — can run without human intervention.
+
+## What is A2A?
+
+A2A (Agent-to-Agent) is a protocol for structured communication between AI agents. Unlike single-agent systems where one LLM handles everything, A2A enables specialized agents to collaborate:
+
+- **Agent A** (Crawler): Identifies technical issues from crawl data
+- **Agent B** (Analyst): Prioritizes issues by estimated traffic impact
+- **Agent C** (Writer): Drafts fix recommendations and content updates
+- **Agent D** (Validator): Checks recommendations against brand guidelines and legal requirements
+- **Agent E** (Reporter): Summarizes actions and results for stakeholders
+
+## A2A vs. Single-Agent Systems
+
+| Aspect | Single Agent | A2A Pipeline |
+|--------|-------------|--------------|
+| Complexity | Limited by context window | Unlimited — agents pass structured data |
+| Accuracy | Degrades with task complexity | Each agent specializes |
+| Speed | Sequential processing | Parallel agent execution |
+| Reliability | Single point of failure | Redundancy and validation |
+
+## Our A2A Architecture at AT&T
+
+### Technical Audit Pipeline
+1. **Crawl Agent** pulls latest Botify/Screaming Frog data via MCP
+2. **Analysis Agent** identifies anomalies — new 404s, indexation drops, crawl budget waste
+3. **Prioritization Agent** scores issues by estimated organic traffic impact
+4. **Recommendation Agent** drafts engineering tickets with implementation details
+5. **QA Agent** validates recommendations against previous fixes and brand guidelines
+
+### Content Optimization Pipeline
+1. **Gap Agent** identifies content gaps from knowledge graph analysis
+2. **Brief Agent** generates content briefs with target entities, intent mapping, and competitive benchmarks
+3. **Draft Agent** creates initial content with SEO optimization
+4. **Legal Agent** reviews for compliance and brand voice adherence
+5. **Publishing Agent** stages content and monitors indexation
+
+## Key Design Principles
+
+- **Structured data contracts**: Agents communicate via typed JSON schemas, not free text
+- **Idempotent operations**: Any agent can re-run without side effects
+- **Human-in-the-loop checkpoints**: Critical decisions (publishing, redirects) require human approval
+- **Observability**: Every agent action is logged for audit and optimization`,
+    tags: ["A2A", "Agent-to-Agent", "Multi-Agent", "AI Automation", "Enterprise SEO"],
+    date: "2025-07-01",
+  },
+  {
+    slug: "mcp-model-context-protocol-enterprise-seo",
+    title: "MCP (Model Context Protocol): Connecting LLMs to Your SEO Infrastructure",
+    metaTitle: "MCP Model Context Protocol for SEO | LLM Integration | Venkata Pagadala",
+    metaDescription: "How Model Context Protocol (MCP) connects AI models to live SEO tools — Botify, Screaming Frog, BigQuery — enabling real-time AI-powered search optimization.",
+    pillarSlug: "ai-agents-automation",
+    excerpt: "MCP is the bridge between LLMs and your SEO tools — enabling AI agents to query live crawl data, pull analytics, and execute optimizations in real-time.",
+    content: `Model Context Protocol (MCP) is the protocol that makes AI agents actually useful for enterprise SEO. Without MCP, agents are limited to their training data. With MCP, they have real-time access to your entire SEO infrastructure.
+
+## What is MCP?
+
+MCP is a standardized protocol for connecting AI models to external tools and data sources. Think of it as an API layer that lets Claude, GPT, or any LLM interact with:
+- **Crawl tools**: Botify, Screaming Frog, Sitebulb
+- **Analytics**: BigQuery, Google Analytics, Google Search Console
+- **Content systems**: CMS platforms, DAMs, content databases
+- **Monitoring**: ContentKing, Akamai CDN logs, Core Web Vitals data
+
+## Why MCP Matters for SEO
+
+Traditional AI + SEO = paste data into ChatGPT and hope for useful output.
+
+MCP + SEO = AI agents that:
+- Pull live crawl stats and identify issues autonomously
+- Query ranking data and correlate with content changes
+- Monitor indexation in real-time and alert on anomalies
+- Generate reports from live data, not stale exports
+
+## Building MCP Servers for SEO
+
+### Botify MCP Server
+Our Botify MCP server exposes:
+- Crawl statistics (pages crawled, status codes, response times)
+- Indexation data (indexed vs. non-indexed, reasons for exclusion)
+- Log file analysis (Googlebot crawl patterns, frequency, budget allocation)
+- Content quality metrics (word count, uniqueness, structured data coverage)
+
+### BigQuery MCP Server
+Connects agents to our SEO data lake:
+- Historical ranking data with trend analysis
+- Content performance metrics across all properties
+- Market share data with geo-segmentation
+- Automated anomaly detection queries
+
+### Screaming Frog MCP Server
+Enables on-demand technical audits:
+- Trigger crawls of specific URL sets
+- Pull redirect chain analysis
+- Extract structured data validation results
+- Compare crawl snapshots for change detection
+
+## Security & Governance
+
+MCP servers in enterprise environments need:
+- **Role-based access control**: Agents can only access data relevant to their function
+- **Audit logging**: Every MCP request is logged with agent identity, query, and response
+- **Rate limiting**: Prevent runaway agents from overwhelming data sources
+- **Data masking**: Sensitive business data is filtered before reaching agent context`,
+    tags: ["MCP", "Model Context Protocol", "LLM Integration", "AI Infrastructure", "Enterprise SEO"],
+    date: "2025-07-15",
+  },
+  {
+    slug: "rag-vs-knowledge-graphs-when-to-use-what",
+    title: "RAG vs. Knowledge Graphs: When to Use What for Enterprise Search",
+    metaTitle: "RAG vs Knowledge Graphs for Enterprise Search | Venkata Pagadala",
+    metaDescription: "Comparing RAG engines and knowledge graphs for enterprise search optimization — architecture decisions, trade-offs, and when to combine both approaches.",
+    pillarSlug: "ai-ml-search-optimization",
+    excerpt: "RAG and knowledge graphs solve different problems. Here's when to use each — and when to combine them for maximum impact.",
+    content: `RAG (Retrieval-Augmented Generation) and knowledge graphs are both critical for enterprise AI, but they solve fundamentally different problems. Understanding when to use each — and when to combine them — is the key to building effective AI systems.
+
+## RAG: Best for Unstructured Retrieval
+
+RAG excels when you need to:
+- Answer natural language questions from large document corpora
+- Surface relevant content from unstructured data (PDFs, docs, crawl data)
+- Generate human-readable responses grounded in source material
+
+### RAG Architecture
+1. **Chunking**: Split documents into semantically meaningful chunks
+2. **Embedding**: Convert chunks to vector representations
+3. **Indexing**: Store vectors in a vector database (Pinecone, Weaviate, pgvector)
+4. **Retrieval**: Find top-K similar chunks for a given query
+5. **Generation**: Feed retrieved chunks to LLM for answer generation
+
+## Knowledge Graphs: Best for Structured Relationships
+
+Knowledge graphs excel when you need to:
+- Navigate entity relationships (product → category → brand)
+- Perform multi-hop reasoning (find all products in category X that competitor Y ranks for)
+- Maintain structured taxonomies that evolve over time
+
+### Knowledge Graph Architecture
+1. **Entity extraction**: Identify entities from content and queries
+2. **Relationship mapping**: Define edges between entities (is_a, part_of, related_to)
+3. **Graph storage**: Neo4j, Amazon Neptune, or property graphs
+4. **Traversal**: Query paths between entities for recommendations
+5. **Inference**: Derive new relationships from existing graph structure
+
+## When to Combine: GraphRAG
+
+The most powerful approach combines both:
+- **Knowledge graph** provides structured context and entity relationships
+- **RAG** provides relevant unstructured content
+- **LLM** synthesizes both into actionable insights
+
+### GraphRAG for SEO
+1. User asks: "What content should we create for wireless plans in Atlanta?"
+2. **Knowledge graph** retrieves: entity taxonomy, competitor coverage, content gaps
+3. **RAG** retrieves: top-performing content examples, historical performance data
+4. **LLM** generates: prioritized content brief with target entities, intent mapping, and competitive positioning
+
+## Decision Framework
+
+| Use Case | Best Approach |
+|----------|--------------|
+| Q&A over documents | RAG |
+| Entity classification | Knowledge Graph |
+| Content recommendations | GraphRAG |
+| Internal linking | Knowledge Graph |
+| Content brief generation | GraphRAG |
+| Technical audit analysis | RAG |
+| Market share analysis | Knowledge Graph + RAG |`,
+    tags: ["RAG", "Knowledge Graphs", "GraphRAG", "Enterprise AI", "Architecture"],
+    date: "2025-08-01",
+  },
 ];
 
 export function getPillarBySlug(slug: string): PillarPage | undefined {
