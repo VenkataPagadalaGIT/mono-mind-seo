@@ -38,9 +38,10 @@ function buildServiceNodes(): GraphNode[] {
     const r = 28 + s.items.length * 1.5;
     const color = serviceColors[s.title] || "#888";
     const children = s.items.map((item, ci) => {
-      const cAngle = angle + ((ci - (s.items.length - 1) / 2) * 0.22);
-      const cDist = r + 30 + ci * 6;
-      return { label: item, x: x + Math.cos(cAngle) * cDist, y: y + Math.sin(cAngle) * cDist, r: 7 + Math.random() * 4 };
+      const cAngle = angle + ((ci - (s.items.length - 1) / 2) * 0.35);
+      const baseDist = r + 45 + ci * 10;
+      const stagger = ci % 2 === 0 ? 15 : 0;
+      return { label: item, x: x + Math.cos(cAngle) * (baseDist + stagger), y: y + Math.sin(cAngle) * (baseDist + stagger), r: 7 + Math.random() * 4 };
     });
     return { id: s.slug, label: s.title, slug: s.slug, tagline: s.tagline, items: s.items, color, x, y, r, children };
   });
@@ -790,8 +791,8 @@ const SolutionsGraph = () => {
                       <circle cx={child.x} cy={child.y} r={child.r + 4} fill="transparent" />
                       <circle cx={child.x} cy={child.y} r={child.r} fill={isActive(node.id) ? node.color : "hsl(var(--muted-foreground) / 0.12)"} fillOpacity={isActive(node.id) ? 0.55 : 0.5} stroke={isActive(node.id) ? node.color : "hsl(var(--muted-foreground) / 0.15)"} strokeWidth={isActive(node.id) ? 1 : 0.5} className="transition-all duration-500 hover:fill-opacity-80" />
                       {isActive(node.id) && (
-                        <text x={child.x} y={child.y + child.r + 10} textAnchor="middle" className="font-mono text-[5.5px] pointer-events-none" fill={node.color} fillOpacity={0.7}>
-                          {child.label.length > 20 ? child.label.slice(0, 20) + "…" : child.label}
+                        <text x={child.x} y={child.y + child.r + 10} textAnchor="middle" className="font-mono text-[7px] pointer-events-none" fill={node.color} fillOpacity={0.85}>
+                          {child.label.length > 30 ? child.label.slice(0, 30) + "…" : child.label}
                         </text>
                       )}
                     </g>
