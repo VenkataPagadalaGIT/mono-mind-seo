@@ -52,7 +52,8 @@ const NeuralSolutionsCanvas = () => {
   const animRef = useRef<number>(0);
   const mouseRef = useRef<{ x: number; y: number; active: boolean }>({ x: 0, y: 0, active: false });
   const activeLayerRef = useRef<number>(-1);
-  const [activeService, setActiveService] = useState<{ title: string; tagline: string; items: string[]; color: string; x: number; y: number } | null>(null);
+  const hoveredChildRef = useRef<string | null>(null);
+  const [activeService, setActiveService] = useState<{ title: string; tagline: string; items: string[]; color: string; highlightItem?: string } | null>(null);
   const nodesRef = useRef<{ x: number; y: number; vx: number; vy: number; r: number; layer: number; label: string; color: string; isMain: boolean }[]>([]);
 
   useEffect(() => {
@@ -113,34 +114,43 @@ const NeuralSolutionsCanvas = () => {
       const mouseActive = mouseRef.current.active;
       const aLayer = activeLayerRef.current;
 
-      // Mouse interaction
+      // Mouse interaction — DON'T repel nodes in the active layer
       for (const n of nodes) {
         if (mouseActive) {
-          const dx = n.x - mx;
-          const dy = n.y - my;
-          const dist = Math.hypot(dx, dy);
-          if (dist < 120 && dist > 1) {
-            const force = n.isMain ? -0.08 : 0.05;
-            const strength = (1 - dist / 120) * force;
-            n.vx += (dx / dist) * strength;
-            n.vy += (dy / dist) * strength;
+          const isActiveLayer = activeLayerRef.current === n.layer;
+          // Freeze active layer nodes so user can hover them
+          if (isActiveLayer) {
+            n.vx *= 0.9;
+            n.vy *= 0.9;
+          } else {
+            const dx = n.x - mx;
+            const dy = n.y - my;
+            const dist = Math.hypot(dx, dy);
+            if (dist < 120 && dist > 1 && n.isMain) {
+              const strength = (1 - dist / 120) * -0.06;
+              n.vx += (dx / dist) * strength;
+              n.vy += (dy / dist) * strength;
+            }
           }
         }
         n.x += n.vx;
         n.y += n.vy;
         n.vx *= 0.996;
         n.vy *= 0.996;
-        n.vx += (Math.random() - 0.5) * 0.02;
-        n.vy += (Math.random() - 0.5) * 0.02;
+        n.vx += (Math.random() - 0.5) * 0.015;
+        n.vy += (Math.random() - 0.5) * 0.015;
         if (n.x < 20 || n.x > rw - 20) n.vx *= -1;
         if (n.y < 20 || n.y > rh - 20) n.vy *= -1;
       }
 
-      // Detect hovered main node
+      // Detect hovered node (main OR child)
       const now = Date.now();
-      if (mouseActive && now - lastCheck > 60) {
+      if (mouseActive && now - lastCheck > 50) {
         lastCheck = now;
         let foundLayer = -1;
+        let foundChild: string | null = null;
+
+        // Check main nodes first
         for (const n of nodes) {
           if (!n.isMain) continue;
           if (Math.hypot(n.x - mx, n.y - my) < 40) {
@@ -148,12 +158,24 @@ const NeuralSolutionsCanvas = () => {
             break;
           }
         }
-        if (foundLayer !== activeLayerRef.current) {
+        // If no main node, check child nodes
+        if (foundLayer < 0) {
+          for (const n of nodes) {
+            if (n.isMain) continue;
+            if (Math.hypot(n.x - mx, n.y - my) < 20) {
+              foundLayer = n.layer;
+              foundChild = n.label;
+              break;
+            }
+          }
+        }
+
+        if (foundLayer !== activeLayerRef.current || foundChild !== hoveredChildRef.current) {
           activeLayerRef.current = foundLayer;
+          hoveredChildRef.current = foundChild;
           if (foundLayer >= 0) {
             const s = services[foundLayer];
-            const mainNode = nodes.find(n => n.isMain && n.layer === foundLayer)!;
-            setActiveService({ title: s.title, tagline: s.tagline, items: s.items, color: serviceColors[s.title] || "#888", x: mainNode.x, y: mainNode.y });
+            setActiveService({ title: s.title, tagline: s.tagline, items: s.items, color: serviceColors[s.title] || "#888", highlightItem: foundChild || undefined });
           } else {
             setActiveService(null);
           }
@@ -200,25 +222,38 @@ const NeuralSolutionsCanvas = () => {
 
       // ── Draw nodes ──
       ctx.globalAlpha = 1;
+      const hChild = hoveredChildRef.current;
       for (const n of nodes) {
         const isActive = aLayer === n.layer;
         const isDimmed = aLayer >= 0 && !isActive;
+        const isHoveredChild = !n.isMain && hChild === n.label && isActive;
 
         // Glow
         ctx.fillStyle = n.color;
-        ctx.globalAlpha = isActive ? 0.1 : (isDimmed ? 0.01 : 0.04);
+        ctx.globalAlpha = isHoveredChild ? 0.2 : (isActive ? 0.1 : (isDimmed ? 0.01 : 0.04));
         ctx.beginPath();
-        ctx.arc(n.x, n.y, n.r * 5, 0, Math.PI * 2);
+        ctx.arc(n.x, n.y, n.r * (isHoveredChild ? 8 : 5), 0, Math.PI * 2);
         ctx.fill();
 
         // Node circle
+        const nodeScale = isHoveredChild ? 1.8 : (isActive && n.isMain ? 1.3 : 1);
         ctx.globalAlpha = n.isMain
           ? (isActive ? 0.9 : (isDimmed ? 0.15 : 0.7))
-          : (isActive ? 0.7 : (isDimmed ? 0.08 : 0.35));
+          : (isHoveredChild ? 0.9 : (isActive ? 0.7 : (isDimmed ? 0.08 : 0.35)));
         ctx.fillStyle = n.color;
         ctx.beginPath();
-        ctx.arc(n.x, n.y, n.r * (isActive && n.isMain ? 1.3 : 1), 0, Math.PI * 2);
+        ctx.arc(n.x, n.y, n.r * nodeScale, 0, Math.PI * 2);
         ctx.fill();
+
+        // Hovered child ring
+        if (isHoveredChild) {
+          ctx.strokeStyle = n.color;
+          ctx.globalAlpha = 0.6;
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, n.r * 2.5, 0, Math.PI * 2);
+          ctx.stroke();
+        }
 
         // Main node labels (always)
         if (n.isMain) {
@@ -233,13 +268,13 @@ const NeuralSolutionsCanvas = () => {
           ctx.fillText(`${count} capabilities`, n.x, n.y - 9);
         }
 
-        // Child node labels — show ALL when layer is active
+        // Child node labels — show ALL when layer is active, bold the hovered one
         if (!n.isMain && isActive) {
-          ctx.globalAlpha = 0.8;
+          ctx.globalAlpha = isHoveredChild ? 1 : 0.65;
           ctx.fillStyle = n.color;
-          ctx.font = "500 8px 'JetBrains Mono', monospace";
+          ctx.font = `${isHoveredChild ? '700' : '500'} ${isHoveredChild ? 9 : 8}px 'JetBrains Mono', monospace`;
           ctx.textAlign = "left";
-          ctx.fillText(n.label, n.x + n.r + 6, n.y + 3);
+          ctx.fillText(n.label, n.x + n.r * nodeScale + 6, n.y + 3);
         }
       }
       ctx.globalAlpha = 1;
@@ -302,13 +337,17 @@ const NeuralSolutionsCanvas = () => {
             <p className="font-mono text-[10px] text-muted-foreground/60 mb-3 leading-relaxed">
               {activeService.tagline}
             </p>
-            <div className="border-t border-border pt-3 space-y-1.5">
-              {activeService.items.map((item, i) => (
-                <div key={item} className="flex items-center gap-2">
-                  <span className="font-mono text-[9px] text-muted-foreground/30 w-4">{String(i + 1).padStart(2, "0")}</span>
-                  <span className="font-mono text-[11px] text-foreground/80">{item}</span>
-                </div>
-              ))}
+            <div className="border-t border-border pt-3 space-y-1">
+              {activeService.items.map((item, i) => {
+                const isHighlighted = activeService.highlightItem === item;
+                return (
+                  <div key={item} className={`flex items-center gap-2 py-0.5 px-1 -mx-1 rounded-sm transition-all ${isHighlighted ? 'bg-foreground/5' : ''}`}>
+                    <span className="font-mono text-[9px] w-4" style={{ color: isHighlighted ? activeService.color : undefined, opacity: isHighlighted ? 0.8 : 0.3 }}>{String(i + 1).padStart(2, "0")}</span>
+                    <span className={`font-mono text-[11px] ${isHighlighted ? 'font-bold' : ''}`} style={{ color: isHighlighted ? activeService.color : undefined, opacity: isHighlighted ? 1 : 0.7 }}>{item}</span>
+                    {isHighlighted && <span className="font-mono text-[8px] ml-auto" style={{ color: activeService.color, opacity: 0.6 }}>◄</span>}
+                  </div>
+                );
+              })}
             </div>
           </motion.div>
         )}
