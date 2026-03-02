@@ -304,8 +304,8 @@ const NeuralSolutionsCanvas = () => {
           const dist = Math.hypot(a.x - b.x, a.y - b.y);
           if (dist > 220) continue;
           const isActive = aLayer === a.layer;
-          const alpha = (1 - dist / 220) * (isActive ? 0.4 : (aLayer >= 0 ? 0.05 : 0.2));
-          ctx.strokeStyle = a.color;
+          const alpha = (1 - dist / 220) * (isActive ? 0.4 : (aLayer >= 0 ? 0.03 : 0.12));
+          ctx.strokeStyle = isActive ? a.color : "#ffffff";
           ctx.globalAlpha = alpha;
           ctx.lineWidth = isActive ? 1.2 : 0.6;
           ctx.beginPath();
@@ -322,7 +322,7 @@ const NeuralSolutionsCanvas = () => {
           const dist = Math.hypot(a.x - b.x, a.y - b.y);
           if (dist > 350) continue;
           const isActive = aLayer === a.layer || aLayer === b.layer;
-          const alpha = (1 - dist / 350) * (isActive ? 0.15 : (aLayer >= 0 ? 0.02 : 0.06));
+          const alpha = (1 - dist / 350) * (isActive ? 0.15 : (aLayer >= 0 ? 0.02 : 0.04));
           ctx.strokeStyle = "#fff";
           ctx.globalAlpha = alpha;
           ctx.lineWidth = a.isMain && b.isMain ? 0.8 : 0.3;
@@ -340,10 +340,11 @@ const NeuralSolutionsCanvas = () => {
         const isActive = aLayer === n.layer;
         const isDimmed = aLayer >= 0 && !isActive;
         const isHoveredChild = !n.isMain && hChild === n.label && isActive;
+        const nodeColor = isActive ? n.color : "#ffffff";
 
         // Glow
-        ctx.fillStyle = n.color;
-        ctx.globalAlpha = isHoveredChild ? 0.2 : (isActive ? 0.1 : (isDimmed ? 0.01 : 0.04));
+        ctx.fillStyle = nodeColor;
+        ctx.globalAlpha = isHoveredChild ? 0.2 : (isActive ? 0.1 : (isDimmed ? 0.008 : 0.025));
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.r * (isHoveredChild ? 8 : 5), 0, Math.PI * 2);
         ctx.fill();
@@ -351,9 +352,9 @@ const NeuralSolutionsCanvas = () => {
         // Node circle
         const nodeScale = isHoveredChild ? 1.8 : (isActive && n.isMain ? 1.3 : 1);
         ctx.globalAlpha = n.isMain
-          ? (isActive ? 0.9 : (isDimmed ? 0.15 : 0.7))
-          : (isHoveredChild ? 0.9 : (isActive ? 0.7 : (isDimmed ? 0.08 : 0.35)));
-        ctx.fillStyle = n.color;
+          ? (isActive ? 0.9 : (isDimmed ? 0.1 : 0.4))
+          : (isHoveredChild ? 0.9 : (isActive ? 0.7 : (isDimmed ? 0.06 : 0.2)));
+        ctx.fillStyle = nodeColor;
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.r * nodeScale, 0, Math.PI * 2);
         ctx.fill();
@@ -368,25 +369,24 @@ const NeuralSolutionsCanvas = () => {
           ctx.stroke();
         }
 
-        // Main node labels (always)
+        // Main node labels
         if (n.isMain) {
-          ctx.globalAlpha = isActive ? 0.95 : (isDimmed ? 0.15 : 0.6);
-          ctx.fillStyle = n.color;
+          ctx.globalAlpha = isActive ? 0.95 : (isDimmed ? 0.12 : 0.45);
+          ctx.fillStyle = isActive ? n.color : "#ffffff";
           ctx.font = `700 ${isActive ? 11 : 10}px 'JetBrains Mono', monospace`;
           ctx.textAlign = "center";
           ctx.fillText(n.label.toUpperCase(), n.x, n.y - 20);
           const count = services[n.layer]?.items.length || 0;
-          ctx.globalAlpha = isActive ? 0.5 : (isDimmed ? 0.08 : 0.25);
+          ctx.globalAlpha = isActive ? 0.5 : (isDimmed ? 0.06 : 0.18);
           ctx.font = "400 8px 'JetBrains Mono', monospace";
           ctx.fillText(`${count} capabilities`, n.x, n.y - 9);
         }
 
-        // Child node labels — positioned outside, bigger text
+        // Child node labels
         if (!n.isMain && isActive) {
           ctx.globalAlpha = isHoveredChild ? 1 : 0.85;
           ctx.fillStyle = n.color;
           ctx.font = `${isHoveredChild ? '700' : '500'} ${isHoveredChild ? 13 : 11}px 'JetBrains Mono', monospace`;
-          // Find parent to determine label side
           const parent = nodes.find(p => p.isMain && p.layer === n.layer);
           const isLeftOfParent = parent ? n.x < parent.x : false;
           ctx.textAlign = isLeftOfParent ? "right" : "left";
@@ -400,7 +400,6 @@ const NeuralSolutionsCanvas = () => {
             }
             displayLabel += '…';
           }
-          // Dark stroke behind text for contrast
           ctx.strokeStyle = "rgba(0,0,0,0.8)";
           ctx.lineWidth = 3;
           ctx.strokeText(displayLabel, labelX, n.y + 4);
@@ -422,8 +421,8 @@ const NeuralSolutionsCanvas = () => {
           const dist = Math.hypot(a.x - b.x, a.y - b.y);
           if (dist > 180) continue;
           const t = ((time * 0.5 + i * 0.3 + j * 0.1) % 1);
-          ctx.fillStyle = a.color;
-          ctx.globalAlpha = isActive ? 0.7 : 0.35;
+          ctx.fillStyle = isActive ? a.color : "#ffffff";
+          ctx.globalAlpha = isActive ? 0.7 : 0.2;
           ctx.beginPath();
           ctx.arc(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t, isActive ? 2 : 1.5, 0, Math.PI * 2);
           ctx.fill();
@@ -535,16 +534,19 @@ const NeuralSolutionsCanvas = () => {
       {/* Legend — bottom left, below canvas content */}
       <div className="absolute bottom-4 left-4 z-40 pointer-events-none">
         <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-          {services.map((s) => (
-            <span
-              key={s.slug}
-              className="flex items-center gap-1.5 font-mono text-[9px] tracking-wider"
-              style={{ color: serviceColors[s.title], opacity: activeService ? (activeService.title === s.title ? 1 : 0.25) : 0.6 }}
-            >
-              <span className="w-2 h-2 rounded-full" style={{ backgroundColor: serviceColors[s.title] }} />
-              {s.title} ({s.items.length})
-            </span>
-          ))}
+          {services.map((s) => {
+            const isActive = activeService?.title === s.title;
+            return (
+              <span
+                key={s.slug}
+                className="flex items-center gap-1.5 font-mono text-[9px] tracking-wider transition-all duration-300"
+                style={{ color: isActive ? serviceColors[s.title] : 'rgba(255,255,255,0.4)', opacity: activeService ? (isActive ? 1 : 0.25) : 0.5 }}
+              >
+                <span className="w-2 h-2 rounded-full transition-all duration-300" style={{ backgroundColor: isActive ? serviceColors[s.title] : 'rgba(255,255,255,0.3)' }} />
+                {s.title} ({s.items.length})
+              </span>
+            );
+          })}
         </div>
       </div>
     </div>
