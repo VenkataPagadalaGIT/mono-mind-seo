@@ -747,12 +747,26 @@ const ContextGraphCanvas = () => {
       </AnimatePresence>
 
       {/* Legend */}
-      <div className="absolute bottom-4 left-4 z-40 pointer-events-none">
+      <div className="absolute bottom-4 left-4 z-40">
         <div className="flex flex-wrap gap-3">
           {services.map((s, i) => (
-            <span
+            <button
               key={s.slug}
-              className="flex items-center gap-1.5 font-mono text-[9px] tracking-wider"
+              onClick={() => {
+                if (expandedRef.current === i) {
+                  expandedRef.current = -1;
+                  setSelectedDomain(-1);
+                  setActiveService(null);
+                } else {
+                  expandedRef.current = i;
+                  setSelectedDomain(i);
+                  setActiveService({
+                    title: s.title, slug: s.slug, tagline: s.tagline,
+                    items: s.items, color: serviceColors[s.title] || "#888",
+                  });
+                }
+              }}
+              className="flex items-center gap-1.5 font-mono text-[9px] tracking-wider cursor-pointer hover:opacity-100 transition-opacity"
               style={{
                 color: serviceColors[s.title],
                 opacity: selectedDomain >= 0 ? (selectedDomain === i ? 1 : 0.25) : 0.6
@@ -760,10 +774,10 @@ const ContextGraphCanvas = () => {
             >
               <span className="w-2 h-2 rounded-full" style={{ backgroundColor: serviceColors[s.title] }} />
               {s.title}
-            </span>
+            </button>
           ))}
         </div>
-        <p className="font-mono text-[8px] text-muted-foreground/20 mt-2 tracking-widest uppercase">
+        <p className="font-mono text-[8px] text-muted-foreground/20 mt-2 tracking-widest uppercase pointer-events-none">
           Click domain to explore · Drag to move · Click background to reset
         </p>
       </div>
