@@ -84,21 +84,18 @@ const ContextGraphCanvas = () => {
 
   // Hub center
   const centerRef = useRef({ x: 400, y: 320 });
+  const orbitR = 180;
 
   const initGraph = useCallback((w: number, h: number) => {
     const cx = w / 2;
     const cy = h / 2;
     centerRef.current = { x: cx, y: cy };
 
-    // Build domain nodes in a horizontal row near the top
-    const count = services.length;
-    const padding = 60;
-    const spacing = (w - padding * 2) / (count - 1);
-    const rowY = 120; // top area
-
+    // Build domain nodes in hexagonal ring
     const domains: DomainNode[] = services.map((s, i) => {
-      const x = padding + i * spacing;
-      const y = rowY;
+      const angle = (i / services.length) * Math.PI * 2 - Math.PI / 2;
+      const x = cx + Math.cos(angle) * orbitR;
+      const y = cy + Math.sin(angle) * orbitR;
       return {
         id: s.slug,
         label: s.title,
@@ -106,7 +103,7 @@ const ContextGraphCanvas = () => {
         tagline: s.tagline,
         items: s.items,
         color: serviceColors[s.title] || "#888",
-        baseAngle: Math.PI / 2, // pointing down
+        baseAngle: angle,
         x, y,
         vx: 0, vy: 0,
         r: 22,
@@ -169,17 +166,20 @@ const ContextGraphCanvas = () => {
     resize();
     window.addEventListener("resize", resize);
 
-    // Compute child target positions for expanded domain — fan downward in a vertical column
+    // Compute child target positions for expanded domain
     const computeChildTargets = (domainIdx: number) => {
       const d = domainsRef.current[domainIdx];
       if (!d) return;
       const childNodes = childrenRef.current.filter(c => c.parentIdx === domainIdx);
       const count = childNodes.length;
-      const startY = d.y + 50;
-      const spacingY = 30;
+      const awayAngle = Math.atan2(d.y - centerRef.current.y, d.x - centerRef.current.x);
+      const arcSpread = Math.PI * 0.85;
       childNodes.forEach((child, ci) => {
-        child.targetX = d.x;
-        child.targetY = startY + ci * spacingY;
+        const angleOffset = count === 1 ? 0 : (ci / (count - 1) - 0.5) * arcSpread;
+        const angle = awayAngle + angleOffset;
+        const dist = 70 + ci * 12;
+        child.targetX = d.x + Math.cos(angle) * dist;
+        child.targetY = d.y + Math.sin(angle) * dist;
       });
     };
 
@@ -428,14 +428,11 @@ const ContextGraphCanvas = () => {
           d.x += d.vx;
           d.y += d.vy;
         } else {
-          // Idle wobble toward base position (horizontal row)
-          const count = domains.length;
-          const padding = 60;
-          const spacing = (w - padding * 2) / (count - 1);
-          const baseX = padding + i * spacing;
-          const baseY = 120;
-          const wobbleX = Math.sin(t * 0.4 + i * 1.7) * 3 + Math.sin(t * 0.7 + i * 2.3) * 1.5;
-          const wobbleY = Math.cos(t * 0.35 + i * 2.1) * 2.5 + Math.cos(t * 0.6 + i * 1.1) * 1;
+          // Idle wobble toward base position
+          const baseX = cx + Math.cos(d.baseAngle) * orbitR;
+          const baseY = cy + Math.sin(d.baseAngle) * orbitR;
+          const wobbleX = Math.sin(t * 0.4 + i * 1.7) * 4 + Math.sin(t * 0.7 + i * 2.3) * 2;
+          const wobbleY = Math.cos(t * 0.35 + i * 2.1) * 3.5 + Math.cos(t * 0.6 + i * 1.1) * 1.5;
           const targetX = baseX + wobbleX;
           const targetY = baseY + wobbleY;
           d.vx += (targetX - d.x) * 0.03;
@@ -447,19 +444,22 @@ const ContextGraphCanvas = () => {
         }
       });
 
-      // 4. Physics: update children (spring downward column)
+      // 4. Physics: update children (spring toward target with staggered jellyfish)
       children.forEach((c, ci) => {
         const d = domains[c.parentIdx];
         const isExpanded = expanded === c.parentIdx;
         
         if (isExpanded) {
           c.progress = Math.min(1, c.progress + 0.04);
-          // Recompute targets: vertical column below parent
           const childIdx = children.filter(ch => ch.parentIdx === c.parentIdx).indexOf(c);
-          const startY = d.y + 50;
-          const spacingY = 30;
-          c.targetX = d.x;
-          c.targetY = startY + childIdx * spacingY;
+          const count = d.items.length;
+          const awayAngle = Math.atan2(d.y - cy, d.x - cx);
+          const arcSpread = Math.PI * 0.85;
+          const angleOffset = count === 1 ? 0 : (childIdx / (count - 1) - 0.5) * arcSpread;
+          const angle = awayAngle + angleOffset;
+          const dist = 70 + childIdx * 12;
+          c.targetX = d.x + Math.cos(angle) * dist;
+          c.targetY = d.y + Math.sin(angle) * dist;
         } else {
           c.progress = Math.max(0, c.progress - 0.06);
           c.targetX = d.x;
@@ -482,24 +482,48 @@ const ContextGraphCanvas = () => {
       // 5. Draw hub-to-domain connections
       domains.forEach((d, i) => {
         const isExp = expanded === i;
-      // 5. Draw domain-to-domain connections (horizontal neighbors)
-      for (let i = 0; i < domains.length - 1; i++) {
-        const a = domains[i], b = domains[i + 1];
-        const eitherActive = expanded === i || expanded === i + 1;
-        const bothDimmed = expanded >= 0 && !eitherActive;
+        const isHov = hoveredD === i;
+        const isDimmed = expanded >= 0 && !isExp;
+
         ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(b.x, b.y);
-        ctx.strokeStyle = eitherActive ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.06)";
-        ctx.globalAlpha = bothDimmed ? 0.02 : 1;
-        ctx.lineWidth = 0.5;
-        ctx.setLineDash([3, 5]);
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(d.x, d.y);
+        ctx.strokeStyle = isExp || isHov ? d.color : "rgba(255,255,255,0.08)";
+        ctx.globalAlpha = isDimmed ? 0.03 : (isExp ? 0.5 : (isHov ? 0.4 : 0.12));
+        ctx.lineWidth = isExp ? 1.5 : (isHov ? 1.2 : 0.6);
+        ctx.setLineDash(isExp || isHov ? [] : [4, 6]);
         ctx.stroke();
         ctx.setLineDash([]);
         ctx.globalAlpha = 1;
-      }
 
-      // (neighbor connections drawn in section 5 above)
+        // Traveling energy pulse
+        if (!isDimmed) {
+          const pulseT = ((t * 0.3 + i * 0.5) % 1);
+          const pulseX = cx + (d.x - cx) * pulseT;
+          const pulseY = cy + (d.y - cy) * pulseT;
+          ctx.beginPath();
+          ctx.arc(pulseX, pulseY, isExp ? 2.5 : 1.5, 0, Math.PI * 2);
+          ctx.fillStyle = d.color;
+          ctx.globalAlpha = isExp ? 0.6 : 0.25;
+          ctx.fill();
+          ctx.globalAlpha = 1;
+        }
+      });
+
+      // 6. Draw inter-domain faint connections (adjacent)
+      for (let i = 0; i < domains.length; i++) {
+        const j = (i + 1) % domains.length;
+        const a = domains[i], b = domains[j];
+        const bothDimmed = expanded >= 0 && expanded !== i && expanded !== j;
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.strokeStyle = "rgba(255,255,255,0.04)";
+        ctx.globalAlpha = bothDimmed ? 0.01 : 0.04;
+        ctx.lineWidth = 0.4;
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
 
       // 7. Draw parent-to-child lines + child nodes
       children.forEach((c, ci) => {
@@ -606,8 +630,30 @@ const ContextGraphCanvas = () => {
         ctx.globalAlpha = 1;
       });
 
-      // 9. No central hub in horizontal layout
+      // 9. Draw hub
+      const hubBreath = Math.sin(t * 0.8) * 3;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 28 + hubBreath, 0, Math.PI * 2);
+      ctx.strokeStyle = expanded >= 0 ? domains[expanded].color : "rgba(255,255,255,0.15)";
+      ctx.lineWidth = 1.2;
+      ctx.globalAlpha = 0.4;
+      ctx.stroke();
+      ctx.globalAlpha = 1;
 
+      ctx.beginPath();
+      ctx.arc(cx, cy, 4, 0, Math.PI * 2);
+      ctx.fillStyle = expanded >= 0 ? domains[expanded].color : "rgba(255,255,255,0.3)";
+      ctx.fill();
+
+      ctx.fillStyle = "rgba(255,255,255,0.25)";
+      ctx.font = "700 7px 'JetBrains Mono', monospace";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText("SOLUTIONS", cx, cy - 1);
+
+      ctx.font = "400 7px 'JetBrains Mono', monospace";
+      ctx.fillStyle = "rgba(255,255,255,0.12)";
+      ctx.fillText("CONSTELLATION", cx, cy + 40 + hubBreath);
 
       animRef.current = requestAnimationFrame(draw);
     };
