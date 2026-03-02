@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { services } from "@/components/ServicesGrid";
 import ScrollReveal from "@/components/ScrollReveal";
+import SolutionsGraph from "@/components/SolutionsGraph";
+import NeuralNetBackground from "@/components/NeuralNetBackground";
 import { ArrowRight } from "lucide-react";
 import { useEffect } from "react";
 
@@ -19,8 +21,14 @@ const Solutions = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background pt-24 pb-20 px-6">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-background pt-24 pb-20 px-6 relative overflow-hidden">
+      {/* Animated background */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <NeuralNetBackground />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-transparent to-background/70" />
+      </div>
+
+      <div className="max-w-[1400px] mx-auto relative z-10">
         <ScrollReveal>
           <p className="font-mono text-xs tracking-[0.3em] text-muted-foreground mb-4 uppercase">
             What I Build
@@ -28,10 +36,23 @@ const Solutions = () => {
           <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground text-glow mb-6">
             Solutions
           </h1>
-          <p className="font-mono text-sm text-muted-foreground leading-relaxed mb-20 max-w-2xl">
+          <p className="font-mono text-sm text-muted-foreground leading-relaxed mb-12 max-w-2xl">
             From Fortune 500 AI infrastructure to growth-stage SEO consulting — production systems that drive measurable outcomes.
           </p>
         </ScrollReveal>
+
+        {/* Interactive Context Graph */}
+        <ScrollReveal delay={200}>
+          <SolutionsGraph />
+        </ScrollReveal>
+
+        {/* Detailed list below */}
+        <div className="mt-20">
+          <ScrollReveal>
+            <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/40 uppercase mb-8">
+              All Solutions
+            </p>
+          </ScrollReveal>
 
         <div className="space-y-6">
           {services.map((service, i) => (
@@ -93,6 +114,7 @@ const Solutions = () => {
             </Link>
           </div>
         </ScrollReveal>
+        </div>
       </div>
     </div>
   );
