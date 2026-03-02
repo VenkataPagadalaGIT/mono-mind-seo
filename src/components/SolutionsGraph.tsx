@@ -406,40 +406,57 @@ const NeuralSolutionsCanvas = () => {
         {activeService && (
           <motion.div
             key="info-panel"
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -10 }}
-            transition={{ duration: 0.15 }}
-            className={`absolute top-4 z-50 max-w-xs border border-border bg-background/90 backdrop-blur-md p-5 cursor-pointer group hover:bg-background/95 transition-all ${activeService.title === 'AI Product' ? 'right-4' : 'left-4'}`}
-            style={{ borderColor: activeService.color + "30" }}
+            initial={{ opacity: 0, y: 8, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 8, scale: 0.96 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25, mass: 0.8 }}
+            className={`absolute top-4 z-50 max-w-xs border-2 bg-background/95 backdrop-blur-xl p-5 cursor-pointer group hover:bg-background transition-all shadow-2xl rounded-lg ${activeService.title === 'AI Product' ? 'right-4' : 'left-4'}`}
+            style={{ borderColor: activeService.color + "50", boxShadow: `0 8px 32px ${activeService.color}15, 0 0 0 1px ${activeService.color}10` }}
             onClick={() => navigate(`/solutions/${activeService.slug}`)}
           >
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-3">
-                <span className="w-3 h-3 rounded-sm flex-shrink-0" style={{ backgroundColor: activeService.color }} />
-                <h3 className="font-display text-lg font-bold" style={{ color: activeService.color }}>
+                <motion.span 
+                  className="w-3.5 h-3.5 rounded-full flex-shrink-0"
+                  style={{ backgroundColor: activeService.color }}
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                />
+                <h3 className="font-display text-lg font-bold tracking-wide" style={{ color: activeService.color }}>
                   {activeService.title}
                 </h3>
               </div>
-              <ExternalLink size={12} className="text-muted-foreground/30 group-hover:text-foreground transition-colors" />
+              <ExternalLink size={12} className="text-muted-foreground/40 group-hover:text-foreground transition-colors" />
             </div>
-            <p className="font-mono text-[10px] text-muted-foreground/60 mb-3 leading-relaxed">
+            <p className="font-mono text-[10px] text-muted-foreground/70 mb-3 leading-relaxed">
               {activeService.tagline}
             </p>
-            <div className="border-t border-border pt-3 space-y-1">
+            <div className="border-t border-border/50 pt-3 space-y-1.5">
               {activeService.items.map((item, i) => {
                 const isHighlighted = activeService.highlightItem === item;
                 return (
-                  <div key={item} className={`flex items-center gap-2 py-0.5 px-1 -mx-1 rounded-sm transition-all ${isHighlighted ? 'bg-foreground/5' : ''}`}>
-                    <span className="font-mono text-[9px] w-4" style={{ color: isHighlighted ? activeService.color : undefined, opacity: isHighlighted ? 0.8 : 0.3 }}>{String(i + 1).padStart(2, "0")}</span>
-                    <span className={`font-mono text-[11px] ${isHighlighted ? 'font-bold' : ''}`} style={{ color: isHighlighted ? activeService.color : undefined, opacity: isHighlighted ? 1 : 0.7 }}>{item}</span>
-                    {isHighlighted && <span className="font-mono text-[8px] ml-auto" style={{ color: activeService.color, opacity: 0.6 }}>◄</span>}
-                  </div>
+                  <motion.div 
+                    key={item} 
+                    className={`flex items-center gap-2 py-1 px-2 -mx-2 rounded transition-all ${isHighlighted ? 'bg-foreground/8' : 'hover:bg-foreground/3'}`}
+                    animate={isHighlighted ? { x: [0, 3, 0] } : {}}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <span className="font-mono text-[9px] w-4" style={{ color: isHighlighted ? activeService.color : undefined, opacity: isHighlighted ? 0.9 : 0.35 }}>{String(i + 1).padStart(2, "0")}</span>
+                    <span className={`font-mono text-[11px] ${isHighlighted ? 'font-bold' : ''}`} style={{ color: isHighlighted ? activeService.color : undefined, opacity: isHighlighted ? 1 : 0.75 }}>{item}</span>
+                    {isHighlighted && (
+                      <motion.span 
+                        className="font-mono text-[8px] ml-auto" 
+                        style={{ color: activeService.color }}
+                        animate={{ opacity: [0.4, 1, 0.4] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
+                      >●</motion.span>
+                    )}
+                  </motion.div>
                 );
               })}
             </div>
-            <div className="border-t border-border mt-3 pt-3 flex items-center gap-2 font-mono text-[10px] tracking-widest uppercase group-hover:opacity-100 opacity-60 transition-opacity" style={{ color: activeService.color }}>
-              Explore {activeService.title} <ArrowRight size={10} />
+            <div className="border-t border-border/50 mt-3 pt-3 flex items-center gap-2 font-mono text-[10px] tracking-widest uppercase group-hover:opacity-100 opacity-70 transition-opacity" style={{ color: activeService.color }}>
+              Explore {activeService.title} <ArrowRight size={10} className="group-hover:translate-x-1 transition-transform" />
             </div>
           </motion.div>
         )}
