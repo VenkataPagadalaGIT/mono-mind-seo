@@ -166,27 +166,18 @@ const NeuralSolutionsCanvas = () => {
       const mouseActive = mouseRef.current.active;
       const aLayer = activeLayerRef.current;
 
-      // Mouse interaction — freeze active layer, gentle attract on others
+      // Mouse interaction — freeze nearby nodes so panel stays stable
       const isDragging = dragRef.current.dragging;
       for (const n of nodes) {
-        // Skip dragged node
         if (isDragging && nodes.indexOf(n) === dragRef.current.nodeIdx) continue;
 
         if (mouseActive && !isDragging) {
           const isActiveLayer = activeLayerRef.current === n.layer;
-          if (isActiveLayer) {
-            // Slow down active layer so user can interact
-            n.vx *= 0.85;
-            n.vy *= 0.85;
-          } else if (n.isMain) {
-            const dx = n.x - mx;
-            const dy = n.y - my;
-            const dist = Math.hypot(dx, dy);
-            if (dist < 120 && dist > 1) {
-              const strength = (1 - dist / 120) * -0.04;
-              n.vx += (dx / dist) * strength;
-              n.vy += (dy / dist) * strength;
-            }
+          const distToMouse = Math.hypot(n.x - mx, n.y - my);
+          if (isActiveLayer || (n.isMain && distToMouse < 50)) {
+            // Freeze: strongly dampen velocity so nodes don't jitter
+            n.vx *= 0.8;
+            n.vy *= 0.8;
           }
         }
         n.x += n.vx;
@@ -407,14 +398,14 @@ const NeuralSolutionsCanvas = () => {
     <div className="relative w-full h-full" style={{ minHeight: 640 }}>
       <canvas ref={canvasRef} className="w-full h-full cursor-default" style={{ minHeight: 640 }} />
       {/* Info panel when hovering a domain — CLICKABLE */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {activeService && (
           <motion.div
-            key={activeService.title}
+            key="info-panel"
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -10 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.15 }}
             className="absolute top-4 left-4 z-50 max-w-xs border border-border bg-background/90 backdrop-blur-md p-5 cursor-pointer group hover:bg-background/95 transition-all"
             style={{ borderColor: activeService.color + "30" }}
             onClick={() => navigate(`/solutions/${activeService.slug}`)}
