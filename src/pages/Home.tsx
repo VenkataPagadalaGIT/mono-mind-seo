@@ -61,7 +61,7 @@ const Home = () => {
             href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=7434105581101133824"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-[#0A66C2] hover:bg-[#004182] px-5 py-2.5 font-mono text-xs tracking-widest uppercase text-white transition-all rounded-full"
+            className="inline-flex items-center gap-2 border border-foreground/30 px-5 py-2.5 font-mono text-xs tracking-widest uppercase text-muted-foreground hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2] transition-all rounded-full"
           >
             <Linkedin size={14} />
             Subscribe on LinkedIn
