@@ -147,14 +147,15 @@ const NeuralSolutionsCanvas = () => {
       const yBase = ch * 0.22;
       nodes.push({ x: xBase, y: yBase, vx: (Math.random() - 0.5) * 0.15, vy: (Math.random() - 0.5) * 0.15, r: 10, layer: li, label: s.title, color, isMain: true });
       const itemCount = s.items.length;
-      const totalSpread = Math.min(itemCount * 28, ch * 0.5); // more vertical space
-      const startY = yBase - totalSpread / 2;
       s.items.forEach((item, ci) => {
-        const angle = -0.6 + (ci / Math.max(itemCount - 1, 1)) * 1.2; // fan out in an arc
-        const dist = 80 + ci * 12; // radial distance from parent
-        const xItem = xBase + Math.cos(angle - Math.PI / 2) * dist + (Math.random() - 0.5) * 15;
-        const yItem = yBase + Math.sin(angle - Math.PI / 2) * dist + (Math.random() - 0.5) * 10;
-        nodes.push({ x: xItem, y: yItem, vx: (Math.random() - 0.5) * 0.05, vy: (Math.random() - 0.5) * 0.05, r: 4.5, layer: li, label: item, color, isMain: false });
+        // Spread children in a wide arc below the parent with good spacing
+        const arcSpread = Math.PI * 0.7; // wide arc
+        const arcStart = Math.PI / 2 - arcSpread / 2; // centered below
+        const angle = arcStart + (ci / Math.max(itemCount - 1, 1)) * arcSpread;
+        const dist = 120 + ci * 8; // further from parent
+        const xItem = xBase + Math.cos(angle) * dist;
+        const yItem = yBase + Math.sin(angle) * dist;
+        nodes.push({ x: xItem, y: yItem, vx: (Math.random() - 0.5) * 0.03, vy: (Math.random() - 0.5) * 0.03, r: 5, layer: li, label: item, color, isMain: false });
       });
     });
     nodesRef.current = nodes;
@@ -371,16 +372,16 @@ const NeuralSolutionsCanvas = () => {
 
         // Child node labels — positioned outside, bigger text
         if (!n.isMain && isActive) {
-          ctx.globalAlpha = isHoveredChild ? 1 : 0.75;
+          ctx.globalAlpha = isHoveredChild ? 1 : 0.85;
           ctx.fillStyle = n.color;
-          ctx.font = `${isHoveredChild ? '700' : '500'} ${isHoveredChild ? 11 : 10}px 'JetBrains Mono', monospace`;
+          ctx.font = `${isHoveredChild ? '700' : '500'} ${isHoveredChild ? 13 : 11}px 'JetBrains Mono', monospace`;
           // Find parent to determine label side
           const parent = nodes.find(p => p.isMain && p.layer === n.layer);
           const isLeftOfParent = parent ? n.x < parent.x : false;
           ctx.textAlign = isLeftOfParent ? "right" : "left";
-          const labelOffset = 12;
+          const labelOffset = 14;
           const labelX = isLeftOfParent ? n.x - n.r * nodeScale - labelOffset : n.x + n.r * nodeScale + labelOffset;
-          const maxLabelWidth = 140;
+          const maxLabelWidth = 180;
           let displayLabel = n.label;
           if (ctx.measureText(displayLabel).width > maxLabelWidth && !isHoveredChild) {
             while (ctx.measureText(displayLabel + '…').width > maxLabelWidth && displayLabel.length > 3) {
