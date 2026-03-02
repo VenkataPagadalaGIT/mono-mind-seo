@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 
 const featuredProject = {
@@ -73,6 +74,13 @@ const projects = [
 ];
 
 const Projects = () => {
+  useEffect(() => {
+    document.title = "Projects | AI Systems & SEO Tools | Venkata Pagadala";
+    const meta = document.querySelector('meta[name="description"]');
+    const content = "Technical projects including AI agent pipelines, RAG engines, knowledge graphs, and enterprise SEO automation tools.";
+    if (meta) meta.setAttribute("content", content);
+  }, []);
+
   return (
     <div className="min-h-screen bg-background pt-24 pb-20 px-6">
       <div className="max-w-6xl mx-auto">

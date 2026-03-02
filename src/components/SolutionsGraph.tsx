@@ -629,7 +629,7 @@ const JsonLdScript = () => {
 
 // ── Main Component ──
 const SolutionsGraph = () => {
-  const [viewMode, setViewMode] = useState<ViewMode>("graph");
+  const [viewMode, setViewMode] = useState<ViewMode>("neural");
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
   const [hoveredChild, setHoveredChild] = useState<{ label: string; x: number; y: number; parentColor: string } | null>(null);
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);

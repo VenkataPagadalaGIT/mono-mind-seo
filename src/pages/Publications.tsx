@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import { ExternalLink, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -21,6 +22,13 @@ const publications = [
 ];
 
 const Publications = () => {
+  useEffect(() => {
+    document.title = "Publications & Research | Venkata Pagadala";
+    const meta = document.querySelector('meta[name="description"]');
+    const content = "Published research on AI-assisted SEO and machine learning for search optimization. Journal publications and thought leadership.";
+    if (meta) meta.setAttribute("content", content);
+  }, []);
+
   return (
     <div className="min-h-screen bg-background pt-24 pb-20 px-6">
       <div className="max-w-4xl mx-auto">

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import venkatPhoto from "@/assets/venkata-pagadala.jpeg";
 
@@ -100,6 +101,13 @@ const experiences = [
 ];
 
 const About = () => {
+  useEffect(() => {
+    document.title = "About Venkata Pagadala | AI Product Owner & SEO Leader";
+    const meta = document.querySelector('meta[name="description"]');
+    const content = "10+ years building AI systems and scaling organic search for Fortune 500 brands. Lead Technical Product Manager at AT&T. Published researcher.";
+    if (meta) meta.setAttribute("content", content);
+  }, []);
+
   return (
     <div className="min-h-screen bg-background pt-24 pb-20 px-6">
       <div className="max-w-6xl mx-auto">
