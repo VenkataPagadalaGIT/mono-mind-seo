@@ -1,0 +1,46 @@
+# Venkata Pagadala — Portfolio
+
+> AI Product Manager — Search (SEO, GEO) at AT&T
+> Building & Enhancing Existing Systems using AI, Automation Workflows, Gen AI, Agentic AI Agents, LLMs, MCP, A2A, RAG, Enterprise SEO, Technical SEO & Growth
+
+## About
+
+Venkata Pagadala is the Lead Technical Product Manager (Automation, AI & SEO) at AT&T. He specializes in enterprise-scale AI systems, knowledge graphs, RAG engines, and technical SEO infrastructure managing 50M+ pages.
+
+## Expertise
+
+- AI Product Management
+- Enterprise SEO & Technical SEO
+- Answer Engine Optimization (AEO)
+- AI Agents & Workflow Automation
+- RAG Engines & Knowledge Graphs
+- MCP Server Integrations
+- A2A Agent Pipelines
+- Programmatic SEO at Scale
+- Editorial SEO & Content Strategy
+- Performance Analytics & Growth Forecasting
+
+## Education
+
+- Disruptive Strategy — Harvard Business School
+- Cybersecurity — MIT
+- MSCS — New England College
+
+## Solutions
+
+- AI Product: AI Agents, Custom AI/ML Pipelines, RAG Engines, Knowledge Graphs, MCP Servers, A2A Pipelines
+- AEO: AI Visibility Tracking, AI Search Prioritization, AI-Focused Content Strategy
+- Technical SEO: Visibility Audits, Internal Linking, Architecture & Crawlability, International SEO, Site Migrations
+- Programmatic SEO: Scalable Page Templates, High-Volume Page Generation, Indexation Logic
+- Editorial SEO: Topical Authority, Persona Mapping, User Intent Research, Content Briefs
+- Performance: Growth Forecasting, Custom Reporting, KPI Tracking, CRO Audits
+
+## Contact
+
+- Email: vdepagadala@gmail.com
+- Location: Atlanta, Georgia
+
+## Links
+
+- Website: https://venkatapagadala.com
+- LinkedIn: https://linkedin.com/in/venkatapagadala
