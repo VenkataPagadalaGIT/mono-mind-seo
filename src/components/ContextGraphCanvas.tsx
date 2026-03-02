@@ -484,14 +484,15 @@ const ContextGraphCanvas = () => {
         const isExp = expanded === i;
         const isHov = hoveredD === i;
         const isDimmed = expanded >= 0 && !isExp;
+        const isActive = isExp || isHov;
 
         ctx.beginPath();
         ctx.moveTo(cx, cy);
         ctx.lineTo(d.x, d.y);
-        ctx.strokeStyle = isExp || isHov ? d.color : "rgba(255,255,255,0.08)";
+        ctx.strokeStyle = isActive ? d.color : "rgba(255,255,255,0.08)";
         ctx.globalAlpha = isDimmed ? 0.03 : (isExp ? 0.5 : (isHov ? 0.4 : 0.12));
         ctx.lineWidth = isExp ? 1.5 : (isHov ? 1.2 : 0.6);
-        ctx.setLineDash(isExp || isHov ? [] : [4, 6]);
+        ctx.setLineDash(isActive ? [] : [4, 6]);
         ctx.stroke();
         ctx.setLineDash([]);
         ctx.globalAlpha = 1;
@@ -503,8 +504,8 @@ const ContextGraphCanvas = () => {
           const pulseY = cy + (d.y - cy) * pulseT;
           ctx.beginPath();
           ctx.arc(pulseX, pulseY, isExp ? 2.5 : 1.5, 0, Math.PI * 2);
-          ctx.fillStyle = d.color;
-          ctx.globalAlpha = isExp ? 0.6 : 0.25;
+          ctx.fillStyle = isActive ? d.color : "#ffffff";
+          ctx.globalAlpha = isActive ? 0.6 : 0.15;
           ctx.fill();
           ctx.globalAlpha = 1;
         }
@@ -525,16 +526,18 @@ const ContextGraphCanvas = () => {
         ctx.globalAlpha = 1;
       }
 
-      // 7. Draw parent-to-child lines + child nodes
+      // 7. Draw parent-to-child lines + child nodes (color only when expanded)
       children.forEach((c, ci) => {
         if (c.progress < 0.01) return;
         const d = domains[c.parentIdx];
+        const parentActive = expanded === c.parentIdx;
+        const childColor = parentActive ? d.color : "#ffffff";
 
         // Line from parent to child
         ctx.beginPath();
         ctx.moveTo(d.x, d.y);
         ctx.lineTo(c.x, c.y);
-        ctx.strokeStyle = d.color;
+        ctx.strokeStyle = childColor;
         ctx.globalAlpha = c.progress * 0.35;
         ctx.lineWidth = 0.8;
         ctx.stroke();
@@ -544,7 +547,7 @@ const ContextGraphCanvas = () => {
         const isHovChild = hoveredC === ci;
         ctx.beginPath();
         ctx.arc(c.x, c.y, c.r * (isHovChild ? 6 : 3.5), 0, Math.PI * 2);
-        ctx.fillStyle = d.color;
+        ctx.fillStyle = childColor;
         ctx.globalAlpha = c.progress * (isHovChild ? 0.15 : 0.06);
         ctx.fill();
         ctx.globalAlpha = 1;
@@ -552,7 +555,7 @@ const ContextGraphCanvas = () => {
         // Child node
         ctx.beginPath();
         ctx.arc(c.x, c.y, c.r * (isHovChild ? 1.5 : 1), 0, Math.PI * 2);
-        ctx.fillStyle = d.color;
+        ctx.fillStyle = childColor;
         ctx.globalAlpha = c.progress * (isHovChild ? 0.9 : 0.7);
         ctx.fill();
         ctx.globalAlpha = 1;
@@ -561,7 +564,7 @@ const ContextGraphCanvas = () => {
         if (c.progress > 0.5) {
           const labelAlpha = (c.progress - 0.5) * 2;
           ctx.globalAlpha = labelAlpha * (isHovChild ? 1 : 0.75);
-          ctx.fillStyle = d.color;
+          ctx.fillStyle = childColor;
           ctx.font = `${isHovChild ? '700' : '500'} ${isHovChild ? 11 : 9}px 'JetBrains Mono', monospace`;
           // Position label away from center
           const awayAngle = Math.atan2(c.y - cy, c.x - cx);
@@ -584,27 +587,29 @@ const ContextGraphCanvas = () => {
         const isExp = expanded === i;
         const isHov = hoveredD === i;
         const isDimmed = expanded >= 0 && !isExp;
+        const isActive = isExp || isHov;
         const breathe = Math.sin(t * 1.2 + i * 1.5) * 2;
+        const nodeColor = isActive ? d.color : "#ffffff";
 
         // Outer glow halo
         const glowR = d.r + 12 + breathe;
         ctx.beginPath();
         ctx.arc(d.x, d.y, glowR, 0, Math.PI * 2);
-        ctx.fillStyle = d.color;
-        ctx.globalAlpha = isDimmed ? 0.01 : (isExp ? 0.08 : (isHov ? 0.06 : 0.025));
+        ctx.fillStyle = nodeColor;
+        ctx.globalAlpha = isDimmed ? 0.01 : (isExp ? 0.08 : (isHov ? 0.06 : 0.015));
         ctx.fill();
         ctx.globalAlpha = 1;
 
         // Hollow circle (stroke)
         ctx.beginPath();
         ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
-        ctx.strokeStyle = d.color;
+        ctx.strokeStyle = nodeColor;
         ctx.lineWidth = isExp ? 2.5 : (isHov ? 2 : 1);
-        ctx.globalAlpha = isDimmed ? 0.12 : (isExp ? 0.9 : (isHov ? 0.8 : 0.4));
+        ctx.globalAlpha = isDimmed ? 0.12 : (isExp ? 0.9 : (isHov ? 0.8 : 0.25));
         ctx.stroke();
 
         // Fill on hover/expand
-        if (isExp || isHov) {
+        if (isActive) {
           ctx.fillStyle = d.color;
           ctx.globalAlpha = isExp ? 0.15 : 0.08;
           ctx.fill();
@@ -612,8 +617,8 @@ const ContextGraphCanvas = () => {
         ctx.globalAlpha = 1;
 
         // Label
-        ctx.fillStyle = d.color;
-        ctx.globalAlpha = isDimmed ? 0.15 : (isExp ? 1 : (isHov ? 0.9 : 0.5));
+        ctx.fillStyle = nodeColor;
+        ctx.globalAlpha = isDimmed ? 0.15 : (isExp ? 1 : (isHov ? 0.9 : 0.35));
         ctx.font = `700 ${isExp ? 11 : 10}px 'JetBrains Mono', monospace`;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
@@ -623,7 +628,7 @@ const ContextGraphCanvas = () => {
         ctx.fillText(d.label.toUpperCase(), d.x, d.y - d.r - 14);
 
         // Capability count
-        ctx.globalAlpha = isDimmed ? 0.08 : (isExp ? 0.6 : 0.3);
+        ctx.globalAlpha = isDimmed ? 0.08 : (isExp ? 0.6 : 0.2);
         ctx.font = "400 8px 'JetBrains Mono', monospace";
         ctx.strokeText(`${d.items.length} capabilities`, d.x, d.y - d.r - 3);
         ctx.fillText(`${d.items.length} capabilities`, d.x, d.y - d.r - 3);
@@ -740,33 +745,39 @@ const ContextGraphCanvas = () => {
       {/* Legend */}
       <div className="absolute bottom-4 left-4 z-40">
         <div className="flex flex-wrap gap-3">
-          {services.map((s, i) => (
-            <button
-              key={s.slug}
-              onClick={() => {
-                if (expandedRef.current === i) {
-                  expandedRef.current = -1;
-                  setSelectedDomain(-1);
-                  setActiveService(null);
-                } else {
-                  expandedRef.current = i;
-                  setSelectedDomain(i);
-                  setActiveService({
-                    title: s.title, slug: s.slug, tagline: s.tagline,
-                    items: s.items, color: serviceColors[s.title] || "#888",
-                  });
-                }
-              }}
-              className="flex items-center gap-1.5 font-mono text-[9px] tracking-wider cursor-pointer hover:opacity-100 transition-opacity"
-              style={{
-                color: serviceColors[s.title],
-                opacity: selectedDomain >= 0 ? (selectedDomain === i ? 1 : 0.25) : 0.6
-              }}
-            >
-              <span className="w-2 h-2 rounded-full" style={{ backgroundColor: serviceColors[s.title] }} />
-              {s.title}
-            </button>
-          ))}
+          {services.map((s, i) => {
+            const isActive = selectedDomain === i;
+            return (
+              <button
+                key={s.slug}
+                onClick={() => {
+                  if (expandedRef.current === i) {
+                    expandedRef.current = -1;
+                    setSelectedDomain(-1);
+                    setActiveService(null);
+                  } else {
+                    expandedRef.current = i;
+                    setSelectedDomain(i);
+                    setActiveService({
+                      title: s.title, slug: s.slug, tagline: s.tagline,
+                      items: s.items, color: serviceColors[s.title] || "#888",
+                    });
+                  }
+                }}
+                className="flex items-center gap-1.5 font-mono text-[9px] tracking-wider cursor-pointer hover:opacity-100 transition-all duration-300"
+                style={{
+                  color: isActive ? serviceColors[s.title] : "rgba(255,255,255,0.5)",
+                  opacity: selectedDomain >= 0 ? (isActive ? 1 : 0.25) : 0.6
+                }}
+              >
+                <span
+                  className="w-2 h-2 rounded-full transition-all duration-300"
+                  style={{ backgroundColor: isActive ? serviceColors[s.title] : "rgba(255,255,255,0.4)" }}
+                />
+                {s.title}
+              </button>
+            );
+          })}
         </div>
         <p className="font-mono text-[8px] text-muted-foreground/20 mt-2 tracking-widest uppercase pointer-events-none">
           Click domain to explore · Drag to move · Click background to reset

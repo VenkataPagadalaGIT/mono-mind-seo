@@ -858,15 +858,14 @@ const SolutionsGraph = () => {
                   Domains ▾
                 </p>
                 <div className="space-y-1">
-                  {services.map((s, i) => {
-                    const color = serviceColors[s.title] || "#888";
+                   {services.map((s, i) => {
                     return (
                       <div
                         key={s.slug}
                         className="w-full flex items-center gap-3 py-2.5 px-2 hover:bg-secondary/20 transition-all text-left"
                       >
-                        <span className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ backgroundColor: color, opacity: 0.5 }} />
-                        <span className="font-mono text-[11px] flex-1 text-muted-foreground/50">{s.title}</span>
+                        <span className="w-2.5 h-2.5 rounded-sm flex-shrink-0 bg-muted-foreground/20" />
+                        <span className="font-mono text-[11px] flex-1 text-muted-foreground/40">{s.title}</span>
                         <span className="font-mono text-[9px] text-muted-foreground/20">{s.items.length}</span>
                       </div>
                     );

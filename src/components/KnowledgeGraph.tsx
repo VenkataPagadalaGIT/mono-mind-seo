@@ -197,12 +197,12 @@ const KnowledgeGraph = () => {
                   <span
                     className="w-2.5 h-2.5 rounded-sm flex-shrink-0 transition-all duration-300"
                     style={{
-                      backgroundColor: active ? cat.color : "hsl(var(--muted-foreground) / 0.3)",
+                      backgroundColor: active ? cat.color : "hsl(var(--muted-foreground) / 0.2)",
                     }}
                   />
                   <span
                     className="font-mono text-[11px] flex-1 transition-all duration-300"
-                    style={{ color: active ? cat.color : "hsl(var(--muted-foreground) / 0.6)" }}
+                    style={{ color: active ? cat.color : "hsl(var(--muted-foreground) / 0.5)" }}
                   >
                     {cat.name}
                   </span>
@@ -230,7 +230,7 @@ const KnowledgeGraph = () => {
                 y1={cy}
                 x2={node.x}
                 y2={node.y}
-                stroke={isActive(node.id) ? node.color : "hsl(var(--border))"}
+                stroke={isActive(node.id) ? node.color : "hsl(var(--muted-foreground) / 0.15)"}
                 strokeWidth={isActive(node.id) ? 1.5 : 0.5}
                 strokeOpacity={isActive(node.id) ? 0.6 : 0.15}
                 className="transition-all duration-500"
@@ -246,7 +246,7 @@ const KnowledgeGraph = () => {
                   y1={node.y}
                   x2={child.x}
                   y2={child.y}
-                  stroke={isActive(node.id) ? node.color : "hsl(var(--border))"}
+                  stroke={isActive(node.id) ? node.color : "hsl(var(--muted-foreground) / 0.1)"}
                   strokeWidth={isActive(node.id) ? 1 : 0.3}
                   strokeOpacity={isActive(node.id) ? 0.4 : 0.1}
                   className="transition-all duration-500"
@@ -260,7 +260,7 @@ const KnowledgeGraph = () => {
               cy={cy}
               r={28}
               fill="none"
-              stroke={hoveredNode ? "hsl(var(--foreground))" : "hsl(var(--muted-foreground) / 0.3)"}
+              stroke={hoveredNode ? "hsl(var(--foreground))" : "hsl(var(--muted-foreground) / 0.2)"}
               strokeWidth={1.5}
               className="transition-all duration-500"
             />
@@ -268,7 +268,7 @@ const KnowledgeGraph = () => {
               cx={cx}
               cy={cy}
               r={4}
-              fill={hoveredNode ? "hsl(var(--foreground))" : "hsl(var(--muted-foreground) / 0.4)"}
+              fill={hoveredNode ? "hsl(var(--foreground))" : "hsl(var(--muted-foreground) / 0.3)"}
               className="transition-all duration-500"
             />
             <text
@@ -288,9 +288,9 @@ const KnowledgeGraph = () => {
                     cx={child.x}
                     cy={child.y}
                     r={child.r}
-                    fill={isActive(node.id) ? node.color : "hsl(var(--muted-foreground) / 0.15)"}
+                    fill={isActive(node.id) ? node.color : "hsl(var(--muted-foreground) / 0.08)"}
                     fillOpacity={isActive(node.id) ? 0.5 : 0.3}
-                    stroke={isActive(node.id) ? node.color : "transparent"}
+                    stroke={isActive(node.id) ? node.color : "hsl(var(--muted-foreground) / 0.1)"}
                     strokeWidth={0.5}
                     className="transition-all duration-500"
                   />
@@ -336,9 +336,9 @@ const KnowledgeGraph = () => {
                     cx={node.x}
                     cy={node.y}
                     r={node.r}
-                    fill={active ? node.color : "hsl(var(--muted-foreground) / 0.1)"}
+                    fill={active ? node.color : "hsl(var(--muted-foreground) / 0.05)"}
                     fillOpacity={active ? 0.25 : 1}
-                    stroke={active ? node.color : "hsl(var(--muted-foreground) / 0.2)"}
+                    stroke={active ? node.color : "hsl(var(--muted-foreground) / 0.15)"}
                     strokeWidth={active ? 2 : 0.8}
                     className="transition-all duration-500"
                   />
@@ -348,7 +348,7 @@ const KnowledgeGraph = () => {
                     textAnchor="middle"
                     dominantBaseline="middle"
                     className="font-mono text-[7px] pointer-events-none transition-all duration-300 uppercase tracking-wider"
-                    fill={active ? node.color : "hsl(var(--muted-foreground) / 0.5)"}
+                    fill={active ? node.color : "hsl(var(--muted-foreground) / 0.4)"}
                   >
                     {node.label.length > 10 ? node.label.slice(0, 10) + "…" : node.label}
                   </text>
@@ -357,7 +357,7 @@ const KnowledgeGraph = () => {
                     y={node.y + node.r + 14}
                     textAnchor="middle"
                     className="font-mono text-[6px] pointer-events-none transition-all duration-300"
-                    fill={active ? node.color : "hsl(var(--muted-foreground) / 0.25)"}
+                    fill={active ? node.color : "hsl(var(--muted-foreground) / 0.2)"}
                     fillOpacity={0.7}
                   >
                     {node.topics} topics
