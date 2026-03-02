@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { pillarPages, getBlogsByPillar } from "@/data/insights";
 import ScrollReveal from "@/components/ScrollReveal";
-import ServicesGrid from "@/components/ServicesGrid";
+
 import { ArrowRight } from "lucide-react";
 import { useEffect } from "react";
 
@@ -32,16 +32,6 @@ const Insights = () => {
           <p className="font-mono text-sm text-muted-foreground leading-relaxed mb-16 max-w-2xl">
             Deep dives into AI agents, machine learning, and enterprise SEO — insights from building production systems across 50M+ pages.
           </p>
-        </ScrollReveal>
-
-        {/* Services Overview */}
-        <ScrollReveal>
-          <div className="mb-20">
-            <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/40 uppercase mb-6">
-              Areas of Expertise
-            </p>
-            <ServicesGrid />
-          </div>
         </ScrollReveal>
 
         {/* Pillar Pages */}
