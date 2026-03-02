@@ -113,11 +113,11 @@ const NeuralSolutionsCanvas = () => {
           const a = nodes[i], b = nodes[j];
           if (a.layer !== b.layer) continue;
           const dist = Math.hypot(a.x - b.x, a.y - b.y);
-          if (dist < 180) {
-            const alpha = (1 - dist / 180) * 0.12;
+          if (dist < 220) {
+            const alpha = (1 - dist / 220) * 0.25;
             ctx.strokeStyle = a.color;
             ctx.globalAlpha = alpha;
-            ctx.lineWidth = 0.5;
+            ctx.lineWidth = 0.8;
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);
@@ -126,16 +126,17 @@ const NeuralSolutionsCanvas = () => {
         }
       }
 
-      // Cross-layer connections (adjacent layers)
+      // Cross-layer connections (adjacent layers — ALL nodes, not just main)
       for (const a of nodes) {
         for (const b of nodes) {
-          if (b.layer === a.layer + 1 && a.r > 4 && b.r > 4) {
+          if (Math.abs(b.layer - a.layer) === 1) {
             const dist = Math.hypot(a.x - b.x, a.y - b.y);
-            if (dist < 250) {
-              const alpha = (1 - dist / 250) * 0.06;
+            const maxDist = 350;
+            if (dist < maxDist) {
+              const alpha = (1 - dist / maxDist) * (a.r > 4 && b.r > 4 ? 0.18 : 0.08);
               ctx.strokeStyle = "#fff";
               ctx.globalAlpha = alpha;
-              ctx.lineWidth = 0.3;
+              ctx.lineWidth = a.r > 4 && b.r > 4 ? 0.8 : 0.4;
               ctx.beginPath();
               ctx.moveTo(a.x, a.y);
               ctx.lineTo(b.x, b.y);

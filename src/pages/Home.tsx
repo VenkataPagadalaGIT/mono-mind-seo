@@ -3,7 +3,7 @@ import { ArrowDown } from "lucide-react";
 import WireframeGrid from "@/components/WireframeGrid";
 import FloatingBlocks from "@/components/FloatingBlocks";
 import TypewriterText from "@/components/TypewriterText";
-import ServicesGrid from "@/components/ServicesGrid";
+import SolutionsGraph from "@/components/SolutionsGraph";
 import ScrollReveal from "@/components/ScrollReveal";
 
 const Home = () => {
@@ -69,7 +69,7 @@ const Home = () => {
             </p>
           </div>
         </ScrollReveal>
-        <ServicesGrid compact />
+        <SolutionsGraph />
       </div>
     </div>
   );
