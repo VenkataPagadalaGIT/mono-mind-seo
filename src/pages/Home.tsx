@@ -3,10 +3,13 @@ import { ArrowDown } from "lucide-react";
 import WireframeGrid from "@/components/WireframeGrid";
 import FloatingBlocks from "@/components/FloatingBlocks";
 import TypewriterText from "@/components/TypewriterText";
+import ServicesGrid from "@/components/ServicesGrid";
+import ScrollReveal from "@/components/ScrollReveal";
 
 const Home = () => {
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center bg-background overflow-hidden">
+    <div className="relative min-h-screen flex flex-col bg-background overflow-hidden">
+      <div className="relative min-h-screen flex flex-col items-center justify-center">
       <WireframeGrid />
       <FloatingBlocks />
 
@@ -48,6 +51,25 @@ const Home = () => {
       </div>
       <div className="absolute bottom-8 right-8 font-mono text-[10px] text-muted-foreground/40">
         ATLANTA, GA
+      </div>
+      </div>
+
+      {/* Services Section */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 mt-24 pb-20">
+        <ScrollReveal>
+          <div className="text-center mb-12">
+            <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/40 uppercase mb-3">
+              What I Do
+            </p>
+            <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground text-glow mb-3">
+              Enterprise to Startup — Full-Stack SEO & AI
+            </h2>
+            <p className="font-mono text-xs text-muted-foreground max-w-xl mx-auto">
+              From Fortune 500 search programs to growth-stage consulting — strategy, execution, and everything in between.
+            </p>
+          </div>
+        </ScrollReveal>
+        <ServicesGrid compact />
       </div>
     </div>
   );
