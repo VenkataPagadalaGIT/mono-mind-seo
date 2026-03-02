@@ -1,62 +1,40 @@
 
 
-# Venkata Pagadala — Futuristic Personal Portfolio
+## Problem
 
-A **black-and-white, Palantir-inspired** multi-page portfolio site with maximum futuristic effects. Monospace/mono typography, dark theme, sharp lines, grid backgrounds, and bold animations throughout.
+The Neural Net child nodes have two core issues visible in the screenshots:
 
-## Design Language
-- **Pure black & white** palette with subtle grays — no color except occasional white accent glows
-- Monospace typography (like the 6xmarketing site)
-- Perspective wireframe grid backgrounds, floating geometric elements
-- Particle/matrix-style ambient effects
-- Scroll-triggered fade-ins, text typing effects, and smooth page transitions
+1. **Labels overlap nodes and each other** — the arc layout clusters children too tightly, especially for services with many items (AI Product has 9). Labels sit on top of connection lines and neighboring nodes.
+2. **Labels are truncated too aggressively** — most labels show ellipsis even though there's plenty of canvas space available.
 
-## Pages
+## Root Cause
 
-### 1. Home / Hero
-- Full-screen dark background with **animated 3D wireframe grid** (perspective room like 6xmarketing)
-- Floating geometric blocks drifting in the grid
-- **Typing animation**: "Venkata Pagadala" → subtitle cycles through "AI Product Owner · Technical SEO Lead · Published Researcher"
-- Minimal CTA: "Explore" arrow scrolling to a brief intro teaser
-- Sticky top navigation bar with monospace links: Home / About / Experience / Projects / Publications / Contact
+- All children fan out in the same small arc (`PI * 0.7`) with minimal radial separation (`120 + ci * 8`). For 9 items, nodes are only ~8px apart radially and crammed in ~126° of arc.
+- Labels are drawn at the node position, so when nodes overlap, labels overlap too.
+- The parent node sits at `y = 22%` of canvas height, leaving most space below but the arc doesn't use it well.
 
-### 2. About
-- Split layout: left side large text block, right side a placeholder for your photo
-- Summary from resume with key stats animated on scroll (10+ years, 50M+ pages, 40M+ organic visits/month)
-- Core competencies displayed as a **grid of glowing tags** with hover effects
-- Education & certifications listed cleanly
+## Plan
 
-### 3. Experience
-- Timeline-style layout with scroll-triggered reveals
-- Each role (AT&T, CoStar/Apartments.com, American Addiction Centers, etc.) as a card that fades/slides in
-- Key achievements as bullet points with subtle entrance animations
-- Company names in bold monospace, dates on the side
+### 1. Improve child node spacing
 
-### 4. Projects & Technical Work
-- Cards for each technical project (MCP integrations, A2A pipelines, Claude Code pipelines, RAG engine, topic clustering, etc.)
-- Each card has a wireframe-style border that glows on hover
-- Numbered like the 6xmarketing services section ({01}, {02}, etc.)
+- Increase base radial distance to **140px** and per-item increment to **15px** so children spread further from parent.
+- Widen arc to `PI * 1.0` (180°) so children spread across a full semicircle below the parent.
+- Add alternating radial offset (even/odd items get different distances) to stagger nodes and prevent vertical stacking.
 
-### 5. Publications & Thought Leadership
-- Featured publication card with journal citation
-- Links to LinkedIn posts (Knowledge Graphs, RAG Demo, AI Agents, etc.)
-- "Top Organic Search Voice" badge/highlight
+### 2. Fix label readability
 
-### 6. Contact
-- Minimal contact section with email, phone, LinkedIn link, and location (Atlanta, GA)
-- Simple contact form (name, email, message) — frontend only
-- Matrix/particle background effect behind the form
+- Increase `maxLabelWidth` to **250px** so labels rarely truncate.
+- Add a dark text shadow/stroke behind labels (`ctx.strokeStyle = "rgba(0,0,0,0.8)"`, `ctx.lineWidth = 3`, `ctx.strokeText()` before `ctx.fillText()`) so they're readable over connection lines.
+- Position labels with more offset (**16px**) from node edge.
 
-## Navigation
-- Fixed top navbar, minimal, monospace — transforms on scroll (transparent → solid black)
-- Hamburger menu on mobile with slide-in panel
+### 3. Prevent node-on-node overlap
 
-## Effects & Animations
-- **3D wireframe grid** on hero using CSS perspective transforms
-- **Floating rectangular blocks** animated with CSS keyframes
-- **Particle field** on contact page using canvas
-- **Text typing effect** on hero headline
-- **Scroll-triggered fade/slide animations** on all sections
-- **Hover glow effects** on project cards and skill tags
-- Smooth page transitions between routes
+- After initial positioning, add a simple collision/repulsion pass in the draw loop that pushes child nodes apart if they're closer than `30px` to each other (same layer only). This ensures labels never stack even after drift.
+
+### File Changes
+
+- **`src/components/SolutionsGraph.tsx`**: 
+  - Lines ~150-158: Update arc spread, distances, and add stagger offset
+  - Lines ~373-393: Add text stroke for contrast, increase maxLabelWidth, increase label offset
+  - Lines ~179-200: Add a repulsion pass between same-layer child nodes
 
