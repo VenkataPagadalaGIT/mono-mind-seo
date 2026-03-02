@@ -154,6 +154,8 @@ const ServiceLanding = () => {
           <nav className="font-mono text-xs text-muted-foreground mb-8 flex items-center gap-2">
             <Link to="/" className="hover:text-foreground transition-all">Home</Link>
             <span>/</span>
+            <Link to="/solutions" className="hover:text-foreground transition-all">Solutions</Link>
+            <span>/</span>
             <span className="text-foreground">{service.title}</span>
           </nav>
         </ScrollReveal>

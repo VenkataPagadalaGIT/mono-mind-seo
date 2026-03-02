@@ -99,7 +99,7 @@ const ServicesGrid = ({ compact = false }: ServicesGridProps) => {
       {services.map((service, i) => (
         <ScrollReveal key={service.title} delay={i * 80}>
           <Link
-            to={`/services/${service.slug}`}
+            to={`/solutions/${service.slug}`}
             className="group block border border-border p-5 sm:p-6 border-glow-hover hover:bg-secondary/20 transition-all h-full"
           >
             <div className="flex items-center justify-between mb-1">
