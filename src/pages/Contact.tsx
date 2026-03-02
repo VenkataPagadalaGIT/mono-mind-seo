@@ -1,23 +1,15 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import ParticleCanvas from "@/components/ParticleCanvas";
 import { Mail, MapPin, Linkedin } from "lucide-react";
 
 const Contact = () => {
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
-
   useEffect(() => {
     document.title = "Contact | Venkata Pagadala — AI & SEO Consulting";
     const meta = document.querySelector('meta[name="description"]');
     const content = "Get in touch with Venkata Pagadala for AI systems consulting, enterprise SEO, and technical product management.";
     if (meta) meta.setAttribute("content", content);
   }, []);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    alert("Thanks for reaching out! I'll get back to you soon.");
-    setForm({ name: "", email: "", message: "" });
-  };
 
   return (
     <div className="min-h-screen bg-background pt-24 pb-20 px-6 relative">
@@ -33,71 +25,41 @@ const Contact = () => {
           </h2>
         </ScrollReveal>
 
-        <div className="grid md:grid-cols-2 gap-12">
-          {/* Info */}
+        <div className="max-w-md mx-auto">
           <ScrollReveal>
-            <div className="space-y-6">
-              <a href="mailto:vdepagadala@gmail.com" className="flex items-center gap-4 font-mono text-sm text-muted-foreground hover:text-foreground transition-all group">
-                <Mail size={16} className="group-hover:text-foreground transition-all" />
-                vdepagadala@gmail.com
+            <div className="space-y-8">
+              <a
+                href="mailto:vdepagadala@gmail.com"
+                className="flex items-center gap-4 font-mono text-sm text-muted-foreground hover:text-foreground transition-all group border border-border/40 hover:border-foreground/30 px-6 py-4"
+              >
+                <Mail size={18} className="group-hover:text-foreground transition-all" />
+                <div>
+                  <span className="block text-[10px] tracking-widest uppercase text-muted-foreground/50 mb-1">Email</span>
+                  vdepagadala@gmail.com
+                </div>
               </a>
-              <a href="https://www.linkedin.com/in/venkata-pagadala/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 font-mono text-sm text-muted-foreground hover:text-foreground transition-all group">
-                <Linkedin size={16} className="group-hover:text-foreground transition-all" />
-                linkedin.com/in/venkata-pagadala
+
+              <a
+                href="https://www.linkedin.com/in/venkata-pagadala/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 font-mono text-sm text-muted-foreground hover:text-foreground transition-all group border border-border/40 hover:border-foreground/30 px-6 py-4"
+              >
+                <Linkedin size={18} className="group-hover:text-foreground transition-all" />
+                <div>
+                  <span className="block text-[10px] tracking-widest uppercase text-muted-foreground/50 mb-1">Follow & Connect</span>
+                  linkedin.com/in/venkata-pagadala
+                </div>
               </a>
-              <div className="flex items-center gap-4 font-mono text-sm text-muted-foreground">
-                <MapPin size={16} />
-                Atlanta, GA
+
+              <div className="flex items-center gap-4 font-mono text-sm text-muted-foreground border border-border/40 px-6 py-4">
+                <MapPin size={18} />
+                <div>
+                  <span className="block text-[10px] tracking-widest uppercase text-muted-foreground/50 mb-1">Location</span>
+                  Atlanta, GA
+                </div>
               </div>
             </div>
-          </ScrollReveal>
-
-          {/* Form */}
-          <ScrollReveal delay={200}>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="font-mono text-[10px] text-muted-foreground tracking-widest uppercase block mb-2">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  required
-                  className="w-full bg-transparent border border-border px-4 py-3 font-mono text-sm text-foreground focus:outline-none focus:border-foreground/40 transition-colors"
-                />
-              </div>
-              <div>
-                <label className="font-mono text-[10px] text-muted-foreground tracking-widest uppercase block mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  required
-                  className="w-full bg-transparent border border-border px-4 py-3 font-mono text-sm text-foreground focus:outline-none focus:border-foreground/40 transition-colors"
-                />
-              </div>
-              <div>
-                <label className="font-mono text-[10px] text-muted-foreground tracking-widest uppercase block mb-2">
-                  Message
-                </label>
-                <textarea
-                  value={form.message}
-                  onChange={(e) => setForm({ ...form, message: e.target.value })}
-                  required
-                  rows={5}
-                  className="w-full bg-transparent border border-border px-4 py-3 font-mono text-sm text-foreground focus:outline-none focus:border-foreground/40 transition-colors resize-none"
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full border border-foreground/60 px-6 py-3 font-mono text-xs tracking-widest uppercase text-foreground hover:bg-foreground hover:text-background transition-all"
-              >
-                Send Message
-              </button>
-            </form>
           </ScrollReveal>
         </div>
 
