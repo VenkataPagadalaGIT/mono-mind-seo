@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import ParticleCanvas from "@/components/ParticleCanvas";
-import { Mail, Phone, MapPin, Linkedin } from "lucide-react";
+import { Mail, MapPin, Linkedin } from "lucide-react";
 
 const Contact = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -31,13 +31,13 @@ const Contact = () => {
           {/* Info */}
           <ScrollReveal>
             <div className="space-y-6">
-              <a href="mailto:venkata.pagadala@gmail.com" className="flex items-center gap-4 font-mono text-sm text-muted-foreground hover:text-foreground transition-all group">
+              <a href="mailto:vdepagadala@gmail.com" className="flex items-center gap-4 font-mono text-sm text-muted-foreground hover:text-foreground transition-all group">
                 <Mail size={16} className="group-hover:text-foreground transition-all" />
-                venkata.pagadala@gmail.com
+                vdepagadala@gmail.com
               </a>
-              <a href="tel:+14048001234" className="flex items-center gap-4 font-mono text-sm text-muted-foreground hover:text-foreground transition-all group">
-                <Phone size={16} className="group-hover:text-foreground transition-all" />
-                (404) 800-1234
+              <a href="https://www.linkedin.com/in/venkata-pagadala/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 font-mono text-sm text-muted-foreground hover:text-foreground transition-all group">
+                <Linkedin size={16} className="group-hover:text-foreground transition-all" />
+                linkedin.com/in/venkata-pagadala
               </a>
               <a href="https://www.linkedin.com/in/venkata-pagadala/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 font-mono text-sm text-muted-foreground hover:text-foreground transition-all group">
                 <Linkedin size={16} className="group-hover:text-foreground transition-all" />
@@ -102,7 +102,7 @@ const Contact = () => {
         {/* Footer */}
         <div className="mt-20 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
           <span className="font-mono text-[10px] text-muted-foreground/40">
-            © 2024 Venkata Pagadala. All rights reserved.
+            © 2026 Venkata Pagadala. All rights reserved.
           </span>
           <span className="font-mono text-[10px] text-muted-foreground/40">
             Built with precision.
