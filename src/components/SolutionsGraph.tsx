@@ -210,22 +210,42 @@ const NeuralSolutionsCanvas = () => {
         canvas.style.cursor = overNode ? "grab" : "default";
       }
 
-      // Detect hovered node (main OR child)
+      // Detect hovered node with hysteresis — once active, use larger radius to stay active
       const now = Date.now();
-      if (mouseActive && now - lastCheck > 50) {
+      if (mouseActive && now - lastCheck > 80) {
         lastCheck = now;
         let foundLayer = -1;
         let foundChild: string | null = null;
+        const currentLayer = activeLayerRef.current;
 
-        // Check main nodes first
-        for (const n of nodes) {
-          if (!n.isMain) continue;
-          if (Math.hypot(n.x - mx, n.y - my) < 40) {
-            foundLayer = n.layer;
-            break;
+        // If already on a layer, check if mouse is still near ANY node in that layer (large radius)
+        if (currentLayer >= 0) {
+          let stillNear = false;
+          for (const n of nodes) {
+            if (n.layer !== currentLayer) continue;
+            const threshold = n.isMain ? 60 : 30;
+            if (Math.hypot(n.x - mx, n.y - my) < threshold) {
+              stillNear = true;
+              if (!n.isMain) foundChild = n.label;
+              break;
+            }
+          }
+          if (stillNear) {
+            foundLayer = currentLayer;
           }
         }
-        // If no main node, check child nodes
+
+        // If not near current layer, check for new main nodes (smaller radius)
+        if (foundLayer < 0) {
+          for (const n of nodes) {
+            if (!n.isMain) continue;
+            if (Math.hypot(n.x - mx, n.y - my) < 40) {
+              foundLayer = n.layer;
+              break;
+            }
+          }
+        }
+        // Check child nodes
         if (foundLayer < 0) {
           for (const n of nodes) {
             if (n.isMain) continue;
