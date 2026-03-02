@@ -33,8 +33,8 @@ const linkedinPosts = [
     link: "https://www.linkedin.com/feed/update/urn:li:activity:7431104751594803200/",
   },
   {
-    title: "Knowledge Graphs for Enterprise SEO",
-    desc: "How we built a knowledge graph connecting 50M+ pages to improve topical authority and internal linking at scale.",
+    title: "Knowledge Graph: 1 Industry, 5 Million+ Queries",
+    desc: "Structured 5.3M raw queries into a 5-level taxonomy (Categories → Subcategories → Intents → Topics → Keywords). 913 L1 categories, <1ms classification speed. Manual: 1,000 keywords = 2 hours. This system: 5.3M keywords = instant.",
     link: "https://www.linkedin.com/feed/update/urn:li:activity:7421367234754756608/",
   },
   {
