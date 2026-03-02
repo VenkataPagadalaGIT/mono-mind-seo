@@ -402,16 +402,12 @@ const NeuralSolutionsCanvas = () => {
         // Child node labels
         if (!n.isMain && isActive) {
           const isMob = canvas.offsetWidth < 600;
+          const cw = canvas.offsetWidth;
           ctx.globalAlpha = isHoveredChild ? 1 : 0.85;
           ctx.fillStyle = n.color;
           const fontSize = isMob ? (isHoveredChild ? 9 : 8) : (isHoveredChild ? 13 : 11);
           ctx.font = `${isHoveredChild ? '700' : '500'} ${fontSize}px 'JetBrains Mono', monospace`;
-          const parent = nodes.find(p => p.isMain && p.layer === n.layer);
-          const isLeftOfParent = parent ? n.x < parent.x : false;
-          ctx.textAlign = isLeftOfParent ? "right" : "left";
-          const labelOffset = isMob ? 10 : 16;
-          const labelX = isLeftOfParent ? n.x - n.r * nodeScale - labelOffset : n.x + n.r * nodeScale + labelOffset;
-          const maxLabelWidth = isMob ? 80 : 250;
+          const maxLabelWidth = isMob ? 80 : 220;
           let displayLabel = n.label;
           if (ctx.measureText(displayLabel).width > maxLabelWidth && !isHoveredChild) {
             while (ctx.measureText(displayLabel + '…').width > maxLabelWidth && displayLabel.length > 3) {
@@ -419,6 +415,27 @@ const NeuralSolutionsCanvas = () => {
             }
             displayLabel += '…';
           }
+          const labelW = ctx.measureText(displayLabel).width;
+          const labelOffset = isMob ? 10 : 16;
+          const padding = 8;
+
+          // Determine side: prefer alternating, but clamp to stay in canvas
+          const parent = nodes.find(p => p.isMain && p.layer === n.layer);
+          let preferLeft = parent ? n.x < parent.x : false;
+          // Check if label fits on preferred side; if not, flip
+          if (preferLeft) {
+            const labelX = n.x - n.r * nodeScale - labelOffset;
+            if (labelX - labelW < padding) preferLeft = false;
+          } else {
+            const labelX = n.x + n.r * nodeScale + labelOffset;
+            if (labelX + labelW > cw - padding) preferLeft = true;
+          }
+
+          ctx.textAlign = preferLeft ? "right" : "left";
+          const labelX = preferLeft
+            ? n.x - n.r * nodeScale - labelOffset
+            : n.x + n.r * nodeScale + labelOffset;
+
           ctx.strokeStyle = "rgba(0,0,0,0.8)";
           ctx.lineWidth = 3;
           ctx.strokeText(displayLabel, labelX, n.y + 4);
