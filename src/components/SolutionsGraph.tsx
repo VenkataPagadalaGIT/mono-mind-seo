@@ -38,9 +38,9 @@ function buildServiceNodes(): GraphNode[] {
     const r = 28 + s.items.length * 1.5;
     const color = serviceColors[s.title] || "#888";
     const children = s.items.map((item, ci) => {
-      const cAngle = angle + ((ci - (s.items.length - 1) / 2) * 0.35);
-      const baseDist = r + 45 + ci * 10;
-      const stagger = ci % 2 === 0 ? 15 : 0;
+      const cAngle = angle + ((ci - (s.items.length - 1) / 2) * 0.45);
+      const baseDist = r + 50 + ci * 12;
+      const stagger = ci % 2 === 0 ? 18 : 0;
       return { label: item, x: x + Math.cos(cAngle) * (baseDist + stagger), y: y + Math.sin(cAngle) * (baseDist + stagger), r: 7 + Math.random() * 4 };
     });
     return { id: s.slug, label: s.title, slug: s.slug, tagline: s.tagline, items: s.items, color, x, y, r, children };
@@ -792,7 +792,7 @@ const SolutionsGraph = () => {
                       <circle cx={child.x} cy={child.y} r={child.r} fill={isActive(node.id) ? node.color : "hsl(var(--muted-foreground) / 0.12)"} fillOpacity={isActive(node.id) ? 0.55 : 0.5} stroke={isActive(node.id) ? node.color : "hsl(var(--muted-foreground) / 0.15)"} strokeWidth={isActive(node.id) ? 1 : 0.5} className="transition-all duration-500 hover:fill-opacity-80" />
                       {isActive(node.id) && (
                         <text x={child.x} y={child.y + child.r + 10} textAnchor="middle" className="font-mono text-[7px] pointer-events-none" fill={node.color} fillOpacity={0.85}>
-                          {child.label.length > 30 ? child.label.slice(0, 30) + "…" : child.label}
+                          {child.label}
                         </text>
                       )}
                     </g>
