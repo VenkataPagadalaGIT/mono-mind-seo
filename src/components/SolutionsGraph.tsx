@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, useRef, useEffect } from "react";
+import { useState, useCallback, useMemo, useRef, useEffect, type MouseEvent as ReactMouseEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, Network, Brain, List } from "lucide-react";
@@ -39,8 +39,8 @@ function buildServiceNodes(): GraphNode[] {
     const color = serviceColors[s.title] || "#888";
     const children = s.items.map((item, ci) => {
       const cAngle = angle + ((ci - (s.items.length - 1) / 2) * 0.22);
-      const cDist = r + 25 + ci * 6;
-      return { label: item, x: x + Math.cos(cAngle) * cDist, y: y + Math.sin(cAngle) * cDist, r: 4 + Math.random() * 5 };
+      const cDist = r + 30 + ci * 6;
+      return { label: item, x: x + Math.cos(cAngle) * cDist, y: y + Math.sin(cAngle) * cDist, r: 7 + Math.random() * 4 };
     });
     return { id: s.slug, label: s.title, slug: s.slug, tagline: s.tagline, items: s.items, color, x, y, r, children };
   });
@@ -289,9 +289,20 @@ const JsonLdScript = () => {
 const SolutionsGraph = () => {
   const [viewMode, setViewMode] = useState<ViewMode>("graph");
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
+  const [hoveredChild, setHoveredChild] = useState<{ label: string; x: number; y: number; parentColor: string } | null>(null);
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
   const nodes = useMemo(() => buildServiceNodes(), []);
   const cx = 400, cy = 320;
+
+  const handleChildHover = useCallback((e: ReactMouseEvent<SVGElement>, label: string, color: string) => {
+    const svg = svgRef.current;
+    if (!svg) return;
+    const rect = svg.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    setHoveredChild({ label, x, y, parentColor: color });
+  }, []);
 
   const isActive = useCallback(
     (id: string) => hoveredNode === id || selectedNode?.id === id,
@@ -400,7 +411,7 @@ const SolutionsGraph = () => {
               {/* Graph SVG */}
               <div className="flex-1 border border-border relative overflow-hidden" style={{ minHeight: 640 }}>
                 <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
-                <svg viewBox="0 0 800 640" className="w-full h-full relative z-10" onMouseLeave={() => setHoveredNode(null)}>
+                <svg ref={svgRef} viewBox="0 0 800 640" className="w-full h-full relative z-10" onMouseLeave={() => { setHoveredNode(null); setHoveredChild(null); }}>
                   {Array.from({ length: 20 }).map((_, i) => (
                     <circle key={`dot-${i}`} cx={50 + Math.random() * 700} cy={50 + Math.random() * 540} r={1 + Math.random() * 1.5} fill="hsl(var(--muted-foreground))" fillOpacity={0.06} />
                   ))}
@@ -408,7 +419,7 @@ const SolutionsGraph = () => {
                     <line key={`line-${node.id}`} x1={cx} y1={cy} x2={node.x} y2={node.y} stroke={isActive(node.id) ? node.color : "hsl(var(--border))"} strokeWidth={isActive(node.id) ? 2 : 0.5} strokeOpacity={isActive(node.id) ? 0.7 : 0.12} className="transition-all duration-500" />
                   ))}
                   {nodes.map((node) => node.children?.map((child, ci) => (
-                    <line key={`child-line-${node.id}-${ci}`} x1={node.x} y1={node.y} x2={child.x} y2={child.y} stroke={isActive(node.id) ? node.color : "hsl(var(--border))"} strokeWidth={isActive(node.id) ? 1 : 0.3} strokeOpacity={isActive(node.id) ? 0.35 : 0.06} className="transition-all duration-500" />
+                    <line key={`child-line-${node.id}-${ci}`} x1={node.x} y1={node.y} x2={child.x} y2={child.y} stroke={isActive(node.id) ? node.color : "hsl(var(--border))"} strokeWidth={isActive(node.id) ? 1.2 : 0.4} strokeOpacity={isActive(node.id) ? 0.5 : 0.08} className="transition-all duration-500" />
                   )))}
                   <circle cx={cx} cy={cy} r={36} fill="none" stroke={selectedNode ? selectedNode.color : "hsl(var(--muted-foreground) / 0.15)"} strokeWidth={1.5} className="transition-all duration-700">
                     <animate attributeName="r" values="34;38;34" dur="4s" repeatCount="indefinite" />
@@ -418,11 +429,18 @@ const SolutionsGraph = () => {
                   <text x={cx} y={cy - 2} textAnchor="middle" dominantBaseline="middle" className="font-mono text-[7px] fill-muted-foreground/30 uppercase tracking-[0.3em]">Solutions</text>
                   <text x={cx} y={cy + 52} textAnchor="middle" className="font-mono text-[7px] fill-muted-foreground/20 uppercase tracking-widest">Context Graph</text>
                   {nodes.map((node) => node.children?.map((child, ci) => (
-                    <g key={`child-${node.id}-${ci}`}>
-                      <circle cx={child.x} cy={child.y} r={child.r} fill={isActive(node.id) ? node.color : "hsl(var(--muted-foreground) / 0.08)"} fillOpacity={isActive(node.id) ? 0.45 : 0.4} stroke={isActive(node.id) ? node.color : "transparent"} strokeWidth={0.5} className="transition-all duration-500" />
-                      {isActive(node.id) && child.r > 5 && (
-                        <text x={child.x} y={child.y + child.r + 9} textAnchor="middle" className="font-mono text-[5px] pointer-events-none" fill={node.color} fillOpacity={0.6}>
-                          {child.label.length > 18 ? child.label.slice(0, 18) + "…" : child.label}
+                    <g
+                      key={`child-${node.id}-${ci}`}
+                      className="cursor-pointer"
+                      onMouseEnter={(e) => handleChildHover(e, child.label, node.color)}
+                      onMouseMove={(e) => handleChildHover(e, child.label, node.color)}
+                      onMouseLeave={() => setHoveredChild(null)}
+                    >
+                      <circle cx={child.x} cy={child.y} r={child.r + 4} fill="transparent" />
+                      <circle cx={child.x} cy={child.y} r={child.r} fill={isActive(node.id) ? node.color : "hsl(var(--muted-foreground) / 0.12)"} fillOpacity={isActive(node.id) ? 0.55 : 0.5} stroke={isActive(node.id) ? node.color : "hsl(var(--muted-foreground) / 0.15)"} strokeWidth={isActive(node.id) ? 1 : 0.5} className="transition-all duration-500 hover:fill-opacity-80" />
+                      {isActive(node.id) && (
+                        <text x={child.x} y={child.y + child.r + 10} textAnchor="middle" className="font-mono text-[5.5px] pointer-events-none" fill={node.color} fillOpacity={0.7}>
+                          {child.label.length > 20 ? child.label.slice(0, 20) + "…" : child.label}
                         </text>
                       )}
                     </g>
@@ -439,6 +457,21 @@ const SolutionsGraph = () => {
                     );
                   })}
                 </svg>
+                {/* Hover tooltip for child nodes */}
+                {hoveredChild && (
+                  <div
+                    className="absolute z-50 pointer-events-none px-3 py-2 border border-border bg-background/95 backdrop-blur-sm shadow-lg"
+                    style={{
+                      left: hoveredChild.x + 12,
+                      top: hoveredChild.y - 8,
+                      borderColor: hoveredChild.parentColor + "40",
+                    }}
+                  >
+                    <p className="font-mono text-[11px] text-foreground whitespace-nowrap" style={{ color: hoveredChild.parentColor }}>
+                      {hoveredChild.label}
+                    </p>
+                  </div>
+                )}
               </div>
 
               {/* Details panel */}
