@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "@/components/Navbar";
+import AgenticBar from "@/components/AgenticBar";
 import Home from "./pages/Home";
 import About from "./pages/About";
 
@@ -42,6 +43,7 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <AgenticBar />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
