@@ -201,32 +201,36 @@ const NeuralSolutionsCanvas = () => {
         canvas.style.cursor = overNode ? "grab" : "default";
       }
 
-      // Detect hovered node with hysteresis — once active, use larger radius to stay active
+      // Detect hovered node with strong hysteresis
       const now = Date.now();
-      if (mouseActive && now - lastCheck > 80) {
+      if (mouseActive && now - lastCheck > 100) {
         lastCheck = now;
         let foundLayer = -1;
         let foundChild: string | null = null;
         const currentLayer = activeLayerRef.current;
 
-        // If already on a layer, check if mouse is still near ANY node in that layer (large radius)
+        // If already on a layer, use VERY generous stickiness
         if (currentLayer >= 0) {
-          let stillNear = false;
-          for (const n of nodes) {
-            if (n.layer !== currentLayer) continue;
-            const threshold = n.isMain ? 60 : 30;
-            if (Math.hypot(n.x - mx, n.y - my) < threshold) {
-              stillNear = true;
-              if (!n.isMain) foundChild = n.label;
-              break;
+          // Find the main node of current layer
+          const mainNode = nodes.find(n => n.isMain && n.layer === currentLayer);
+          if (mainNode) {
+            // Stay active if mouse is within a wide column around the main node's X position
+            const xDist = Math.abs(mx - mainNode.x);
+            if (xDist < 120) {
+              foundLayer = currentLayer;
+              // Check if hovering a specific child
+              for (const n of nodes) {
+                if (n.isMain || n.layer !== currentLayer) continue;
+                if (Math.hypot(n.x - mx, n.y - my) < 25) {
+                  foundChild = n.label;
+                  break;
+                }
+              }
             }
-          }
-          if (stillNear) {
-            foundLayer = currentLayer;
           }
         }
 
-        // If not near current layer, check for new main nodes (smaller radius)
+        // If not sticking to current, check for new main nodes
         if (foundLayer < 0) {
           for (const n of nodes) {
             if (!n.isMain) continue;
