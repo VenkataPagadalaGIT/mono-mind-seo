@@ -644,7 +644,48 @@ const SolutionsGraph = () => {
   const [hoveredChild, setHoveredChild] = useState<{ label: string; x: number; y: number; parentColor: string } | null>(null);
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
   const svgRef = useRef<SVGSVGElement>(null);
-  const nodes = useMemo(() => buildServiceNodes(), []);
+  const [nodePositions, setNodePositions] = useState<GraphNode[]>(() => buildServiceNodes());
+  const nodes = nodePositions;
+  const dragState = useRef<{ dragging: boolean; nodeId: string | null; startX: number; startY: number; origX: number; origY: number }>({ dragging: false, nodeId: null, startX: 0, startY: 0, origX: 0, origY: 0 });
+
+  const getSVGPoint = useCallback((clientX: number, clientY: number) => {
+    const svg = svgRef.current;
+    if (!svg) return { x: 0, y: 0 };
+    const pt = svg.createSVGPoint();
+    pt.x = clientX;
+    pt.y = clientY;
+    const ctm = svg.getScreenCTM();
+    if (!ctm) return { x: 0, y: 0 };
+    const svgPt = pt.matrixTransform(ctm.inverse());
+    return { x: svgPt.x, y: svgPt.y };
+  }, []);
+
+  const handleDragStart = useCallback((e: ReactMouseEvent, nodeId: string) => {
+    e.stopPropagation();
+    const pt = getSVGPoint(e.clientX, e.clientY);
+    const node = nodePositions.find(n => n.id === nodeId);
+    if (!node) return;
+    dragState.current = { dragging: true, nodeId, startX: pt.x, startY: pt.y, origX: node.x, origY: node.y };
+  }, [nodePositions, getSVGPoint]);
+
+  const handleDragMove = useCallback((e: ReactMouseEvent) => {
+    if (!dragState.current.dragging || !dragState.current.nodeId) return;
+    const pt = getSVGPoint(e.clientX, e.clientY);
+    const dx = pt.x - dragState.current.startX;
+    const dy = pt.y - dragState.current.startY;
+    const newX = dragState.current.origX + dx;
+    const newY = dragState.current.origY + dy;
+    setNodePositions(prev => prev.map(n => {
+      if (n.id !== dragState.current.nodeId) return n;
+      const childDx = newX - n.x;
+      const childDy = newY - n.y;
+      return { ...n, x: newX, y: newY, children: n.children.map(c => ({ ...c, x: c.x + childDx, y: c.y + childDy })) };
+    }));
+  }, [getSVGPoint]);
+
+  const handleDragEnd = useCallback(() => {
+    dragState.current = { dragging: false, nodeId: null, startX: 0, startY: 0, origX: 0, origY: 0 };
+  }, []);
   const cx = 400, cy = 320;
 
   const handleChildHover = useCallback((e: ReactMouseEvent<SVGElement>, label: string, color: string) => {
@@ -763,7 +804,7 @@ const SolutionsGraph = () => {
               {/* Graph SVG */}
               <div className="flex-1 border border-border relative overflow-hidden" style={{ minHeight: 640 }}>
                 <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
-                <svg ref={svgRef} viewBox="0 0 800 640" className="w-full h-full relative z-10" onMouseLeave={() => { setHoveredNode(null); setHoveredChild(null); }}>
+                <svg ref={svgRef} viewBox="0 0 800 640" className="w-full h-full relative z-10" style={{ cursor: dragState.current.dragging ? 'grabbing' : 'default' }} onMouseMove={handleDragMove} onMouseUp={handleDragEnd} onMouseLeave={() => { setHoveredNode(null); setHoveredChild(null); handleDragEnd(); }}>
                   {Array.from({ length: 20 }).map((_, i) => (
                     <circle key={`dot-${i}`} cx={50 + Math.random() * 700} cy={50 + Math.random() * 540} r={1 + Math.random() * 1.5} fill="hsl(var(--muted-foreground))" fillOpacity={0.06} />
                   ))}
@@ -800,7 +841,7 @@ const SolutionsGraph = () => {
                   {nodes.map((node) => {
                     const active = isActive(node.id);
                     return (
-                      <g key={node.id} onMouseEnter={() => setHoveredNode(node.id)} onMouseLeave={() => setHoveredNode(null)} onClick={() => setSelectedNode(active && selectedNode?.id === node.id ? null : node)} className="cursor-pointer">
+                      <g key={node.id} onMouseEnter={() => !dragState.current.dragging && setHoveredNode(node.id)} onMouseLeave={() => !dragState.current.dragging && setHoveredNode(null)} onMouseDown={(e) => handleDragStart(e, node.id)} onClick={() => { if (dragState.current.dragging) return; setSelectedNode(active && selectedNode?.id === node.id ? null : node); }} className="cursor-grab active:cursor-grabbing">
                         {active && (<><circle cx={node.x} cy={node.y} r={node.r + 12} fill={node.color} fillOpacity={0.04} /><circle cx={node.x} cy={node.y} r={node.r + 4} fill="none" stroke={node.color} strokeWidth={0.5} strokeOpacity={0.3} /></>)}
                         <circle cx={node.x} cy={node.y} r={node.r} fill={active ? node.color : "hsl(var(--muted-foreground) / 0.06)"} fillOpacity={active ? 0.2 : 1} stroke={active ? node.color : "hsl(var(--muted-foreground) / 0.15)"} strokeWidth={active ? 2 : 0.8} className="transition-all duration-500" />
                         <text x={node.x} y={node.y + 1} textAnchor="middle" dominantBaseline="middle" className="font-mono text-[8px] pointer-events-none uppercase tracking-wider" fill={active ? node.color : "hsl(var(--muted-foreground) / 0.4)"}>{node.label}</text>
