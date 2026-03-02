@@ -148,11 +148,13 @@ const NeuralSolutionsCanvas = () => {
       nodes.push({ x: xBase, y: yBase, vx: (Math.random() - 0.5) * 0.15, vy: (Math.random() - 0.5) * 0.15, r: 10, layer: li, label: s.title, color, isMain: true });
       const itemCount = s.items.length;
       s.items.forEach((item, ci) => {
-        // Spread children in a wide arc below the parent with good spacing
-        const arcSpread = Math.PI * 0.7; // wide arc
+        // Spread children in a full semicircle below the parent with staggered distances
+        const arcSpread = Math.PI * 1.0; // 180° semicircle
         const arcStart = Math.PI / 2 - arcSpread / 2; // centered below
-        const angle = arcStart + (ci / Math.max(itemCount - 1, 1)) * arcSpread;
-        const dist = 120 + ci * 8; // further from parent
+        const angle = itemCount === 1 ? Math.PI / 2 : arcStart + (ci / (itemCount - 1)) * arcSpread;
+        const baseDist = 140 + ci * 15; // further from parent
+        const stagger = ci % 2 === 0 ? 20 : 0; // alternating radial offset
+        const dist = baseDist + stagger;
         const xItem = xBase + Math.cos(angle) * dist;
         const yItem = yBase + Math.sin(angle) * dist;
         nodes.push({ x: xItem, y: yItem, vx: (Math.random() - 0.5) * 0.03, vy: (Math.random() - 0.5) * 0.03, r: 5, layer: li, label: item, color, isMain: false });
@@ -197,6 +199,26 @@ const NeuralSolutionsCanvas = () => {
         n.vy += (Math.random() - 0.5) * 0.008;
         if (n.x < 20 || n.x > rw - 20) n.vx *= -1;
         if (n.y < 20 || n.y > rh - 20) n.vy *= -1;
+      }
+
+      // Repulsion pass: push same-layer child nodes apart if too close
+      for (let i = 0; i < nodes.length; i++) {
+        if (nodes[i].isMain) continue;
+        for (let j = i + 1; j < nodes.length; j++) {
+          if (nodes[j].isMain || nodes[j].layer !== nodes[i].layer) continue;
+          const dx = nodes[j].x - nodes[i].x;
+          const dy = nodes[j].y - nodes[i].y;
+          const d = Math.hypot(dx, dy);
+          if (d < 30 && d > 0.1) {
+            const force = (30 - d) * 0.05;
+            const nx = dx / d;
+            const ny = dy / d;
+            nodes[i].x -= nx * force;
+            nodes[i].y -= ny * force;
+            nodes[j].x += nx * force;
+            nodes[j].y += ny * force;
+          }
+        }
       }
 
       // Update cursor
@@ -379,9 +401,9 @@ const NeuralSolutionsCanvas = () => {
           const parent = nodes.find(p => p.isMain && p.layer === n.layer);
           const isLeftOfParent = parent ? n.x < parent.x : false;
           ctx.textAlign = isLeftOfParent ? "right" : "left";
-          const labelOffset = 14;
+          const labelOffset = 16;
           const labelX = isLeftOfParent ? n.x - n.r * nodeScale - labelOffset : n.x + n.r * nodeScale + labelOffset;
-          const maxLabelWidth = 180;
+          const maxLabelWidth = 250;
           let displayLabel = n.label;
           if (ctx.measureText(displayLabel).width > maxLabelWidth && !isHoveredChild) {
             while (ctx.measureText(displayLabel + '…').width > maxLabelWidth && displayLabel.length > 3) {
@@ -389,6 +411,10 @@ const NeuralSolutionsCanvas = () => {
             }
             displayLabel += '…';
           }
+          // Dark stroke behind text for contrast
+          ctx.strokeStyle = "rgba(0,0,0,0.8)";
+          ctx.lineWidth = 3;
+          ctx.strokeText(displayLabel, labelX, n.y + 4);
           ctx.fillText(displayLabel, labelX, n.y + 4);
         }
       }
