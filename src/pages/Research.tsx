@@ -22,7 +22,7 @@ const Research = () => {
       {/* Animated neural net background */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <NeuralNetBackground />
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/60" />
       </div>
 
       <div className="max-w-[1400px] mx-auto relative z-10">
