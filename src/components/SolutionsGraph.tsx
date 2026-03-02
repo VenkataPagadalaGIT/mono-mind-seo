@@ -667,6 +667,9 @@ const SolutionsGraph = () => {
   }, []);
 
   // Physics loop for jellyfish motion
+  // Idle wobble offsets — computed each frame from time
+  const idleTimeRef = useRef(0);
+
   useEffect(() => {
     const spring = 0.08;
     const damping = 0.75;
@@ -674,56 +677,73 @@ const SolutionsGraph = () => {
     const childDamping = 0.7;
 
     const tick = () => {
-      if (!isDraggingRef.current && !dragState.current.dragging) {
-        animFrame.current = requestAnimationFrame(tick);
-        return;
-      }
+      idleTimeRef.current += 0.016; // ~60fps
+      const t = idleTimeRef.current;
+      const dragging = dragState.current.dragging;
 
       setNodePositions(prev => {
-        let changed = false;
-        const next = prev.map(n => {
-          if (n.id !== dragState.current.nodeId) return n;
+        const next = prev.map((n, ni) => {
+          const isDragTarget = dragging && n.id === dragState.current.nodeId;
 
-          const vel = velocities.current.get(n.id) || { vx: 0, vy: 0 };
-          const fx = (targetPos.current.x - n.x) * spring;
-          const fy = (targetPos.current.y - n.y) * spring;
-          vel.vx = (vel.vx + fx) * damping;
-          vel.vy = (vel.vy + fy) * damping;
-          velocities.current.set(n.id, vel);
+          // Idle wobble: each node gets unique sine-based drift
+          const wobbleX = Math.sin(t * 0.4 + ni * 1.7) * 3 + Math.sin(t * 0.7 + ni * 2.3) * 1.5;
+          const wobbleY = Math.cos(t * 0.35 + ni * 2.1) * 2.5 + Math.cos(t * 0.6 + ni * 1.1) * 1.2;
 
-          const newX = n.x + vel.vx;
-          const newY = n.y + vel.vy;
+          const baseNode = baseNodes.find(b => b.id === n.id)!;
 
-          if (Math.abs(vel.vx) > 0.01 || Math.abs(vel.vy) > 0.01) changed = true;
+          if (isDragTarget) {
+            // Spring toward mouse
+            const vel = velocities.current.get(n.id) || { vx: 0, vy: 0 };
+            vel.vx = (vel.vx + (targetPos.current.x - n.x) * spring) * damping;
+            vel.vy = (vel.vy + (targetPos.current.y - n.y) * spring) * damping;
+            velocities.current.set(n.id, vel);
+            const newX = n.x + vel.vx;
+            const newY = n.y + vel.vy;
 
-          const baseNode = baseNodes.find(b => b.id === n.id);
+            const newChildren = n.children.map((c, ci) => {
+              const key = `${n.id}-${ci}`;
+              const cv = childVelocities.current.get(key) || { vx: 0, vy: 0 };
+              const baseChild = baseNode.children[ci];
+              const offsetX = baseChild ? baseChild.x - baseNode.x : 0;
+              const offsetY = baseChild ? baseChild.y - baseNode.y : 0;
+              const stiffness = childSpring * (1 - ci * 0.003);
+              cv.vx = (cv.vx + (newX + offsetX - c.x) * stiffness) * childDamping;
+              cv.vy = (cv.vy + (newY + offsetY - c.y) * stiffness) * childDamping;
+              childVelocities.current.set(key, cv);
+              return { ...c, x: c.x + cv.vx, y: c.y + cv.vy };
+            });
 
-          const newChildren = n.children.map((c, ci) => {
-            const key = `${n.id}-${ci}`;
-            const cv = childVelocities.current.get(key) || { vx: 0, vy: 0 };
+            return { ...n, x: newX, y: newY, children: newChildren };
+          } else {
+            // Idle: gently float around base position
+            const idleX = baseNode.x + wobbleX;
+            const idleY = baseNode.y + wobbleY;
+            const vel = velocities.current.get(n.id) || { vx: 0, vy: 0 };
+            vel.vx = (vel.vx + (idleX - n.x) * 0.03) * 0.85;
+            vel.vy = (vel.vy + (idleY - n.y) * 0.03) * 0.85;
+            velocities.current.set(n.id, vel);
+            const newX = n.x + vel.vx;
+            const newY = n.y + vel.vy;
 
-            const baseChild = baseNode?.children[ci];
-            const offsetX = baseChild ? baseChild.x - (baseNode?.x || 0) : 0;
-            const offsetY = baseChild ? baseChild.y - (baseNode?.y || 0) : 0;
-            const targetCX = newX + offsetX;
-            const targetCY = newY + offsetY;
+            const newChildren = n.children.map((c, ci) => {
+              const childWobbleX = Math.sin(t * 0.3 + ni * 1.7 + ci * 0.9) * 2 + Math.sin(t * 0.55 + ci * 2.5) * 1;
+              const childWobbleY = Math.cos(t * 0.25 + ni * 2.1 + ci * 1.3) * 1.8 + Math.cos(t * 0.5 + ci * 1.7) * 0.8;
+              const baseChild = baseNode.children[ci];
+              const targetCX = newX + (baseChild.x - baseNode.x) + childWobbleX;
+              const targetCY = newY + (baseChild.y - baseNode.y) + childWobbleY;
+              const key = `${n.id}-${ci}`;
+              const cv = childVelocities.current.get(key) || { vx: 0, vy: 0 };
+              cv.vx = (cv.vx + (targetCX - c.x) * 0.02) * 0.88;
+              cv.vy = (cv.vy + (targetCY - c.y) * 0.02) * 0.88;
+              childVelocities.current.set(key, cv);
+              return { ...c, x: c.x + cv.vx, y: c.y + cv.vy };
+            });
 
-            const stiffness = childSpring * (1 - ci * 0.003);
-            const cfx = (targetCX - c.x) * stiffness;
-            const cfy = (targetCY - c.y) * stiffness;
-            cv.vx = (cv.vx + cfx) * childDamping;
-            cv.vy = (cv.vy + cfy) * childDamping;
-            childVelocities.current.set(key, cv);
-
-            if (Math.abs(cv.vx) > 0.01 || Math.abs(cv.vy) > 0.01) changed = true;
-
-            return { ...c, x: c.x + cv.vx, y: c.y + cv.vy };
-          });
-
-          return { ...n, x: newX, y: newY, children: newChildren };
+            return { ...n, x: newX, y: newY, children: newChildren };
+          }
         });
 
-        return changed ? next : prev;
+        return next;
       });
 
       animFrame.current = requestAnimationFrame(tick);
@@ -870,9 +890,21 @@ const SolutionsGraph = () => {
               <div className="flex-1 border border-border relative overflow-hidden" style={{ minHeight: 640 }}>
                 <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
                 <svg ref={svgRef} viewBox="0 0 800 640" className="w-full h-full relative z-10" style={{ cursor: dragState.current.dragging ? 'grabbing' : 'default' }} onMouseMove={handleDragMove} onMouseUp={handleDragEnd} onMouseLeave={() => { setHoveredNode(null); setHoveredChild(null); handleDragEnd(); }}>
-                  {Array.from({ length: 20 }).map((_, i) => (
-                    <circle key={`dot-${i}`} cx={50 + Math.random() * 700} cy={50 + Math.random() * 540} r={1 + Math.random() * 1.5} fill="hsl(var(--muted-foreground))" fillOpacity={0.06} />
-                  ))}
+                  {useMemo(() => Array.from({ length: 40 }).map((_, i) => {
+                    const bx = 30 + (i * 19.3) % 740;
+                    const by = 30 + (i * 23.7) % 580;
+                    const r = 0.8 + (i % 3) * 0.6;
+                    const dur = 6 + (i % 5) * 2;
+                    const dx = 8 + (i % 4) * 4;
+                    const dy = 6 + (i % 3) * 3;
+                    return (
+                      <circle key={`dot-${i}`} r={r} fill="hsl(var(--muted-foreground))" fillOpacity={0.06 + (i % 4) * 0.015}>
+                        <animate attributeName="cx" values={`${bx};${bx + dx};${bx - dx * 0.5};${bx}`} dur={`${dur}s`} repeatCount="indefinite" />
+                        <animate attributeName="cy" values={`${by};${by - dy};${by + dy * 0.7};${by}`} dur={`${dur * 1.3}s`} repeatCount="indefinite" />
+                        <animate attributeName="fill-opacity" values={`${0.04};${0.09};${0.04}`} dur={`${dur * 0.8}s`} repeatCount="indefinite" />
+                      </circle>
+                    );
+                  }), [])}
                   {nodes.map((node) => (
                     <line key={`line-${node.id}`} x1={cx} y1={cy} x2={node.x} y2={node.y} stroke={isActive(node.id) ? node.color : "hsl(var(--border))"} strokeWidth={isActive(node.id) ? 2 : 0.5} strokeOpacity={isActive(node.id) ? 0.7 : 0.12} className="transition-all duration-500" />
                   ))}
