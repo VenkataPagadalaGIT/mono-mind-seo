@@ -146,10 +146,15 @@ const NeuralSolutionsCanvas = () => {
       const xBase = (cw / (layers + 1)) * (li + 1);
       const yBase = ch * 0.22;
       nodes.push({ x: xBase, y: yBase, vx: (Math.random() - 0.5) * 0.15, vy: (Math.random() - 0.5) * 0.15, r: 10, layer: li, label: s.title, color, isMain: true });
+      const itemCount = s.items.length;
+      const totalSpread = Math.min(itemCount * 28, ch * 0.5); // more vertical space
+      const startY = yBase - totalSpread / 2;
       s.items.forEach((item, ci) => {
-        const yItem = ch * 0.40 + ci * (ch * 0.06);
-        const xItem = xBase + (Math.random() - 0.5) * 50;
-        nodes.push({ x: xItem, y: yItem, vx: (Math.random() - 0.5) * 0.1, vy: (Math.random() - 0.5) * 0.1, r: 4.5, layer: li, label: item, color, isMain: false });
+        const angle = -0.6 + (ci / Math.max(itemCount - 1, 1)) * 1.2; // fan out in an arc
+        const dist = 80 + ci * 12; // radial distance from parent
+        const xItem = xBase + Math.cos(angle - Math.PI / 2) * dist + (Math.random() - 0.5) * 15;
+        const yItem = yBase + Math.sin(angle - Math.PI / 2) * dist + (Math.random() - 0.5) * 10;
+        nodes.push({ x: xItem, y: yItem, vx: (Math.random() - 0.5) * 0.05, vy: (Math.random() - 0.5) * 0.05, r: 4.5, layer: li, label: item, color, isMain: false });
       });
     });
     nodesRef.current = nodes;
@@ -364,13 +369,18 @@ const NeuralSolutionsCanvas = () => {
           ctx.fillText(`${count} capabilities`, n.x, n.y - 9);
         }
 
-        // Child node labels — positioned further out, bigger text
+        // Child node labels — positioned outside, bigger text
         if (!n.isMain && isActive) {
           ctx.globalAlpha = isHoveredChild ? 1 : 0.75;
           ctx.fillStyle = n.color;
           ctx.font = `${isHoveredChild ? '700' : '500'} ${isHoveredChild ? 11 : 10}px 'JetBrains Mono', monospace`;
-          ctx.textAlign = "left";
-          const maxLabelWidth = 120;
+          // Find parent to determine label side
+          const parent = nodes.find(p => p.isMain && p.layer === n.layer);
+          const isLeftOfParent = parent ? n.x < parent.x : false;
+          ctx.textAlign = isLeftOfParent ? "right" : "left";
+          const labelOffset = 12;
+          const labelX = isLeftOfParent ? n.x - n.r * nodeScale - labelOffset : n.x + n.r * nodeScale + labelOffset;
+          const maxLabelWidth = 140;
           let displayLabel = n.label;
           if (ctx.measureText(displayLabel).width > maxLabelWidth && !isHoveredChild) {
             while (ctx.measureText(displayLabel + '…').width > maxLabelWidth && displayLabel.length > 3) {
@@ -378,7 +388,7 @@ const NeuralSolutionsCanvas = () => {
             }
             displayLabel += '…';
           }
-          ctx.fillText(displayLabel, n.x + n.r * nodeScale + 10, n.y + 4);
+          ctx.fillText(displayLabel, labelX, n.y + 4);
         }
       }
       ctx.globalAlpha = 1;
