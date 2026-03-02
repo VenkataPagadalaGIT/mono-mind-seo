@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowDown } from "lucide-react";
 import WireframeGrid from "@/components/WireframeGrid";
@@ -7,6 +8,13 @@ import SolutionsGraph from "@/components/SolutionsGraph";
 import ScrollReveal from "@/components/ScrollReveal";
 
 const Home = () => {
+  useEffect(() => {
+    document.title = "Venkata Pagadala — AI Product Owner & Technical SEO Lead";
+    const meta = document.querySelector('meta[name="description"]');
+    const content = "Venkata Pagadala — AI Product Owner, Technical SEO Lead, and Published Researcher. Building AI systems and scaling organic search for Fortune 500 brands.";
+    if (meta) meta.setAttribute("content", content);
+  }, []);
+
   return (
     <div className="relative min-h-screen flex flex-col bg-background overflow-hidden">
       <div className="relative min-h-screen flex flex-col items-center justify-center">

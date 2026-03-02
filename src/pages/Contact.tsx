@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import ParticleCanvas from "@/components/ParticleCanvas";
 import { Mail, MapPin, Linkedin } from "lucide-react";
@@ -6,9 +6,15 @@ import { Mail, MapPin, Linkedin } from "lucide-react";
 const Contact = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
 
+  useEffect(() => {
+    document.title = "Contact | Venkata Pagadala — AI & SEO Consulting";
+    const meta = document.querySelector('meta[name="description"]');
+    const content = "Get in touch with Venkata Pagadala for AI systems consulting, enterprise SEO, and technical product management.";
+    if (meta) meta.setAttribute("content", content);
+  }, []);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Frontend only — no backend
     alert("Thanks for reaching out! I'll get back to you soon.");
     setForm({ name: "", email: "", message: "" });
   };
