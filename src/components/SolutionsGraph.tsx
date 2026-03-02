@@ -143,19 +143,27 @@ const NeuralSolutionsCanvas = () => {
     const ch = canvas.offsetHeight;
     const nodes: typeof nodesRef.current = [];
 
+    // Responsive layout: if narrow, use 2 rows × 3 cols; otherwise 1 row × 6 cols
+    const isMobile = cw < 600;
+    const cols = isMobile ? 3 : layers;
+    const rows = isMobile ? 2 : 1;
+
     services.forEach((s, li) => {
       const color = serviceColors[s.title] || "#888";
-      const xBase = (cw / (layers + 1)) * (li + 1);
-      const yBase = 50;
-      nodes.push({ x: xBase, y: yBase, vx: 0, vy: 0, r: 10, layer: li, label: s.title, color, isMain: true });
+      const col = isMobile ? li % cols : li;
+      const row = isMobile ? Math.floor(li / cols) : 0;
+      const xBase = (cw / (cols + 1)) * (col + 1);
+      const rowHeight = isMobile ? ch / rows : ch;
+      const yBase = isMobile ? row * rowHeight + 40 : 50;
+      nodes.push({ x: xBase, y: yBase, vx: 0, vy: 0, r: isMobile ? 8 : 10, layer: li, label: s.title, color, isMain: true });
       const itemCount = s.items.length;
       s.items.forEach((item, ci) => {
-        // Vertical column below parent, evenly spaced
-        const startY = yBase + 55;
-        const spacingY = Math.min(45, (ch - startY - 30) / itemCount);
+        const startY = yBase + (isMobile ? 40 : 55);
+        const maxY = isMobile ? rowHeight - 20 : ch - 30;
+        const spacingY = Math.min(isMobile ? 32 : 45, (maxY - startY) / itemCount);
         const xItem = xBase;
         const yItem = startY + ci * spacingY;
-        nodes.push({ x: xItem, y: yItem, vx: 0, vy: 0, r: 5, layer: li, label: item, color, isMain: false });
+        nodes.push({ x: xItem, y: yItem, vx: 0, vy: 0, r: isMobile ? 3.5 : 5, layer: li, label: item, color, isMain: false });
       });
     });
     nodesRef.current = nodes;
@@ -181,17 +189,24 @@ const NeuralSolutionsCanvas = () => {
         const n = nodes[ni];
         if (isDragging && ni === dragRef.current.nodeIdx) continue;
 
-        // Compute base position
-        const xBase = (rw / (layers + 1)) * (n.layer + 1);
+        // Compute base position (responsive)
+        const isMob = rw < 600;
+        const nCols = isMob ? 3 : layers;
+        const nRows = isMob ? 2 : 1;
+        const col = isMob ? n.layer % nCols : n.layer;
+        const row = isMob ? Math.floor(n.layer / nCols) : 0;
+        const xBase = (rw / (nCols + 1)) * (col + 1);
+        const rowH = isMob ? rh / nRows : rh;
         let yBase: number;
         if (n.isMain) {
-          yBase = 50;
+          yBase = isMob ? row * rowH + 40 : 50;
         } else {
           const childrenOfLayer = nodes.filter(nd => nd.layer === n.layer && !nd.isMain);
           const childIdx = childrenOfLayer.indexOf(n);
           const itemCount = childrenOfLayer.length;
-          const startY = 100;
-          const spacingY = Math.min(45, (rh - startY - 30) / itemCount);
+          const startY = (isMob ? row * rowH + 40 : 50) + (isMob ? 40 : 55);
+          const maxY = isMob ? rowH - 20 : rh - 30;
+          const spacingY = Math.min(isMob ? 32 : 45, (maxY - startY) / itemCount);
           yBase = startY + childIdx * spacingY;
         }
 
@@ -371,28 +386,32 @@ const NeuralSolutionsCanvas = () => {
 
         // Main node labels
         if (n.isMain) {
+          const isMob = canvas.offsetWidth < 600;
           ctx.globalAlpha = isActive ? 0.95 : (isDimmed ? 0.12 : 0.45);
           ctx.fillStyle = isActive ? n.color : "#ffffff";
-          ctx.font = `700 ${isActive ? 11 : 10}px 'JetBrains Mono', monospace`;
+          const mainFontSize = isMob ? (isActive ? 8 : 7) : (isActive ? 11 : 10);
+          ctx.font = `700 ${mainFontSize}px 'JetBrains Mono', monospace`;
           ctx.textAlign = "center";
-          ctx.fillText(n.label.toUpperCase(), n.x, n.y - 20);
+          ctx.fillText(n.label.toUpperCase(), n.x, n.y - (isMob ? 14 : 20));
           const count = services[n.layer]?.items.length || 0;
           ctx.globalAlpha = isActive ? 0.5 : (isDimmed ? 0.06 : 0.18);
-          ctx.font = "400 8px 'JetBrains Mono', monospace";
-          ctx.fillText(`${count} capabilities`, n.x, n.y - 9);
+          ctx.font = `400 ${isMob ? 6 : 8}px 'JetBrains Mono', monospace`;
+          ctx.fillText(`${count} capabilities`, n.x, n.y - (isMob ? 5 : 9));
         }
 
         // Child node labels
         if (!n.isMain && isActive) {
+          const isMob = canvas.offsetWidth < 600;
           ctx.globalAlpha = isHoveredChild ? 1 : 0.85;
           ctx.fillStyle = n.color;
-          ctx.font = `${isHoveredChild ? '700' : '500'} ${isHoveredChild ? 13 : 11}px 'JetBrains Mono', monospace`;
+          const fontSize = isMob ? (isHoveredChild ? 9 : 8) : (isHoveredChild ? 13 : 11);
+          ctx.font = `${isHoveredChild ? '700' : '500'} ${fontSize}px 'JetBrains Mono', monospace`;
           const parent = nodes.find(p => p.isMain && p.layer === n.layer);
           const isLeftOfParent = parent ? n.x < parent.x : false;
           ctx.textAlign = isLeftOfParent ? "right" : "left";
-          const labelOffset = 16;
+          const labelOffset = isMob ? 10 : 16;
           const labelX = isLeftOfParent ? n.x - n.r * nodeScale - labelOffset : n.x + n.r * nodeScale + labelOffset;
-          const maxLabelWidth = 250;
+          const maxLabelWidth = isMob ? 80 : 250;
           let displayLabel = n.label;
           if (ctx.measureText(displayLabel).width > maxLabelWidth && !isHoveredChild) {
             while (ctx.measureText(displayLabel + '…').width > maxLabelWidth && displayLabel.length > 3) {

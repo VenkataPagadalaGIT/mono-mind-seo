@@ -45,10 +45,6 @@ const Contact = () => {
                 <Linkedin size={16} className="group-hover:text-foreground transition-all" />
                 linkedin.com/in/venkata-pagadala
               </a>
-              <a href="https://www.linkedin.com/in/venkata-pagadala/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 font-mono text-sm text-muted-foreground hover:text-foreground transition-all group">
-                <Linkedin size={16} className="group-hover:text-foreground transition-all" />
-                linkedin.com/in/venkata-pagadala
-              </a>
               <div className="flex items-center gap-4 font-mono text-sm text-muted-foreground">
                 <MapPin size={16} />
                 Atlanta, GA
