@@ -824,40 +824,45 @@ const SolutionsGraph = () => {
                     </p>
                   </div>
                 )}
-              </div>
-
-              {/* Details panel */}
-              <div className="hidden xl:block w-72 flex-shrink-0 border border-border p-4">
-                <AnimatePresence mode="wait">
-                  {selectedNode ? (
-                    <motion.div key={selectedNode.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }}>
-                      <div className="flex items-center justify-between mb-4">
-                        <h3 className="font-display text-lg font-bold text-foreground">{selectedNode.label}</h3>
-                        <span className="font-mono text-[9px] px-2 py-0.5" style={{ backgroundColor: selectedNode.color + "15", color: selectedNode.color }}>DOMAIN</span>
+                {/* Floating overlay detail panel */}
+                <AnimatePresence>
+                  {selectedNode && (
+                    <motion.div
+                      key={selectedNode.id}
+                      initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                      transition={{ duration: 0.25 }}
+                      className="absolute z-50 top-4 right-4 w-72 border bg-background/95 backdrop-blur-md p-5 shadow-2xl"
+                      style={{ borderColor: selectedNode.color + "40" }}
+                    >
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-2.5">
+                          <span className="w-3 h-3 rounded-full" style={{ backgroundColor: selectedNode.color }} />
+                          <h3 className="font-display text-lg font-bold text-foreground">{selectedNode.label}</h3>
+                        </div>
+                        <Link to={`/solutions/${selectedNode.slug}`} className="text-muted-foreground/40 hover:text-foreground transition-colors">
+                          <ExternalLink size={14} />
+                        </Link>
                       </div>
                       <p className="font-mono text-[11px] text-muted-foreground/60 mb-4 leading-relaxed">{selectedNode.tagline}</p>
-                      <div className="border-t border-border pt-4 mb-4">
-                        <p className="font-mono text-[10px] tracking-[0.2em] text-muted-foreground/40 uppercase mb-3">Capabilities ({selectedNode.items.length})</p>
-                        <div className="space-y-1.5">
-                          {selectedNode.items.map((item) => (
-                            <div key={item} className="flex items-center gap-2 py-1.5 px-2 -mx-2 border border-transparent hover:border-border/50 transition-all">
-                              <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: selectedNode.color }} />
-                              <span className="font-mono text-[10px] text-muted-foreground">{item}</span>
+                      <div className="border-t border-border pt-4">
+                        <div className="space-y-0">
+                          {selectedNode.items.map((item, idx) => (
+                            <div key={item} className="flex items-center gap-3 py-2.5 border-b border-border/30 last:border-0">
+                              <span className="font-mono text-[10px] text-muted-foreground/30 w-5">{String(idx + 1).padStart(2, "0")}</span>
+                              <span className="font-mono text-[11px] text-foreground/80">{item}</span>
                             </div>
                           ))}
                         </div>
                       </div>
-                      <Link to={`/solutions/${selectedNode.slug}`} className="flex items-center gap-2 font-mono text-[10px] tracking-widest uppercase mt-4 py-2 px-3 border border-border hover:bg-secondary/20 transition-all group" style={{ color: selectedNode.color }}>
-                        Explore <ArrowRight size={10} className="group-hover:translate-x-1 transition-transform" />
+                      <Link
+                        to={`/solutions/${selectedNode.slug}`}
+                        className="flex items-center gap-2 font-mono text-[10px] tracking-widest uppercase mt-4 py-2 transition-all group"
+                        style={{ color: selectedNode.color }}
+                      >
+                        Explore {selectedNode.label} <ArrowRight size={10} className="group-hover:translate-x-1 transition-transform" />
                       </Link>
-                    </motion.div>
-                  ) : (
-                    <motion.div key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center justify-center h-full text-center py-20">
-                      <div className="w-8 h-8 border border-border rounded-full flex items-center justify-center mb-4">
-                        <div className="w-2 h-2 rounded-full bg-muted-foreground/20" />
-                      </div>
-                      <p className="font-mono text-[10px] text-muted-foreground/30 tracking-widest uppercase mb-2">Select a domain</p>
-                      <p className="font-mono text-[10px] text-muted-foreground/20 leading-relaxed max-w-[180px]">Click any node to explore capabilities and services</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
