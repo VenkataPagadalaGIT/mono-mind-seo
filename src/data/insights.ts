@@ -118,6 +118,109 @@ export const pillarPages: PillarPage[] = [
     ],
     tags: ["Technical SEO", "Crawl Optimization", "Structured Data", "Site Migrations", "Core Web Vitals", "Programmatic SEO"],
   },
+  {
+    slug: "editorial-seo-content-strategy",
+    title: "Editorial SEO & Content Strategy",
+    metaTitle: "Editorial SEO & Content Strategy | Topical Authority | Venkata Pagadala",
+    metaDescription:
+      "Master editorial SEO with topical authority, persona mapping, user intent research, and high-impact content briefs that drive organic growth.",
+    headline: "Editorial SEO & Content Strategy",
+    description:
+      "Editorial SEO goes beyond keywords — it's about building topical authority through strategic content planning, persona mapping, and intent-driven storytelling. From high-impact content briefs to premium copywriting, editorial SEO ensures every piece of content serves both the user and the search engine.",
+    sections: [
+      {
+        heading: "Topical Authority",
+        body: "Building topical authority requires comprehensive coverage of subject areas with depth and breadth. We develop content architectures that establish expertise through pillar-and-cluster models, ensuring Google recognizes domain authority across target topics.",
+      },
+      {
+        heading: "Persona Mapping & Strategy",
+        body: "Effective content starts with understanding the audience. Persona mapping identifies user segments, their pain points, search behaviors, and content preferences — enabling targeted content strategies that convert.",
+      },
+      {
+        heading: "User Intent Research",
+        body: "Every search query carries intent — informational, navigational, commercial, or transactional. We map content to intent stages across the funnel, ensuring the right content meets users at every touchpoint.",
+      },
+      {
+        heading: "Market Gap Analysis",
+        body: "Identifying content gaps in the competitive landscape reveals untapped ranking opportunities. Our gap analysis compares topical coverage, content depth, and SERP features against top competitors.",
+      },
+      {
+        heading: "High-Intent Topics & Content Briefs",
+        body: "Data-driven content briefs outline target keywords, search intent, competitive benchmarks, content structure, and internal linking opportunities — giving writers everything they need to create content that ranks.",
+      },
+      {
+        heading: "Premium Copywriting",
+        body: "SEO-optimized content doesn't mean keyword-stuffed content. Premium copywriting balances search visibility with brand voice, readability, and conversion — creating content that ranks and resonates.",
+      },
+    ],
+    tags: ["Topical Authority", "Content Strategy", "User Intent", "Persona Mapping", "Content Briefs", "Copywriting"],
+  },
+  {
+    slug: "answer-engine-optimization",
+    title: "Answer Engine Optimization (AEO)",
+    metaTitle: "Answer Engine Optimization (AEO) | AI Visibility & Citations | Venkata Pagadala",
+    metaDescription:
+      "Optimize for AI-generated answers with AEO strategies — AI visibility tracking, search prioritization, citation insights, and AI-focused content strategy.",
+    headline: "Answer Engine Optimization (AEO)",
+    description:
+      "As search shifts from blue links to AI-generated answers, Answer Engine Optimization (AEO) ensures your content gets cited by AI systems like Google AI Overviews, ChatGPT, and Perplexity. AEO combines AI visibility tracking, citation analysis, and structured content strategies to win in the age of generative search.",
+    sections: [
+      {
+        heading: "AI Visibility Tracking",
+        body: "Traditional rank tracking isn't enough. AI visibility tracking monitors how often your content appears in AI-generated answers, AI Overviews, and featured snippets — across Google, Bing, ChatGPT, and Perplexity.",
+      },
+      {
+        heading: "AI Search Prioritization",
+        body: "Not all content is equal in the eyes of AI. We prioritize content that's most likely to be cited by AI systems — authoritative, well-structured, semantically rich content with clear entity relationships.",
+      },
+      {
+        heading: "AI-Focused Content Strategy",
+        body: "Content optimized for AEO is structured for extraction: clear headings, concise answers, supporting evidence, and schema markup that helps AI systems understand and cite your content accurately.",
+      },
+      {
+        heading: "AI Citation Insights",
+        body: "Understanding how AI systems cite content reveals optimization opportunities. We analyze citation patterns across AI platforms to identify what content formats, structures, and topics earn the most AI visibility.",
+      },
+      {
+        heading: "AI-Targeted Outreach Strategy",
+        body: "Building authority signals that AI systems trust requires strategic outreach. We develop link-building and content distribution strategies designed to increase AI citation likelihood and brand mentions in AI-generated responses.",
+      },
+    ],
+    tags: ["AEO", "AI Overviews", "Generative Search", "AI Visibility", "Citations", "GEO"],
+  },
+  {
+    slug: "seo-performance-analytics",
+    title: "SEO Performance & Analytics",
+    metaTitle: "SEO Performance & Analytics | KPI Tracking & Growth | Venkata Pagadala",
+    metaDescription:
+      "Data-driven SEO performance measurement with growth forecasting, custom dashboards, KPI tracking, cohort analysis, and CRO optimization.",
+    headline: "SEO Performance & Analytics",
+    description:
+      "What gets measured gets improved. SEO Performance & Analytics transforms raw data into actionable intelligence — from growth forecasting and custom reporting dashboards to cohort analysis and CRO audits. Data-driven decision making across every layer of the organic growth stack.",
+    sections: [
+      {
+        heading: "Growth Forecasting",
+        body: "Predictive models that forecast organic traffic growth based on historical trends, seasonal patterns, competitive dynamics, and planned content initiatives. Accurate forecasting enables better resource allocation and stakeholder alignment.",
+      },
+      {
+        heading: "Custom Reporting Dashboards",
+        body: "Purpose-built dashboards in Looker Studio and BigQuery that surface the metrics that matter — from executive-level KPIs to granular page-level performance data. Automated reporting that delivers insights, not just numbers.",
+      },
+      {
+        heading: "KPI Tracking & Reporting",
+        body: "Comprehensive KPI frameworks covering organic sessions, conversions, revenue attribution, keyword visibility, crawl health, and Core Web Vitals. Bi-weekly reporting cycles with trend analysis and actionable recommendations.",
+      },
+      {
+        heading: "Cohort Analysis",
+        body: "Analyzing content performance by publication cohort reveals content lifecycle patterns, decay rates, and refresh opportunities. Cohort analysis identifies which content strategies deliver sustainable long-term organic growth.",
+      },
+      {
+        heading: "CRO Audits & Optimization",
+        body: "SEO traffic is only valuable if it converts. CRO audits identify friction points, optimize landing page experiences, and align SEO-driven traffic with conversion funnels for maximum business impact.",
+      },
+    ],
+    tags: ["Analytics", "Growth Forecasting", "KPI Tracking", "Dashboards", "CRO", "Cohort Analysis"],
+  },
 ];
 
 export const blogPosts: BlogPost[] = [
@@ -438,6 +541,217 @@ BigQuery powers continuous optimization: identifying underperforming pages, dete
     linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7264875407047380992/",
     tags: ["Programmatic SEO", "Python", "BigQuery", "Automation"],
     date: "2024-11-10",
+  },
+  {
+    slug: "building-topical-authority-enterprise",
+    title: "Building Topical Authority at Enterprise Scale",
+    metaTitle: "Building Topical Authority at Enterprise Scale | Venkata Pagadala",
+    metaDescription:
+      "How to build topical authority through strategic content architecture, persona mapping, and intent-driven editorial planning.",
+    pillarSlug: "editorial-seo-content-strategy",
+    excerpt:
+      "Strategic content architecture and persona-driven editorial planning for building topical authority that Google rewards.",
+    content: `Topical authority isn't about publishing more content — it's about publishing the right content in the right structure.
+
+## What is Topical Authority?
+
+Google evaluates whether a site comprehensively covers a subject area. Sites that demonstrate expertise across related subtopics earn higher rankings than sites with shallow, scattered coverage.
+
+## The Content Architecture Approach
+
+We build content architectures using pillar-and-cluster models: comprehensive pillar pages supported by targeted blog posts that interlink semantically. Each cluster establishes authority for an entire topic area.
+
+## Persona-Driven Planning
+
+Content planning starts with personas. Who is searching? What do they need at each stage of their journey? Mapping content to personas ensures coverage of all intent types — informational, navigational, commercial, and transactional.
+
+## Measuring Topical Authority
+
+We track topical authority through keyword coverage breadth, SERP feature ownership, and entity association in Google's Knowledge Graph. These signals indicate whether Google recognizes your site as an authority on a topic.
+
+## Results at AT&T
+
+By restructuring content around topical clusters, we increased organic visibility across core service categories, improved internal linking efficiency, and reduced content cannibalization across 50M+ pages.`,
+    tags: ["Topical Authority", "Content Strategy", "Content Architecture", "Editorial SEO"],
+    date: "2025-04-01",
+  },
+  {
+    slug: "user-intent-mapping-seo-content",
+    title: "User Intent Mapping for SEO Content Strategy",
+    metaTitle: "User Intent Mapping for SEO Content Strategy | Venkata Pagadala",
+    metaDescription:
+      "How to map user search intent to content strategy for maximum organic visibility and conversion at every funnel stage.",
+    pillarSlug: "editorial-seo-content-strategy",
+    excerpt:
+      "Mapping user search intent to content touchpoints across the funnel for maximum organic visibility and conversion.",
+    content: `Every search query carries intent. Understanding and mapping that intent to your content strategy is the foundation of modern SEO.
+
+## The Four Intent Types
+
+- **Informational**: Users seeking knowledge ("what is RAG in AI")
+- **Navigational**: Users looking for a specific site or page
+- **Commercial**: Users researching before purchase ("best enterprise SEO tools")
+- **Transactional**: Users ready to act ("buy SEO audit service")
+
+## Intent Mapping Framework
+
+We map every target keyword to its primary intent, then ensure content exists for each intent type within every topic cluster. This creates complete funnel coverage.
+
+## High-Intent Topic Selection
+
+Not all topics are equal. We prioritize high-intent topics that align with business objectives — commercial and transactional queries that drive pipeline and revenue, supported by informational content that builds authority.
+
+## Content Brief Architecture
+
+Our content briefs include target keywords, mapped intent, competitive SERP analysis, recommended content structure, internal linking targets, and schema markup requirements. Writers get everything they need to create content that ranks and converts.
+
+## Measuring Intent Alignment
+
+Post-publication, we track whether content attracts the intended audience by monitoring engagement metrics, conversion rates, and search query alignment through Google Search Console data.`,
+    tags: ["User Intent", "Content Strategy", "Keyword Research", "Funnel Optimization"],
+    date: "2025-03-10",
+  },
+  {
+    slug: "optimizing-for-ai-overviews",
+    title: "Optimizing for Google AI Overviews",
+    metaTitle: "Optimizing for Google AI Overviews & AEO | Venkata Pagadala",
+    metaDescription:
+      "Strategies for getting your content cited in Google AI Overviews — from structured content to entity optimization.",
+    pillarSlug: "answer-engine-optimization",
+    excerpt:
+      "Practical strategies for getting your content cited in Google AI Overviews and AI-generated search results.",
+    content: `Google AI Overviews are reshaping search. Content that gets cited in AI-generated answers earns visibility that traditional ranking can't match.
+
+## The AI Overview Landscape
+
+AI Overviews appear for an increasing percentage of search queries. They synthesize information from multiple sources, citing the most authoritative and well-structured content.
+
+## Content Structure for AI Extraction
+
+AI systems prefer content that's easy to extract: clear headings, concise answers to specific questions, supporting evidence, and logical flow. Structure your content for machines as much as humans.
+
+## Entity Optimization
+
+AI systems understand entities — people, organizations, concepts, and their relationships. Strengthening entity signals through schema markup, consistent naming, and authoritative mentions improves AI citation likelihood.
+
+## Schema Markup for AEO
+
+FAQ schema, HowTo schema, and Article schema provide structured signals that AI systems use to understand and cite content. Programmatic schema deployment ensures every page is AI-ready.
+
+## Monitoring AI Visibility
+
+We track AI Overview appearances, citation frequency, and content format patterns to continuously optimize our AEO strategy. What works today may change tomorrow — continuous monitoring is essential.`,
+    tags: ["AEO", "AI Overviews", "Google", "Schema Markup", "Entity SEO"],
+    date: "2025-05-20",
+  },
+  {
+    slug: "ai-citation-analysis-strategy",
+    title: "AI Citation Analysis: What Gets Cited and Why",
+    metaTitle: "AI Citation Analysis for SEO | What Gets Cited | Venkata Pagadala",
+    metaDescription:
+      "Analyzing AI citation patterns across Google, ChatGPT, and Perplexity to build content strategies that earn AI visibility.",
+    pillarSlug: "answer-engine-optimization",
+    excerpt:
+      "Analyzing citation patterns across AI platforms to understand what content earns AI visibility and how to optimize for it.",
+    content: `Understanding how AI systems choose what to cite is the key to winning in the age of generative search.
+
+## Citation Pattern Analysis
+
+We analyzed thousands of AI-generated responses across Google AI Overviews, ChatGPT, and Perplexity to identify citation patterns. The results reveal clear preferences for certain content characteristics.
+
+## What Gets Cited
+
+- **Authoritative sources**: Sites with established domain authority and topical expertise
+- **Structured content**: Clear headings, numbered lists, and concise definitions
+- **Data-backed claims**: Content with specific numbers, statistics, and research citations
+- **Recent content**: Freshness signals matter — AI systems prefer up-to-date information
+
+## Content Format Winners
+
+How-to guides, comparison articles, and definition-style content earn disproportionate AI citations. Long-form, well-structured guides outperform short blog posts.
+
+## Building an AI-First Content Strategy
+
+An AI-first content strategy starts with understanding which queries trigger AI-generated answers, then creating content specifically designed for citation. This means structured answers, supporting data, and clear entity relationships.
+
+## Outreach for AI Visibility
+
+Traditional link building evolves into AI visibility building. Getting mentioned by authoritative sources that AI systems trust increases your citation likelihood across all AI platforms.`,
+    tags: ["AI Citations", "AEO", "Generative Search", "Content Strategy", "AI Visibility"],
+    date: "2025-04-22",
+  },
+  {
+    slug: "seo-growth-forecasting-models",
+    title: "SEO Growth Forecasting: Predictive Models That Work",
+    metaTitle: "SEO Growth Forecasting Models | Venkata Pagadala",
+    metaDescription:
+      "Building predictive SEO growth models using historical data, seasonal patterns, and competitive analysis for accurate traffic forecasting.",
+    pillarSlug: "seo-performance-analytics",
+    excerpt:
+      "Building predictive growth models that forecast organic traffic with accuracy — using historical trends, seasonality, and competitive dynamics.",
+    content: `Accurate SEO forecasting transforms organic from a "hope and wait" channel into a predictable growth engine.
+
+## Why Forecasting Matters
+
+Stakeholders need predictability. SEO growth forecasting enables better resource allocation, realistic goal setting, and proactive strategy adjustments before traffic declines materialize.
+
+## The Forecasting Framework
+
+Our models incorporate:
+- **Historical trend analysis**: 12-24 months of traffic data with seasonal decomposition
+- **Competitive dynamics**: Share of voice trends and competitor content velocity
+- **Content pipeline impact**: Projected traffic from planned content initiatives
+- **Algorithm sensitivity**: Historical impact analysis of Google algorithm updates
+
+## BigQuery-Powered Analytics
+
+BigQuery processes billions of rows of search data to power our forecasting models. Combining Search Console data, crawl logs, and third-party ranking data creates a comprehensive view of organic performance.
+
+## Dashboard Implementation
+
+Custom Looker Studio dashboards surface forecasts alongside actuals, enabling real-time tracking of forecast accuracy and early detection of trend deviations.
+
+## Cohort-Based Content Analysis
+
+We analyze content performance by publication cohort to understand content lifecycle patterns — identifying optimal refresh timing, content decay rates, and evergreen vs. trending content performance.`,
+    tags: ["Growth Forecasting", "Analytics", "BigQuery", "Dashboards", "KPI Tracking"],
+    date: "2025-03-25",
+  },
+  {
+    slug: "cro-seo-alignment-strategy",
+    title: "Aligning CRO and SEO for Maximum Impact",
+    metaTitle: "CRO and SEO Alignment Strategy | Venkata Pagadala",
+    metaDescription:
+      "How to align conversion rate optimization with SEO strategy to turn organic traffic into measurable business outcomes.",
+    pillarSlug: "seo-performance-analytics",
+    excerpt:
+      "Bridging the gap between SEO traffic and conversions — aligning CRO and organic strategy for maximum business impact.",
+    content: `SEO traffic without conversions is vanity. Aligning CRO with SEO strategy turns organic visibility into measurable business outcomes.
+
+## The CRO-SEO Gap
+
+Many organizations optimize SEO and CRO in silos. SEO teams drive traffic; CRO teams optimize conversion. The result: high-traffic pages that don't convert and high-converting pages that don't rank.
+
+## Unified Strategy Framework
+
+We align CRO and SEO through:
+- **Intent-matched landing pages**: Content that matches search intent AND conversion goals
+- **User journey mapping**: Understanding how organic visitors navigate to conversion
+- **Page experience optimization**: Core Web Vitals, mobile UX, and content layout that serves both rankings and conversions
+
+## KPI Framework
+
+A unified KPI framework tracks organic sessions, conversion rates, revenue attribution, and customer acquisition cost from organic. This connects SEO investment to business outcomes.
+
+## CRO Audit Methodology
+
+Our CRO audits analyze organic landing pages for conversion friction: form placement, CTA visibility, content-to-conversion alignment, and mobile experience. Recommendations are prioritized by traffic volume and conversion potential.
+
+## Cohort Performance Tracking
+
+Tracking conversion rates by content cohort reveals which content strategies drive both traffic and revenue — enabling data-driven decisions about content investment and optimization priorities.`,
+    tags: ["CRO", "Conversion Optimization", "Analytics", "KPI Tracking", "Performance"],
+    date: "2025-02-28",
   },
 ];
 
