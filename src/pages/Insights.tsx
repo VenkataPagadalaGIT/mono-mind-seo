@@ -1,0 +1,101 @@
+import { Link } from "react-router-dom";
+import { pillarPages, getBlogsByPillar } from "@/data/insights";
+import ScrollReveal from "@/components/ScrollReveal";
+import { ArrowRight } from "lucide-react";
+import { useEffect } from "react";
+
+const Insights = () => {
+  useEffect(() => {
+    document.title = "Insights | AI, SEO & Machine Learning | Venkata Pagadala";
+    const meta = document.querySelector('meta[name="description"]');
+    const content = "Deep dives into AI agents, machine learning, RAG engines, knowledge graphs, and enterprise technical SEO — by Venkata Pagadala.";
+    if (meta) meta.setAttribute("content", content);
+    else {
+      const m = document.createElement("meta");
+      m.name = "description";
+      m.content = content;
+      document.head.appendChild(m);
+    }
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-background pt-24 pb-20 px-6">
+      <div className="max-w-5xl mx-auto">
+        <ScrollReveal>
+          <p className="font-mono text-xs tracking-[0.3em] text-muted-foreground mb-4 uppercase">
+            {"{05}"} — Insights
+          </p>
+          <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground text-glow mb-6">
+            Thought Leadership
+          </h1>
+          <p className="font-mono text-sm text-muted-foreground leading-relaxed mb-16 max-w-2xl">
+            Deep dives into AI agents, machine learning, and enterprise SEO — insights from building production systems across 50M+ pages.
+          </p>
+        </ScrollReveal>
+
+        {/* Pillar Pages */}
+        <div className="space-y-16">
+          {pillarPages.map((pillar, pi) => {
+            const posts = getBlogsByPillar(pillar.slug);
+            return (
+              <ScrollReveal key={pillar.slug} delay={pi * 150}>
+                <div className="border border-border p-8 sm:p-10 border-glow-hover group transition-all">
+                  {/* Pillar Header */}
+                  <Link to={`/insights/${pillar.slug}`} className="block mb-6">
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <p className="font-mono text-[10px] text-muted-foreground/40 tracking-widest uppercase mb-3">
+                          Pillar Guide
+                        </p>
+                        <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground group-hover:text-glow transition-all mb-3">
+                          {pillar.headline}
+                        </h2>
+                        <p className="font-mono text-xs text-muted-foreground leading-relaxed max-w-2xl">
+                          {pillar.description.slice(0, 200)}...
+                        </p>
+                      </div>
+                      <ArrowRight size={18} className="text-muted-foreground group-hover:text-foreground transition-all mt-2 flex-shrink-0" />
+                    </div>
+                  </Link>
+
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {pillar.tags.map((tag) => (
+                      <span key={tag} className="font-mono text-[10px] border border-border px-2 py-1 text-muted-foreground/60">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Related Posts */}
+                  <div className="border-t border-border/50 pt-6 space-y-3">
+                    <p className="font-mono text-[10px] text-muted-foreground/40 tracking-widest uppercase mb-3">
+                      {posts.length} Articles
+                    </p>
+                    {posts.map((post) => (
+                      <Link
+                        key={post.slug}
+                        to={`/insights/${pillar.slug}/${post.slug}`}
+                        className="flex items-center justify-between gap-4 py-2 px-3 -mx-3 hover:bg-secondary/20 transition-all group/post"
+                      >
+                        <div className="flex items-center gap-3 min-w-0">
+                          <span className="font-mono text-[10px] text-muted-foreground/30 flex-shrink-0">{post.date}</span>
+                          <span className="font-mono text-xs text-muted-foreground group-hover/post:text-foreground transition-all truncate">
+                            {post.title}
+                          </span>
+                        </div>
+                        <ArrowRight size={10} className="text-muted-foreground/30 group-hover/post:text-foreground transition-all flex-shrink-0" />
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </ScrollReveal>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Insights;
