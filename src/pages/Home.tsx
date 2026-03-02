@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, Linkedin } from "lucide-react";
 import WireframeGrid from "@/components/WireframeGrid";
 import FloatingBlocks from "@/components/FloatingBlocks";
 import TypewriterText from "@/components/TypewriterText";
@@ -56,7 +56,16 @@ const Home = () => {
           />
         </div>
 
-        <div className="mt-16">
+        <div className="mt-16 flex items-center gap-6">
+          <a
+            href="https://www.linkedin.com/in/venkata-pagadala/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 border border-foreground/30 px-5 py-2.5 font-mono text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground hover:border-foreground/60 transition-all group"
+          >
+            <Linkedin size={14} className="group-hover:text-foreground transition-all" />
+            Follow
+          </a>
           <Link
             to="/about"
             className="inline-flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group"
