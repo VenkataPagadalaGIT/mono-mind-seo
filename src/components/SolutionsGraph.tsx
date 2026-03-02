@@ -410,7 +410,7 @@ const NeuralSolutionsCanvas = () => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -10 }}
             transition={{ duration: 0.15 }}
-            className="absolute top-4 left-4 z-50 max-w-xs border border-border bg-background/90 backdrop-blur-md p-5 cursor-pointer group hover:bg-background/95 transition-all"
+            className={`absolute top-4 z-50 max-w-xs border border-border bg-background/90 backdrop-blur-md p-5 cursor-pointer group hover:bg-background/95 transition-all ${activeService.title === 'AI Product' ? 'right-4' : 'left-4'}`}
             style={{ borderColor: activeService.color + "30" }}
             onClick={() => navigate(`/solutions/${activeService.slug}`)}
           >
