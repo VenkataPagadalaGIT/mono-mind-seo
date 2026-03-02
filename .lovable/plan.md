@@ -1,40 +1,83 @@
 
 
-## Problem
+# Context Graph Complete Redesign
 
-The Neural Net child nodes have two core issues visible in the screenshots:
+## Current Problems
+- Cluttered SVG with overlapping child nodes and labels
+- Small viewBox (800x640) cramps everything
+- Child nodes are always visible, creating visual noise
+- No clear visual hierarchy — everything competes for attention
+- Background dots are static SVG animates (not fluid)
 
-1. **Labels overlap nodes and each other** — the arc layout clusters children too tightly, especially for services with many items (AI Product has 9). Labels sit on top of connection lines and neighboring nodes.
-2. **Labels are truncated too aggressively** — most labels show ellipsis even though there's plenty of canvas space available.
+## Design Vision: "Constellation Map"
 
-## Root Cause
+A dark, spacious constellation-style graph where domain nodes are prominent orbital stations connected by glowing energy lines. Child capabilities reveal on hover/click with a radial burst animation. The whole thing breathes with ambient particle flow.
 
-- All children fan out in the same small arc (`PI * 0.7`) with minimal radial separation (`120 + ci * 8`). For 9 items, nodes are only ~8px apart radially and crammed in ~126° of arc.
-- Labels are drawn at the node position, so when nodes overlap, labels overlap too.
-- The parent node sits at `y = 22%` of canvas height, leaving most space below but the arc doesn't use it well.
+## Architecture
 
-## Plan
+### 1. Replace SVG Context Graph with Canvas
+- Canvas gives smoother animations, better particle effects, and handles the jellyfish physics natively (no React re-renders per frame)
+- Reuse the proven Canvas pattern from the Neural Net view
+- Keep the left sidebar (domains panel) and floating overlay panel as HTML overlays
 
-### 1. Improve child node spacing
+### 2. Layout: Orbital Ring
+- Central hub ("SOLUTIONS") at canvas center
+- 6 domain nodes arranged in a hexagonal ring at ~200px radius
+- Each domain node is a glowing circle with pulsing halo
+- Connection lines between hub and domains use animated dashed strokes with traveling light particles
+- Inter-domain connections shown as faint arcs (adjacency)
 
-- Increase base radial distance to **140px** and per-item increment to **15px** so children spread further from parent.
-- Widen arc to `PI * 1.0` (180°) so children spread across a full semicircle below the parent.
-- Add alternating radial offset (even/odd items get different distances) to stagger nodes and prevent vertical stacking.
+### 3. Child Reveal: Radial Burst
+- Children are hidden by default — keeps the view clean and understandable
+- On hover/click of a domain, children animate outward in a smooth radial fan from the parent
+- Each child springs out with staggered delay (jellyfish trail effect)
+- Connection lines draw progressively from parent to child
+- Labels appear with fade-in after nodes settle
 
-### 2. Fix label readability
+### 4. Ambient Effects
+- Subtle particle field drifting across the canvas (reuse existing particle logic)
+- Domain nodes have a soft breathing glow (radius oscillation)
+- Faint grid lines in background that shift with parallax on mouse move
+- Energy pulses travel along connection lines periodically
 
-- Increase `maxLabelWidth` to **250px** so labels rarely truncate.
-- Add a dark text shadow/stroke behind labels (`ctx.strokeStyle = "rgba(0,0,0,0.8)"`, `ctx.lineWidth = 3`, `ctx.strokeText()` before `ctx.fillText()`) so they're readable over connection lines.
-- Position labels with more offset (**16px**) from node edge.
+### 5. Interaction Model
+- **Hover domain**: Highlights domain, shows capability count tooltip, pulses connections
+- **Click domain**: Bursts open children, shows floating detail panel, dims other domains
+- **Drag domain**: Jellyfish physics (keep existing spring logic, port to canvas)
+- **Click child**: Highlight in detail panel with bounce animation
+- **Click background**: Collapse all children, reset view
 
-### 3. Prevent node-on-node overlap
+### 6. Visual Style
+- Monochrome by default, color reveals on interaction (matches site aesthetic)
+- Domain nodes: hollow circles with thin stroke, fill on hover
+- Children: small solid dots that glow in parent's color
+- Labels: crisp monospace, positioned intelligently (avoid overlap via force-directed push)
+- Connection lines: thin, with subtle gradient from parent color to transparent
 
-- After initial positioning, add a simple collision/repulsion pass in the draw loop that pushes child nodes apart if they're closer than `30px` to each other (same layer only). This ensures labels never stack even after drift.
+## File Changes
 
-### File Changes
+### `src/components/SolutionsGraph.tsx`
+- **Replace the Context Graph section** (lines 860-1010) with a new `ContextGraphCanvas` component
+- New component uses Canvas API with `requestAnimationFrame` loop
+- State: `expandedDomain` (which domain has children visible), `selectedDomain` (for detail panel)
+- Physics: Reuse spring/damping constants from existing jellyfish code
+- Child positions computed on-demand when domain expands (radial fan from parent)
+- Keep the left sidebar and floating detail panel as HTML overlays (they work well)
+- Keep the domains panel, stats bar, view toggle, and SEO markup unchanged
 
-- **`src/components/SolutionsGraph.tsx`**: 
-  - Lines ~150-158: Update arc spread, distances, and add stagger offset
-  - Lines ~373-393: Add text stroke for contrast, increase maxLabelWidth, increase label offset
-  - Lines ~179-200: Add a repulsion pass between same-layer child nodes
+### Key rendering pipeline (Canvas draw loop):
+1. Clear + draw background grid with mouse parallax offset
+2. Draw ambient particles
+3. Draw hub-to-domain connection lines with traveling particles
+4. Draw inter-domain faint connections
+5. If expanded domain: draw parent-to-child lines + child nodes + labels
+6. Draw domain nodes (hollow circles with glow)
+7. Draw hub node
+8. Handle mouse hit-testing for hover/click/drag
+
+### Interaction handlers (on Canvas):
+- `mousemove`: Update mouse position, check hover targets, parallax offset
+- `mousedown`: Start drag or expand/select domain
+- `mouseup`: End drag
+- `click`: Toggle domain expansion, select for detail panel
 
