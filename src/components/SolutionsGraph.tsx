@@ -1,7 +1,7 @@
 import { useState, useCallback, useMemo, useRef, useEffect, type MouseEvent as ReactMouseEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
-import { ArrowRight, Network, Brain, List } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { ArrowRight, Network, Brain, List, ExternalLink } from "lucide-react";
 import { services } from "@/components/ServicesGrid";
 
 type ViewMode = "graph" | "neural" | "structured";
@@ -48,12 +48,14 @@ function buildServiceNodes(): GraphNode[] {
 
 // ── Neural Net Canvas ──
 const NeuralSolutionsCanvas = () => {
+  const navigate = useNavigate();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animRef = useRef<number>(0);
   const mouseRef = useRef<{ x: number; y: number; active: boolean }>({ x: 0, y: 0, active: false });
+  const dragRef = useRef<{ dragging: boolean; nodeIdx: number; offsetX: number; offsetY: number }>({ dragging: false, nodeIdx: -1, offsetX: 0, offsetY: 0 });
   const activeLayerRef = useRef<number>(-1);
   const hoveredChildRef = useRef<string | null>(null);
-  const [activeService, setActiveService] = useState<{ title: string; tagline: string; items: string[]; color: string; highlightItem?: string } | null>(null);
+  const [activeService, setActiveService] = useState<{ title: string; slug: string; tagline: string; items: string[]; color: string; highlightItem?: string } | null>(null);
   const nodesRef = useRef<{ x: number; y: number; vx: number; vy: number; r: number; layer: number; label: string; color: string; isMain: boolean }[]>([]);
 
   useEffect(() => {
@@ -72,14 +74,64 @@ const NeuralSolutionsCanvas = () => {
 
     const onMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
-      mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top, active: true };
+      const mx = e.clientX - rect.left;
+      const my = e.clientY - rect.top;
+      mouseRef.current = { x: mx, y: my, active: true };
+
+      // Handle dragging
+      if (dragRef.current.dragging && dragRef.current.nodeIdx >= 0) {
+        const n = nodes[dragRef.current.nodeIdx];
+        n.x = mx - dragRef.current.offsetX;
+        n.y = my - dragRef.current.offsetY;
+        n.vx = 0;
+        n.vy = 0;
+      }
+    };
+    const onMouseDown = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      const mx = e.clientX - rect.left;
+      const my = e.clientY - rect.top;
+      for (let i = 0; i < nodes.length; i++) {
+        const n = nodes[i];
+        const hitR = n.isMain ? 20 : 12;
+        if (Math.hypot(n.x - mx, n.y - my) < hitR) {
+          dragRef.current = { dragging: true, nodeIdx: i, offsetX: mx - n.x, offsetY: my - n.y };
+          canvas.style.cursor = "grabbing";
+          break;
+        }
+      }
+    };
+    const onMouseUp = () => {
+      dragRef.current.dragging = false;
+      dragRef.current.nodeIdx = -1;
+      canvas.style.cursor = "pointer";
+    };
+    const onClick = (e: MouseEvent) => {
+      if (dragRef.current.dragging) return;
+      const rect = canvas.getBoundingClientRect();
+      const mx = e.clientX - rect.left;
+      const my = e.clientY - rect.top;
+      for (const n of nodes) {
+        if (!n.isMain) continue;
+        if (Math.hypot(n.x - mx, n.y - my) < 30) {
+          const s = services[n.layer];
+          navigate(`/solutions/${s.slug}`);
+          return;
+        }
+      }
     };
     const onMouseLeave = () => {
       mouseRef.current.active = false;
       activeLayerRef.current = -1;
+      dragRef.current.dragging = false;
+      dragRef.current.nodeIdx = -1;
       setActiveService(null);
+      canvas.style.cursor = "default";
     };
     canvas.addEventListener("mousemove", onMouseMove);
+    canvas.addEventListener("mousedown", onMouseDown);
+    canvas.addEventListener("mouseup", onMouseUp);
+    canvas.addEventListener("click", onClick);
     canvas.addEventListener("mouseleave", onMouseLeave);
 
     const layers = services.length;
@@ -114,20 +166,24 @@ const NeuralSolutionsCanvas = () => {
       const mouseActive = mouseRef.current.active;
       const aLayer = activeLayerRef.current;
 
-      // Mouse interaction — DON'T repel nodes in the active layer
+      // Mouse interaction — freeze active layer, gentle attract on others
+      const isDragging = dragRef.current.dragging;
       for (const n of nodes) {
-        if (mouseActive) {
+        // Skip dragged node
+        if (isDragging && nodes.indexOf(n) === dragRef.current.nodeIdx) continue;
+
+        if (mouseActive && !isDragging) {
           const isActiveLayer = activeLayerRef.current === n.layer;
-          // Freeze active layer nodes so user can hover them
           if (isActiveLayer) {
-            n.vx *= 0.9;
-            n.vy *= 0.9;
-          } else {
+            // Slow down active layer so user can interact
+            n.vx *= 0.85;
+            n.vy *= 0.85;
+          } else if (n.isMain) {
             const dx = n.x - mx;
             const dy = n.y - my;
             const dist = Math.hypot(dx, dy);
-            if (dist < 120 && dist > 1 && n.isMain) {
-              const strength = (1 - dist / 120) * -0.06;
+            if (dist < 120 && dist > 1) {
+              const strength = (1 - dist / 120) * -0.04;
               n.vx += (dx / dist) * strength;
               n.vy += (dy / dist) * strength;
             }
@@ -135,12 +191,23 @@ const NeuralSolutionsCanvas = () => {
         }
         n.x += n.vx;
         n.y += n.vy;
-        n.vx *= 0.996;
-        n.vy *= 0.996;
-        n.vx += (Math.random() - 0.5) * 0.015;
-        n.vy += (Math.random() - 0.5) * 0.015;
+        n.vx *= 0.997;
+        n.vy *= 0.997;
+        // Very gentle slow drift
+        n.vx += (Math.random() - 0.5) * 0.008;
+        n.vy += (Math.random() - 0.5) * 0.008;
         if (n.x < 20 || n.x > rw - 20) n.vx *= -1;
         if (n.y < 20 || n.y > rh - 20) n.vy *= -1;
+      }
+
+      // Update cursor
+      if (!isDragging && mouseActive) {
+        let overNode = false;
+        for (const n of nodes) {
+          const hitR = n.isMain ? 30 : 15;
+          if (Math.hypot(n.x - mx, n.y - my) < hitR) { overNode = true; break; }
+        }
+        canvas.style.cursor = overNode ? "grab" : "default";
       }
 
       // Detect hovered node (main OR child)
@@ -175,7 +242,7 @@ const NeuralSolutionsCanvas = () => {
           hoveredChildRef.current = foundChild;
           if (foundLayer >= 0) {
             const s = services[foundLayer];
-            setActiveService({ title: s.title, tagline: s.tagline, items: s.items, color: serviceColors[s.title] || "#888", highlightItem: foundChild || undefined });
+            setActiveService({ title: s.title, slug: s.slug, tagline: s.tagline, items: s.items, color: serviceColors[s.title] || "#888", highlightItem: foundChild || undefined });
           } else {
             setActiveService(null);
           }
@@ -309,14 +376,17 @@ const NeuralSolutionsCanvas = () => {
       cancelAnimationFrame(animRef.current);
       window.removeEventListener("resize", resize);
       canvas.removeEventListener("mousemove", onMouseMove);
+      canvas.removeEventListener("mousedown", onMouseDown);
+      canvas.removeEventListener("mouseup", onMouseUp);
+      canvas.removeEventListener("click", onClick);
       canvas.removeEventListener("mouseleave", onMouseLeave);
     };
-  }, []);
+  }, [navigate]);
 
   return (
     <div className="relative w-full h-full" style={{ minHeight: 640 }}>
-      <canvas ref={canvasRef} className="w-full h-full" style={{ minHeight: 640 }} />
-      {/* Info panel when hovering a domain */}
+      <canvas ref={canvasRef} className="w-full h-full cursor-default" style={{ minHeight: 640 }} />
+      {/* Info panel when hovering a domain — CLICKABLE */}
       <AnimatePresence>
         {activeService && (
           <motion.div
@@ -325,14 +395,18 @@ const NeuralSolutionsCanvas = () => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -10 }}
             transition={{ duration: 0.2 }}
-            className="absolute top-4 left-4 z-50 pointer-events-none max-w-xs border border-border bg-background/90 backdrop-blur-md p-5"
+            className="absolute top-4 left-4 z-50 max-w-xs border border-border bg-background/90 backdrop-blur-md p-5 cursor-pointer group hover:bg-background/95 transition-all"
             style={{ borderColor: activeService.color + "30" }}
+            onClick={() => navigate(`/solutions/${activeService.slug}`)}
           >
-            <div className="flex items-center gap-3 mb-2">
-              <span className="w-3 h-3 rounded-sm flex-shrink-0" style={{ backgroundColor: activeService.color }} />
-              <h3 className="font-display text-lg font-bold" style={{ color: activeService.color }}>
-                {activeService.title}
-              </h3>
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-3">
+                <span className="w-3 h-3 rounded-sm flex-shrink-0" style={{ backgroundColor: activeService.color }} />
+                <h3 className="font-display text-lg font-bold" style={{ color: activeService.color }}>
+                  {activeService.title}
+                </h3>
+              </div>
+              <ExternalLink size={12} className="text-muted-foreground/30 group-hover:text-foreground transition-colors" />
             </div>
             <p className="font-mono text-[10px] text-muted-foreground/60 mb-3 leading-relaxed">
               {activeService.tagline}
@@ -348,6 +422,9 @@ const NeuralSolutionsCanvas = () => {
                   </div>
                 );
               })}
+            </div>
+            <div className="border-t border-border mt-3 pt-3 flex items-center gap-2 font-mono text-[10px] tracking-widest uppercase group-hover:opacity-100 opacity-60 transition-opacity" style={{ color: activeService.color }}>
+              Explore {activeService.title} <ArrowRight size={10} />
             </div>
           </motion.div>
         )}
