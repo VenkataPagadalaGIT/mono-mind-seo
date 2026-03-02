@@ -56,7 +56,7 @@ const Home = () => {
           />
         </div>
 
-        <div className="mt-16 flex items-center gap-6">
+        <div className="mt-16 flex flex-col items-center gap-6">
           <a
             href="https://www.linkedin.com/in/venkata-pagadala/"
             target="_blank"
