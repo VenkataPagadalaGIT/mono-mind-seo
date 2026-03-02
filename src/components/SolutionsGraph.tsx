@@ -51,8 +51,8 @@ const NeuralSolutionsCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animRef = useRef<number>(0);
   const mouseRef = useRef<{ x: number; y: number; active: boolean }>({ x: 0, y: 0, active: false });
-  const hoveredRef = useRef<{ label: string; color: string; x: number; y: number } | null>(null);
-  const [tooltip, setTooltip] = useState<{ label: string; color: string; x: number; y: number } | null>(null);
+  const activeLayerRef = useRef<number>(-1);
+  const [activeService, setActiveService] = useState<{ title: string; tagline: string; items: string[]; color: string; x: number; y: number } | null>(null);
   const nodesRef = useRef<{ x: number; y: number; vx: number; vy: number; r: number; layer: number; label: string; color: string; isMain: boolean }[]>([]);
 
   useEffect(() => {
@@ -69,20 +69,18 @@ const NeuralSolutionsCanvas = () => {
     resize();
     window.addEventListener("resize", resize);
 
-    // Mouse tracking
     const onMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
       mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top, active: true };
     };
     const onMouseLeave = () => {
       mouseRef.current.active = false;
-      hoveredRef.current = null;
-      setTooltip(null);
+      activeLayerRef.current = -1;
+      setActiveService(null);
     };
     canvas.addEventListener("mousemove", onMouseMove);
     canvas.addEventListener("mouseleave", onMouseLeave);
 
-    // Build neural-net-style nodes from services
     const layers = services.length;
     const cw = canvas.offsetWidth;
     const ch = canvas.offsetHeight;
@@ -91,17 +89,17 @@ const NeuralSolutionsCanvas = () => {
     services.forEach((s, li) => {
       const color = serviceColors[s.title] || "#888";
       const xBase = (cw / (layers + 1)) * (li + 1);
-      const yBase = ch * 0.25;
-      nodes.push({ x: xBase, y: yBase, vx: (Math.random() - 0.5) * 0.2, vy: (Math.random() - 0.5) * 0.2, r: 8, layer: li, label: s.title, color, isMain: true });
+      const yBase = ch * 0.22;
+      nodes.push({ x: xBase, y: yBase, vx: (Math.random() - 0.5) * 0.15, vy: (Math.random() - 0.5) * 0.15, r: 10, layer: li, label: s.title, color, isMain: true });
       s.items.forEach((item, ci) => {
-        const yItem = ch * 0.42 + ci * (ch * 0.065);
+        const yItem = ch * 0.40 + ci * (ch * 0.06);
         const xItem = xBase + (Math.random() - 0.5) * 50;
-        nodes.push({ x: xItem, y: yItem, vx: (Math.random() - 0.5) * 0.15, vy: (Math.random() - 0.5) * 0.15, r: 4, layer: li, label: item, color, isMain: false });
+        nodes.push({ x: xItem, y: yItem, vx: (Math.random() - 0.5) * 0.1, vy: (Math.random() - 0.5) * 0.1, r: 4.5, layer: li, label: item, color, isMain: false });
       });
     });
     nodesRef.current = nodes;
 
-    let lastTooltipCheck = 0;
+    let lastCheck = 0;
 
     const draw = () => {
       const dpr = window.devicePixelRatio;
@@ -113,155 +111,156 @@ const NeuralSolutionsCanvas = () => {
       const mx = mouseRef.current.x;
       const my = mouseRef.current.y;
       const mouseActive = mouseRef.current.active;
+      const aLayer = activeLayerRef.current;
 
-      // Update positions with mouse interaction
+      // Mouse interaction
       for (const n of nodes) {
-        // Mouse attraction/repulsion
         if (mouseActive) {
           const dx = n.x - mx;
           const dy = n.y - my;
           const dist = Math.hypot(dx, dy);
-          if (dist < 150 && dist > 1) {
-            // Attract main nodes, repel child nodes
-            const force = n.isMain ? -0.15 : 0.08;
-            const strength = (1 - dist / 150) * force;
+          if (dist < 120 && dist > 1) {
+            const force = n.isMain ? -0.08 : 0.05;
+            const strength = (1 - dist / 120) * force;
             n.vx += (dx / dist) * strength;
             n.vy += (dy / dist) * strength;
           }
         }
-
         n.x += n.vx;
         n.y += n.vy;
-        n.vx *= 0.995;
-        n.vy *= 0.995;
-        n.vx += (Math.random() - 0.5) * 0.03;
-        n.vy += (Math.random() - 0.5) * 0.03;
+        n.vx *= 0.996;
+        n.vy *= 0.996;
+        n.vx += (Math.random() - 0.5) * 0.02;
+        n.vy += (Math.random() - 0.5) * 0.02;
         if (n.x < 20 || n.x > rw - 20) n.vx *= -1;
         if (n.y < 20 || n.y > rh - 20) n.vy *= -1;
       }
 
-      // Tooltip: find closest node to mouse
+      // Detect hovered main node
       const now = Date.now();
-      if (mouseActive && now - lastTooltipCheck > 50) {
-        lastTooltipCheck = now;
-        let closest: typeof hoveredRef.current = null;
-        let closestDist = 30;
+      if (mouseActive && now - lastCheck > 60) {
+        lastCheck = now;
+        let foundLayer = -1;
         for (const n of nodes) {
-          const d = Math.hypot(n.x - mx, n.y - my);
-          if (d < closestDist) {
-            closestDist = d;
-            closest = { label: n.label, color: n.color, x: n.x, y: n.y };
+          if (!n.isMain) continue;
+          if (Math.hypot(n.x - mx, n.y - my) < 40) {
+            foundLayer = n.layer;
+            break;
           }
         }
-        if (closest !== hoveredRef.current) {
-          hoveredRef.current = closest;
-          setTooltip(closest);
+        if (foundLayer !== activeLayerRef.current) {
+          activeLayerRef.current = foundLayer;
+          if (foundLayer >= 0) {
+            const s = services[foundLayer];
+            const mainNode = nodes.find(n => n.isMain && n.layer === foundLayer)!;
+            setActiveService({ title: s.title, tagline: s.tagline, items: s.items, color: serviceColors[s.title] || "#888", x: mainNode.x, y: mainNode.y });
+          } else {
+            setActiveService(null);
+          }
         }
       }
 
-      // Draw connections between nodes in same layer
+      // ── Draw connections ──
+      // Same-layer connections
       for (let i = 0; i < nodes.length; i++) {
         for (let j = i + 1; j < nodes.length; j++) {
           const a = nodes[i], b = nodes[j];
           if (a.layer !== b.layer) continue;
           const dist = Math.hypot(a.x - b.x, a.y - b.y);
-          if (dist < 220) {
-            const alpha = (1 - dist / 220) * 0.25;
-            ctx.strokeStyle = a.color;
-            ctx.globalAlpha = alpha;
-            ctx.lineWidth = 0.8;
-            ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
-            ctx.stroke();
-          }
+          if (dist > 220) continue;
+          const isActive = aLayer === a.layer;
+          const alpha = (1 - dist / 220) * (isActive ? 0.4 : (aLayer >= 0 ? 0.05 : 0.2));
+          ctx.strokeStyle = a.color;
+          ctx.globalAlpha = alpha;
+          ctx.lineWidth = isActive ? 1.2 : 0.6;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
         }
       }
 
       // Cross-layer connections
       for (const a of nodes) {
         for (const b of nodes) {
-          if (Math.abs(b.layer - a.layer) === 1) {
-            const dist = Math.hypot(a.x - b.x, a.y - b.y);
-            const maxDist = 350;
-            if (dist < maxDist) {
-              const alpha = (1 - dist / maxDist) * (a.isMain && b.isMain ? 0.18 : 0.08);
-              ctx.strokeStyle = "#fff";
-              ctx.globalAlpha = alpha;
-              ctx.lineWidth = a.isMain && b.isMain ? 0.8 : 0.4;
-              ctx.beginPath();
-              ctx.moveTo(a.x, a.y);
-              ctx.lineTo(b.x, b.y);
-              ctx.stroke();
-            }
-          }
+          if (Math.abs(b.layer - a.layer) !== 1) continue;
+          const dist = Math.hypot(a.x - b.x, a.y - b.y);
+          if (dist > 350) continue;
+          const isActive = aLayer === a.layer || aLayer === b.layer;
+          const alpha = (1 - dist / 350) * (isActive ? 0.15 : (aLayer >= 0 ? 0.02 : 0.06));
+          ctx.strokeStyle = "#fff";
+          ctx.globalAlpha = alpha;
+          ctx.lineWidth = a.isMain && b.isMain ? 0.8 : 0.3;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
         }
       }
 
-      // Draw nodes
+      // ── Draw nodes ──
       ctx.globalAlpha = 1;
       for (const n of nodes) {
-        const isHovered = hoveredRef.current && Math.hypot(n.x - hoveredRef.current.x, n.y - hoveredRef.current.y) < 2;
-        
+        const isActive = aLayer === n.layer;
+        const isDimmed = aLayer >= 0 && !isActive;
+
         // Glow
         ctx.fillStyle = n.color;
-        ctx.globalAlpha = isHovered ? 0.12 : 0.04;
+        ctx.globalAlpha = isActive ? 0.1 : (isDimmed ? 0.01 : 0.04);
         ctx.beginPath();
-        ctx.arc(n.x, n.y, n.r * (isHovered ? 7 : 5), 0, Math.PI * 2);
+        ctx.arc(n.x, n.y, n.r * 5, 0, Math.PI * 2);
         ctx.fill();
 
-        // Node
-        ctx.globalAlpha = n.isMain ? 0.8 : (isHovered ? 0.7 : 0.4);
+        // Node circle
+        ctx.globalAlpha = n.isMain
+          ? (isActive ? 0.9 : (isDimmed ? 0.15 : 0.7))
+          : (isActive ? 0.7 : (isDimmed ? 0.08 : 0.35));
         ctx.fillStyle = n.color;
         ctx.beginPath();
-        ctx.arc(n.x, n.y, n.r * (isHovered ? 1.4 : 1), 0, Math.PI * 2);
+        ctx.arc(n.x, n.y, n.r * (isActive && n.isMain ? 1.3 : 1), 0, Math.PI * 2);
         ctx.fill();
 
-        // Label for main nodes (always visible)
+        // Main node labels (always)
         if (n.isMain) {
-          ctx.globalAlpha = 0.7;
+          ctx.globalAlpha = isActive ? 0.95 : (isDimmed ? 0.15 : 0.6);
           ctx.fillStyle = n.color;
-          ctx.font = "700 10px 'JetBrains Mono', monospace";
+          ctx.font = `700 ${isActive ? 11 : 10}px 'JetBrains Mono', monospace`;
           ctx.textAlign = "center";
-          ctx.fillText(n.label.toUpperCase(), n.x, n.y - 18);
-          // Subtitle
-          const count = services.find(s => s.title === n.label)?.items.length || 0;
-          ctx.globalAlpha = 0.35;
+          ctx.fillText(n.label.toUpperCase(), n.x, n.y - 20);
+          const count = services[n.layer]?.items.length || 0;
+          ctx.globalAlpha = isActive ? 0.5 : (isDimmed ? 0.08 : 0.25);
           ctx.font = "400 8px 'JetBrains Mono', monospace";
-          ctx.fillText(`LAYER ${n.layer + 1} · ${count} NODES`, n.x, n.y - 7);
+          ctx.fillText(`${count} capabilities`, n.x, n.y - 9);
         }
 
-        // Label for child nodes when nearby mouse
-        if (!n.isMain && mouseActive) {
-          const dMouse = Math.hypot(n.x - mx, n.y - my);
-          if (dMouse < 80) {
-            ctx.globalAlpha = Math.max(0, (1 - dMouse / 80) * 0.7);
-            ctx.fillStyle = n.color;
-            ctx.font = "400 8px 'JetBrains Mono', monospace";
-            ctx.textAlign = "center";
-            ctx.fillText(n.label, n.x, n.y + n.r + 12);
-          }
+        // Child node labels — show ALL when layer is active
+        if (!n.isMain && isActive) {
+          ctx.globalAlpha = 0.8;
+          ctx.fillStyle = n.color;
+          ctx.font = "500 8px 'JetBrains Mono', monospace";
+          ctx.textAlign = "left";
+          ctx.fillText(n.label, n.x + n.r + 6, n.y + 3);
         }
       }
       ctx.globalAlpha = 1;
 
-      // Pulsing data signals
+      // Data signal particles
       const time = Date.now() * 0.001;
       for (let i = 0; i < nodes.length; i++) {
         const a = nodes[i];
         if (!a.isMain) continue;
+        const isActive = aLayer === a.layer;
+        if (aLayer >= 0 && !isActive) continue;
         for (let j = 0; j < nodes.length; j++) {
           const b = nodes[j];
           if (b.layer !== a.layer || b.isMain || i === j) continue;
           const dist = Math.hypot(a.x - b.x, a.y - b.y);
-          if (dist > 150) continue;
+          if (dist > 180) continue;
           const t = ((time * 0.5 + i * 0.3 + j * 0.1) % 1);
-          const px = a.x + (b.x - a.x) * t;
-          const py = a.y + (b.y - a.y) * t;
           ctx.fillStyle = a.color;
-          ctx.globalAlpha = 0.5;
+          ctx.globalAlpha = isActive ? 0.7 : 0.35;
           ctx.beginPath();
-          ctx.arc(px, py, 1.5, 0, Math.PI * 2);
+          ctx.arc(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t, isActive ? 2 : 1.5, 0, Math.PI * 2);
           ctx.fill();
         }
       }
@@ -282,16 +281,51 @@ const NeuralSolutionsCanvas = () => {
   return (
     <div className="relative w-full h-full" style={{ minHeight: 640 }}>
       <canvas ref={canvasRef} className="w-full h-full" style={{ minHeight: 640 }} />
-      {tooltip && (
-        <div
-          className="absolute z-50 pointer-events-none px-3 py-2 border border-border bg-background/95 backdrop-blur-sm shadow-lg"
-          style={{ left: tooltip.x + 16, top: tooltip.y - 12, borderColor: tooltip.color + "40" }}
-        >
-          <p className="font-mono text-[11px] whitespace-nowrap" style={{ color: tooltip.color }}>
-            {tooltip.label}
-          </p>
-        </div>
-      )}
+      {/* Info panel when hovering a domain */}
+      <AnimatePresence>
+        {activeService && (
+          <motion.div
+            key={activeService.title}
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -10 }}
+            transition={{ duration: 0.2 }}
+            className="absolute top-4 left-4 z-50 pointer-events-none max-w-xs border border-border bg-background/90 backdrop-blur-md p-5"
+            style={{ borderColor: activeService.color + "30" }}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <span className="w-3 h-3 rounded-sm flex-shrink-0" style={{ backgroundColor: activeService.color }} />
+              <h3 className="font-display text-lg font-bold" style={{ color: activeService.color }}>
+                {activeService.title}
+              </h3>
+            </div>
+            <p className="font-mono text-[10px] text-muted-foreground/60 mb-3 leading-relaxed">
+              {activeService.tagline}
+            </p>
+            <div className="border-t border-border pt-3 space-y-1.5">
+              {activeService.items.map((item, i) => (
+                <div key={item} className="flex items-center gap-2">
+                  <span className="font-mono text-[9px] text-muted-foreground/30 w-4">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="font-mono text-[11px] text-foreground/80">{item}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      {/* Legend */}
+      <div className="absolute top-4 right-4 z-40 pointer-events-none flex flex-wrap gap-3 max-w-sm justify-end">
+        {services.map((s) => (
+          <span
+            key={s.slug}
+            className="flex items-center gap-1.5 font-mono text-[9px] tracking-wider"
+            style={{ color: serviceColors[s.title], opacity: activeService ? (activeService.title === s.title ? 1 : 0.25) : 0.6 }}
+          >
+            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: serviceColors[s.title] }} />
+            {s.title} ({s.items.length})
+          </span>
+        ))}
+      </div>
     </div>
   );
 };
