@@ -146,20 +146,16 @@ const NeuralSolutionsCanvas = () => {
     services.forEach((s, li) => {
       const color = serviceColors[s.title] || "#888";
       const xBase = (cw / (layers + 1)) * (li + 1);
-      const yBase = ch * 0.22;
-      nodes.push({ x: xBase, y: yBase, vx: (Math.random() - 0.5) * 0.15, vy: (Math.random() - 0.5) * 0.15, r: 10, layer: li, label: s.title, color, isMain: true });
+      const yBase = 60;
+      nodes.push({ x: xBase, y: yBase, vx: 0, vy: 0, r: 10, layer: li, label: s.title, color, isMain: true });
       const itemCount = s.items.length;
       s.items.forEach((item, ci) => {
-        // Spread children in a full semicircle below the parent with staggered distances
-        const arcSpread = Math.PI * 1.0; // 180° semicircle
-        const arcStart = Math.PI / 2 - arcSpread / 2; // centered below
-        const angle = itemCount === 1 ? Math.PI / 2 : arcStart + (ci / (itemCount - 1)) * arcSpread;
-        const baseDist = 140 + ci * 15; // further from parent
-        const stagger = ci % 2 === 0 ? 20 : 0; // alternating radial offset
-        const dist = baseDist + stagger;
-        const xItem = xBase + Math.cos(angle) * dist;
-        const yItem = yBase + Math.sin(angle) * dist;
-        nodes.push({ x: xItem, y: yItem, vx: (Math.random() - 0.5) * 0.03, vy: (Math.random() - 0.5) * 0.03, r: 5, layer: li, label: item, color, isMain: false });
+        // Vertical column below parent, evenly spaced
+        const startY = yBase + 55;
+        const spacingY = Math.min(45, (ch - startY - 30) / itemCount);
+        const xItem = xBase;
+        const yItem = startY + ci * spacingY;
+        nodes.push({ x: xItem, y: yItem, vx: 0, vy: 0, r: 5, layer: li, label: item, color, isMain: false });
       });
     });
     nodesRef.current = nodes;
@@ -178,49 +174,40 @@ const NeuralSolutionsCanvas = () => {
       const mouseActive = mouseRef.current.active;
       const aLayer = activeLayerRef.current;
 
-      // Mouse interaction — freeze nearby nodes so panel stays stable
+      // Physics: spring back to base positions with gentle wobble
       const isDragging = dragRef.current.dragging;
-      for (const n of nodes) {
-        if (isDragging && nodes.indexOf(n) === dragRef.current.nodeIdx) continue;
+      const physicsTime = Date.now() * 0.001;
+      for (let ni = 0; ni < nodes.length; ni++) {
+        const n = nodes[ni];
+        if (isDragging && ni === dragRef.current.nodeIdx) continue;
 
-        if (mouseActive && !isDragging) {
-          const isActiveLayer = activeLayerRef.current === n.layer;
-          const distToMouse = Math.hypot(n.x - mx, n.y - my);
-          if (isActiveLayer || (n.isMain && distToMouse < 50)) {
-            // Freeze: strongly dampen velocity so nodes don't jitter
-            n.vx *= 0.8;
-            n.vy *= 0.8;
-          }
+        // Compute base position
+        const xBase = (rw / (layers + 1)) * (n.layer + 1);
+        let yBase: number;
+        if (n.isMain) {
+          yBase = 60;
+        } else {
+          const childrenOfLayer = nodes.filter(nd => nd.layer === n.layer && !nd.isMain);
+          const childIdx = childrenOfLayer.indexOf(n);
+          const itemCount = childrenOfLayer.length;
+          const startY = 115;
+          const spacingY = Math.min(45, (rh - startY - 30) / itemCount);
+          yBase = startY + childIdx * spacingY;
         }
+
+        // Gentle idle wobble
+        const wobbleX = Math.sin(physicsTime * 0.4 + ni * 1.7) * 2;
+        const wobbleY = Math.cos(physicsTime * 0.35 + ni * 2.1) * 1.5;
+        const targetX = xBase + wobbleX;
+        const targetY = yBase + wobbleY;
+
+        // Spring toward target
+        n.vx += (targetX - n.x) * 0.04;
+        n.vy += (targetY - n.y) * 0.04;
+        n.vx *= 0.85;
+        n.vy *= 0.85;
         n.x += n.vx;
         n.y += n.vy;
-        n.vx *= 0.997;
-        n.vy *= 0.997;
-        // Very gentle slow drift
-        n.vx += (Math.random() - 0.5) * 0.008;
-        n.vy += (Math.random() - 0.5) * 0.008;
-        if (n.x < 20 || n.x > rw - 20) n.vx *= -1;
-        if (n.y < 20 || n.y > rh - 20) n.vy *= -1;
-      }
-
-      // Repulsion pass: push same-layer child nodes apart if too close
-      for (let i = 0; i < nodes.length; i++) {
-        if (nodes[i].isMain) continue;
-        for (let j = i + 1; j < nodes.length; j++) {
-          if (nodes[j].isMain || nodes[j].layer !== nodes[i].layer) continue;
-          const dx = nodes[j].x - nodes[i].x;
-          const dy = nodes[j].y - nodes[i].y;
-          const d = Math.hypot(dx, dy);
-          if (d < 30 && d > 0.1) {
-            const force = (30 - d) * 0.05;
-            const nx = dx / d;
-            const ny = dy / d;
-            nodes[i].x -= nx * force;
-            nodes[i].y -= ny * force;
-            nodes[j].x += nx * force;
-            nodes[j].y += ny * force;
-          }
-        }
       }
 
       // Update cursor
