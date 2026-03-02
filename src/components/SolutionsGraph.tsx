@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, Network, Brain, List, ExternalLink } from "lucide-react";
 import { services } from "@/components/ServicesGrid";
+import ContextGraphCanvas from "@/components/ContextGraphCanvas";
 
 type ViewMode = "graph" | "neural" | "structured";
 
@@ -866,144 +867,25 @@ const SolutionsGraph = () => {
                   Domains ▾
                 </p>
                 <div className="space-y-1">
-                  {nodes.map((node) => {
-                    const active = isActive(node.id);
+                  {services.map((s, i) => {
+                    const color = serviceColors[s.title] || "#888";
                     return (
-                      <button
-                        key={node.id}
+                      <div
+                        key={s.slug}
                         className="w-full flex items-center gap-3 py-2.5 px-2 hover:bg-secondary/20 transition-all text-left"
-                        onMouseEnter={() => setHoveredNode(node.id)}
-                        onMouseLeave={() => setHoveredNode(null)}
-                        onClick={() => setSelectedNode(active && selectedNode?.id === node.id ? null : node)}
-                        style={{ borderLeft: active ? `2px solid ${node.color}` : "2px solid transparent" }}
                       >
-                        <span className="w-2.5 h-2.5 rounded-sm flex-shrink-0 transition-all duration-300" style={{ backgroundColor: active ? node.color : "hsl(var(--muted-foreground) / 0.2)" }} />
-                        <span className="font-mono text-[11px] flex-1 transition-all duration-300" style={{ color: active ? node.color : "hsl(var(--muted-foreground) / 0.5)" }}>{node.label}</span>
-                        <span className="font-mono text-[9px] text-muted-foreground/20">{node.items.length}</span>
-                      </button>
+                        <span className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ backgroundColor: color, opacity: 0.5 }} />
+                        <span className="font-mono text-[11px] flex-1 text-muted-foreground/50">{s.title}</span>
+                        <span className="font-mono text-[9px] text-muted-foreground/20">{s.items.length}</span>
+                      </div>
                     );
                   })}
                 </div>
               </div>
 
-              {/* Graph SVG */}
+              {/* Canvas Graph */}
               <div className="flex-1 border border-border relative overflow-hidden" style={{ minHeight: 640 }}>
-                <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
-                <svg ref={svgRef} viewBox="0 0 800 640" className="w-full h-full relative z-10" style={{ cursor: dragState.current.dragging ? 'grabbing' : 'default' }} onMouseMove={handleDragMove} onMouseUp={handleDragEnd} onMouseLeave={() => { setHoveredNode(null); setHoveredChild(null); handleDragEnd(); }}>
-                  {useMemo(() => Array.from({ length: 40 }).map((_, i) => {
-                    const bx = 30 + (i * 19.3) % 740;
-                    const by = 30 + (i * 23.7) % 580;
-                    const r = 0.8 + (i % 3) * 0.6;
-                    const dur = 6 + (i % 5) * 2;
-                    const dx = 8 + (i % 4) * 4;
-                    const dy = 6 + (i % 3) * 3;
-                    return (
-                      <circle key={`dot-${i}`} r={r} fill="hsl(var(--muted-foreground))" fillOpacity={0.06 + (i % 4) * 0.015}>
-                        <animate attributeName="cx" values={`${bx};${bx + dx};${bx - dx * 0.5};${bx}`} dur={`${dur}s`} repeatCount="indefinite" />
-                        <animate attributeName="cy" values={`${by};${by - dy};${by + dy * 0.7};${by}`} dur={`${dur * 1.3}s`} repeatCount="indefinite" />
-                        <animate attributeName="fill-opacity" values={`${0.04};${0.09};${0.04}`} dur={`${dur * 0.8}s`} repeatCount="indefinite" />
-                      </circle>
-                    );
-                  }), [])}
-                  {nodes.map((node) => (
-                    <line key={`line-${node.id}`} x1={cx} y1={cy} x2={node.x} y2={node.y} stroke={isActive(node.id) ? node.color : "hsl(var(--border))"} strokeWidth={isActive(node.id) ? 2 : 0.5} strokeOpacity={isActive(node.id) ? 0.7 : 0.12} className="transition-all duration-500" />
-                  ))}
-                  {nodes.map((node) => node.children?.map((child, ci) => (
-                    <line key={`child-line-${node.id}-${ci}`} x1={node.x} y1={node.y} x2={child.x} y2={child.y} stroke={isActive(node.id) ? node.color : "hsl(var(--border))"} strokeWidth={isActive(node.id) ? 1.2 : 0.4} strokeOpacity={isActive(node.id) ? 0.5 : 0.08} className="transition-all duration-500" />
-                  )))}
-                  <circle cx={cx} cy={cy} r={36} fill="none" stroke={selectedNode ? selectedNode.color : "hsl(var(--muted-foreground) / 0.15)"} strokeWidth={1.5} className="transition-all duration-700">
-                    <animate attributeName="r" values="34;38;34" dur="4s" repeatCount="indefinite" />
-                    <animate attributeName="stroke-opacity" values="0.3;0.6;0.3" dur="4s" repeatCount="indefinite" />
-                  </circle>
-                  <circle cx={cx} cy={cy} r={5} fill={selectedNode ? selectedNode.color : "hsl(var(--muted-foreground) / 0.3)"} className="transition-all duration-500" />
-                  <text x={cx} y={cy - 2} textAnchor="middle" dominantBaseline="middle" className="font-mono text-[7px] fill-muted-foreground/30 uppercase tracking-[0.3em]">Solutions</text>
-                  <text x={cx} y={cy + 52} textAnchor="middle" className="font-mono text-[7px] fill-muted-foreground/20 uppercase tracking-widest">Context Graph</text>
-                  {nodes.map((node) => node.children?.map((child, ci) => (
-                    <g
-                      key={`child-${node.id}-${ci}`}
-                      className="cursor-pointer"
-                      onMouseEnter={(e) => handleChildHover(e, child.label, node.color)}
-                      onMouseMove={(e) => handleChildHover(e, child.label, node.color)}
-                      onMouseLeave={() => setHoveredChild(null)}
-                    >
-                      <circle cx={child.x} cy={child.y} r={child.r + 4} fill="transparent" />
-                      <circle cx={child.x} cy={child.y} r={child.r} fill={isActive(node.id) ? node.color : "hsl(var(--muted-foreground) / 0.12)"} fillOpacity={isActive(node.id) ? 0.55 : 0.5} stroke={isActive(node.id) ? node.color : "hsl(var(--muted-foreground) / 0.15)"} strokeWidth={isActive(node.id) ? 1 : 0.5} className="transition-all duration-500 hover:fill-opacity-80" />
-                      {isActive(node.id) && (
-                        <text x={child.x} y={child.y + child.r + 10} textAnchor="middle" className="font-mono text-[7px] pointer-events-none" fill={node.color} fillOpacity={0.85}>
-                          {child.label}
-                        </text>
-                      )}
-                    </g>
-                  )))}
-                  {nodes.map((node) => {
-                    const active = isActive(node.id);
-                    return (
-                      <g key={node.id} onMouseEnter={() => !dragState.current.dragging && setHoveredNode(node.id)} onMouseLeave={() => !dragState.current.dragging && setHoveredNode(null)} onMouseDown={(e) => handleDragStart(e, node.id)} onClick={() => { if (dragState.current.dragging) return; setSelectedNode(active && selectedNode?.id === node.id ? null : node); }} className="cursor-grab active:cursor-grabbing">
-                        {active && (<><circle cx={node.x} cy={node.y} r={node.r + 12} fill={node.color} fillOpacity={0.04} /><circle cx={node.x} cy={node.y} r={node.r + 4} fill="none" stroke={node.color} strokeWidth={0.5} strokeOpacity={0.3} /></>)}
-                        <circle cx={node.x} cy={node.y} r={node.r} fill={active ? node.color : "hsl(var(--muted-foreground) / 0.06)"} fillOpacity={active ? 0.2 : 1} stroke={active ? node.color : "hsl(var(--muted-foreground) / 0.15)"} strokeWidth={active ? 2 : 0.8} className="transition-all duration-500" />
-                        <text x={node.x} y={node.y + 1} textAnchor="middle" dominantBaseline="middle" className="font-mono text-[8px] pointer-events-none uppercase tracking-wider" fill={active ? node.color : "hsl(var(--muted-foreground) / 0.4)"}>{node.label}</text>
-                        <text x={node.x} y={node.y + node.r + 14} textAnchor="middle" className="font-mono text-[6px] pointer-events-none" fill={active ? node.color : "hsl(var(--muted-foreground) / 0.2)"}>{node.items.length} capabilities</text>
-                      </g>
-                    );
-                  })}
-                </svg>
-                {/* Hover tooltip for child nodes */}
-                {hoveredChild && (
-                  <div
-                    className="absolute z-50 pointer-events-none px-3 py-2 border border-border bg-background/95 backdrop-blur-sm shadow-lg"
-                    style={{
-                      left: hoveredChild.x + 12,
-                      top: hoveredChild.y - 8,
-                      borderColor: hoveredChild.parentColor + "40",
-                    }}
-                  >
-                    <p className="font-mono text-[11px] text-foreground whitespace-nowrap" style={{ color: hoveredChild.parentColor }}>
-                      {hoveredChild.label}
-                    </p>
-                  </div>
-                )}
-                {/* Floating overlay detail panel */}
-                <AnimatePresence>
-                  {selectedNode && (
-                    <motion.div
-                      key={selectedNode.id}
-                      initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                      animate={{ opacity: 1, scale: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                      transition={{ duration: 0.25 }}
-                      className="absolute z-50 top-4 right-4 w-72 border bg-background/95 backdrop-blur-md p-5 shadow-2xl"
-                      style={{ borderColor: selectedNode.color + "40" }}
-                    >
-                      <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center gap-2.5">
-                          <span className="w-3 h-3 rounded-full" style={{ backgroundColor: selectedNode.color }} />
-                          <h3 className="font-display text-lg font-bold text-foreground">{selectedNode.label}</h3>
-                        </div>
-                        <Link to={`/solutions/${selectedNode.slug}`} className="text-muted-foreground/40 hover:text-foreground transition-colors">
-                          <ExternalLink size={14} />
-                        </Link>
-                      </div>
-                      <p className="font-mono text-[11px] text-muted-foreground/60 mb-4 leading-relaxed">{selectedNode.tagline}</p>
-                      <div className="border-t border-border pt-4">
-                        <div className="space-y-0">
-                          {selectedNode.items.map((item, idx) => (
-                            <div key={item} className="flex items-center gap-3 py-2.5 border-b border-border/30 last:border-0">
-                              <span className="font-mono text-[10px] text-muted-foreground/30 w-5">{String(idx + 1).padStart(2, "0")}</span>
-                              <span className="font-mono text-[11px] text-foreground/80">{item}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      <Link
-                        to={`/solutions/${selectedNode.slug}`}
-                        className="flex items-center gap-2 font-mono text-[10px] tracking-widest uppercase mt-4 py-2 transition-all group"
-                        style={{ color: selectedNode.color }}
-                      >
-                        Explore {selectedNode.label} <ArrowRight size={10} className="group-hover:translate-x-1 transition-transform" />
-                      </Link>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <ContextGraphCanvas />
               </div>
             </div>
           </motion.div>
