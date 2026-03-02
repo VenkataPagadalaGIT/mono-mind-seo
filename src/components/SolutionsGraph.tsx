@@ -364,13 +364,13 @@ const NeuralSolutionsCanvas = () => {
           ctx.fillText(`${count} capabilities`, n.x, n.y - 9);
         }
 
-        // Child node labels — truncate long names, tooltip handles full text
+        // Child node labels — positioned further out, bigger text
         if (!n.isMain && isActive) {
-          ctx.globalAlpha = isHoveredChild ? 1 : 0.65;
+          ctx.globalAlpha = isHoveredChild ? 1 : 0.75;
           ctx.fillStyle = n.color;
-          ctx.font = `${isHoveredChild ? '700' : '500'} ${isHoveredChild ? 9 : 8}px 'JetBrains Mono', monospace`;
+          ctx.font = `${isHoveredChild ? '700' : '500'} ${isHoveredChild ? 11 : 10}px 'JetBrains Mono', monospace`;
           ctx.textAlign = "left";
-          const maxLabelWidth = 90;
+          const maxLabelWidth = 120;
           let displayLabel = n.label;
           if (ctx.measureText(displayLabel).width > maxLabelWidth && !isHoveredChild) {
             while (ctx.measureText(displayLabel + '…').width > maxLabelWidth && displayLabel.length > 3) {
@@ -378,7 +378,7 @@ const NeuralSolutionsCanvas = () => {
             }
             displayLabel += '…';
           }
-          ctx.fillText(displayLabel, n.x + n.r * nodeScale + 6, n.y + 3);
+          ctx.fillText(displayLabel, n.x + n.r * nodeScale + 10, n.y + 4);
         }
       }
       ctx.globalAlpha = 1;
