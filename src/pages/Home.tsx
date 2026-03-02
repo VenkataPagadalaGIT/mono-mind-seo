@@ -18,9 +18,23 @@ const Home = () => {
           [ Portfolio ]
         </p>
 
-        <h1 className="font-display text-5xl sm:text-7xl md:text-8xl font-bold tracking-tight text-foreground text-glow mb-6">
+        <h1 className="font-display text-5xl sm:text-7xl md:text-8xl font-bold tracking-tight text-foreground text-glow mb-4">
           Venkata Pagadala
         </h1>
+
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mb-6">
+          {[
+            { label: "Impressions", value: "404K+" },
+            { label: "Followers", value: "18K+" },
+            { label: "Connections", value: "500+" },
+            { label: "Reach", value: "132K+" },
+          ].map((stat) => (
+            <div key={stat.label} className="flex items-center gap-1.5">
+              <span className="font-mono text-sm sm:text-base font-bold text-foreground">{stat.value}</span>
+              <span className="font-mono text-[10px] text-muted-foreground/50 uppercase tracking-wider">{stat.label}</span>
+            </div>
+          ))}
+        </div>
 
         <div className="h-8 flex items-center justify-center">
           <TypewriterText
