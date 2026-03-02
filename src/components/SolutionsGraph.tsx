@@ -56,6 +56,7 @@ const NeuralSolutionsCanvas = () => {
   const activeLayerRef = useRef<number>(-1);
   const hoveredChildRef = useRef<string | null>(null);
   const [activeService, setActiveService] = useState<{ title: string; slug: string; tagline: string; items: string[]; color: string; highlightItem?: string } | null>(null);
+  const [tooltip, setTooltip] = useState<{ label: string; x: number; y: number; color: string } | null>(null);
   const nodesRef = useRef<{ x: number; y: number; vx: number; vy: number; r: number; layer: number; label: string; color: string; isMain: boolean }[]>([]);
 
   useEffect(() => {
@@ -126,6 +127,7 @@ const NeuralSolutionsCanvas = () => {
       dragRef.current.dragging = false;
       dragRef.current.nodeIdx = -1;
       setActiveService(null);
+      setTooltip(null);
       canvas.style.cursor = "default";
     };
     canvas.addEventListener("mousemove", onMouseMove);
@@ -261,6 +263,18 @@ const NeuralSolutionsCanvas = () => {
           } else {
             setActiveService(null);
           }
+          // Update tooltip for child nodes
+          if (foundChild && foundLayer >= 0) {
+            const childNode = nodes.find(n => !n.isMain && n.label === foundChild && n.layer === foundLayer);
+            if (childNode) {
+              const rect = canvas.getBoundingClientRect();
+              setTooltip({ label: foundChild, x: childNode.x, y: childNode.y, color: serviceColors[services[foundLayer].title] || "#888" });
+            } else {
+              setTooltip(null);
+            }
+          } else {
+            setTooltip(null);
+          }
         }
       }
 
@@ -350,13 +364,21 @@ const NeuralSolutionsCanvas = () => {
           ctx.fillText(`${count} capabilities`, n.x, n.y - 9);
         }
 
-        // Child node labels — show ALL when layer is active, bold the hovered one
+        // Child node labels — truncate long names, tooltip handles full text
         if (!n.isMain && isActive) {
           ctx.globalAlpha = isHoveredChild ? 1 : 0.65;
           ctx.fillStyle = n.color;
           ctx.font = `${isHoveredChild ? '700' : '500'} ${isHoveredChild ? 9 : 8}px 'JetBrains Mono', monospace`;
           ctx.textAlign = "left";
-          ctx.fillText(n.label, n.x + n.r * nodeScale + 6, n.y + 3);
+          const maxLabelWidth = 90;
+          let displayLabel = n.label;
+          if (ctx.measureText(displayLabel).width > maxLabelWidth && !isHoveredChild) {
+            while (ctx.measureText(displayLabel + '…').width > maxLabelWidth && displayLabel.length > 3) {
+              displayLabel = displayLabel.slice(0, -1);
+            }
+            displayLabel += '…';
+          }
+          ctx.fillText(displayLabel, n.x + n.r * nodeScale + 6, n.y + 3);
         }
       }
       ctx.globalAlpha = 1;
@@ -401,6 +423,29 @@ const NeuralSolutionsCanvas = () => {
   return (
     <div className="relative w-full h-full" style={{ minHeight: 640 }}>
       <canvas ref={canvasRef} className="w-full h-full cursor-default" style={{ minHeight: 640 }} />
+      {/* Floating tooltip for child nodes */}
+      <AnimatePresence>
+        {tooltip && (
+          <motion.div
+            key="child-tooltip"
+            initial={{ opacity: 0, y: 4, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.12 }}
+            className="absolute z-[60] pointer-events-none px-3 py-1.5 rounded-md border bg-background/95 backdrop-blur-lg shadow-xl"
+            style={{
+              left: tooltip.x + 16,
+              top: tooltip.y - 12,
+              borderColor: tooltip.color + '50',
+              boxShadow: `0 4px 20px ${tooltip.color}20`,
+            }}
+          >
+            <span className="font-mono text-xs font-semibold whitespace-nowrap" style={{ color: tooltip.color }}>
+              {tooltip.label}
+            </span>
+          </motion.div>
+        )}
+      </AnimatePresence>
       {/* Info panel when hovering a domain — CLICKABLE */}
       <AnimatePresence mode="wait">
         {activeService && (
