@@ -146,7 +146,7 @@ const NeuralSolutionsCanvas = () => {
     services.forEach((s, li) => {
       const color = serviceColors[s.title] || "#888";
       const xBase = (cw / (layers + 1)) * (li + 1);
-      const yBase = 60;
+      const yBase = 50;
       nodes.push({ x: xBase, y: yBase, vx: 0, vy: 0, r: 10, layer: li, label: s.title, color, isMain: true });
       const itemCount = s.items.length;
       s.items.forEach((item, ci) => {
@@ -185,12 +185,12 @@ const NeuralSolutionsCanvas = () => {
         const xBase = (rw / (layers + 1)) * (n.layer + 1);
         let yBase: number;
         if (n.isMain) {
-          yBase = 60;
+          yBase = 50;
         } else {
           const childrenOfLayer = nodes.filter(nd => nd.layer === n.layer && !nd.isMain);
           const childIdx = childrenOfLayer.indexOf(n);
           const itemCount = childrenOfLayer.length;
-          const startY = 115;
+          const startY = 100;
           const spacingY = Math.min(45, (rh - startY - 30) / itemCount);
           yBase = startY + childIdx * spacingY;
         }
@@ -481,7 +481,7 @@ const NeuralSolutionsCanvas = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.96 }}
             transition={{ type: "spring", stiffness: 400, damping: 25, mass: 0.8 }}
-            className={`absolute top-4 z-50 max-w-xs border-2 bg-background/95 backdrop-blur-xl p-5 cursor-pointer group hover:bg-background transition-all shadow-2xl rounded-lg ${activeService.title === 'AI Product' ? 'right-4' : 'left-4'}`}
+            className="absolute top-4 right-4 z-50 max-w-xs border-2 bg-background/95 backdrop-blur-xl p-5 cursor-pointer group hover:bg-background transition-all shadow-2xl rounded-lg"
             style={{ borderColor: activeService.color + "50", boxShadow: `0 8px 32px ${activeService.color}15, 0 0 0 1px ${activeService.color}10` }}
             onClick={() => navigate(`/solutions/${activeService.slug}`)}
           >
@@ -532,18 +532,20 @@ const NeuralSolutionsCanvas = () => {
           </motion.div>
         )}
       </AnimatePresence>
-      {/* Legend */}
-      <div className="absolute top-4 right-4 z-40 pointer-events-none flex flex-wrap gap-3 max-w-sm justify-end">
-        {services.map((s) => (
-          <span
-            key={s.slug}
-            className="flex items-center gap-1.5 font-mono text-[9px] tracking-wider"
-            style={{ color: serviceColors[s.title], opacity: activeService ? (activeService.title === s.title ? 1 : 0.25) : 0.6 }}
-          >
-            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: serviceColors[s.title] }} />
-            {s.title} ({s.items.length})
-          </span>
-        ))}
+      {/* Legend — bottom left, below canvas content */}
+      <div className="absolute bottom-4 left-4 z-40 pointer-events-none">
+        <div className="flex flex-wrap gap-x-4 gap-y-1.5">
+          {services.map((s) => (
+            <span
+              key={s.slug}
+              className="flex items-center gap-1.5 font-mono text-[9px] tracking-wider"
+              style={{ color: serviceColors[s.title], opacity: activeService ? (activeService.title === s.title ? 1 : 0.25) : 0.6 }}
+            >
+              <span className="w-2 h-2 rounded-full" style={{ backgroundColor: serviceColors[s.title] }} />
+              {s.title} ({s.items.length})
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   );
