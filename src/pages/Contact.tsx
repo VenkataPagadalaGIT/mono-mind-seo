@@ -52,6 +52,16 @@ const Contact = () => {
                 </div>
               </a>
 
+              <a
+                href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=7434105581101133824"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-3 font-mono text-sm text-white bg-[#0A66C2] hover:bg-[#004182] transition-all px-6 py-4"
+              >
+                <Linkedin size={18} />
+                <span className="tracking-widest uppercase text-xs font-bold">Subscribe on LinkedIn</span>
+              </a>
+
               <div className="flex items-center gap-4 font-mono text-sm text-muted-foreground border border-border/40 px-6 py-4">
                 <MapPin size={18} />
                 <div>

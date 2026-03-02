@@ -56,7 +56,16 @@ const Home = () => {
           />
         </div>
 
-        <div className="mt-16 flex flex-col items-center gap-6">
+        <div className="mt-16 flex flex-col items-center gap-4">
+          <a
+            href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=7434105581101133824"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-[#0A66C2] hover:bg-[#004182] px-5 py-2.5 font-mono text-xs tracking-widest uppercase text-white transition-all rounded-full"
+          >
+            <Linkedin size={14} />
+            Subscribe on LinkedIn
+          </a>
           <a
             href="https://www.linkedin.com/in/venkata-pagadala/"
             target="_blank"
