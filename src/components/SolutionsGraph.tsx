@@ -644,9 +644,15 @@ const SolutionsGraph = () => {
   const [hoveredChild, setHoveredChild] = useState<{ label: string; x: number; y: number; parentColor: string } | null>(null);
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
   const svgRef = useRef<SVGSVGElement>(null);
+  const baseNodes = useMemo(() => buildServiceNodes(), []);
   const [nodePositions, setNodePositions] = useState<GraphNode[]>(() => buildServiceNodes());
   const nodes = nodePositions;
-  const dragState = useRef<{ dragging: boolean; nodeId: string | null; startX: number; startY: number; origX: number; origY: number }>({ dragging: false, nodeId: null, startX: 0, startY: 0, origX: 0, origY: 0 });
+  const dragState = useRef<{ dragging: boolean; nodeId: string | null }>({ dragging: false, nodeId: null });
+  const targetPos = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+  const velocities = useRef<Map<string, { vx: number; vy: number }>>(new Map());
+  const childVelocities = useRef<Map<string, { vx: number; vy: number }>>(new Map());
+  const animFrame = useRef<number>(0);
+  const isDraggingRef = useRef(false);
 
   const getSVGPoint = useCallback((clientX: number, clientY: number) => {
     const svg = svgRef.current;
@@ -660,31 +666,90 @@ const SolutionsGraph = () => {
     return { x: svgPt.x, y: svgPt.y };
   }, []);
 
+  // Physics loop for jellyfish motion
+  useEffect(() => {
+    const spring = 0.08;
+    const damping = 0.75;
+    const childSpring = 0.04;
+    const childDamping = 0.7;
+
+    const tick = () => {
+      if (!isDraggingRef.current && !dragState.current.dragging) {
+        animFrame.current = requestAnimationFrame(tick);
+        return;
+      }
+
+      setNodePositions(prev => {
+        let changed = false;
+        const next = prev.map(n => {
+          if (n.id !== dragState.current.nodeId) return n;
+
+          const vel = velocities.current.get(n.id) || { vx: 0, vy: 0 };
+          const fx = (targetPos.current.x - n.x) * spring;
+          const fy = (targetPos.current.y - n.y) * spring;
+          vel.vx = (vel.vx + fx) * damping;
+          vel.vy = (vel.vy + fy) * damping;
+          velocities.current.set(n.id, vel);
+
+          const newX = n.x + vel.vx;
+          const newY = n.y + vel.vy;
+
+          if (Math.abs(vel.vx) > 0.01 || Math.abs(vel.vy) > 0.01) changed = true;
+
+          const baseNode = baseNodes.find(b => b.id === n.id);
+
+          const newChildren = n.children.map((c, ci) => {
+            const key = `${n.id}-${ci}`;
+            const cv = childVelocities.current.get(key) || { vx: 0, vy: 0 };
+
+            const baseChild = baseNode?.children[ci];
+            const offsetX = baseChild ? baseChild.x - (baseNode?.x || 0) : 0;
+            const offsetY = baseChild ? baseChild.y - (baseNode?.y || 0) : 0;
+            const targetCX = newX + offsetX;
+            const targetCY = newY + offsetY;
+
+            const stiffness = childSpring * (1 - ci * 0.003);
+            const cfx = (targetCX - c.x) * stiffness;
+            const cfy = (targetCY - c.y) * stiffness;
+            cv.vx = (cv.vx + cfx) * childDamping;
+            cv.vy = (cv.vy + cfy) * childDamping;
+            childVelocities.current.set(key, cv);
+
+            if (Math.abs(cv.vx) > 0.01 || Math.abs(cv.vy) > 0.01) changed = true;
+
+            return { ...c, x: c.x + cv.vx, y: c.y + cv.vy };
+          });
+
+          return { ...n, x: newX, y: newY, children: newChildren };
+        });
+
+        return changed ? next : prev;
+      });
+
+      animFrame.current = requestAnimationFrame(tick);
+    };
+
+    animFrame.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(animFrame.current);
+  }, [baseNodes]);
+
   const handleDragStart = useCallback((e: ReactMouseEvent, nodeId: string) => {
     e.stopPropagation();
     const pt = getSVGPoint(e.clientX, e.clientY);
-    const node = nodePositions.find(n => n.id === nodeId);
-    if (!node) return;
-    dragState.current = { dragging: true, nodeId, startX: pt.x, startY: pt.y, origX: node.x, origY: node.y };
-  }, [nodePositions, getSVGPoint]);
+    dragState.current = { dragging: true, nodeId };
+    isDraggingRef.current = true;
+    targetPos.current = pt;
+    velocities.current.set(nodeId, { vx: 0, vy: 0 });
+  }, [getSVGPoint]);
 
   const handleDragMove = useCallback((e: ReactMouseEvent) => {
-    if (!dragState.current.dragging || !dragState.current.nodeId) return;
-    const pt = getSVGPoint(e.clientX, e.clientY);
-    const dx = pt.x - dragState.current.startX;
-    const dy = pt.y - dragState.current.startY;
-    const newX = dragState.current.origX + dx;
-    const newY = dragState.current.origY + dy;
-    setNodePositions(prev => prev.map(n => {
-      if (n.id !== dragState.current.nodeId) return n;
-      const childDx = newX - n.x;
-      const childDy = newY - n.y;
-      return { ...n, x: newX, y: newY, children: n.children.map(c => ({ ...c, x: c.x + childDx, y: c.y + childDy })) };
-    }));
+    if (!dragState.current.dragging) return;
+    targetPos.current = getSVGPoint(e.clientX, e.clientY);
   }, [getSVGPoint]);
 
   const handleDragEnd = useCallback(() => {
-    dragState.current = { dragging: false, nodeId: null, startX: 0, startY: 0, origX: 0, origY: 0 };
+    dragState.current = { dragging: false, nodeId: null };
+    setTimeout(() => { isDraggingRef.current = false; }, 800);
   }, []);
   const cx = 400, cy = 320;
 
