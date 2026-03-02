@@ -1,4 +1,5 @@
 import ScrollReveal from "@/components/ScrollReveal";
+import venkatPhoto from "@/assets/venkata-pagadala.jpeg";
 
 const stats = [
   { value: "10+", label: "Years Experience" },
@@ -49,8 +50,12 @@ const About = () => {
           </ScrollReveal>
 
           <ScrollReveal className="md:col-span-2" delay={200}>
-            <div className="aspect-[3/4] border border-border bg-secondary/30 flex items-center justify-center">
-              <span className="font-mono text-xs text-muted-foreground tracking-widest">[PHOTO]</span>
+            <div className="aspect-[3/4] border border-border overflow-hidden">
+              <img 
+                src={venkatPhoto} 
+                alt="Venkata Pagadala" 
+                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+              />
             </div>
           </ScrollReveal>
         </div>

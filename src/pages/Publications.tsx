@@ -13,20 +13,54 @@ const publications = [
 
 const linkedinPosts = [
   {
+    title: "MCP + A2A: The Future of AI Agent Communication",
+    desc: "Breaking down how Model Context Protocol and Agent-to-Agent pipelines are transforming enterprise AI workflows.",
+    link: "https://www.linkedin.com/feed/update/urn:li:activity:7433168439763972096/",
+  },
+  {
+    title: "Building RAG Engines for Enterprise SEO",
+    desc: "How we built a Retrieval-Augmented Generation engine that lets teams query organic performance data in natural language.",
+    link: "https://www.linkedin.com/feed/update/urn:li:activity:7432885401087848448/",
+  },
+  {
+    title: "Claude Code Pipelines in Production",
+    desc: "Real-world implementation of Claude Code for automating technical SEO audits and content optimization at scale.",
+    link: "https://www.linkedin.com/feed/update/urn:li:activity:7431551666157613057/",
+  },
+  {
+    title: "AI Agents Reshaping Enterprise Search",
+    desc: "How A2A and MCP protocols are transforming technical SEO at Fortune 500 scale — from crawl optimization to content intelligence.",
+    link: "https://www.linkedin.com/feed/update/urn:li:activity:7431104751594803200/",
+  },
+  {
     title: "Knowledge Graphs for Enterprise SEO",
     desc: "How we built a knowledge graph connecting 50M+ pages to improve topical authority and internal linking at scale.",
+    link: "https://www.linkedin.com/feed/update/urn:li:activity:7421367234754756608/",
   },
   {
-    title: "RAG Demo: Querying SEO Data with Natural Language",
-    desc: "Live demo of our RAG engine allowing teams to ask natural language questions about organic performance.",
+    title: "Topic Clustering with AI at Scale",
+    desc: "Using NLP and machine learning to automate topic clustering across millions of pages for content strategy.",
+    link: "https://www.linkedin.com/feed/update/urn:li:activity:7386425381697888256/",
   },
   {
-    title: "AI Agents in Enterprise Search",
-    desc: "How A2A and MCP protocols are transforming how we approach technical SEO at Fortune 500 scale.",
+    title: "LLM-Optimized Content Strategy",
+    desc: "Exploring how generative AI is reshaping content strategy and what it means for the future of organic search.",
+    link: "https://www.linkedin.com/feed/update/urn:li:activity:7321763491848019968/",
   },
   {
-    title: "The Future of LLM-Optimized Content",
-    desc: "Exploring how generative AI is reshaping content strategy and what it means for organic search.",
+    title: "Technical SEO at Scale: Lessons from 50M+ Pages",
+    desc: "Key learnings from managing crawl optimization, indexation, and site architecture across massive enterprise sites.",
+    link: "https://www.linkedin.com/feed/update/urn:li:activity:7314825890108964864/",
+  },
+  {
+    title: "The Intersection of AI and Search",
+    desc: "How machine learning is fundamentally changing how we approach search engine optimization and content discovery.",
+    link: "https://www.linkedin.com/feed/update/urn:li:activity:7298815756568281088/",
+  },
+  {
+    title: "Programmatic SEO with Python & AI",
+    desc: "Building automated SEO pipelines using Python, BigQuery, and AI to drive organic growth at enterprise scale.",
+    link: "https://www.linkedin.com/feed/update/urn:li:activity:7264875407047380992/",
   },
 ];
 
@@ -83,14 +117,24 @@ const Publications = () => {
         <div className="space-y-4">
           {linkedinPosts.map((post, i) => (
             <ScrollReveal key={post.title} delay={250 + i * 80}>
-              <div className="border border-border p-6 border-glow-hover group hover:bg-secondary/20 transition-all">
-                <h4 className="font-display text-lg font-semibold text-foreground mb-2 group-hover:text-glow transition-all">
-                  {post.title}
-                </h4>
-                <p className="font-mono text-xs text-muted-foreground leading-relaxed">
-                  {post.desc}
-                </p>
-              </div>
+              <a 
+                href={post.link} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block border border-border p-6 border-glow-hover group hover:bg-secondary/20 transition-all"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h4 className="font-display text-lg font-semibold text-foreground mb-2 group-hover:text-glow transition-all">
+                      {post.title}
+                    </h4>
+                    <p className="font-mono text-xs text-muted-foreground leading-relaxed">
+                      {post.desc}
+                    </p>
+                  </div>
+                  <ExternalLink size={14} className="text-muted-foreground group-hover:text-foreground transition-all mt-1 flex-shrink-0" />
+                </div>
+              </a>
             </ScrollReveal>
           ))}
         </div>
