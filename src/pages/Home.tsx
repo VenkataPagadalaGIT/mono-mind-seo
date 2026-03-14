@@ -52,32 +52,32 @@ const Home = () => {
               "Published Researcher",
               "Enterprise SEO & Automation",
             ]}
-            className="font-mono text-sm sm:text-base text-muted-foreground"
+            className="font-mono text-sm sm:text-base text-foreground/60"
           />
         </div>
 
-        <div className="mt-16 flex flex-col items-center gap-4">
+        <div className="mt-16 flex flex-col items-center gap-5">
           <a
             href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=7434105581101133824"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 border border-foreground/30 px-5 py-2.5 font-mono text-xs tracking-widest uppercase text-muted-foreground hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2] transition-all rounded-full"
+            className="inline-flex items-center gap-3 bg-[#0A66C2] text-white px-8 py-3 font-mono text-xs tracking-widest uppercase hover:bg-[#004182] transition-all rounded-full shadow-[0_0_25px_rgba(10,102,194,0.3)] hover:shadow-[0_0_35px_rgba(10,102,194,0.5)]"
           >
-            <Linkedin size={14} />
+            <Linkedin size={16} />
             Subscribe on LinkedIn
           </a>
           <a
             href="https://www.linkedin.com/in/venkata-pagadala/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 border border-foreground/30 px-5 py-2.5 font-mono text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground hover:border-foreground/60 transition-all group"
+            className="inline-flex items-center gap-3 border border-foreground/30 px-8 py-3 font-mono text-xs tracking-widest uppercase text-foreground/70 hover:text-foreground hover:border-foreground/60 transition-all group"
           >
-            <Linkedin size={14} className="group-hover:text-foreground transition-all" />
+            <Linkedin size={16} className="group-hover:text-foreground transition-all" />
             Follow
           </a>
           <Link
             to="/about"
-            className="inline-flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group"
+            className="inline-flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group mt-2"
           >
             <span className="font-mono text-xs tracking-widest uppercase">Explore</span>
             <ArrowDown size={16} className="group-hover:translate-y-1 transition-transform" />
