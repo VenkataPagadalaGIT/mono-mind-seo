@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import ParticleCanvas from "@/components/ParticleCanvas";
+import KitSignupForm from "@/components/KitSignupForm";
 import { Mail, MapPin, Linkedin } from "lucide-react";
 
 const Contact = () => {
@@ -68,6 +69,11 @@ const Contact = () => {
                   <span className="block text-[10px] tracking-widest uppercase text-muted-foreground/50 mb-1">Location</span>
                   Atlanta, GA
                 </div>
+              </div>
+
+              <div className="border border-border/40 px-6 py-4">
+                <span className="block text-[10px] tracking-widest uppercase text-muted-foreground/50 mb-3 font-mono">Subscribe to Newsletter</span>
+                <KitSignupForm />
               </div>
             </div>
           </ScrollReveal>
