@@ -52,7 +52,7 @@ const Home = () => {
               "Published Researcher",
               "Enterprise SEO & Automation",
             ]}
-            className="font-mono text-sm sm:text-base text-muted-foreground"
+            className="font-mono text-sm sm:text-base text-foreground/60"
           />
         </div>
 
