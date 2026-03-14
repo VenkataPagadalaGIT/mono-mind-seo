@@ -73,32 +73,9 @@ const Footer = () => {
           <div>
             <p className="font-mono text-[10px] tracking-[0.2em] text-muted-foreground/40 uppercase mb-4">Newsletter</p>
             <p className="font-mono text-[11px] text-muted-foreground/60 leading-relaxed mb-3">
-              Get AI & SEO insights delivered to your feed.
+              Get AI & SEO insights delivered to your inbox.
             </p>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                window.open(LINKEDIN_NEWSLETTER_URL, "_blank", "noopener,noreferrer");
-                setEmail("");
-              }}
-              className="flex gap-2"
-            >
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@email.com"
-                className="flex-1 bg-muted/30 border border-border/40 px-3 py-2 font-mono text-[11px] text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-primary/50 transition-colors"
-              />
-              <button
-                type="submit"
-                className="inline-flex items-center gap-1.5 border border-primary/40 bg-primary/10 px-4 py-2 font-mono text-[11px] tracking-wider uppercase text-primary hover:bg-primary hover:text-primary-foreground transition-all"
-              >
-                <MailIcon size={12} />
-                Subscribe
-              </button>
-            </form>
+            <KitSignupForm />
             <Link
               to="/contact"
               className="inline-flex items-center gap-2 font-mono text-[11px] text-foreground hover:text-muted-foreground transition-colors mt-4"
