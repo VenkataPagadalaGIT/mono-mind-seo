@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Linkedin, Mail } from "lucide-react";
+import { ArrowRight, Linkedin, Mail as MailIcon } from "lucide-react";
 
 const Footer = () => {
   const links = [
