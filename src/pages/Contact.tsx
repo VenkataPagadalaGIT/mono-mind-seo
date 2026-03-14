@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import ParticleCanvas from "@/components/ParticleCanvas";
+import KitSignupForm from "@/components/KitSignupForm";
 import { Mail, MapPin, Linkedin } from "lucide-react";
 
 const Contact = () => {
