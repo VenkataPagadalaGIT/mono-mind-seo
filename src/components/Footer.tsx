@@ -1,11 +1,9 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Linkedin, Mail as MailIcon } from "lucide-react";
-
-const LINKEDIN_NEWSLETTER_URL = "https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=7434105581101133824";
+import KitSignupForm from "@/components/KitSignupForm";
 
 const Footer = () => {
-  const [email, setEmail] = useState("");
+  const links = [
   const links = [
     { label: "About", to: "/about" },
     { label: "Solutions", to: "/solutions" },
