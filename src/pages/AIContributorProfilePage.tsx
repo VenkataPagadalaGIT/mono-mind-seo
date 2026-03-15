@@ -344,6 +344,44 @@ const AIContributorProfilePage = () => {
                   {copied ? <><Check size={10} /> Copied</> : <><Copy size={10} /> Copy Link</>}
                 </button>
               </div>
+              {/* Share with AI */}
+              <div className="border-t border-border pt-4 flex flex-wrap items-center gap-2">
+                <span className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mr-2">Share with AI</span>
+                <a
+                  href={`https://chatgpt.com/?q=${encodeURIComponent(`Tell me about ${contributor.name}, an AI contributor ranked #${contributor.rank}. Their key influence: ${contributor.keyInfluence}`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-[10px] border border-border px-2.5 py-1.5 text-muted-foreground/50 hover:text-foreground hover:border-foreground/30 transition-colors"
+                >
+                  ChatGPT
+                </a>
+                <a
+                  href={`https://www.perplexity.ai/search?q=${encodeURIComponent(`${contributor.name} AI researcher ${contributor.affiliation}`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-[10px] border border-border px-2.5 py-1.5 text-muted-foreground/50 hover:text-foreground hover:border-foreground/30 transition-colors"
+                >
+                  Perplexity
+                </a>
+                <a
+                  href={`https://gemini.google.com/app?q=${encodeURIComponent(`Tell me about ${contributor.name}, ${contributor.affiliation}`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-[10px] border border-border px-2.5 py-1.5 text-muted-foreground/50 hover:text-foreground hover:border-foreground/30 transition-colors"
+                >
+                  Gemini
+                </a>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(`https://mono-mind-seo.lovable.app/ai-contributors/${contributor.id}`);
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 2000);
+                  }}
+                  className="inline-flex items-center gap-1 font-mono text-[10px] border border-border px-2.5 py-1.5 text-muted-foreground/50 hover:text-foreground hover:border-foreground/30 transition-colors"
+                >
+                  {copied ? <><Check size={10} /> Copied</> : <><Copy size={10} /> Copy URL</>}
+                </button>
+              </div>
             </div>
           </ScrollReveal>
 
