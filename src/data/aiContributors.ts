@@ -410,7 +410,8 @@ export const aiContributors: AIContributor[] = [
     name: "Percy Liang",
     rank: 21,
     bio: "Associate Professor at Stanford. Co-founder of Together AI. Created HELM benchmark.",
-    // No real photo available
+    photoUrl: "/photos/liang.jpg",
+    photoCredit: "Photo: Wikimedia Commons",
     segment: "Open Source AI & Platforms",
     specialty: ["NLP", "LLMs", "Open Source AI"],
     affiliation: "Stanford / Together AI",
