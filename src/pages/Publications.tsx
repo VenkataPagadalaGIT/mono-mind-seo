@@ -242,18 +242,32 @@ const Lab = () => {
           <KnowledgeGraph />
         </ScrollReveal>
 
-        {/* ── AI Contributors Explorer ── */}
+        {/* ── AI Contributors Explorer (Link) ── */}
         <div className="mt-20">
           <ScrollReveal>
-            <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/40 uppercase mb-4">
-              Top 100 AI Contributors (2026)
-            </p>
-            <p className="font-mono text-sm text-muted-foreground leading-relaxed mb-8 max-w-2xl">
-              An interactive exploration of the people shaping AI — from researchers and founders to policy advocates. Switch between graph and directory views, click to explore each profile.
-            </p>
-          </ScrollReveal>
-          <ScrollReveal delay={200}>
-            <AIContributorsExplorer />
+            <Link
+              to="/ai-contributors"
+              className="block border border-border p-8 sm:p-10 border-glow-hover group relative overflow-hidden"
+            >
+              <div className="absolute top-4 right-4 font-mono text-[10px] border border-border px-3 py-1 text-muted-foreground/60 uppercase tracking-widest">
+                Interactive Explorer
+              </div>
+              <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/40 uppercase mb-4">
+                Featured
+              </p>
+              <h3 className="font-display text-3xl sm:text-4xl font-bold text-foreground text-glow mb-2">
+                Top 100 AI Contributors
+              </h3>
+              <p className="font-mono text-xs text-muted-foreground/60 mb-4 tracking-wider uppercase">
+                2026 Edition
+              </p>
+              <p className="font-mono text-sm text-muted-foreground leading-relaxed mb-6 max-w-3xl">
+                An interactive exploration of the people shaping AI — researchers, founders, and policy advocates mapped across segments. Graph and directory views with detailed profiles.
+              </p>
+              <span className="inline-flex items-center gap-2 font-mono text-xs text-foreground group-hover:text-glow transition-all tracking-widest uppercase">
+                Explore Now <ArrowRight size={12} />
+              </span>
+            </Link>
           </ScrollReveal>
         </div>
 
