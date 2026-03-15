@@ -25,7 +25,7 @@ const experiences = [
   {
     company: "AT&T",
     role: "Lead Technical Product Manager, AI & Automation",
-    period: "2024 — Present",
+    period: "March 2025 — Present",
     location: "Atlanta, Georgia",
     achievements: [
       "Built AI-powered metadata automation with knowledge graphs and content guardrails (legal, brand voice), scaling to 100K+ pages with multi-model LLM testing",
@@ -41,7 +41,7 @@ const experiences = [
   {
     company: "CoStar Group (Apartments.com)",
     role: "SEO Product Lead (Level 3)",
-    period: "Oct 2022 — 2024",
+    period: "Oct 2022 — March 2025",
     location: "Atlanta, Georgia",
     achievements: [
       "Owned technical SEO across 5 properties (40M+ pages); shipped AI-powered content translation (GPT-4) across 1M+ pages",
@@ -51,7 +51,7 @@ const experiences = [
   {
     company: "American Addiction Centers",
     role: "Senior SEO Software Developer",
-    period: "Mar 2019 — Oct 2022",
+    period: "Apr 2019 — Oct 2022",
     location: "San Diego, California",
     achievements: [
       "Led PHP to React.js migration; implemented JSON-LD structured data across 1M+ page healthcare portfolio",
@@ -60,7 +60,7 @@ const experiences = [
   {
     company: "Dyad Ventures",
     role: "Search Marketing Strategist",
-    period: "Jan 2018 — Mar 2019",
+    period: "Jan 2018 — Feb 2019",
     location: "",
     achievements: [],
   },
