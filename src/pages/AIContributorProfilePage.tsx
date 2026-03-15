@@ -477,7 +477,7 @@ const AIContributorProfilePage = () => {
 
           {/* ── External Links ── */}
           <ScrollReveal delay={100}>
-            <div className="border border-border p-6 mb-10">
+            <div id="links" className="border border-border p-6 mb-10 scroll-mt-24">
               <h2 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-4">Links & Profiles</h2>
               <div className="flex flex-wrap gap-2">
                 {contributor.linkedin && (
