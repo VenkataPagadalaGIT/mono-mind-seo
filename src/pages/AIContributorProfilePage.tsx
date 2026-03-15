@@ -756,7 +756,7 @@ const AIContributorProfilePage = () => {
               </Link>
             </div>
           </ScrollReveal>
-            </div>{/* end content column */}
+            </div>{/* end main content column */}
           </div>{/* end two-column layout */}
         </div>
       </div>
