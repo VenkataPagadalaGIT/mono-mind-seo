@@ -1836,6 +1836,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "emad", name: "Emad Mostaque", rank: 84,
     bio: "Founder of Stability AI. Launched Stable Diffusion. Pioneer of open-source generative AI. Stepped down as CEO in 2024.",
+    photoUrl: "/photos/emad.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 2.0",
     segment: "Generative AI & Creative", specialty: ["Generative AI", "Open Source AI"],
     affiliation: "Stability AI (founder)", expertType: "Founder/CEO", country: "UK/Bangladesh",
     keyInfluence: "Launched Stable Diffusion — the open-source image generation model that democratized AI art.",
