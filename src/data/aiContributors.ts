@@ -657,8 +657,7 @@ export const aiContributors: AIContributor[] = [
     name: "Jan Leike",
     rank: 74,
     bio: "Head of Alignment at Anthropic. Former OpenAI Superalignment team leader. Key RLHF researcher.",
-    photoUrl: "/photos/leike.jpg",
-    photoCredit: "Illustration · AI-generated portrait",
+    // No real photo available
     segment: "AI Safety & Alignment",
     specialty: ["AI Safety"],
     affiliation: "Anthropic",
