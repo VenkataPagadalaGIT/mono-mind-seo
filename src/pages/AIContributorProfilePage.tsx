@@ -31,20 +31,21 @@ function getThumbnail(url: string): string | null {
 }
 
 /** Reusable thumbnail component */
-const ResourceThumbnail = ({ url }: { url: string }) => {
+const ResourceThumbnail = ({ url, fullWidth }: { url: string; fullWidth?: boolean }) => {
   const thumb = getThumbnail(url);
+  const sizeClass = fullWidth ? "w-full h-36" : "w-28 h-16";
   if (!thumb) {
     return (
-      <div className="w-28 h-16 border border-border flex items-center justify-center shrink-0 bg-muted/20 group-hover:border-foreground/30 transition-colors">
-        <Play size={16} className="text-muted-foreground/30 group-hover:text-foreground transition-colors" />
+      <div className={`${sizeClass} border border-border flex items-center justify-center shrink-0 bg-muted/20 group-hover:border-foreground/30 transition-colors`}>
+        <Play size={fullWidth ? 24 : 16} className="text-muted-foreground/30 group-hover:text-foreground transition-colors" />
       </div>
     );
   }
   return (
-    <div className="w-28 h-16 shrink-0 relative overflow-hidden border border-border group-hover:border-foreground/30 transition-colors">
+    <div className={`${sizeClass} shrink-0 relative overflow-hidden border border-border group-hover:border-foreground/30 transition-colors`}>
       <img src={thumb} alt="" className="w-full h-full object-cover" loading="lazy" />
       <div className="absolute inset-0 flex items-center justify-center bg-background/40 group-hover:bg-background/20 transition-colors">
-        <Play size={16} className="text-foreground/70" fill="currentColor" />
+        <Play size={fullWidth ? 24 : 16} className="text-foreground/70" fill="currentColor" />
       </div>
     </div>
   );
