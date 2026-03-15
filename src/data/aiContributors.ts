@@ -18,7 +18,7 @@ export interface AIContributor {
   expertType: string;
   country: string;
   keyInfluence: string;
-  awards: string;
+  awards?: string;
   education: string;
   twitter?: string;
   linkedin?: string;
