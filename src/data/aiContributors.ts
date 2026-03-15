@@ -617,7 +617,7 @@ export const aiContributors: AIContributor[] = [
     rank: 60,
     bio: "CEO of Baidu. Launched Ernie Bot. Pioneer of China's AI industry. Leading autonomous driving (Apollo).",
     photoUrl: "/photos/li.jpg",
-    photoCredit: "Illustration · AI-generated portrait",
+    photoCredit: "Photo: Wikimedia Commons / Fair use",
     segment: "Foundation Models & LLMs",
     specialty: ["LLMs", "AI Infrastructure"],
     affiliation: "Baidu",
