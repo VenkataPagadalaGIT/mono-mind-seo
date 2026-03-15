@@ -1,18 +1,31 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Network, LayoutGrid } from "lucide-react";
-import { AI_SEGMENTS, SEGMENT_COLORS, type AIContributor } from "@/data/aiContributors";
+import { AI_SEGMENTS, SEGMENT_COLORS, aiContributors, type AIContributor } from "@/data/aiContributors";
 import AIContributorGraph from "./AIContributorGraph";
 import AIContributorDirectory from "./AIContributorDirectory";
 import AIContributorProfile from "./AIContributorProfile";
 
-const AIContributorsExplorer = () => {
+interface Props {
+  onExplore?: (id: string) => void;
+}
+
+const AIContributorsExplorer = ({ onExplore }: Props) => {
   const [view, setView] = useState<"graph" | "directory">("graph");
   const [selectedContributor, setSelectedContributor] = useState<AIContributor | null>(null);
   const [filterSegment, setFilterSegment] = useState<string>("");
 
   const handleSelect = useCallback((contributor: AIContributor) => {
     setSelectedContributor((prev) => (prev?.id === contributor.id ? null : contributor));
-  }, []);
+    onExplore?.(contributor.id);
+  }, [onExplore]);
+
+  const handleSelectById = useCallback((id: string) => {
+    const c = aiContributors.find((c) => c.id === id);
+    if (c) {
+      setSelectedContributor(c);
+      onExplore?.(c.id);
+    }
+  }, [onExplore]);
 
   const handleClose = useCallback(() => {
     setSelectedContributor(null);
@@ -22,7 +35,6 @@ const AIContributorsExplorer = () => {
     <div>
       {/* Controls */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-        {/* View Toggle */}
         <div className="flex gap-1 border border-border p-0.5">
           <button
             onClick={() => setView("graph")}
@@ -48,7 +60,6 @@ const AIContributorsExplorer = () => {
           </button>
         </div>
 
-        {/* Segment Filter */}
         <select
           value={filterSegment}
           onChange={(e) => setFilterSegment(e.target.value)}
@@ -96,12 +107,12 @@ const AIContributorsExplorer = () => {
           )}
         </div>
 
-        {/* Profile Panel */}
         <div className="lg:sticky lg:top-24 lg:self-start">
           {selectedContributor ? (
             <AIContributorProfile
               contributor={selectedContributor}
               onClose={handleClose}
+              onSelectContributor={handleSelectById}
             />
           ) : (
             <div className="border border-border border-dashed p-8 text-center">
