@@ -510,6 +510,8 @@ export const aiContributors: AIContributor[] = [
     name: "Mira Murati",
     rank: 44,
     bio: "Former CTO of OpenAI. Led ChatGPT and GPT-4 launches. Founded Thinking Machines Lab in 2025 for agentic AI.",
+    photoUrl: "/photos/murati.jpg",
+    photoCredit: "Illustration · AI-generated portrait",
     segment: "Foundation Models & LLMs",
     specialty: ["LLMs", "Generative AI"],
     affiliation: "Thinking Machines Lab",
