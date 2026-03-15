@@ -898,6 +898,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "bengio", name: "Yoshua Bengio", rank: 2,
     bio: "Turing Award 2018. Scientific Director of Mila. Pioneer of attention mechanisms and generative models. Major AI safety advocate.",
+    photoUrl: "/photos/bengio.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "Foundation Models & LLMs", specialty: ["Deep Learning", "NLP", "AI Safety"],
     affiliation: "Mila / Université de Montréal", expertType: "Researcher", country: "Canada",
     keyInfluence: "Most-cited computer scientist alive. Pioneered attention mechanisms that led to transformers.",
