@@ -132,29 +132,26 @@ const AIContributors = () => {
     <div className="min-h-screen bg-background pt-24 pb-20 px-6 relative">
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Breadcrumb */}
-        <ScrollReveal>
-          <Link
-            to="/notebook"
-            className="inline-flex items-center gap-2 font-mono text-[10px] tracking-widest uppercase text-muted-foreground/40 hover:text-foreground transition-colors mb-10"
-          >
-            <ArrowLeft size={12} /> Back to Notebooks
-          </Link>
-        </ScrollReveal>
+        <Link
+          to="/notebook"
+          className="inline-flex items-center gap-2 font-mono text-[10px] tracking-widest uppercase text-muted-foreground/40 hover:text-foreground transition-colors mb-6"
+        >
+          <ArrowLeft size={12} /> Back to Notebooks
+        </Link>
 
-        {/* Hero — two column */}
-        <ScrollReveal>
-          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8 mb-8">
-            <div className="flex-1">
-              <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/30 mb-3 uppercase">
-                The AI Notebook · 2026 Edition
-              </p>
-              <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-2">
-                AI Notebook
-              </h1>
-              <p className="font-mono text-xs text-muted-foreground/60 max-w-xl leading-relaxed">
-                Your complete AI learning companion — from zero to hero. A roadmap with 90+ resources, 110 concepts explained, and 100 contributors profiled.
-              </p>
-            </div>
+        {/* Hero — compact two column */}
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-6">
+          <div className="flex-1">
+            <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/30 mb-2 uppercase">
+              The AI Notebook · 2026 Edition
+            </p>
+            <h1 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-1">
+              AI Notebook
+            </h1>
+            <p className="font-mono text-xs text-muted-foreground/60 max-w-xl leading-relaxed">
+              Your complete AI learning companion — from zero to hero. A roadmap with 90+ resources, 110 concepts explained, and 100 contributors profiled.
+            </p>
+          </div>
 
             {/* Author card */}
             <div className="lg:w-64 shrink-0 border border-border/50 rounded-lg p-5">
