@@ -292,6 +292,8 @@ export const aiContributors: AIContributor[] = [
     twitter: "https://x.com/ylecun",
     linkedin: "https://www.linkedin.com/in/yann-lecun-0b999/",
     website: "https://yann.lecun.com/",
+    github: "https://github.com/ylecun",
+    githubFollowers: "~3K",
     googleScholar: "https://scholar.google.com/citations?user=WLN3QrAAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981e9acaed6b0f4aec933",
     quote: "Our intelligence is what makes us human, and AI is an extension of that quality.",
