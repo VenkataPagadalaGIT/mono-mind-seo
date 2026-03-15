@@ -249,9 +249,9 @@ const AIContributors = () => {
               </div>
             </ScrollReveal>
 
-            {/* Three-column layout: left sidebar | content | author sidebar */}
+            {/* Three-column layout: author sidebar | nav sidebar | content */}
             <div className="lg:flex lg:gap-10">
-              <PageSidebar sections={pageTocSections} shareTitle="Top 100 AI Contributors 2026 — The Definitive AI Notebook" />
+              <AuthorSidebar />
 
               <div className="flex-1 min-w-0">
                 <div ref={contentRef}>
