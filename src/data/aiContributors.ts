@@ -1065,6 +1065,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "kaifulee", name: "Kai-Fu Lee", rank: 24,
     bio: "CEO of Sinovation Ventures. Founded 01.AI. Former president of Google China. Author of AI Superpowers.",
+    photoUrl: "/photos/kaifulee.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 2.0",
     segment: "Foundation Models & LLMs", specialty: ["LLMs", "AI Policy"],
     affiliation: "Sinovation Ventures / 01.AI", expertType: "Founder/CEO", country: "Taiwan/China",
     keyInfluence: "Bridge between US and China AI ecosystems. Founded 01.AI (Yi models).",
