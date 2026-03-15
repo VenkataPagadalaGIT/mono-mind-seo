@@ -1,6 +1,8 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { encyclopediaConcepts, ENCYCLOPEDIA_CATEGORIES, type EncyclopediaConcept } from "@/data/aiEncyclopedia";
 import { Search, ChevronDown, ChevronUp, ExternalLink, Tag, BookOpen, ArrowRight } from "lucide-react";
+
+console.log("[AIEncyclopedia] encyclopediaConcepts loaded:", encyclopediaConcepts?.length, "items");
 
 const diffBadge: Record<string, string> = {
   beginner: "border-green-500/30 text-green-400",
