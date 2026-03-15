@@ -10,11 +10,13 @@ interface PageSidebarProps {
   sections: TocItem[];
   shareTitle?: string;
   shareDescription?: string;
+  /** Called when a TOC item is clicked */
+  onSectionClick?: (id: string) => void;
   /** Extra content to render below the TOC */
   children?: React.ReactNode;
 }
 
-const PageSidebar = ({ sections, shareTitle, shareDescription, children }: PageSidebarProps) => {
+const PageSidebar = ({ sections, shareTitle, shareDescription, onSectionClick, children }: PageSidebarProps) => {
   const [activeId, setActiveId] = useState(sections[0]?.id ?? "");
   const [copied, setCopied] = useState(false);
 
@@ -57,17 +59,20 @@ const PageSidebar = ({ sections, shareTitle, shareDescription, children }: PageS
             <p className="font-mono text-[9px] text-muted-foreground/30 uppercase tracking-widest mb-3">On This Page</p>
             <nav className="space-y-0.5 mb-6 border-l border-border">
               {sections.map((item) => (
-                <a
+                <button
                   key={item.id}
-                  href={`#${item.id}`}
-                  className={`block font-mono text-[10px] py-1.5 border-l-2 pl-3 -ml-px transition-colors ${
+                  onClick={() => {
+                    onSectionClick?.(item.id);
+                    setActiveId(item.id);
+                  }}
+                  className={`block w-full text-left font-mono text-[10px] py-1.5 border-l-2 pl-3 -ml-px transition-colors ${
                     activeId === item.id
                       ? "text-foreground border-foreground/50"
                       : "text-muted-foreground/40 border-transparent hover:text-foreground hover:border-foreground/40"
                   }`}
                 >
                   {item.label}
-                </a>
+                </button>
               ))}
             </nav>
           </>

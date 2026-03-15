@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useCallback } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import PageSidebar from "@/components/PageSidebar";
 
@@ -11,15 +11,15 @@ import AILearningRoadmap from "@/components/AILearningRoadmap";
 import AIEncyclopedia from "@/components/AIEncyclopedia";
 import { aiContributors } from "@/data/aiContributors";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Users, Clock, Brain, FileText, Library, Linkedin, Mail } from "lucide-react";
+import { ArrowLeft, ArrowRight, Linkedin, Mail } from "lucide-react";
 import authorPhoto from "@/assets/venkata-pagadala.jpeg";
 
 const pageTocSections = [
-  { label: "Database", id: "explorer-section" },
-  { label: "Overview", id: "essay-section" },
-  { label: "Timeline", id: "timeline-section" },
-  { label: "Glossary", id: "glossary-section" },
-  { label: "Reading Lists", id: "reading-section" },
+  { label: "Database", id: "explorer" },
+  { label: "Overview", id: "essay" },
+  { label: "Timeline", id: "timeline" },
+  { label: "Glossary", id: "glossary" },
+  { label: "Reading Lists", id: "reading" },
 ];
 
 const STORAGE_KEY = "ai-contributors-explored";
@@ -47,13 +47,6 @@ const TAB_META: Record<TopLevelTab, { title: string; description: string }> = {
   },
 };
 
-const contributorSections = [
-  { id: "explorer", label: "Database", icon: Users },
-  { id: "essay", label: "Overview", icon: FileText },
-  { id: "timeline", label: "Timeline", icon: Clock },
-  { id: "glossary", label: "Glossary", icon: Brain },
-  { id: "reading", label: "Reading Lists", icon: Library },
-] as const;
 
 function getTabFromPath(pathname: string): TopLevelTab {
   if (pathname === "/notebook/ai/roadmap") return "roadmap";
@@ -76,7 +69,7 @@ const AIContributors = () => {
   });
 
   const [activeSection, setActiveSection] = useState<string>("explorer");
-  const contentRef = useRef<HTMLDivElement>(null);
+  
 
   useEffect(() => {
     const meta = TAB_META[topTab];
@@ -204,7 +197,6 @@ const AIContributors = () => {
                   <Mail size={10} /> Get in Touch
                 </a>
               </div>
-            </div>
           </div>
         </div>
 
@@ -284,83 +276,51 @@ const AIContributors = () => {
 
             {/* Two-column layout: content | nav sidebar */}
             <div className="lg:flex lg:gap-10">
-
               <div className="flex-1 min-w-0">
-                <div ref={contentRef}>
-                  <ScrollReveal delay={100}>
-                    <div className="flex flex-wrap gap-0 border-b border-border mb-8">
-                      {contributorSections.map((section) => (
-                        <button
-                          key={section.id}
-                          onClick={() => setActiveSection(section.id)}
-                          className={`flex items-center gap-1.5 px-4 py-2.5 font-mono text-[10px] uppercase tracking-widest transition-all border-b-2 -mb-px ${
-                            activeSection === section.id
-                              ? "border-foreground text-foreground"
-                              : "border-transparent text-muted-foreground/30 hover:text-muted-foreground/60"
-                          }`}
-                        >
-                          <section.icon size={11} />
-                          <span className="hidden sm:inline">{section.label}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </ScrollReveal>
-
-                  <div id="explorer-section" className="scroll-mt-28">
-                    {activeSection === "explorer" && (
-                      <AIContributorsExplorer onExplore={handleExplore} />
-                    )}
+                {activeSection === "explorer" && (
+                  <AIContributorsExplorer onExplore={handleExplore} />
+                )}
+                {activeSection === "essay" && (
+                  <div>
+                    <h2 className="font-display text-xl font-bold text-foreground mb-1">The State of AI, 2026</h2>
+                    <p className="font-mono text-[10px] text-muted-foreground/25 uppercase tracking-widest mb-8">An introduction</p>
+                    <StateOfAIEssay />
                   </div>
-
-                  <div id="essay-section" className="scroll-mt-28">
-                    {activeSection === "essay" && (
-                      <div>
-                        <h2 className="font-display text-xl font-bold text-foreground mb-1">The State of AI, 2026</h2>
-                        <p className="font-mono text-[10px] text-muted-foreground/25 uppercase tracking-widest mb-8">An introduction</p>
-                        <StateOfAIEssay />
-                      </div>
-                    )}
+                )}
+                {activeSection === "timeline" && (
+                  <div>
+                    <h2 className="font-display text-xl font-bold text-foreground mb-1">AI Timeline</h2>
+                    <p className="font-mono text-[11px] text-muted-foreground/40 mb-8 max-w-2xl leading-relaxed">
+                      Key milestones from 1986 to today.
+                    </p>
+                    <AITimeline onSelectContributor={handleSelectFromOutside} />
                   </div>
-
-                  <div id="timeline-section" className="scroll-mt-28">
-                    {activeSection === "timeline" && (
-                      <div>
-                        <h2 className="font-display text-xl font-bold text-foreground mb-1">AI Timeline</h2>
-                        <p className="font-mono text-[11px] text-muted-foreground/40 mb-8 max-w-2xl leading-relaxed">
-                          Key milestones from 1986 to today.
-                        </p>
-                        <AITimeline onSelectContributor={handleSelectFromOutside} />
-                      </div>
-                    )}
+                )}
+                {activeSection === "glossary" && (
+                  <div>
+                    <h2 className="font-display text-xl font-bold text-foreground mb-1">AI Concepts Glossary</h2>
+                    <p className="font-mono text-[11px] text-muted-foreground/40 mb-8 max-w-2xl leading-relaxed">
+                      20 essential AI concepts linked to the contributors who pioneered them.
+                    </p>
+                    <AIGlossary onSelectContributor={handleSelectFromOutside} />
                   </div>
-
-                  <div id="glossary-section" className="scroll-mt-28">
-                    {activeSection === "glossary" && (
-                      <div>
-                        <h2 className="font-display text-xl font-bold text-foreground mb-1">AI Concepts Glossary</h2>
-                        <p className="font-mono text-[11px] text-muted-foreground/40 mb-8 max-w-2xl leading-relaxed">
-                          20 essential AI concepts linked to the contributors who pioneered them.
-                        </p>
-                        <AIGlossary onSelectContributor={handleSelectFromOutside} />
-                      </div>
-                    )}
+                )}
+                {activeSection === "reading" && (
+                  <div>
+                    <h2 className="font-display text-xl font-bold text-foreground mb-1">Curated Reading Lists</h2>
+                    <p className="font-mono text-[11px] text-muted-foreground/40 mb-8 max-w-2xl leading-relaxed">
+                      The papers, podcasts, and talks that matter most.
+                    </p>
+                    <CuratedReadingLists />
                   </div>
-
-                  <div id="reading-section" className="scroll-mt-28">
-                    {activeSection === "reading" && (
-                      <div>
-                        <h2 className="font-display text-xl font-bold text-foreground mb-1">Curated Reading Lists</h2>
-                        <p className="font-mono text-[11px] text-muted-foreground/40 mb-8 max-w-2xl leading-relaxed">
-                          The papers, podcasts, and talks that matter most.
-                        </p>
-                        <CuratedReadingLists />
-                      </div>
-                    )}
-                  </div>
-                </div>
+                )}
               </div>
 
-              <PageSidebar sections={pageTocSections} shareTitle="Top 100 AI Contributors 2026 — The Definitive AI Notebook" />
+              <PageSidebar
+                sections={pageTocSections}
+                shareTitle="Top 100 AI Contributors 2026 — The Definitive AI Notebook"
+                onSectionClick={(id) => setActiveSection(id)}
+              />
             </div>
           </>
         )}
