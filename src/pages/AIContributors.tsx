@@ -2,24 +2,19 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import PageSidebar from "@/components/PageSidebar";
 import StateOfAIEssay from "@/components/StateOfAIEssay";
-import NarrativeChapters from "@/components/NarrativeChapters";
 import AIContributorsExplorer from "@/components/AIContributorsExplorer";
 import AITimeline from "@/components/AITimeline";
-import LearningPaths from "@/components/LearningPaths";
 import AIGlossary from "@/components/AIGlossary";
 import CuratedReadingLists from "@/components/CuratedReadingLists";
 import AILearningRoadmap from "@/components/AILearningRoadmap";
 import AIEncyclopedia from "@/components/AIEncyclopedia";
-import ReadingProgress from "@/components/ReadingProgress";
 import { aiContributors } from "@/data/aiContributors";
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowLeft, Users, BookOpen, Clock, Map, Brain, FileText, Library, Sparkles, Route, BookMarked } from "lucide-react";
+import { ArrowLeft, Users, Clock, Brain, FileText, Library } from "lucide-react";
 
 const pageTocSections = [
   { label: "Database", id: "explorer-section" },
   { label: "Overview", id: "essay-section" },
-  { label: "Chapters", id: "chapters-section" },
-  { label: "Paths", id: "paths-section" },
   { label: "Timeline", id: "timeline-section" },
   { label: "Glossary", id: "glossary-section" },
   { label: "Reading Lists", id: "reading-section" },
@@ -38,8 +33,6 @@ const topTabs = [
 const contributorSections = [
   { id: "explorer", label: "Database", icon: Users },
   { id: "essay", label: "Overview", icon: FileText },
-  { id: "chapters", label: "Chapters", icon: BookOpen },
-  { id: "paths", label: "Paths", icon: Map },
   { id: "timeline", label: "Timeline", icon: Clock },
   { id: "glossary", label: "Glossary", icon: Brain },
   { id: "reading", label: "Reading Lists", icon: Library },
@@ -166,7 +159,6 @@ const AIContributors = () => {
               <div className="flex flex-wrap gap-6 mb-10 pb-8 border-b border-border">
                 {[
                   { label: "Contributors", value: String(aiContributors.length) },
-                  { label: "Chapters", value: "6" },
                   { label: "Concepts", value: "20" },
                   { label: "Resources", value: "25+" },
                   { label: "Explored", value: `${exploredIds.size}/${aiContributors.length}` },
@@ -222,29 +214,6 @@ const AIContributors = () => {
                     )}
                   </div>
 
-                  <div id="chapters-section" className="scroll-mt-28">
-                    {activeSection === "chapters" && (
-                      <div>
-                        <h2 className="font-display text-xl font-bold text-foreground mb-1">Narrative Chapters</h2>
-                        <p className="font-mono text-[11px] text-muted-foreground/40 mb-8 max-w-2xl leading-relaxed">
-                          Six stories that weave the top contributors into the narrative arcs defining AI's evolution.
-                        </p>
-                        <NarrativeChapters onSelectContributor={handleSelectFromOutside} />
-                      </div>
-                    )}
-                  </div>
-
-                  <div id="paths-section" className="scroll-mt-28">
-                    {activeSection === "paths" && (
-                      <div>
-                        <h2 className="font-display text-xl font-bold text-foreground mb-1">Learning Paths</h2>
-                        <p className="font-mono text-[11px] text-muted-foreground/40 mb-8 max-w-2xl leading-relaxed">
-                          Curated paths grouping contributors by topic and skill level.
-                        </p>
-                        <LearningPaths onSelectContributor={handleSelectFromOutside} exploredIds={exploredIds} />
-                      </div>
-                    )}
-                  </div>
 
                   <div id="timeline-section" className="scroll-mt-28">
                     {activeSection === "timeline" && (
