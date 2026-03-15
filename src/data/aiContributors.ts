@@ -293,6 +293,8 @@ export const aiContributors: AIContributor[] = [
     googleScholar: "https://scholar.google.com/citations?user=WLN3QrAAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981e9acaed6b0f4aec933",
     quote: "Our intelligence is what makes us human, and AI is an extension of that quality.",
+    photoUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Yann_LeCun_-_2018_%28cropped%29.jpg/440px-Yann_LeCun_-_2018_%28cropped%29.jpg",
+    photoCredit: "Photo: ITU / Wikimedia Commons / CC BY 2.0",
     myTake: "LeCun is the rare figure who combines deep technical contribution (CNNs) with relentless public engagement. His debates with AI doomers on X/Twitter are legendary. His 'world model' vision for AI — learning like babies through observation — represents a fundamentally different path from pure language models. Worth following closely.",
     resources: [
       { title: "A Path Towards Autonomous Machine Intelligence", type: "paper", url: "https://openreview.net/forum?id=BZ5a1r-kVsf", year: "2022" },
