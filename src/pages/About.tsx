@@ -60,7 +60,7 @@ const experiences = [
   {
     company: "Dyad Ventures",
     role: "Search Marketing Strategist",
-    period: "Jan 2018 — Mar 2019",
+    period: "Jan 2018 — Feb 2019",
     location: "",
     achievements: [],
   },
