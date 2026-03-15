@@ -1675,6 +1675,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "russell", name: "Stuart Russell", rank: 17,
     bio: "Professor at UC Berkeley. Author of AI: A Modern Approach. Director of CHAI. Leading voice on AI existential risk.",
+    photoUrl: "/photos/russell.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "AI Safety & Alignment", specialty: ["AI Safety", "Robotics"],
     affiliation: "UC Berkeley / CHAI", expertType: "Researcher", country: "UK/USA",
     keyInfluence: "Wrote THE AI textbook used globally. Leading voice warning about AI existential risk. Founded CHAI.",
