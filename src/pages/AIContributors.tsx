@@ -213,7 +213,8 @@ const AIContributors = () => {
 
         {/* === ENCYCLOPEDIA TAB === */}
         {topTab === "encyclopedia" && (
-          <div className="flex gap-10">
+          <div className="lg:flex lg:gap-10">
+            <AuthorSidebar />
             <div className="flex-1 min-w-0">
               <div className="mb-6">
                 <h2 className="font-display text-xl font-bold text-foreground mb-1">
@@ -225,7 +226,6 @@ const AIContributors = () => {
               </div>
               <AIEncyclopedia />
             </div>
-            <AuthorSidebar />
           </div>
         )}
 
