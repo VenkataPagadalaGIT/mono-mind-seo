@@ -866,6 +866,8 @@ export const aiContributors: AIContributor[] = [
     twitter: "https://x.com/_albertgu",
     website: "https://albertgu.com/",
     github: "https://github.com/state-spaces",
+    githubFollowers: "~8K+",
+    githubPinnedRepos: ["mamba", "state-spaces"],
     googleScholar: "https://scholar.google.com/citations?user=8GKhLs8AAAAJ",
     notionUrl: "https://www.notion.so/323882e4d919814cb79cd99c86a4eb5d",
     quote: "State-space models offer a principled alternative to attention mechanisms with linear-time complexity.",
