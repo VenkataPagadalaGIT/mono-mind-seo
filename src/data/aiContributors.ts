@@ -1205,6 +1205,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "yudkowsky", name: "Eliezer Yudkowsky", rank: 40,
     bio: "Co-founder of MIRI. Leading AI safety theorist. Author of Rationality sequences. Most prominent voice on AI existential risk.",
+    photoUrl: "/photos/yudkowsky.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 3.0",
     segment: "AI Safety & Alignment", specialty: ["AI Safety", "AGI"],
     affiliation: "MIRI", expertType: "Policy Advocate", country: "USA",
     keyInfluence: "Most prominent voice on AI existential risk. Built LessWrong community.",
