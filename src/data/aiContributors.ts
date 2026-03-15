@@ -1105,6 +1105,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "nadella", name: "Satya Nadella", rank: 29,
     bio: "CEO of Microsoft. Drove $100B+ AI investment including OpenAI partnership. Deployed Copilot across products.",
+    photoUrl: "/photos/nadella.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 2.0",
     segment: "Enterprise & Applied AI", specialty: ["AI Infrastructure", "LLMs"],
     affiliation: "Microsoft", expertType: "Industry Leader", country: "India/USA",
     keyInfluence: "Made the $13B bet on OpenAI. Deployed Copilot across entire Microsoft ecosystem.",
