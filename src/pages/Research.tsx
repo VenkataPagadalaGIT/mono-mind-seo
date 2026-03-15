@@ -1,7 +1,12 @@
 import ScrollReveal from "@/components/ScrollReveal";
 import KnowledgeGraph from "@/components/KnowledgeGraph";
 import NeuralNetBackground from "@/components/NeuralNetBackground";
+import PageSidebar from "@/components/PageSidebar";
 import { useEffect } from "react";
+
+const tocSections = [
+  { label: "Knowledge Graph", id: "knowledge-graph" },
+];
 
 const Research = () => {
   useEffect(() => {
@@ -19,7 +24,6 @@ const Research = () => {
 
   return (
     <div className="min-h-screen bg-background pt-24 pb-20 px-6 relative overflow-hidden">
-      {/* Animated neural net background */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <NeuralNetBackground />
         <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/60" />
@@ -38,9 +42,17 @@ const Research = () => {
           </p>
         </ScrollReveal>
 
-        <ScrollReveal delay={200}>
-          <KnowledgeGraph />
-        </ScrollReveal>
+        <div className="lg:flex lg:gap-10">
+          <PageSidebar sections={tocSections} shareTitle="Topic Explorer — AI & SEO Research Graph" />
+
+          <div className="flex-1 min-w-0">
+            <div id="knowledge-graph" className="scroll-mt-28">
+              <ScrollReveal delay={200}>
+                <KnowledgeGraph />
+              </ScrollReveal>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
