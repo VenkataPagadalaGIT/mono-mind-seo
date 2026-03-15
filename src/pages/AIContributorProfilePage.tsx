@@ -529,7 +529,7 @@ const AIContributorProfilePage = () => {
                       rel="noopener noreferrer"
                       className="border border-border p-4 hover:border-foreground/20 transition-all group"
                     >
-                      <ResourceThumbnail url={media.url} />
+                      <ResourceThumbnail url={media.url} fullWidth />
                       <div className="mt-3">
                         <p className="font-display text-sm font-bold text-foreground group-hover:text-glow transition-all mb-1 line-clamp-2">
                           {media.title}
