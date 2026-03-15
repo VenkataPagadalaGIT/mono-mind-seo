@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import PageSidebar from "@/components/PageSidebar";
-import AuthorSidebar from "@/components/AuthorSidebar";
+
 import StateOfAIEssay from "@/components/StateOfAIEssay";
 import AIContributorsExplorer from "@/components/AIContributorsExplorer";
 import AITimeline from "@/components/AITimeline";
