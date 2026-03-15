@@ -1037,6 +1037,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "thrun", name: "Sebastian Thrun", rank: 22,
     bio: "Creator of Google Self-Driving Car. Founded Udacity. Pioneer of autonomous vehicles.",
+    photoUrl: "/photos/thrun.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 4.0",
     segment: "Robotics & Autonomous Systems", specialty: ["Robotics", "AI Education"],
     affiliation: "Kitty Hawk / Stanford", expertType: "Founder/CEO", country: "Germany/USA",
     keyInfluence: "Created Google's self-driving car (now Waymo). Founded Udacity. Won DARPA Grand Challenge.",
