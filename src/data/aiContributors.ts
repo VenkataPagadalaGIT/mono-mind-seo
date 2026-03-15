@@ -590,7 +590,7 @@ export const aiContributors: AIContributor[] = [
     rank: 54,
     bio: "Professor emeritus at NYU. Prominent AI critic. Author of Rebooting AI. Advocates hybrid neurosymbolic AI.",
     photoUrl: "/photos/marcus.jpg",
-    photoCredit: "Illustration · AI-generated portrait",
+    photoCredit: "Photo: Wikimedia Commons / CC BY 2.0",
     segment: "AI Ethics & Policy",
     specialty: ["AI Safety", "AI Policy"],
     affiliation: "Independent / NYU (emeritus)",
