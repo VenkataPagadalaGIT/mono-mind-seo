@@ -984,6 +984,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "goodfellow", name: "Ian Goodfellow", rank: 12,
     bio: "Invented GANs. Author of Deep Learning textbook. Researcher at DeepMind.",
+    photoUrl: "/photos/goodfellow.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 2.0",
     segment: "Generative AI & Creative", specialty: ["Generative AI", "Deep Learning"],
     affiliation: "Google DeepMind", expertType: "Researcher", country: "USA",
     keyInfluence: "Invented GANs — one of the most important breakthroughs in generative AI.",
