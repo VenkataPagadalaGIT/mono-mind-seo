@@ -51,7 +51,7 @@ const experiences = [
   {
     company: "American Addiction Centers",
     role: "Senior SEO Software Developer",
-    period: "Mar 2019 — Oct 2022",
+    period: "Apr 2019 — Oct 2022",
     location: "San Diego, California",
     achievements: [
       "Led PHP to React.js migration; implemented JSON-LD structured data across 1M+ page healthcare portfolio",
