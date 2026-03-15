@@ -16,7 +16,7 @@ interface PageSidebarProps {
   children?: React.ReactNode;
 }
 
-const PageSidebar = ({ sections, shareTitle, shareDescription, children }: PageSidebarProps) => {
+const PageSidebar = ({ sections, shareTitle, shareDescription, onSectionClick, children }: PageSidebarProps) => {
   const [activeId, setActiveId] = useState(sections[0]?.id ?? "");
   const [copied, setCopied] = useState(false);
 
