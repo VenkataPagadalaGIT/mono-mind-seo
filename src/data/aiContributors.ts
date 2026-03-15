@@ -571,7 +571,8 @@ export const aiContributors: AIContributor[] = [
     name: "Sara Hooker",
     rank: 50,
     bio: "Head of Cohere for AI research lab. Former Google Brain. Champion of efficient ML and responsible AI.",
-    // No real photo available
+    photoUrl: "/photos/hooker.jpg",
+    photoCredit: "Photo: Wikimedia Commons",
     segment: "Open Source AI & Platforms",
     specialty: ["Deep Learning", "AI Ethics", "Open Source AI"],
     affiliation: "Cohere for AI",
