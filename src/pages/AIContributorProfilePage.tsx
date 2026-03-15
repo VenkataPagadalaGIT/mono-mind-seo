@@ -95,13 +95,8 @@ const AIContributorProfilePage = () => {
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
 
-      <div className="min-h-screen bg-background pt-24 pb-20 px-6 relative overflow-hidden">
-        <div className="fixed inset-0 z-0 pointer-events-none">
-          <NeuralNetBackground />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-transparent to-background/70" />
-        </div>
-
-        <div className="max-w-4xl mx-auto relative z-10">
+      <div className="min-h-screen bg-background pt-24 pb-20 px-6">
+        <div className="max-w-3xl mx-auto">
           {/* Breadcrumb */}
           <ScrollReveal>
             <nav className="flex items-center gap-2 font-mono text-[10px] tracking-widest uppercase text-muted-foreground/40 mb-10">
