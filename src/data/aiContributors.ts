@@ -970,6 +970,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "huang", name: "Jensen Huang", rank: 11,
     bio: "CEO & Co-founder of NVIDIA. Built the AI hardware backbone. NVIDIA reached $3T market cap. Queen Elizabeth Prize 2025.",
+    photoUrl: "/photos/huang.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "AI Hardware & Infrastructure", specialty: ["AI Hardware", "AI Infrastructure"],
     affiliation: "NVIDIA", expertType: "Industry Leader", country: "USA/Taiwan",
     keyInfluence: "Built the GPU infrastructure backbone powering the entire AI revolution.",
