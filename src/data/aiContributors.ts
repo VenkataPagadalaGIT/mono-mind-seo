@@ -34,6 +34,8 @@ export interface AIContributor {
   milestones?: { year: string; event: string }[];
   featuredMedia?: { title: string; type: "podcast" | "interview" | "documentary" | "lecture"; url: string; host?: string; duration?: string; year?: string }[];
   whyTheyMatter?: string;
+  photoUrl?: string;
+  photoCredit?: string; // e.g. "Photo: Wikimedia Commons / CC BY 2.0"
 }
 
 export const AI_SEGMENTS = [
@@ -249,6 +251,8 @@ export const aiContributors: AIContributor[] = [
     notionUrl: "https://www.notion.so/323882e4d9198151ba9cf617f1147229",
     quote: "The idea that this stuff could actually get smarter than people — a few years ago I thought it was 30 to 50 years or even longer away. Now I think it's more like 5 to 20 years.",
     myTake: "Hinton is the root node of the entire modern AI tree. Almost every major figure in deep learning was either his student or influenced by his work. His departure from Google to warn about AI risks carries weight precisely because of his unmatched credibility. Required study for anyone entering AI.",
+    photoUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Geoffrey_Hinton_-_Collision_2023_-_Centre_Stage%2C_May_31_%28cropped%29.jpg/440px-Geoffrey_Hinton_-_Collision_2023_-_Centre_Stage%2C_May_31_%28cropped%29.jpg",
+    photoCredit: "Photo: Collision Conf / Wikimedia Commons / CC BY 2.0",
     whyTheyMatter: "Without Hinton, there is no modern AI. Backpropagation, which he popularized in 1986, is still the fundamental algorithm that trains every neural network today. His intellectual lineage — students like Ilya Sutskever (co-founder of OpenAI), Yann LeCun, and dozens of others — built the entire industry. When Hinton speaks about AI risks, the world listens because he earned that authority over 40 years of being right when others were wrong.",
     resources: [
       { title: "Learning representations by back-propagating errors", type: "paper", url: "https://www.nature.com/articles/323533a0", year: "1986", description: "The paper that made neural networks trainable. Still the foundation of all deep learning." },
@@ -289,6 +293,8 @@ export const aiContributors: AIContributor[] = [
     googleScholar: "https://scholar.google.com/citations?user=WLN3QrAAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981e9acaed6b0f4aec933",
     quote: "Our intelligence is what makes us human, and AI is an extension of that quality.",
+    photoUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Yann_LeCun_-_2018_%28cropped%29.jpg/440px-Yann_LeCun_-_2018_%28cropped%29.jpg",
+    photoCredit: "Photo: ITU / Wikimedia Commons / CC BY 2.0",
     myTake: "LeCun is the rare figure who combines deep technical contribution (CNNs) with relentless public engagement. His debates with AI doomers on X/Twitter are legendary. His 'world model' vision for AI — learning like babies through observation — represents a fundamentally different path from pure language models. Worth following closely.",
     resources: [
       { title: "A Path Towards Autonomous Machine Intelligence", type: "paper", url: "https://openreview.net/forum?id=BZ5a1r-kVsf", year: "2022" },
@@ -301,6 +307,8 @@ export const aiContributors: AIContributor[] = [
     name: "Sam Altman",
     rank: 8,
     bio: "CEO of OpenAI. Led development of ChatGPT & GPT series. TIME Person of the Year 2025.",
+    photoUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Sam_Altman_TechCrunch_SF_2019_Day_2_Oct_3_%28cropped%29.jpg/440px-Sam_Altman_TechCrunch_SF_2019_Day_2_Oct_3_%28cropped%29.jpg",
+    photoCredit: "Photo: TechCrunch / Wikimedia Commons / CC BY 2.0",
     segment: "Foundation Models & LLMs",
     specialty: ["LLMs", "AGI", "AI Policy"],
     affiliation: "OpenAI",
@@ -335,6 +343,8 @@ export const aiContributors: AIContributor[] = [
     name: "Jeff Dean",
     rank: 13,
     bio: "Chief Scientist at Google. Co-designed MapReduce, BigTable, TensorFlow. Leads Google's AI research strategy.",
+    photoUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Jeff_Dean%2C_Google_Senior_Fellow.jpg/440px-Jeff_Dean%2C_Google_Senior_Fellow.jpg",
+    photoCredit: "Photo: Google / Wikimedia Commons / CC BY 3.0",
     segment: "AI Hardware & Infrastructure",
     specialty: ["AI Infrastructure", "LLMs"],
     affiliation: "Google DeepMind",
@@ -361,6 +371,8 @@ export const aiContributors: AIContributor[] = [
     name: "David Silver",
     rank: 19,
     bio: "Former lead researcher at DeepMind. Creator of AlphaGo & AlphaZero. Left DeepMind in 2026 to found Ineffable Intelligence.",
+    photoUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/David_Silver_%28computer_scientist%29.jpg/440px-David_Silver_%28computer_scientist%29.jpg",
+    photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "Reinforcement Learning & Decision",
     specialty: ["Reinforcement Learning", "AGI"],
     affiliation: "Ineffable Intelligence (founder)",
@@ -417,7 +429,9 @@ export const aiContributors: AIContributor[] = [
     id: "pichai",
     name: "Sundar Pichai",
     rank: 31,
-    bio: "CEO of Google & Alphabet. Oversees DeepMind integration. Launched Gemini. Driving AI-first transformation.",
+    bio: "CEO of Alphabet/Google. Overseeing Gemini AI, Google DeepMind, and AI-first transformation.",
+    photoUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Sundar_Pichai_-_2023_%28cropped%29.jpg/440px-Sundar_Pichai_-_2023_%28cropped%29.jpg",
+    photoCredit: "Photo: Wikimedia Commons / CC BY 2.0",
     segment: "Enterprise & Applied AI",
     specialty: ["AI Infrastructure", "LLMs"],
     affiliation: "Google / Alphabet",
@@ -463,7 +477,9 @@ export const aiContributors: AIContributor[] = [
     id: "fridman",
     name: "Lex Fridman",
     rank: 43,
-    bio: "MIT research scientist. Host of Lex Fridman Podcast — most influential AI interview show.",
+    bio: "MIT researcher and host of the Lex Fridman Podcast. 400+ deep interviews with AI pioneers.",
+    photoUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Lex_Fridman_teaching_at_MIT_in_2018.png/440px-Lex_Fridman_teaching_at_MIT_in_2018.png",
+    photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "AI Education & Communication",
     specialty: ["Robotics", "AI Education"],
     affiliation: "MIT / Lex Fridman Podcast",
@@ -588,6 +604,8 @@ export const aiContributors: AIContributor[] = [
     name: "Robin Li",
     rank: 60,
     bio: "CEO of Baidu. Launched Ernie Bot. Pioneer of China's AI industry. Leading autonomous driving (Apollo).",
+    photoUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Robin_Li_at_the_Web_2.0_Summit_2010.jpg/440px-Robin_Li_at_the_Web_2.0_Summit_2010.jpg",
+    photoCredit: "Photo: JD Lasica / Wikimedia Commons / CC BY 2.0",
     segment: "Foundation Models & LLMs",
     specialty: ["LLMs", "AI Infrastructure"],
     affiliation: "Baidu",
@@ -651,6 +669,8 @@ export const aiContributors: AIContributor[] = [
     name: "Tristan Harris",
     rank: 76,
     bio: "Co-founder of Center for Humane Technology. Star of The Social Dilemma. Leading voice on responsible AI.",
+    photoUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Tristan_Harris_in_2022.jpg/440px-Tristan_Harris_in_2022.jpg",
+    photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "AI Ethics & Policy",
     specialty: ["AI Ethics", "AI Policy"],
     affiliation: "Center for Humane Technology",

@@ -120,12 +120,21 @@ const AIContributorsExplorer = ({ onExplore }: Props) => {
               className="group grid grid-cols-[40px_1fr] sm:grid-cols-[40px_1fr_1fr_140px_100px_24px] gap-3 px-4 py-3 hover:bg-foreground/[0.02] transition-colors items-center"
             >
               {/* Avatar */}
-              <div
-                className="w-8 h-8 flex items-center justify-center font-mono text-[10px] font-bold text-background shrink-0"
-                style={{ backgroundColor: color }}
-              >
-                {contributor.name.split(" ").map((w) => w[0]).join("")}
-              </div>
+              {contributor.photoUrl ? (
+                <img
+                  src={contributor.photoUrl}
+                  alt={contributor.name}
+                  className="w-8 h-8 object-cover shrink-0 rounded-sm"
+                  loading="lazy"
+                />
+              ) : (
+                <div
+                  className="w-8 h-8 flex items-center justify-center font-mono text-[10px] font-bold text-background shrink-0"
+                  style={{ backgroundColor: color }}
+                >
+                  {contributor.name.split(" ").map((w) => w[0]).join("")}
+                </div>
+              )}
 
               {/* Name + mobile info */}
               <div className="min-w-0">
