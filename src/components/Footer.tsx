@@ -8,7 +8,7 @@ const Footer = () => {
     { label: "Solutions", to: "/solutions" },
     { label: "Projects", to: "/projects" },
     { label: "Insights", to: "/insights" },
-    { label: "Publications", to: "/publications" },
+    { label: "Lab", to: "/publications" },
     { label: "Contact", to: "/contact" },
   ];
 
@@ -29,7 +29,7 @@ const Footer = () => {
               Venkata Pagadala
             </Link>
             <p className="font-mono text-[11px] text-muted-foreground/60 mt-3 leading-relaxed">
-              AI Product Owner & Technical SEO Lead. Building production AI systems at enterprise scale.
+              AI Systems Builder & Researcher. Production AI, business intelligence, and enterprise search at scale.
             </p>
             <div className="flex items-center gap-4 mt-4">
               <a href="https://www.linkedin.com/in/venkata-pagadala/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground/40 hover:text-foreground transition-colors">

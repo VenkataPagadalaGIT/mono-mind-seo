@@ -9,9 +9,9 @@ import ScrollReveal from "@/components/ScrollReveal";
 
 const Home = () => {
   useEffect(() => {
-    document.title = "Venkata Pagadala — AI Product Owner & Technical SEO Lead";
+    document.title = "Venkata Pagadala — AI Systems Builder, Researcher & Business Strategist";
     const meta = document.querySelector('meta[name="description"]');
-    const content = "Venkata Pagadala — AI Product Owner, Technical SEO Lead, and Published Researcher. Building AI systems and scaling organic search for Fortune 500 brands.";
+    const content = "Venkata Pagadala — AI Systems Architect, Published Researcher, and Business Strategist. Building production AI systems, knowledge graphs, and enterprise search at scale.";
     if (meta) meta.setAttribute("content", content);
   }, []);
 
@@ -26,9 +26,12 @@ const Home = () => {
           [ Portfolio ]
         </p>
 
-        <h1 className="font-display text-5xl sm:text-7xl md:text-8xl font-bold tracking-tight text-foreground text-glow mb-4">
+        <h1 className="font-display text-5xl sm:text-7xl md:text-8xl font-bold tracking-tight text-foreground text-glow mb-2">
           Venkata Pagadala
         </h1>
+        <p className="font-mono text-xs sm:text-sm text-foreground/50 mb-4 tracking-wide">
+          AI Systems · Business Research · Search
+        </p>
 
         <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mb-6">
           {[
@@ -47,10 +50,11 @@ const Home = () => {
         <div className="h-8 flex items-center justify-center">
           <TypewriterText
             words={[
-              "AI Product Manager — Search",
-              "Lead Technical Product Manager",
+              "AI Systems Architect",
               "Published Researcher",
+              "Business & Market Intelligence",
               "Enterprise SEO & Automation",
+              "Building the Future of Search",
             ]}
             className="font-mono text-sm sm:text-base text-foreground/60"
           />
