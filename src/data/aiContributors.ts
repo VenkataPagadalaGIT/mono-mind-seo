@@ -501,6 +501,7 @@ export const aiContributors: AIContributor[] = [
     awards: "TIME100 AI 2024",
     education: "MS in Engineering, Dartmouth College.",
     twitter: "https://x.com/maboriramurati",
+    linkedin: "https://www.linkedin.com/in/maboriramurati/",
     googleScholar: "https://scholar.google.com/citations?user=Y6-OXYAAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d919814ebcc4cefe1f9c37bd",
     myTake: "Murati is one of the most underrated figures in AI. She actually shipped ChatGPT and GPT-4 — turning research into product. Her new venture Thinking Machines Lab, focused on agentic AI, suggests she sees the next frontier beyond chat interfaces. One to watch closely.",
