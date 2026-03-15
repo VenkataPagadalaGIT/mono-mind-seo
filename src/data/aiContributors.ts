@@ -1,3 +1,10 @@
+export interface AIResource {
+  title: string;
+  type: "paper" | "talk" | "interview" | "book" | "podcast" | "project";
+  url: string;
+  year?: string;
+}
+
 export interface AIContributor {
   id: string;
   name: string;
@@ -17,6 +24,11 @@ export interface AIContributor {
   googleScholar?: string;
   youtube?: string;
   notionUrl: string;
+  quote?: string;
+  myTake?: string;
+  resources?: AIResource[];
+  connections?: string[]; // ids of related contributors
+  milestones?: { year: string; event: string }[];
 }
 
 export const AI_SEGMENTS = [
@@ -57,6 +69,159 @@ export const SEGMENT_COLORS: Record<string, string> = {
   "AI for Science & Healthcare": "#d35400",
 };
 
+export interface LearningPath {
+  id: string;
+  title: string;
+  description: string;
+  contributorIds: string[];
+  difficulty: "beginner" | "intermediate" | "advanced";
+  estimatedTime: string;
+}
+
+export const LEARNING_PATHS: LearningPath[] = [
+  {
+    id: "foundation-models",
+    title: "Foundation Models Deep Dive",
+    description: "Understand the architectures, people, and breakthroughs behind LLMs — from transformers to GPT to Llama.",
+    contributorIds: ["hinton", "lecun", "altman", "gomez", "murati", "touvron", "gu"],
+    difficulty: "intermediate",
+    estimatedTime: "2-3 hours",
+  },
+  {
+    id: "ai-safety",
+    title: "AI Safety & Alignment",
+    description: "The critical challenge of building AI that aligns with human values — from RLHF to scalable oversight.",
+    contributorIds: ["hinton", "leike", "dragan", "marcus", "harris"],
+    difficulty: "advanced",
+    estimatedTime: "1-2 hours",
+  },
+  {
+    id: "open-source-ai",
+    title: "Open Source AI Revolution",
+    description: "How open-source is democratizing AI — from Hugging Face to LLaMA to community-driven research.",
+    contributorIds: ["wolf", "touvron", "liang", "hooker"],
+    difficulty: "beginner",
+    estimatedTime: "1 hour",
+  },
+  {
+    id: "ai-infrastructure",
+    title: "AI Infrastructure & Scale",
+    description: "The hardware, systems, and platforms powering AI at scale — GPUs, TPUs, and distributed training.",
+    contributorIds: ["dean", "dally", "pichai"],
+    difficulty: "intermediate",
+    estimatedTime: "1-2 hours",
+  },
+  {
+    id: "robotics-embodied",
+    title: "Robotics & Embodied AI",
+    description: "From AlphaGo to general-purpose robots — how RL and meta-learning are creating physical intelligence.",
+    contributorIds: ["silver", "finn", "dragan", "fridman"],
+    difficulty: "advanced",
+    estimatedTime: "2 hours",
+  },
+  {
+    id: "ai-ethics-society",
+    title: "AI Ethics & Society",
+    description: "Critical perspectives on AI's impact — from stochastic parrots to humane technology.",
+    contributorIds: ["bender", "harris", "marcus"],
+    difficulty: "beginner",
+    estimatedTime: "1 hour",
+  },
+];
+
+export const AI_TIMELINE: { year: string; events: { contributorId: string; event: string }[] }[] = [
+  {
+    year: "1986",
+    events: [
+      { contributorId: "hinton", event: "Published backpropagation learning algorithm paper" },
+    ],
+  },
+  {
+    year: "1998",
+    events: [
+      { contributorId: "lecun", event: "Published LeNet — first successful CNN for digit recognition" },
+    ],
+  },
+  {
+    year: "2012",
+    events: [
+      { contributorId: "hinton", event: "AlexNet wins ImageNet — deep learning revolution begins" },
+    ],
+  },
+  {
+    year: "2014",
+    events: [
+      { contributorId: "socher", event: "Published GloVe word embeddings — new standard for NLP" },
+    ],
+  },
+  {
+    year: "2015",
+    events: [
+      { contributorId: "silver", event: "AlphaGo defeats Fan Hui — AI beats professional Go player" },
+    ],
+  },
+  {
+    year: "2016",
+    events: [
+      { contributorId: "silver", event: "AlphaGo defeats Lee Sedol — watershed moment for AI" },
+    ],
+  },
+  {
+    year: "2017",
+    events: [
+      { contributorId: "gomez", event: "Co-authored 'Attention Is All You Need' — the Transformer paper" },
+      { contributorId: "finn", event: "Published MAML — meta-learning breakthrough" },
+    ],
+  },
+  {
+    year: "2018",
+    events: [
+      { contributorId: "hinton", event: "Turing Award (with LeCun and Bengio)" },
+      { contributorId: "lecun", event: "Turing Award (with Hinton and Bengio)" },
+    ],
+  },
+  {
+    year: "2020",
+    events: [
+      { contributorId: "bender", event: "Co-authored 'On the Dangers of Stochastic Parrots'" },
+      { contributorId: "hooker", event: "Published 'The Hardware Lottery' — reshaping AI progress narrative" },
+    ],
+  },
+  {
+    year: "2022",
+    events: [
+      { contributorId: "altman", event: "Launched ChatGPT — AI enters mainstream consciousness" },
+      { contributorId: "murati", event: "Led ChatGPT engineering as CTO of OpenAI" },
+    ],
+  },
+  {
+    year: "2023",
+    events: [
+      { contributorId: "touvron", event: "Released LLaMA — catalyzed open-source LLM revolution" },
+      { contributorId: "altman", event: "Launched GPT-4 — most capable AI model at the time" },
+      { contributorId: "wolf", event: "Hugging Face reaches 500K+ models on platform" },
+      { contributorId: "zhavoronkov", event: "First AI-discovered drug enters Phase II clinical trials" },
+    ],
+  },
+  {
+    year: "2024",
+    events: [
+      { contributorId: "hinton", event: "Awarded Nobel Prize in Physics for AI contributions" },
+      { contributorId: "gu", event: "Mamba architecture challenges Transformer dominance" },
+      { contributorId: "dally", event: "Queen Elizabeth Prize for Engineering 2025 announced" },
+      { contributorId: "liang", event: "HELM benchmark becomes standard for LLM evaluation" },
+    ],
+  },
+  {
+    year: "2025",
+    events: [
+      { contributorId: "altman", event: "TIME Person of the Year" },
+      { contributorId: "murati", event: "Founded Thinking Machines Lab for agentic AI" },
+      { contributorId: "silver", event: "Left DeepMind to found Ineffable Intelligence" },
+    ],
+  },
+];
+
 export const aiContributors: AIContributor[] = [
   {
     id: "hinton",
@@ -75,6 +240,21 @@ export const aiContributors: AIContributor[] = [
     website: "https://www.cs.toronto.edu/~hinton/",
     googleScholar: "https://scholar.google.com/citations?user=JicYPdAAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d9198151ba9cf617f1147229",
+    quote: "The idea that this stuff could actually get smarter than people — a few years ago I thought it was 30 to 50 years or even longer away. Now I think it's more like 5 to 20 years.",
+    myTake: "Hinton is the root node of the entire modern AI tree. Almost every major figure in deep learning was either his student or influenced by his work. His departure from Google to warn about AI risks carries weight precisely because of his unmatched credibility. Required study for anyone entering AI.",
+    resources: [
+      { title: "Learning representations by back-propagating errors", type: "paper", url: "https://www.nature.com/articles/323533a0", year: "1986" },
+      { title: "Lex Fridman Interview — Godfather of AI", type: "interview", url: "https://www.youtube.com/watch?v=rGgGOccMEiY", year: "2024" },
+      { title: "Nobel Prize Lecture", type: "talk", url: "https://www.nobelprize.org/prizes/physics/2024/hinton/lecture/", year: "2024" },
+    ],
+    connections: ["lecun", "altman", "silver"],
+    milestones: [
+      { year: "1986", event: "Published backpropagation paper" },
+      { year: "2012", event: "AlexNet — deep learning revolution" },
+      { year: "2018", event: "Turing Award" },
+      { year: "2023", event: "Left Google to warn about AI risks" },
+      { year: "2024", event: "Nobel Prize in Physics" },
+    ],
   },
   {
     id: "lecun",
@@ -93,6 +273,13 @@ export const aiContributors: AIContributor[] = [
     website: "https://yann.lecun.com/",
     googleScholar: "https://scholar.google.com/citations?user=WLN3QrAAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981e9acaed6b0f4aec933",
+    quote: "Our intelligence is what makes us human, and AI is an extension of that quality.",
+    myTake: "LeCun is the rare figure who combines deep technical contribution (CNNs) with relentless public engagement. His debates with AI doomers on X/Twitter are legendary. His 'world model' vision for AI — learning like babies through observation — represents a fundamentally different path from pure language models. Worth following closely.",
+    resources: [
+      { title: "A Path Towards Autonomous Machine Intelligence", type: "paper", url: "https://openreview.net/forum?id=BZ5a1r-kVsf", year: "2022" },
+      { title: "Lex Fridman Interview — Meta AI", type: "interview", url: "https://www.youtube.com/watch?v=5t1vTLU7s40", year: "2023" },
+    ],
+    connections: ["hinton", "touvron", "hooker"],
   },
   {
     id: "altman",
@@ -112,6 +299,20 @@ export const aiContributors: AIContributor[] = [
     github: "https://github.com/sama",
     googleScholar: "https://scholar.google.com/citations?user=K_2IHEAAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d9198136ba9ae1ea7c5770ae",
+    quote: "AI will probably most likely lead to the end of the world, but in the meantime, there'll be great companies.",
+    myTake: "Love or hate him, Altman is the most consequential figure in making AI mainstream. His YC background shaped his 'ship fast' approach to deploying GPT models. The boardroom drama of 2023 only reinforced his central role. His blog posts on 'Moore's Law for Everything' are essential reading for understanding how AI reshapes economics.",
+    resources: [
+      { title: "Moore's Law for Everything", type: "paper", url: "https://moores.samaltman.com/", year: "2021" },
+      { title: "Lex Fridman Interview", type: "interview", url: "https://www.youtube.com/watch?v=L_Guz73e6fw", year: "2023" },
+      { title: "Sam Altman's Blog", type: "book", url: "https://blog.samaltman.com/", year: "2024" },
+    ],
+    connections: ["murati", "leike", "hinton"],
+    milestones: [
+      { year: "2019", event: "Became CEO of OpenAI" },
+      { year: "2022", event: "Launched ChatGPT" },
+      { year: "2023", event: "GPT-4 launch & boardroom crisis" },
+      { year: "2025", event: "TIME Person of the Year" },
+    ],
   },
   {
     id: "dean",
@@ -130,6 +331,13 @@ export const aiContributors: AIContributor[] = [
     website: "https://research.google/people/jeff/",
     googleScholar: "https://scholar.google.com/citations?user=NMS69lQAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981418254ef7670bbd9a4",
+    quote: "We want to use AI to make the world a better place.",
+    myTake: "Jeff Dean is the 'engineer's engineer.' While others get the headlines, Dean quietly built the infrastructure that makes modern AI possible. MapReduce, BigTable, TensorFlow, TPUs — each one would be a career-defining achievement. Together, they make him arguably the most impactful individual systems engineer in computing history.",
+    resources: [
+      { title: "MapReduce: Simplified Data Processing on Large Clusters", type: "paper", url: "https://research.google/pubs/pub62/", year: "2004" },
+      { title: "TensorFlow: A System for Large-Scale Machine Learning", type: "paper", url: "https://arxiv.org/abs/1605.08695", year: "2016" },
+    ],
+    connections: ["pichai", "dally"],
   },
   {
     id: "silver",
@@ -147,6 +355,20 @@ export const aiContributors: AIContributor[] = [
     website: "https://www.davidsilver.uk/",
     googleScholar: "https://scholar.google.com/citations?user=1L4GCDAAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d919816b9569e86be0e08e54",
+    quote: "The game of Go has long been viewed as the most challenging of classic games for AI.",
+    myTake: "The AlphaGo documentary is possibly the best AI content ever made — watch it. Silver's RL course at UCL is the gold standard for learning reinforcement learning. His move to found Ineffable Intelligence signals he believes the most impactful AI work is now happening outside big labs.",
+    resources: [
+      { title: "Mastering the Game of Go with Deep Neural Networks", type: "paper", url: "https://www.nature.com/articles/nature16961", year: "2016" },
+      { title: "AlphaGo Documentary", type: "talk", url: "https://www.youtube.com/watch?v=WXuK6gekU1Y", year: "2020" },
+      { title: "UCL RL Course", type: "talk", url: "https://www.davidsilver.uk/teaching/", year: "2015" },
+    ],
+    connections: ["hinton", "finn", "dragan"],
+    milestones: [
+      { year: "2015", event: "AlphaGo defeats Fan Hui" },
+      { year: "2016", event: "AlphaGo defeats Lee Sedol" },
+      { year: "2017", event: "AlphaZero masters chess/Go from scratch" },
+      { year: "2026", event: "Founded Ineffable Intelligence" },
+    ],
   },
   {
     id: "liang",
@@ -166,6 +388,11 @@ export const aiContributors: AIContributor[] = [
     github: "https://github.com/percyliang",
     googleScholar: "https://scholar.google.com/citations?user=uKoJYFQAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d919816893a4db8a5d49099d",
+    myTake: "Liang is quietly one of the most important figures in AI evaluation. Without HELM, we'd have no standardized way to compare LLMs. Together AI represents the thesis that open-source can compete with closed models — a bet that's increasingly looking right.",
+    resources: [
+      { title: "HELM: Holistic Evaluation of Language Models", type: "paper", url: "https://arxiv.org/abs/2211.09110", year: "2022" },
+    ],
+    connections: ["wolf", "hooker", "touvron"],
   },
   {
     id: "pichai",
@@ -184,6 +411,8 @@ export const aiContributors: AIContributor[] = [
     website: "https://about.google/",
     googleScholar: "https://scholar.google.com/citations?user=0NOr2MQAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d9198111a1b6ccf3dadfa8bd",
+    myTake: "Pichai's decision to merge DeepMind with Google Brain was the most consequential AI leadership move of 2023. He's navigating the hardest challenge in tech: transforming the world's largest search engine with AI without destroying the business model that funds it.",
+    connections: ["dean", "dally"],
   },
   {
     id: "gomez",
@@ -202,6 +431,12 @@ export const aiContributors: AIContributor[] = [
     website: "https://cohere.com/",
     googleScholar: "https://scholar.google.com/citations?user=gMbMj18AAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981648eadcd3e366073b6",
+    quote: "The Transformer architecture was written on a whiteboard in about an afternoon.",
+    myTake: "Gomez represents the next generation — co-authoring the most important AI paper of the decade at 20. His enterprise-first approach with Cohere contrasts with OpenAI's consumer play. Watch how Cohere's RAG capabilities evolve; they're building for the boring-but-massive enterprise market.",
+    resources: [
+      { title: "Attention Is All You Need", type: "paper", url: "https://arxiv.org/abs/1706.03762", year: "2017" },
+    ],
+    connections: ["hooker", "lecun"],
   },
   {
     id: "fridman",
@@ -222,6 +457,13 @@ export const aiContributors: AIContributor[] = [
     youtube: "https://youtube.com/@lexfridman",
     googleScholar: "https://scholar.google.com/citations?user=wZH_N7cAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d919819ca735c38a70fbd80b",
+    quote: "Love is the answer. That's not just a bumper sticker — it's a statement about the human condition.",
+    myTake: "Fridman has done more to democratize understanding of AI than any other single person. His interviews are essentially free graduate seminars. Start with his Hinton, Altman, and Silver episodes for a masterclass in modern AI. His ability to get technical people to explain simply is unmatched.",
+    resources: [
+      { title: "Geoffrey Hinton Interview", type: "podcast", url: "https://www.youtube.com/watch?v=rGgGOccMEiY", year: "2024" },
+      { title: "Sam Altman Interview", type: "podcast", url: "https://www.youtube.com/watch?v=L_Guz73e6fw", year: "2023" },
+    ],
+    connections: ["hinton", "altman", "silver", "lecun", "marcus"],
   },
   {
     id: "murati",
@@ -239,6 +481,8 @@ export const aiContributors: AIContributor[] = [
     twitter: "https://x.com/maboriramurati",
     googleScholar: "https://scholar.google.com/citations?user=Y6-OXYAAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d919814ebcc4cefe1f9c37bd",
+    myTake: "Murati is one of the most underrated figures in AI. She actually shipped ChatGPT and GPT-4 — turning research into product. Her new venture Thinking Machines Lab, focused on agentic AI, suggests she sees the next frontier beyond chat interfaces. One to watch closely.",
+    connections: ["altman", "leike"],
   },
   {
     id: "finn",
@@ -258,6 +502,11 @@ export const aiContributors: AIContributor[] = [
     github: "https://github.com/cbfinn",
     googleScholar: "https://scholar.google.com/citations?user=vUPPg3gAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981f69300d73c3fbaab0d",
+    myTake: "Finn's MAML paper is one of the most elegant ideas in ML — teach a model how to learn quickly from few examples. Physical Intelligence is betting that the same kind of foundation model approach that worked for language will work for robotics. If they're right, it's transformative.",
+    resources: [
+      { title: "Model-Agnostic Meta-Learning (MAML)", type: "paper", url: "https://arxiv.org/abs/1703.03400", year: "2017" },
+    ],
+    connections: ["silver", "dragan"],
   },
   {
     id: "hooker",
@@ -277,6 +526,12 @@ export const aiContributors: AIContributor[] = [
     github: "https://github.com/sarahooker",
     googleScholar: "https://scholar.google.com/citations?user=0Tnz_L8AAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981c3a245ffaa458d0e9c",
+    quote: "The Hardware Lottery — when a research idea wins because it's compatible with available hardware, not because it's the best idea.",
+    myTake: "Hooker's 'Hardware Lottery' is one of those papers that changes how you think about everything. It explains why certain AI approaches dominated — not because they were best, but because they fit available hardware. Essential reading for understanding why transformers won and what might come next.",
+    resources: [
+      { title: "The Hardware Lottery", type: "paper", url: "https://arxiv.org/abs/2009.06489", year: "2020" },
+    ],
+    connections: ["gomez", "lecun", "wolf", "liang"],
   },
   {
     id: "marcus",
@@ -295,6 +550,12 @@ export const aiContributors: AIContributor[] = [
     website: "https://garymarcus.com/",
     googleScholar: "https://scholar.google.com/citations?user=dJiSBSQAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d919813e8119fd8ed03eba3b",
+    quote: "Deep learning is hitting a wall. We need hybrid AI that combines neural networks with symbolic reasoning.",
+    myTake: "Marcus is the contrarian the AI field needs. While everyone's on the LLM hype train, he consistently points out fundamental limitations. His debates with LeCun are must-watch content. Even if you disagree with him, engaging with his arguments makes you a sharper thinker about AI.",
+    resources: [
+      { title: "Rebooting AI", type: "book", url: "https://garymarcus.com/rebooting-ai/", year: "2019" },
+    ],
+    connections: ["lecun", "bender", "harris"],
   },
   {
     id: "li",
@@ -312,6 +573,8 @@ export const aiContributors: AIContributor[] = [
     github: "https://github.com/PaddlePaddle",
     googleScholar: "https://scholar.google.com/citations?user=v3LVROIAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d9198142a535ef174f34ae6f",
+    myTake: "Li represents the parallel AI universe developing in China. Baidu's ERNIE models and Apollo autonomous driving platform are massive — yet largely invisible to Western audiences. Understanding China's AI ecosystem through Li's work is critical for anyone thinking about AI geopolitics.",
+    connections: ["pichai", "dean"],
   },
   {
     id: "socher",
@@ -330,6 +593,11 @@ export const aiContributors: AIContributor[] = [
     website: "https://www.socher.org/",
     googleScholar: "https://scholar.google.com/citations?user=FaOcyfMAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981cc90f7ee253010a763",
+    myTake: "Socher's GloVe embeddings were a foundational breakthrough — they showed that word meanings could be captured as vectors. His pivot from Salesforce to You.com shows his conviction that AI will fundamentally transform search. Early but important signal for the AI-search convergence.",
+    resources: [
+      { title: "GloVe: Global Vectors for Word Representation", type: "paper", url: "https://nlp.stanford.edu/projects/glove/", year: "2014" },
+    ],
+    connections: ["liang", "gomez"],
   },
   {
     id: "leike",
@@ -348,6 +616,8 @@ export const aiContributors: AIContributor[] = [
     website: "https://www.anthropic.com/",
     googleScholar: "https://scholar.google.com/citations?user=IOSL4_sAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981d6b352d70486765bcd",
+    myTake: "Leike's move from OpenAI to Anthropic — publicly citing safety concerns — was one of the most significant talent moves in AI. He's working on the hardest problem: how do you align AI systems that might become smarter than us? His work on RLHF and scalable oversight is foundational.",
+    connections: ["altman", "murati", "dragan", "hinton"],
   },
   {
     id: "harris",
@@ -366,6 +636,13 @@ export const aiContributors: AIContributor[] = [
     website: "https://www.humanetech.com/",
     googleScholar: "https://scholar.google.com/citations?user=TQk_m2sAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981878679e60509f81007",
+    quote: "If you're not paying for the product, you are the product.",
+    myTake: "Harris bridges the gap between tech and policy better than anyone. The Social Dilemma reached hundreds of millions. His AI Dilemma talk should be required viewing. He understands that AI safety isn't just a technical problem — it's a design and incentive problem.",
+    resources: [
+      { title: "The AI Dilemma", type: "talk", url: "https://www.youtube.com/watch?v=xoVJKj8lcNQ", year: "2023" },
+      { title: "The Social Dilemma (Netflix)", type: "talk", url: "https://www.thesocialdilemma.com/", year: "2020" },
+    ],
+    connections: ["marcus", "bender"],
   },
   {
     id: "touvron",
@@ -382,6 +659,12 @@ export const aiContributors: AIContributor[] = [
     education: "PhD in Computer Science, Sorbonne University / INRIA (2022).",
     googleScholar: "https://scholar.google.com/citations?user=VNkD9dMAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d919812fa842d98ed672600b",
+    myTake: "Touvron is the unsung hero of open-source AI. LLaMA didn't just release a model — it ignited an entire ecosystem. Within weeks, the community had fine-tuned variants for every use case imaginable. The LLaMA papers are essential reading for understanding efficient training at scale.",
+    resources: [
+      { title: "LLaMA: Open and Efficient Foundation Language Models", type: "paper", url: "https://arxiv.org/abs/2302.13971", year: "2023" },
+      { title: "Llama 2: Open Foundation and Fine-Tuned Chat Models", type: "paper", url: "https://arxiv.org/abs/2307.09288", year: "2023" },
+    ],
+    connections: ["lecun", "liang", "wolf", "hooker"],
   },
   {
     id: "dally",
@@ -399,6 +682,8 @@ export const aiContributors: AIContributor[] = [
     website: "https://www.nvidia.com/",
     googleScholar: "https://scholar.google.com/citations?user=YPkCbBYAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d919816e978fe39572028d76",
+    myTake: "Dally is the reason NVIDIA dominates AI. His work on GPU architectures, network-on-chip, and sparse computation directly shaped the hardware that trains every major AI model. Understanding his work is understanding the physical foundation of AI. His talks on efficient computing are must-watch.",
+    connections: ["dean", "pichai"],
   },
   {
     id: "zhavoronkov",
@@ -417,6 +702,8 @@ export const aiContributors: AIContributor[] = [
     website: "https://www.insilico.com/",
     googleScholar: "https://scholar.google.com/citations?user=BaDBNTYAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d919813b9215fcebe000add5",
+    myTake: "Zhavoronkov is proving that AI can do more than generate text and images — it can discover life-saving drugs. Insilico Medicine's pipeline represents the most tangible 'AI for good' story in the industry. If AI-designed drugs consistently pass clinical trials, it changes healthcare forever.",
+    connections: [],
   },
   {
     id: "dragan",
@@ -435,6 +722,8 @@ export const aiContributors: AIContributor[] = [
     website: "https://people.eecs.berkeley.edu/~anca/",
     googleScholar: "https://scholar.google.com/citations?user=ddiUmhIAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981d5a643e6f888ce4404",
+    myTake: "Dragan approaches alignment from the physical world — how do robots learn human preferences through interaction? Her work bridges the gap between theoretical alignment and practical robot safety. It's a perspective often missing from the LLM-dominated safety conversation.",
+    connections: ["silver", "finn", "leike"],
   },
   {
     id: "wolf",
@@ -454,6 +743,12 @@ export const aiContributors: AIContributor[] = [
     github: "https://github.com/thomwolf",
     googleScholar: "https://scholar.google.com/citations?user=j35feEMAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981419a79d2251397cd30",
+    quote: "We believe in democratizing good machine learning, one commit at a time.",
+    myTake: "Wolf and Hugging Face have done for AI what GitHub did for software — democratized access. The Transformers library is in virtually every ML codebase. Their model hub is the distribution layer of modern AI. Understanding HF's ecosystem is a practical prerequisite for any AI work.",
+    resources: [
+      { title: "Hugging Face Transformers Library", type: "project", url: "https://github.com/huggingface/transformers", year: "2018" },
+    ],
+    connections: ["touvron", "hooker", "liang"],
   },
   {
     id: "bender",
@@ -472,6 +767,12 @@ export const aiContributors: AIContributor[] = [
     website: "https://faculty.washington.edu/ebender/",
     googleScholar: "https://scholar.google.com/citations?user=9r_WQPIAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981cc881ef2966f934984",
+    quote: "Just because a language model produces fluent text doesn't mean it understands anything.",
+    myTake: "Bender's 'Stochastic Parrots' paper is one of the most important critiques in AI. It forced the field to confront uncomfortable questions about what LLMs actually do vs. what we project onto them. Even hardcore LLM believers should read it — it makes your thinking more rigorous.",
+    resources: [
+      { title: "On the Dangers of Stochastic Parrots", type: "paper", url: "https://dl.acm.org/doi/10.1145/3442188.3445922", year: "2021" },
+    ],
+    connections: ["marcus", "harris"],
   },
   {
     id: "gu",
@@ -491,5 +792,12 @@ export const aiContributors: AIContributor[] = [
     github: "https://github.com/state-spaces",
     googleScholar: "https://scholar.google.com/citations?user=8GKhLs8AAAAJ",
     notionUrl: "https://www.notion.so/323882e4d919814cb79cd99c86a4eb5d",
+    quote: "State-space models offer a principled alternative to attention mechanisms with linear-time complexity.",
+    myTake: "Gu might be the person who breaks the Transformer's monopoly. Mamba's linear-time complexity solves the fundamental scaling limitation of attention. If state-space models prove competitive across all modalities, it's a paradigm shift. His S4 and Mamba papers are technically demanding but essential.",
+    resources: [
+      { title: "Mamba: Linear-Time Sequence Modeling with Selective State Spaces", type: "paper", url: "https://arxiv.org/abs/2312.00752", year: "2023" },
+      { title: "Efficiently Modeling Long Sequences with Structured State Spaces (S4)", type: "paper", url: "https://arxiv.org/abs/2111.00396", year: "2021" },
+    ],
+    connections: ["hinton", "lecun"],
   },
 ];
