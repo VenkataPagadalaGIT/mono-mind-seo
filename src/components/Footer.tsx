@@ -5,10 +5,9 @@ import KitSignupForm from "@/components/KitSignupForm";
 const Footer = () => {
   const links = [
     { label: "About", to: "/about" },
-    { label: "Solutions", to: "/solutions" },
-    { label: "Projects", to: "/projects" },
-    { label: "Insights", to: "/insights" },
     { label: "Lab", to: "/publications" },
+    { label: "Solutions", to: "/solutions" },
+    { label: "Insights", to: "/insights" },
     { label: "Contact", to: "/contact" },
   ];
 
