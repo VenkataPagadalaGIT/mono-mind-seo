@@ -688,4 +688,4 @@ export const roadmapTopics: RoadmapTopic[] = ([
     tools: "arXiv, Papers With Code, Semantic Scholar, Google Scholar, Zotero, Notion",
     proTips: "Don't read papers cover-to-cover — read Abstract → Conclusion → Figures → Methods. Yannic Kilcher's channel is the best for paper walkthroughs. Subscribe to The Batch (Andrew Ng).",
   },
-].sort((a, b) => a.order - b.order);
+] as RoadmapTopic[]).sort((a, b) => a.order - b.order);
