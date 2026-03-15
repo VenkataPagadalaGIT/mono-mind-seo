@@ -748,7 +748,8 @@ export const aiContributors: AIContributor[] = [
     name: "Bill Dally",
     rank: 87,
     bio: "Chief Scientist at NVIDIA. Stanford professor. Queen Elizabeth Prize 2025. Pioneer of GPU computing for AI.",
-    // No real photo available
+    photoUrl: "/photos/dally.jpg",
+    photoCredit: "Photo: Wikimedia Commons",
     segment: "AI Hardware & Infrastructure",
     specialty: ["AI Hardware", "AI Infrastructure"],
     affiliation: "NVIDIA / Stanford",
