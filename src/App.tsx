@@ -17,6 +17,7 @@ import ServiceLanding from "./pages/ServiceLanding";
 import Solutions from "./pages/Solutions";
 import Research from "./pages/Research";
 import Contact from "./pages/Contact";
+import AIContributors from "./pages/AIContributors";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
