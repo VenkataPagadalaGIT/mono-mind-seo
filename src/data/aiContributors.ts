@@ -954,6 +954,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "karpathy", name: "Andrej Karpathy", rank: 10,
     bio: "Former Director of AI at Tesla. OpenAI founding member. Founded Eureka Labs. Top AI educator on YouTube.",
+    photoUrl: "/photos/karpathy.png", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "AI Education & Communication", specialty: ["Deep Learning", "Computer Vision", "AI Education"],
     affiliation: "Eureka Labs (founder)", expertType: "Founder/CEO", country: "Slovakia/USA",
     keyInfluence: "Built Tesla's AI vision stack. Top AI educator on YouTube (2M+ subscribers). nanoGPT democratized LLM training.",
