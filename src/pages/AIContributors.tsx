@@ -2,24 +2,19 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import PageSidebar from "@/components/PageSidebar";
 import StateOfAIEssay from "@/components/StateOfAIEssay";
-import NarrativeChapters from "@/components/NarrativeChapters";
 import AIContributorsExplorer from "@/components/AIContributorsExplorer";
 import AITimeline from "@/components/AITimeline";
-import LearningPaths from "@/components/LearningPaths";
 import AIGlossary from "@/components/AIGlossary";
 import CuratedReadingLists from "@/components/CuratedReadingLists";
 import AILearningRoadmap from "@/components/AILearningRoadmap";
 import AIEncyclopedia from "@/components/AIEncyclopedia";
-import ReadingProgress from "@/components/ReadingProgress";
 import { aiContributors } from "@/data/aiContributors";
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowLeft, Users, BookOpen, Clock, Map, Brain, FileText, Library, Sparkles, Route, BookMarked } from "lucide-react";
+import { ArrowLeft, Users, Clock, Brain, FileText, Library } from "lucide-react";
 
 const pageTocSections = [
   { label: "Database", id: "explorer-section" },
   { label: "Overview", id: "essay-section" },
-  { label: "Chapters", id: "chapters-section" },
-  { label: "Paths", id: "paths-section" },
   { label: "Timeline", id: "timeline-section" },
   { label: "Glossary", id: "glossary-section" },
   { label: "Reading Lists", id: "reading-section" },
@@ -38,8 +33,6 @@ const topTabs = [
 const contributorSections = [
   { id: "explorer", label: "Database", icon: Users },
   { id: "essay", label: "Overview", icon: FileText },
-  { id: "chapters", label: "Chapters", icon: BookOpen },
-  { id: "paths", label: "Paths", icon: Map },
   { id: "timeline", label: "Timeline", icon: Clock },
   { id: "glossary", label: "Glossary", icon: Brain },
   { id: "reading", label: "Reading Lists", icon: Library },
