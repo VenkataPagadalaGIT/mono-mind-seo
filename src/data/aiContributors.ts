@@ -1565,6 +1565,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "chollet", name: "François Chollet", rank: 91,
     bio: "Creator of Keras. Software engineer at Google. Founded ARC Prize for measuring real AI intelligence.",
+    photoUrl: "/photos/chollet.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "Open Source AI & Platforms", specialty: ["Deep Learning", "Open Source AI"],
     affiliation: "Google / ARC Prize", expertType: "Researcher", country: "France/USA",
     keyInfluence: "Created Keras democratizing deep learning and designed the ARC-AGI benchmark.",
