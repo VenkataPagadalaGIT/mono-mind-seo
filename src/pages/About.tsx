@@ -25,7 +25,7 @@ const experiences = [
   {
     company: "AT&T",
     role: "Lead Technical Product Manager, AI & Automation",
-    period: "2024 — Present",
+    period: "March 2025 — Present",
     location: "Atlanta, Georgia",
     achievements: [
       "Built AI-powered metadata automation with knowledge graphs and content guardrails (legal, brand voice), scaling to 100K+ pages with multi-model LLM testing",
