@@ -1400,6 +1400,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "malik", name: "Jitendra Malik", rank: 65,
     bio: "Professor at UC Berkeley. Former research director at Meta AI. Pioneer of image segmentation.",
+    photoUrl: "/photos/malik.jpg", photoCredit: "Photo: Wikimedia Commons / Public Domain",
     segment: "Computer Vision & Perception", specialty: ["Computer Vision"],
     affiliation: "UC Berkeley / Meta AI", expertType: "Researcher", country: "India/USA",
     keyInfluence: "Foundational contributions to computer vision, object recognition, and human body modeling.",
