@@ -1725,6 +1725,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "wang-alexandr", name: "Alexandr Wang", rank: 38,
     bio: "CEO & Co-founder of Scale AI. Youngest self-made AI billionaire. Major US defense AI contractor. TIME100 AI 2025.",
+    photoUrl: "/photos/wang-alexandr.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 4.0",
     segment: "AI Hardware & Infrastructure", specialty: ["AI Infrastructure", "LLMs"],
     affiliation: "Scale AI", expertType: "Founder/CEO", country: "USA",
     keyInfluence: "Built the data labeling infrastructure behind GPT-4. Youngest self-made AI billionaire.",
