@@ -1130,6 +1130,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "musk", name: "Elon Musk", rank: 32,
     bio: "CEO of xAI, Tesla, SpaceX. Founded xAI for Grok. Vocal AI safety advocate and OpenAI critic.",
+    photoUrl: "/photos/musk.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 3.0",
     segment: "Foundation Models & LLMs", specialty: ["AGI", "AI Policy"],
     affiliation: "xAI / Tesla / SpaceX", expertType: "Founder/CEO", country: "South Africa/USA",
     keyInfluence: "Built Colossus (world's largest GPU cluster). Founded xAI for Grok.",
