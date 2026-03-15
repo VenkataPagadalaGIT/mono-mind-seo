@@ -24,30 +24,54 @@ const skills = [
 const experiences = [
   {
     company: "AT&T",
-    role: "Lead Technical Product Manager — Automation, AI & SEO",
-    period: "March 2025 — Present",
+    role: "Lead Technical Product Manager, AI & Automation",
+    period: "2024 — Present",
     location: "Atlanta, Georgia",
     achievements: [
-      "AI Product Owner for technical SEO infrastructure across 50M+ pages — own product roadmap for AI-powered search optimization systems",
-      "Built RAG-powered internal linking engine using vector embeddings and entity recognition across 10M+ pages",
-      "Shipping AI integrations connecting LLMs to live SEO data for automated keyword research and content optimization",
-      "Created market share content tool with geo-segmentation generating 3-year competitive roadmaps",
+      "Built AI-powered metadata automation with knowledge graphs and content guardrails (legal, brand voice), scaling to 100K+ pages with multi-model LLM testing",
+      "Shipped RAG-based internal linking engine using vector embeddings, cosine similarity, and entity recognition for intelligent link recommendations",
+      "Built topic clustering system using vector embeddings to map content relationships for programmatic recommendations",
+      "Led AI-powered internal search chatbot using RAG architecture for Answer Engine Optimization (AEO)",
+      "Architected unified JSON-LD schema system across fragmented engineering teams with dynamic generation from CMS/catalog feeds",
+      "Established enterprise crawl infrastructure (Botify 50M+ crawls) with SEO observability, Akamai CDN caching, and Core Web Vitals optimization",
+      "Built market share content optimization tool with nationwide and geo-focused analysis (state, city, zip) and L1-L6 classification",
+      "Unlocked 3-year content roadmap through systematic market share analysis with automated internal linking and schema validation",
     ],
   },
   {
-    company: "CoStar Group",
-    role: "SEO Manager — Apartments.com, ForRent.com, ApartmentFinder.com",
-    period: "Oct 2018 — May 2022",
+    company: "CoStar Group (Apartments.com)",
+    role: "SEO Product Lead (Level 3)",
+    period: "Oct 2022 — 2024",
     location: "Atlanta, Georgia",
     achievements: [
-      "Scaled SEO infrastructure across Apartments.com (100M+ monthly visits), ForRent.com, and ApartmentFinder.com",
-      "Led site migration strategy for multi-domain consolidation with zero traffic loss",
-      "Built automated reporting pipelines integrating Google Search Console, Analytics, and Ahrefs data",
-      "International SEO implementation across 15+ geo-targeted property listing markets",
+      "Owned technical SEO across 5 properties (40M+ pages); shipped AI-powered content translation (GPT-4) across 1M+ pages",
+      "Led cross-functional team of 6 in sprint-based development; built analytics dashboards (BigQuery, SQL, PowerBI)",
     ],
   },
+  {
+    company: "American Addiction Centers",
+    role: "Senior SEO Software Developer",
+    period: "Mar 2019 — Oct 2022",
+    location: "San Diego, California",
+    achievements: [
+      "Led PHP to React.js migration; implemented JSON-LD structured data across 1M+ page healthcare portfolio",
+    ],
+  },
+  {
+    company: "Dyad Ventures",
+    role: "Search Marketing Strategist",
+    period: "Jan 2018 — Mar 2019",
+    location: "",
+    achievements: [],
+  },
+  {
+    company: "Sprout for Business",
+    role: "SEO Manager",
+    period: "Apr 2016 — Dec 2017",
+    location: "",
+    achievements: [],
+  },
 ];
-
 const tocSections = [
   { label: "About", id: "about" },
   { label: "Stats", id: "stats" },
