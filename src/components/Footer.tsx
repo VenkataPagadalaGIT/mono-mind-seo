@@ -11,6 +11,13 @@ const Footer = () => {
     { label: "Contact", to: "/contact" },
   ];
 
+  const notebookLinks = [
+    { label: "AI Notebook", to: "/notebook/ai" },
+    { label: "Top 100 Contributors", to: "/notebook/ai" },
+    { label: "Learning Roadmap", to: "/notebook/ai/roadmap" },
+    { label: "Concepts Encyclopedia", to: "/notebook/ai/encyclopedia" },
+  ];
+
   const files = [
     { name: "llms.txt", path: "/llms.txt" },
     { name: "sitemap.xml", path: "/sitemap.xml" },
