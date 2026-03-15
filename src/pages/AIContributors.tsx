@@ -47,13 +47,6 @@ const TAB_META: Record<TopLevelTab, { title: string; description: string }> = {
   },
 };
 
-const contributorSections = [
-  { id: "explorer", label: "Database", icon: Users },
-  { id: "essay", label: "Overview", icon: FileText },
-  { id: "timeline", label: "Timeline", icon: Clock },
-  { id: "glossary", label: "Glossary", icon: Brain },
-  { id: "reading", label: "Reading Lists", icon: Library },
-] as const;
 
 function getTabFromPath(pathname: string): TopLevelTab {
   if (pathname === "/notebook/ai/roadmap") return "roadmap";
