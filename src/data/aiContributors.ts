@@ -448,6 +448,7 @@ export const aiContributors: AIContributor[] = [
     awards: "Forbes 30 Under 30, Globe and Mail Top 40 Under 40",
     education: "BASc in Engineering Science, University of Toronto (2017).",
     twitter: "https://x.com/aidangomez",
+    linkedin: "https://www.linkedin.com/in/aidangomez/",
     website: "https://cohere.com/",
     googleScholar: "https://scholar.google.com/citations?user=gMbMj18AAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981648eadcd3e366073b6",
