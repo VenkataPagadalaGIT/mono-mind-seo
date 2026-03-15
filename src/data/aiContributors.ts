@@ -800,6 +800,8 @@ export const aiContributors: AIContributor[] = [
     name: "Thomas Wolf",
     rank: 95,
     bio: "Co-founder & CSO of Hugging Face. Creator of the Transformers library. Champion of open-source AI.",
+    photoUrl: "/photos/wolf.jpg",
+    photoCredit: "Illustration · AI-generated portrait",
     segment: "Open Source AI & Platforms",
     specialty: ["Open Source AI", "NLP"],
     affiliation: "Hugging Face",
