@@ -831,7 +831,7 @@ export const aiContributors: AIContributor[] = [
     rank: 98,
     bio: "Professor at UW. Co-author of Stochastic Parrots. Leading voice on responsible NLP and LLM limitations.",
     photoUrl: "/photos/bender.jpg",
-    photoCredit: "Illustration · AI-generated portrait",
+    photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "AI Ethics & Policy",
     specialty: ["NLP", "AI Ethics"],
     affiliation: "University of Washington",
