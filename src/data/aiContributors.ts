@@ -748,8 +748,7 @@ export const aiContributors: AIContributor[] = [
     name: "Alexandr Zhavoronkov",
     rank: 89,
     bio: "CEO of Insilico Medicine. Pioneer of AI-driven drug discovery. First AI-discovered drug in clinical trials.",
-    photoUrl: "/photos/zhavoronkov.jpg",
-    photoCredit: "Illustration · AI-generated portrait",
+    // No real photo available
     segment: "AI for Science & Healthcare",
     specialty: ["Drug Discovery", "Generative AI"],
     affiliation: "Insilico Medicine",
