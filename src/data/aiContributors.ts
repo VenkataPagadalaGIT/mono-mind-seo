@@ -940,6 +940,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "feifei-li", name: "Fei-Fei Li", rank: 9,
     bio: "Created ImageNet. Co-directed Stanford HAI. Founded World Labs (spatial AI). Launched Marble in 2026.",
+    photoUrl: "/photos/feifei-li.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 2.0",
     segment: "Computer Vision & Perception", specialty: ["Computer Vision", "AI Ethics"],
     affiliation: "Stanford / World Labs", expertType: "Researcher", country: "USA/China",
     keyInfluence: "Created ImageNet — the dataset that ignited the deep learning revolution.",
