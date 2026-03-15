@@ -251,8 +251,7 @@ const AIContributors = () => {
 
         {/* === ROADMAP TAB === */}
         {topTab === "roadmap" && (
-          <div className="lg:flex lg:gap-10">
-            <AuthorSidebar />
+          <div>
             <div className="flex-1 min-w-0">
               <div className="mb-6">
                 <h2 className="font-display text-xl font-bold text-foreground mb-1">
