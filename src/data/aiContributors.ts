@@ -843,7 +843,8 @@ export const aiContributors: AIContributor[] = [
     name: "Emily Bender",
     rank: 98,
     bio: "Professor at UW. Co-author of Stochastic Parrots. Leading voice on responsible NLP and LLM limitations.",
-    // No real photo available
+    photoUrl: "/photos/bender.jpg",
+    photoCredit: "Photo: Wikimedia Commons",
     segment: "AI Ethics & Policy",
     specialty: ["NLP", "AI Ethics"],
     affiliation: "University of Washington",
