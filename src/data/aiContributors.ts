@@ -1219,6 +1219,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "mensch", name: "Arthur Mensch", rank: 42,
     bio: "CEO & Co-founder of Mistral AI. Former DeepMind researcher. Building Europe's leading AI company.",
+    photoUrl: "/photos/mensch.png", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "Foundation Models & LLMs", specialty: ["LLMs", "Open Source AI"],
     affiliation: "Mistral AI", expertType: "Founder/CEO", country: "France",
     keyInfluence: "Built Europe's leading AI company from scratch. Mistral 7B proved open-source can rival closed models.",
