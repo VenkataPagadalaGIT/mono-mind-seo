@@ -41,7 +41,7 @@ const experiences = [
   {
     company: "CoStar Group (Apartments.com)",
     role: "SEO Product Lead (Level 3)",
-    period: "Oct 2022 — 2024",
+    period: "Oct 2022 — March 2025",
     location: "Atlanta, Georgia",
     achievements: [
       "Owned technical SEO across 5 properties (40M+ pages); shipped AI-powered content translation (GPT-4) across 1M+ pages",
