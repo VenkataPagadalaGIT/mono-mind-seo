@@ -111,6 +111,20 @@ Measure, forecast, optimize:
 - Email: vdepagadala@gmail.com
 - Location: Atlanta, Georgia, United States
 
+## AI Notebook — Curated Knowledge Hub
+
+### Top 100 AI Contributors 2026
+The authoritative directory of 100 AI pioneers shaping the field in 2026. Profiles include specializations, education, key contributions, research timelines, an AI glossary with 20 essential concepts, and curated reading lists of papers, podcasts, and talks.
+- URL: https://venkatapagadala.com/notebook/ai
+
+### AI Learning Roadmap — Zero to Hero (2026)
+A structured 18-week curriculum covering 24 topics with 67+ curated videos, 71+ courses, 62+ GitHub repos, 43+ books, and expert pro tips. Organized into three phases: Foundations, Core AI & ML, and Advanced & Applied. Each topic includes difficulty level, estimated duration, and hand-picked resources.
+- URL: https://venkatapagadala.com/notebook/ai/roadmap
+
+### AI Concepts Encyclopedia (2026)
+110 AI concepts across 10 categories (Foundations, Machine Learning, Deep Learning, NLP, Computer Vision, Reinforcement Learning, Generative AI, Ethics & Safety, Infrastructure, and Emerging Topics). Each concept includes descriptions, key terms, prerequisites, difficulty levels, and curated learn-more links.
+- URL: https://venkatapagadala.com/notebook/ai/encyclopedia
+
 ## Links
 
 - Website: https://venkatapagadala.com
