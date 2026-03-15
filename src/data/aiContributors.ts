@@ -596,6 +596,8 @@ export const aiContributors: AIContributor[] = [
     name: "Robin Li",
     rank: 60,
     bio: "CEO of Baidu. Launched Ernie Bot. Pioneer of China's AI industry. Leading autonomous driving (Apollo).",
+    photoUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Robin_Li_at_the_Web_2.0_Summit_2010.jpg/440px-Robin_Li_at_the_Web_2.0_Summit_2010.jpg",
+    photoCredit: "Photo: JD Lasica / Wikimedia Commons / CC BY 2.0",
     segment: "Foundation Models & LLMs",
     specialty: ["LLMs", "AI Infrastructure"],
     affiliation: "Baidu",
