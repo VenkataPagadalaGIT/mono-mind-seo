@@ -15,11 +15,11 @@ import { ArrowLeft, ArrowRight, Users, Clock, Brain, FileText, Library, Linkedin
 import authorPhoto from "@/assets/venkata-pagadala.jpeg";
 
 const pageTocSections = [
-  { label: "Database", id: "explorer-section" },
-  { label: "Overview", id: "essay-section" },
-  { label: "Timeline", id: "timeline-section" },
-  { label: "Glossary", id: "glossary-section" },
-  { label: "Reading Lists", id: "reading-section" },
+  { label: "Database", id: "explorer" },
+  { label: "Overview", id: "essay" },
+  { label: "Timeline", id: "timeline" },
+  { label: "Glossary", id: "glossary" },
+  { label: "Reading Lists", id: "reading" },
 ];
 
 const STORAGE_KEY = "ai-contributors-explored";
