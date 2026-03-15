@@ -1079,6 +1079,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "gebru", name: "Timnit Gebru", rank: 25,
     bio: "Founder of DAIR Institute. Former Google Ethical AI co-lead. Pioneer of AI bias research.",
+    photoUrl: "/photos/gebru.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 2.0",
     segment: "AI Ethics & Policy", specialty: ["AI Ethics", "AI Policy"],
     affiliation: "DAIR Institute", expertType: "Policy Advocate", country: "Ethiopia/USA",
     keyInfluence: "Exposed facial recognition bias with Gender Shades. Founded DAIR Institute.",
