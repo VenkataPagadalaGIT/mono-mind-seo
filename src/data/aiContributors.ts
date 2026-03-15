@@ -521,6 +521,7 @@ export const aiContributors: AIContributor[] = [
     awards: "MIT Technology Review 35 Under 35, Sloan Fellow",
     education: "PhD in Computer Science, UC Berkeley (2018).",
     twitter: "https://x.com/chelseabfinn",
+    linkedin: "https://www.linkedin.com/in/chelsea-finn-8a924771/",
     website: "https://ai.stanford.edu/~cbfinn/",
     github: "https://github.com/cbfinn",
     googleScholar: "https://scholar.google.com/citations?user=vUPPg3gAAAAJ",
