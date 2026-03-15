@@ -109,25 +109,24 @@ const About = () => {
               <div className="grid md:grid-cols-5 gap-12 mb-20">
                 <ScrollReveal className="md:col-span-3">
                   <p className="font-mono text-sm leading-relaxed text-muted-foreground mb-6">
-                    I build AI systems that automate SEO at a scale that manual execution can't match. Currently leading 
-                    AI & Automation at AT&T as Lead Technical Product Manager, shipping RAG pipelines, knowledge graphs, 
-                    and programmatic SEO infrastructure across 50M+ pages. Not strategy decks. Production systems.
+                    AI Product Owner and Technical SEO Lead with 10 years of experience building AI-powered search 
+                    infrastructure at enterprise scale (50M+ pages). Hands-on builder with Model Context Protocol (MCP), 
+                    Claude Code, and A2A integrations. Expert in RAG systems, knowledge graphs, vector embeddings, and 
+                    LLM-powered content optimization.
                   </p>
                   <p className="font-mono text-sm leading-relaxed text-muted-foreground mb-6">
-                    AI integrations connecting LLMs to live SEO data for automated keyword research and content optimization. 
-                    A RAG-powered internal linking engine using vector embeddings and entity recognition. Automated pipelines 
-                    that run technical SEO audits at scale. A market share content tool with geo-segmentation that generates 
-                    3-year roadmaps.
+                    Built MCP integrations connecting Claude to SEO data sources for automated keyword analysis and 
+                    topical clustering. Developed A2A pipelines for multi-step SEO analysis combining crawl data, search 
+                    console metrics, and content scoring. Created Claude Code pipelines for programmatic content analysis, 
+                    sub-clustering, and automated technical audits.
                   </p>
                   <p className="font-mono text-sm leading-relaxed text-muted-foreground mb-6">
-                    10 years in Technical SEO — the fundamentals that power how Google ranks content today. Site migrations, 
-                    crawl budget optimization, structured data at enterprise scale, Core Web Vitals, international SEO. 
-                    Tools: Botify (50M+ crawls), Screaming Frog, Ahrefs, SEMrush, BigQuery, Python.
+                    Passionate about Answer Engine Optimization (AEO) and Generative Engine Optimization (GEO) — the next 
+                    frontier of how users discover content through AI-powered search experiences.
                   </p>
                   <p className="font-mono text-sm leading-relaxed text-muted-foreground">
-                    Previously scaled SEO for CoStar Group (Apartments.com, ApartmentFinders.com, ForRent.com) and built 
-                    technical SEO infrastructure across multiple verticals. Published researcher — "Google, SEO and Helpful Content: 
-                    How AI Can Be Helpful for E-Commerce Websites" in the Journal of Digital & Social Media Marketing, December 2024.
+                    Published researcher — "Google, SEO and Helpful Content: How AI Can Be Helpful for E-Commerce Websites" 
+                    in the Journal of Digital & Social Media Marketing, Vol. 12(3), pp. 206-226, December 2024.
                   </p>
                 </ScrollReveal>
 
