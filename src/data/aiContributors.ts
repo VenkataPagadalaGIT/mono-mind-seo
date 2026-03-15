@@ -344,6 +344,7 @@ export const aiContributors: AIContributor[] = [
     awards: "NAE Member, ACM Fellow, ACM SIGOPS Hall of Fame",
     education: "PhD in Computer Science, University of Washington (1996).",
     twitter: "https://x.com/JeffDean",
+    linkedin: "https://www.linkedin.com/in/jeff-dean-8b212555/",
     website: "https://research.google/people/jeff/",
     googleScholar: "https://scholar.google.com/citations?user=NMS69lQAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981418254ef7670bbd9a4",
