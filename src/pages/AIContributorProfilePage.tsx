@@ -193,10 +193,10 @@ const AIContributorProfilePage = () => {
             </div>
           </ScrollReveal>
 
-          {/* ── Details Grid (moved to top) ── */}
+          {/* ── Details Grid + Links (compact) ── */}
           <ScrollReveal delay={30}>
-            <div id="details" className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10 scroll-mt-24">
-              <div className="border border-border p-5">
+            <div id="details" className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8 scroll-mt-24">
+              <div className="border border-border p-4">
                 <h3 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-2">Specialties</h3>
                 <div className="flex flex-wrap gap-1.5">
                   {contributor.specialty.map((s) => (
@@ -204,18 +204,60 @@ const AIContributorProfilePage = () => {
                   ))}
                 </div>
               </div>
-              <div className="border border-border p-5">
+              <div className="border border-border p-4">
                 <h3 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-2">Location</h3>
                 <div className="flex items-center gap-2">
                   <MapPin size={12} className="text-muted-foreground/30" />
                   <span className="font-mono text-sm text-muted-foreground">{contributor.country}</span>
                 </div>
               </div>
-              <div className="border border-border p-5">
+              <div className="border border-border p-4">
                 <h3 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-2">Education</h3>
                 <div className="flex items-start gap-2">
                   <GraduationCap size={12} className="text-muted-foreground/30 mt-0.5 shrink-0" />
                   <span className="font-mono text-[11px] text-muted-foreground leading-relaxed">{contributor.education}</span>
+                </div>
+              </div>
+              {/* Links & Profiles - inline in grid */}
+              <div className="border border-border p-4 sm:col-span-2 lg:col-span-3" id="links">
+                <h3 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-2">Links & Profiles</h3>
+                <div className="flex flex-wrap gap-2">
+                  {contributor.linkedin && (
+                    <a href={contributor.linkedin} target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 font-mono text-[11px] text-foreground/60 hover:text-foreground border border-border px-3 py-1.5 transition-colors">
+                      <Linkedin size={12} /> LinkedIn <ExternalLink size={8} />
+                    </a>
+                  )}
+                  {contributor.twitter && (
+                    <a href={contributor.twitter} target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 font-mono text-[11px] text-foreground/60 hover:text-foreground border border-border px-3 py-1.5 transition-colors">
+                      𝕏 Twitter <ExternalLink size={8} />
+                    </a>
+                  )}
+                  {contributor.website && (
+                    <a href={contributor.website} target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 font-mono text-[11px] text-foreground/60 hover:text-foreground border border-border px-3 py-1.5 transition-colors">
+                      Website <ExternalLink size={8} />
+                    </a>
+                  )}
+                  {contributor.github && (
+                    <a href={contributor.github} target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 font-mono text-[11px] text-foreground/60 hover:text-foreground border border-border px-3 py-1.5 transition-colors">
+                      <Github size={12} /> GitHub <ExternalLink size={8} />
+                    </a>
+                  )}
+                  {contributor.googleScholar && (
+                    <a href={contributor.googleScholar} target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 font-mono text-[11px] text-foreground/60 hover:text-foreground border border-border px-3 py-1.5 transition-colors">
+                      Scholar <ExternalLink size={8} />
+                    </a>
+                  )}
+                  {contributor.youtube && (
+                    <a href={contributor.youtube} target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 font-mono text-[11px] text-foreground/60 hover:text-foreground border border-border px-3 py-1.5 transition-colors">
+                      YouTube <ExternalLink size={8} />
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
@@ -610,51 +652,6 @@ const AIContributorProfilePage = () => {
               </div>
             </ScrollReveal>
           )}
-
-          {/* ── External Links ── */}
-          <ScrollReveal delay={100}>
-            <div id="links" className="border border-border p-6 mb-10 scroll-mt-24">
-              <h2 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-4">Links & Profiles</h2>
-              <div className="flex flex-wrap gap-2">
-                {contributor.linkedin && (
-                  <a href={contributor.linkedin} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 font-mono text-[11px] text-foreground/60 hover:text-foreground border border-border px-3 py-2 transition-colors">
-                    <Linkedin size={12} /> LinkedIn <ExternalLink size={8} />
-                  </a>
-                )}
-                {contributor.twitter && (
-                  <a href={contributor.twitter} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 font-mono text-[11px] text-foreground/60 hover:text-foreground border border-border px-3 py-2 transition-colors">
-                    𝕏 Twitter <ExternalLink size={8} />
-                  </a>
-                )}
-                {contributor.website && (
-                  <a href={contributor.website} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 font-mono text-[11px] text-foreground/60 hover:text-foreground border border-border px-3 py-2 transition-colors">
-                    Website <ExternalLink size={8} />
-                  </a>
-                )}
-                {contributor.github && (
-                  <a href={contributor.github} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 font-mono text-[11px] text-foreground/60 hover:text-foreground border border-border px-3 py-2 transition-colors">
-                    <Github size={12} /> GitHub <ExternalLink size={8} />
-                  </a>
-                )}
-                {contributor.googleScholar && (
-                  <a href={contributor.googleScholar} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 font-mono text-[11px] text-foreground/60 hover:text-foreground border border-border px-3 py-2 transition-colors">
-                    Scholar <ExternalLink size={8} />
-                  </a>
-                )}
-                {contributor.youtube && (
-                  <a href={contributor.youtube} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 font-mono text-[11px] text-foreground/60 hover:text-foreground border border-border px-3 py-2 transition-colors">
-                    YouTube <ExternalLink size={8} />
-                  </a>
-                )}
-              </div>
-            </div>
-          </ScrollReveal>
 
           {/* ── Prev/Next Navigation ── */}
           <ScrollReveal delay={100}>
