@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import PageSidebar from "@/components/PageSidebar";
-import AuthorSidebar from "@/components/AuthorSidebar";
+
 import StateOfAIEssay from "@/components/StateOfAIEssay";
 import AIContributorsExplorer from "@/components/AIContributorsExplorer";
 import AITimeline from "@/components/AITimeline";
@@ -11,7 +11,7 @@ import AILearningRoadmap from "@/components/AILearningRoadmap";
 import AIEncyclopedia from "@/components/AIEncyclopedia";
 import { aiContributors } from "@/data/aiContributors";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { ArrowLeft, Users, Clock, Brain, FileText, Library } from "lucide-react";
+import { ArrowLeft, ArrowRight, Users, Clock, Brain, FileText, Library, Linkedin, Mail } from "lucide-react";
 import authorPhoto from "@/assets/venkata-pagadala.jpeg";
 
 const pageTocSections = [
@@ -157,19 +157,75 @@ const AIContributors = () => {
           </Link>
         </ScrollReveal>
 
-        {/* Hero */}
+        {/* Hero — two column */}
         <ScrollReveal>
-          <div className="mb-8">
-            <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/30 mb-3 uppercase">
-              The AI Notebook · 2026 Edition
-            </p>
-            <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-2">
-              AI Notebook
-            </h1>
-            <p className="font-mono text-xs text-muted-foreground/60 max-w-xl leading-relaxed">
-              Your complete AI learning companion — from zero to hero. A roadmap with 90+ resources, 110 concepts explained, and 100 contributors profiled.
-            </p>
-            <AuthorByline />
+          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8 mb-8">
+            {/* Left: title & description */}
+            <div className="flex-1">
+              <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/30 mb-3 uppercase">
+                The AI Notebook · 2026 Edition
+              </p>
+              <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-2">
+                AI Notebook
+              </h1>
+              <p className="font-mono text-xs text-muted-foreground/60 max-w-xl leading-relaxed">
+                Your complete AI learning companion — from zero to hero. A roadmap with 90+ resources, 110 concepts explained, and 100 contributors profiled.
+              </p>
+              <AuthorByline />
+            </div>
+
+            {/* Right: author bio card */}
+            <div className="lg:w-64 shrink-0 border border-border/50 rounded-lg p-5">
+              <div className="flex items-center gap-3 mb-3">
+                <img
+                  src={authorPhoto}
+                  alt="Venkata Pagadala"
+                  className="w-12 h-12 rounded-full object-cover border border-border"
+                />
+                <div>
+                  <h3 className="font-display text-sm font-bold text-foreground">Venkata Pagadala</h3>
+                  <p className="font-mono text-[9px] text-muted-foreground/40">AI Systems Architect & Venture Builder</p>
+                </div>
+              </div>
+              <p className="font-mono text-[10px] text-muted-foreground/50 leading-relaxed mb-3">
+                Building the future of search and agentic automation. Harvard & MIT certified.
+              </p>
+              <div className="flex flex-wrap gap-3 mb-3">
+                {[
+                  { value: "18K+", label: "Followers" },
+                  { value: "404K+", label: "Impressions" },
+                ].map((s) => (
+                  <div key={s.label}>
+                    <p className="font-mono text-xs font-bold text-foreground">{s.value}</p>
+                    <p className="font-mono text-[8px] text-muted-foreground/30 uppercase tracking-widest">{s.label}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="space-y-1.5">
+                <a
+                  href="https://www.linkedin.com/in/venkata-pagadala/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 font-mono text-[10px] text-muted-foreground/50 hover:text-foreground transition-colors"
+                >
+                  <Linkedin size={10} /> Follow on LinkedIn
+                </a>
+                <a
+                  href="https://www.linkedin.com/newsletters/7286801553498583041/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 font-mono text-[10px] text-muted-foreground/50 hover:text-foreground transition-colors"
+                >
+                  <ArrowRight size={10} /> Subscribe Newsletter
+                </a>
+                <a
+                  href="mailto:vdepagadala@gmail.com"
+                  className="flex items-center gap-1.5 font-mono text-[10px] text-muted-foreground/50 hover:text-foreground transition-colors"
+                >
+                  <Mail size={10} /> Get in Touch
+                </a>
+              </div>
+            </div>
           </div>
         </ScrollReveal>
 
@@ -195,8 +251,7 @@ const AIContributors = () => {
 
         {/* === ROADMAP TAB === */}
         {topTab === "roadmap" && (
-          <div className="lg:flex lg:gap-10">
-            <AuthorSidebar />
+          <div>
             <div className="flex-1 min-w-0">
               <div className="mb-6">
                 <h2 className="font-display text-xl font-bold text-foreground mb-1">
@@ -213,8 +268,7 @@ const AIContributors = () => {
 
         {/* === ENCYCLOPEDIA TAB === */}
         {topTab === "encyclopedia" && (
-          <div className="lg:flex lg:gap-10">
-            <AuthorSidebar />
+          <div>
             <div className="flex-1 min-w-0">
               <div className="mb-6">
                 <h2 className="font-display text-xl font-bold text-foreground mb-1">
@@ -249,9 +303,8 @@ const AIContributors = () => {
               </div>
             </ScrollReveal>
 
-            {/* Three-column layout: author sidebar | nav sidebar | content */}
+            {/* Two-column layout: content | nav sidebar */}
             <div className="lg:flex lg:gap-10">
-              <AuthorSidebar />
 
               <div className="flex-1 min-w-0">
                 <div ref={contentRef}>
