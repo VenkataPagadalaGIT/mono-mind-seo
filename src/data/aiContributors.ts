@@ -323,6 +323,7 @@ export const aiContributors: AIContributor[] = [
     linkedin: "https://www.linkedin.com/in/samaltman/",
     website: "https://blog.samaltman.com/",
     github: "https://github.com/sama",
+    githubFollowers: "~12K",
     googleScholar: "https://scholar.google.com/citations?user=K_2IHEAAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d9198136ba9ae1ea7c5770ae",
     quote: "AI will probably most likely lead to the end of the world, but in the meantime, there'll be great companies.",
