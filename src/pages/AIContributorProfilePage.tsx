@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import ScrollReveal from "@/components/ScrollReveal";
-import NeuralNetBackground from "@/components/NeuralNetBackground";
+
 import { aiContributors, SEGMENT_COLORS } from "@/data/aiContributors";
 import {
   ArrowLeft, ArrowRight, ExternalLink, GraduationCap, Award, MapPin,
