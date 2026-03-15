@@ -436,7 +436,7 @@ const AIContributorProfilePage = () => {
           {/* ── Connected Contributors ── */}
           {connectedContributors.length > 0 && (
             <ScrollReveal delay={100}>
-              <div className="mb-10">
+              <div id="connections" className="mb-10 scroll-mt-24">
                 <div className="flex items-center gap-2 mb-6">
                   <Link2 size={14} className="text-muted-foreground/30" />
                   <h2 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest">
