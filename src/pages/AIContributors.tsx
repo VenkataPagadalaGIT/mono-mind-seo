@@ -61,22 +61,6 @@ function getTabFromPath(pathname: string): TopLevelTab {
   return "contributors";
 }
 
-const AuthorByline = () => (
-  <div className="flex items-center gap-3 mt-4">
-    <img
-      src={authorPhoto}
-      alt="Venkata Pagadala"
-      className="w-8 h-8 rounded-full object-cover border border-border"
-    />
-    <div>
-      <p className="font-mono text-[11px] text-foreground/80">
-        Curated by <span className="font-semibold text-foreground">Venkata Pagadala</span>
-      </p>
-      <p className="font-mono text-[9px] text-muted-foreground/40">AI Systems Architect & Researcher</p>
-    </div>
-  </div>
-);
-
 const AIContributors = () => {
   const navigate = useNavigate();
   const location = useLocation();
