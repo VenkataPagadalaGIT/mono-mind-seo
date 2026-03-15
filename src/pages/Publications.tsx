@@ -3,7 +3,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 import NeuralNetBackground from "@/components/NeuralNetBackground";
 import KnowledgeGraph from "@/components/KnowledgeGraph";
 import SolutionsGraph from "@/components/SolutionsGraph";
-import AIContributorsExplorer from "@/components/AIContributorsExplorer";
+
 import { ExternalLink, ArrowRight, FlaskConical, Brain, TrendingUp } from "lucide-react";
 import { Link } from "react-router-dom";
 
