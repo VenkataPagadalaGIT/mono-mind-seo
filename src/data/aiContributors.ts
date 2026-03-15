@@ -344,7 +344,7 @@ export const aiContributors: AIContributor[] = [
     rank: 13,
     bio: "Chief Scientist at Google. Co-designed MapReduce, BigTable, TensorFlow. Leads Google's AI research strategy.",
     photoUrl: "/photos/dean.jpg",
-    photoCredit: "Illustration · AI-generated portrait",
+    photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "AI Hardware & Infrastructure",
     specialty: ["AI Infrastructure", "LLMs"],
     affiliation: "Google DeepMind",
