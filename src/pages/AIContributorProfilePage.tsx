@@ -272,7 +272,7 @@ const AIContributorProfilePage = () => {
 
           {/* ── Key Influence ── */}
           <ScrollReveal delay={100}>
-            <div className="border border-border p-6 mb-10">
+            <div id="influence" className="border border-border p-6 mb-10 scroll-mt-24">
               <h2 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-3">Key Influence</h2>
               <p className="font-mono text-sm text-foreground/80 leading-relaxed">{contributor.keyInfluence}</p>
             </div>
