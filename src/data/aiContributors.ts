@@ -660,6 +660,7 @@ export const aiContributors: AIContributor[] = [
     awards: "Co-founder of Center for Humane Technology, testified before US Congress",
     education: "BS in Computer Science, Stanford University.",
     twitter: "https://x.com/tristanharris",
+    linkedin: "https://www.linkedin.com/in/tristanharris/",
     website: "https://www.humanetech.com/",
     googleScholar: "https://scholar.google.com/citations?user=TQk_m2sAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981878679e60509f81007",
