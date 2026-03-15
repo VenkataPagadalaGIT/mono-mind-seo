@@ -98,8 +98,8 @@ const Notebook = () => {
         </div>
 
         <PageSidebar
-          title="Notebook"
           sections={tocSections}
+          shareTitle="Research Notebooks"
         />
       </div>
     </div>

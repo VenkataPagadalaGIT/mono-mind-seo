@@ -86,8 +86,8 @@ const BusinessNotebook = () => {
         </div>
 
         <PageSidebar
-          title="Business Notebook"
           sections={tocSections}
+          shareTitle="Business Notebook"
         />
       </div>
     </div>
