@@ -214,29 +214,6 @@ const AIContributors = () => {
                     )}
                   </div>
 
-                  <div id="chapters-section" className="scroll-mt-28">
-                    {activeSection === "chapters" && (
-                      <div>
-                        <h2 className="font-display text-xl font-bold text-foreground mb-1">Narrative Chapters</h2>
-                        <p className="font-mono text-[11px] text-muted-foreground/40 mb-8 max-w-2xl leading-relaxed">
-                          Six stories that weave the top contributors into the narrative arcs defining AI's evolution.
-                        </p>
-                        <NarrativeChapters onSelectContributor={handleSelectFromOutside} />
-                      </div>
-                    )}
-                  </div>
-
-                  <div id="paths-section" className="scroll-mt-28">
-                    {activeSection === "paths" && (
-                      <div>
-                        <h2 className="font-display text-xl font-bold text-foreground mb-1">Learning Paths</h2>
-                        <p className="font-mono text-[11px] text-muted-foreground/40 mb-8 max-w-2xl leading-relaxed">
-                          Curated paths grouping contributors by topic and skill level.
-                        </p>
-                        <LearningPaths onSelectContributor={handleSelectFromOutside} exploredIds={exploredIds} />
-                      </div>
-                    )}
-                  </div>
 
                   <div id="timeline-section" className="scroll-mt-28">
                     {activeSection === "timeline" && (
