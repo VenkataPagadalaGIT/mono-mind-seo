@@ -111,11 +111,27 @@ const AIContributorProfilePage = () => {
           {/* ── Header ── */}
           <ScrollReveal>
             <div className="flex items-start gap-6 mb-8">
-              <div
-                className="w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center font-mono text-xl sm:text-2xl font-bold text-background shrink-0"
-                style={{ backgroundColor: color }}
-              >
-                {contributor.name.split(" ").map((w) => w[0]).join("")}
+              <div className="shrink-0">
+                {contributor.photoUrl ? (
+                  <img
+                    src={contributor.photoUrl}
+                    alt={`Photo of ${contributor.name}`}
+                    className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-sm"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div
+                    className="w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center font-mono text-xl sm:text-2xl font-bold text-background"
+                    style={{ backgroundColor: color }}
+                  >
+                    {contributor.name.split(" ").map((w) => w[0]).join("")}
+                  </div>
+                )}
+                {contributor.photoCredit && (
+                  <p className="font-mono text-[8px] text-muted-foreground/25 mt-1 max-w-24 leading-tight">
+                    {contributor.photoCredit}
+                  </p>
+                )}
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2 flex-wrap">
