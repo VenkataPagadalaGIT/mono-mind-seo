@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import NeuralNetBackground from "@/components/NeuralNetBackground";
+import KnowledgeGraph from "@/components/KnowledgeGraph";
+import SolutionsGraph from "@/components/SolutionsGraph";
 import { ExternalLink, ArrowRight, FlaskConical, Brain, TrendingUp } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -21,24 +23,50 @@ const publications = [
   },
 ];
 
-const labProjects = [
-  {
-    title: "Omniscite",
-    status: "Active",
-    desc: "100+ neural agent orchestration pipeline — multi-agent system that autonomously coordinates technical audits, content optimization, and competitive analysis.",
-    tags: ["AI Agents", "Neural Nets", "A2A Protocol", "MCP", "LLM Orchestration"],
-  },
+const featuredProject = {
+  title: "Omniscite",
+  subtitle: "Neural Agent Orchestration",
+  desc: "100+ neural agent orchestration pipeline — multi-agent system that autonomously coordinates technical audits, content optimization, and competitive analysis at enterprise scale.",
+  tags: ["AI Agents", "Neural Nets", "A2A Protocol", "MCP", "Python", "RAG", "LLM Orchestration"],
+  status: "Research → Product",
+};
+
+const projects = [
   {
     title: "Knowledge Graph Engine",
     status: "Production",
-    desc: "5.3M keyword taxonomy across a 5-level hierarchy with <1ms classification speed. Powers topical authority analysis and semantic SEO.",
-    tags: ["Knowledge Graphs", "Entity Resolution", "NLP", "Graph Embeddings"],
+    desc: "5.3M keyword taxonomy across a 5-level hierarchy with <1ms classification speed.",
+    tags: ["Knowledge Graphs", "Entity Resolution", "NLP"],
   },
   {
     title: "RAG Search Engine",
     status: "Active",
     desc: "Retrieval-Augmented Generation engine for enterprise knowledge bases — natural language querying across millions of documents.",
-    tags: ["RAG", "Vector DB", "LLM", "Embeddings"],
+    tags: ["RAG", "Vector DB", "LLM"],
+  },
+  {
+    title: "MCP Server Integrations",
+    status: "Active",
+    desc: "Model Context Protocol servers enabling AI agents to interact with enterprise search tools and analytics in real-time.",
+    tags: ["MCP", "AI Agents", "API Design"],
+  },
+  {
+    title: "Enterprise Topic Clustering",
+    status: "Production",
+    desc: "Python-based NLP system for automated topic clustering across 50M+ pages with content gap analysis.",
+    tags: ["NLP", "Python", "BigQuery"],
+  },
+  {
+    title: "A2A Agent Pipelines",
+    status: "Active",
+    desc: "Agent-to-Agent communication pipelines for autonomous content optimization and competitive analysis workflows.",
+    tags: ["A2A Protocol", "Multi-Agent"],
+  },
+  {
+    title: "SEO Data Lake & Analytics",
+    status: "Production",
+    desc: "Comprehensive SEO data lake in BigQuery with real-time organic performance tracking and anomaly detection.",
+    tags: ["BigQuery", "Analytics", "SQL"],
   },
 ];
 
@@ -62,9 +90,9 @@ const researchInterests = [
 
 const Lab = () => {
   useEffect(() => {
-    document.title = "Lab | AI Research & Systems | Venkata Pagadala";
+    document.title = "Lab | AI Research, Systems & Projects | Venkata Pagadala";
     const meta = document.querySelector('meta[name="description"]');
-    const content = "Original AI research, production systems, and published papers. Exploring agent architectures, knowledge graphs, and business intelligence at enterprise scale.";
+    const content = "Original AI research, production systems, published papers, and interactive explorations — building at the intersection of AI, business intelligence, and search.";
     if (meta) meta.setAttribute("content", content);
   }, []);
 
@@ -75,20 +103,20 @@ const Lab = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-transparent to-background/70" />
       </div>
 
-      <div className="max-w-5xl mx-auto relative z-10">
+      <div className="max-w-6xl mx-auto relative z-10">
         <ScrollReveal>
           <p className="font-mono text-xs tracking-[0.3em] text-muted-foreground mb-4 uppercase">
-            Research & Development
+            Research · Systems · Exploration
           </p>
           <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground text-glow mb-6">
             The Lab
           </h1>
           <p className="font-mono text-sm text-muted-foreground leading-relaxed mb-16 max-w-2xl">
-            Original research, production AI systems, and published work — building at the intersection of artificial intelligence, business strategy, and search.
+            Where research meets production — AI systems, published work, and interactive explorations across artificial intelligence, business strategy, and search.
           </p>
         </ScrollReveal>
 
-        {/* Research Interests */}
+        {/* ── Research Interests ── */}
         <ScrollReveal>
           <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/40 uppercase mb-6">
             Research Interests
@@ -106,7 +134,66 @@ const Lab = () => {
           ))}
         </div>
 
-        {/* Published Research */}
+        {/* ── Featured Project ── */}
+        <ScrollReveal>
+          <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/40 uppercase mb-6">
+            Featured System
+          </p>
+        </ScrollReveal>
+        <ScrollReveal delay={100}>
+          <div className="border border-border p-8 sm:p-10 mb-12 border-glow-hover relative overflow-hidden">
+            <div className="absolute top-4 right-4 font-mono text-[10px] border border-border px-3 py-1 text-muted-foreground/60 uppercase tracking-widest">
+              {featuredProject.status}
+            </div>
+            <h3 className="font-display text-3xl sm:text-4xl font-bold text-foreground text-glow mb-2">
+              {featuredProject.title}
+            </h3>
+            <p className="font-mono text-xs text-muted-foreground/60 mb-4 tracking-wider uppercase">
+              {featuredProject.subtitle}
+            </p>
+            <p className="font-mono text-sm text-muted-foreground leading-relaxed mb-6 max-w-3xl">
+              {featuredProject.desc}
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {featuredProject.tags.map((tag) => (
+                <span key={tag} className="font-mono text-[10px] border border-border px-2 py-1 text-muted-foreground/60">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </ScrollReveal>
+
+        {/* ── All Projects ── */}
+        <ScrollReveal>
+          <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/40 uppercase mb-6">
+            Active Systems
+          </p>
+        </ScrollReveal>
+        <div className="grid md:grid-cols-2 gap-4 mb-20">
+          {projects.map((project, i) => (
+            <ScrollReveal key={project.title} delay={i * 80}>
+              <div className="border border-border p-6 h-full border-glow-hover">
+                <div className="flex items-center gap-3 mb-3">
+                  <h3 className="font-display text-lg font-bold text-foreground">{project.title}</h3>
+                  <span className="font-mono text-[10px] border border-border px-2 py-0.5 text-muted-foreground/50 uppercase tracking-widest">
+                    {project.status}
+                  </span>
+                </div>
+                <p className="font-mono text-xs text-muted-foreground leading-relaxed mb-4">{project.desc}</p>
+                <div className="flex flex-wrap gap-2">
+                  {project.tags.map((tag) => (
+                    <span key={tag} className="font-mono text-[10px] border border-border px-2 py-1 text-muted-foreground/60">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+
+        {/* ── Published Research ── */}
         <ScrollReveal>
           <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/40 uppercase mb-2">
             Published Research
@@ -117,7 +204,6 @@ const Lab = () => {
             </span>
           </div>
         </ScrollReveal>
-
         <div className="space-y-6 mb-20">
           {publications.map((pub, i) => (
             <ScrollReveal key={pub.title} delay={i * 100}>
@@ -142,39 +228,37 @@ const Lab = () => {
           ))}
         </div>
 
-        {/* Active Lab Projects */}
+        {/* ── Topic Explorer ── */}
         <ScrollReveal>
-          <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/40 uppercase mb-6">
-            Active Systems
+          <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/40 uppercase mb-4">
+            Topic Explorer
+          </p>
+          <p className="font-mono text-sm text-muted-foreground leading-relaxed mb-8 max-w-2xl">
+            An interactive map of topics across AI systems, enterprise SEO, and machine learning — hover to explore, click to drill down.
           </p>
         </ScrollReveal>
+        <ScrollReveal delay={200}>
+          <KnowledgeGraph />
+        </ScrollReveal>
 
-        <div className="space-y-6 mb-16">
-          {labProjects.map((project, i) => (
-            <ScrollReveal key={project.title} delay={i * 100}>
-              <div className="border border-border p-8 border-glow-hover">
-                <div className="flex items-center gap-3 mb-3">
-                  <h3 className="font-display text-xl font-bold text-foreground">{project.title}</h3>
-                  <span className="font-mono text-[10px] border border-border px-2 py-0.5 text-muted-foreground/50 uppercase tracking-widest">
-                    {project.status}
-                  </span>
-                </div>
-                <p className="font-mono text-xs text-muted-foreground leading-relaxed mb-4">{project.desc}</p>
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
-                    <span key={tag} className="font-mono text-[10px] border border-border px-2 py-1 text-muted-foreground/60">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </ScrollReveal>
-          ))}
+        {/* ── Solutions Overview ── */}
+        <div className="mt-20">
+          <ScrollReveal>
+            <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/40 uppercase mb-4">
+              Solutions
+            </p>
+            <p className="font-mono text-sm text-muted-foreground leading-relaxed mb-8 max-w-2xl">
+              From Fortune 500 AI infrastructure to growth-stage consulting — explore what I build and offer.
+            </p>
+          </ScrollReveal>
+          <ScrollReveal delay={200}>
+            <SolutionsGraph />
+          </ScrollReveal>
         </div>
 
-        {/* CTA */}
+        {/* ── CTA ── */}
         <ScrollReveal>
-          <div className="border border-foreground/30 p-8 text-center border-glow">
+          <div className="border border-foreground/30 p-8 text-center border-glow mt-20">
             <h3 className="font-display text-xl font-bold text-foreground mb-3">Interested in collaborating?</h3>
             <p className="font-mono text-xs text-muted-foreground mb-6 max-w-md mx-auto">
               Open to research partnerships, investment conversations, and building AI systems together.
