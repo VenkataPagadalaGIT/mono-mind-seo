@@ -32,18 +32,24 @@ const topTabs = [
   { id: "encyclopedia" as TopLevelTab, path: "/notebook/ai/encyclopedia", label: "🧠 Concepts Encyclopedia", shortLabel: "Encyclopedia" },
 ];
 
-const TAB_META: Record<TopLevelTab, { title: string; description: string }> = {
+const TAB_META: Record<TopLevelTab, { title: string; description: string; canonical: string; ogTitle: string }> = {
   contributors: {
-    title: "Top 100 AI Contributors 2026 — Definitive Directory | Venkata Pagadala",
-    description: "The authoritative directory of 100 AI pioneers shaping the field in 2026. Explore profiles, research timelines, glossary, and curated reading lists — curated by Venkata Pagadala.",
+    title: "Best 100 AI Contributors 2026 — Definitive Directory | Venkata Pagadala",
+    description: "The best and most authoritative directory of 100 AI pioneers shaping the field in 2026. Explore profiles, research timelines, glossary, and curated reading lists — curated by Venkata Pagadala.",
+    canonical: "https://venkatapagadala.com/notebook/ai",
+    ogTitle: "Best 100 AI Contributors 2026 — The Definitive Directory",
   },
   roadmap: {
-    title: "AI Learning Roadmap 2026 — Zero to Hero in 18 Weeks | Venkata Pagadala",
-    description: "A structured 23-topic AI curriculum with 90+ curated resources — videos, courses, books, repos, and pro tips. Your complete path from beginner to advanced, curated by Venkata Pagadala.",
+    title: "Best AI Learning Roadmap 2026 — Zero to Hero in 18 Weeks | Venkata Pagadala",
+    description: "The best structured 23-topic AI curriculum with 90+ curated resources — videos, courses, books, repos, and pro tips. Your complete path from beginner to advanced.",
+    canonical: "https://venkatapagadala.com/notebook/ai/roadmap",
+    ogTitle: "Best AI Learning Roadmap 2026 — Zero to Hero in 18 Weeks",
   },
   encyclopedia: {
-    title: "AI Concepts Encyclopedia 2026 — 110 Concepts Explained | Venkata Pagadala",
-    description: "110 AI concepts across 10 categories with key terms, prerequisites, difficulty levels, and curated learn-more links. The definitive AI reference guide by Venkata Pagadala.",
+    title: "Best AI Concepts Encyclopedia 2026 — 110 Concepts Explained | Venkata Pagadala",
+    description: "The best AI concepts encyclopedia: 110 concepts across 10 categories with key terms, prerequisites, difficulty levels, and curated learn-more links.",
+    canonical: "https://venkatapagadala.com/notebook/ai/encyclopedia",
+    ogTitle: "Best AI Concepts Encyclopedia 2026 — 110 Concepts Explained",
   },
 };
 
