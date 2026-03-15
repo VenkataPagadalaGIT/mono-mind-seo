@@ -572,6 +572,7 @@ export const aiContributors: AIContributor[] = [
     awards: "Bestselling author of 'Rebooting AI', prominent AI skeptic voice",
     education: "PhD in Brain and Cognitive Sciences, MIT (1993).",
     twitter: "https://x.com/GaryMarcus",
+    linkedin: "https://www.linkedin.com/in/gary-marcus/",
     website: "https://garymarcus.com/",
     googleScholar: "https://scholar.google.com/citations?user=dJiSBSQAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d919813e8119fd8ed03eba3b",
