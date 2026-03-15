@@ -616,6 +616,7 @@ export const aiContributors: AIContributor[] = [
     awards: "Founded Salesforce AI Research, created GloVe embeddings",
     education: "PhD in Computer Science, Princeton University (2014).",
     twitter: "https://x.com/RichardSocher",
+    linkedin: "https://www.linkedin.com/in/richardsocher/",
     website: "https://www.socher.org/",
     googleScholar: "https://scholar.google.com/citations?user=FaOcyfMAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981cc90f7ee253010a763",
