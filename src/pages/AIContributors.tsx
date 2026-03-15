@@ -84,6 +84,9 @@ const AIContributors = () => {
               The definitive reference for understanding the people shaping artificial intelligence.
               Browse the database, read narrative chapters, or explore by topic.
             </p>
+            <p className="font-mono text-[10px] text-muted-foreground/30 mt-3 italic">
+              Note: This list is not a ranking and is not sorted by any metric. Contributors are listed in no particular order.
+            </p>
           </div>
         </ScrollReveal>
 
