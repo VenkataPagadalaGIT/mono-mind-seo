@@ -3,6 +3,7 @@ export interface AIResource {
   type: "paper" | "talk" | "interview" | "book" | "podcast" | "project";
   url: string;
   year?: string;
+  description?: string;
 }
 
 export interface AIContributor {
@@ -10,6 +11,7 @@ export interface AIContributor {
   name: string;
   rank: number;
   bio: string;
+  longBio?: string;
   segment: string;
   specialty: string[];
   affiliation: string;
@@ -19,6 +21,7 @@ export interface AIContributor {
   awards: string;
   education: string;
   twitter?: string;
+  linkedin?: string;
   website?: string;
   github?: string;
   googleScholar?: string;
@@ -29,6 +32,8 @@ export interface AIContributor {
   resources?: AIResource[];
   connections?: string[]; // ids of related contributors
   milestones?: { year: string; event: string }[];
+  featuredMedia?: { title: string; type: "podcast" | "interview" | "documentary" | "lecture"; url: string; host?: string; duration?: string; year?: string }[];
+  whyTheyMatter?: string;
 }
 
 export const AI_SEGMENTS = [
@@ -228,6 +233,7 @@ export const aiContributors: AIContributor[] = [
     name: "Geoffrey Hinton",
     rank: 1,
     bio: "Godfather of Deep Learning. 2024 Nobel Prize in Physics. Turing Award 2018. Pioneered backpropagation, Boltzmann machines, and dropout.",
+    longBio: "Geoffrey Everest Hinton is a British-Canadian cognitive psychologist and computer scientist who is widely regarded as the 'Godfather of Deep Learning.' His pioneering work on artificial neural networks — particularly backpropagation, Boltzmann machines, and deep belief networks — laid the foundation for virtually every modern AI system. After decades at the University of Toronto and Google Brain, Hinton left Google in 2023 to speak freely about the existential risks of the technology he helped create. In 2024, he received the Nobel Prize in Physics for his contributions to machine learning — a moment that symbolized AI's arrival as a fundamental scientific discipline. His students include Yann LeCun, Ilya Sutskever, and many other leading AI researchers.",
     segment: "Foundation Models & LLMs",
     specialty: ["Deep Learning", "AI Safety"],
     affiliation: "University of Toronto / Google (emeritus)",
@@ -237,15 +243,17 @@ export const aiContributors: AIContributor[] = [
     awards: "2024 Nobel Prize in Physics, 2018 Turing Award, Fellow of Royal Society",
     education: "PhD in Artificial Intelligence, University of Edinburgh (1978). BA in Experimental Psychology, Cambridge.",
     twitter: "https://x.com/geoffreyhinton",
+    linkedin: "https://www.linkedin.com/in/geoffrey-hinton-7a326a/",
     website: "https://www.cs.toronto.edu/~hinton/",
     googleScholar: "https://scholar.google.com/citations?user=JicYPdAAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d9198151ba9cf617f1147229",
     quote: "The idea that this stuff could actually get smarter than people — a few years ago I thought it was 30 to 50 years or even longer away. Now I think it's more like 5 to 20 years.",
     myTake: "Hinton is the root node of the entire modern AI tree. Almost every major figure in deep learning was either his student or influenced by his work. His departure from Google to warn about AI risks carries weight precisely because of his unmatched credibility. Required study for anyone entering AI.",
+    whyTheyMatter: "Without Hinton, there is no modern AI. Backpropagation, which he popularized in 1986, is still the fundamental algorithm that trains every neural network today. His intellectual lineage — students like Ilya Sutskever (co-founder of OpenAI), Yann LeCun, and dozens of others — built the entire industry. When Hinton speaks about AI risks, the world listens because he earned that authority over 40 years of being right when others were wrong.",
     resources: [
-      { title: "Learning representations by back-propagating errors", type: "paper", url: "https://www.nature.com/articles/323533a0", year: "1986" },
-      { title: "Lex Fridman Interview — Godfather of AI", type: "interview", url: "https://www.youtube.com/watch?v=rGgGOccMEiY", year: "2024" },
-      { title: "Nobel Prize Lecture", type: "talk", url: "https://www.nobelprize.org/prizes/physics/2024/hinton/lecture/", year: "2024" },
+      { title: "Learning representations by back-propagating errors", type: "paper", url: "https://www.nature.com/articles/323533a0", year: "1986", description: "The paper that made neural networks trainable. Still the foundation of all deep learning." },
+      { title: "Lex Fridman Interview — Godfather of AI", type: "interview", url: "https://www.youtube.com/watch?v=rGgGOccMEiY", year: "2024", description: "Deep conversation on AI risks, consciousness, and the future of intelligence." },
+      { title: "Nobel Prize Lecture", type: "talk", url: "https://www.nobelprize.org/prizes/physics/2024/hinton/lecture/", year: "2024", description: "Hinton's Nobel lecture on how neural networks learned to learn." },
     ],
     connections: ["lecun", "altman", "silver"],
     milestones: [
@@ -254,6 +262,12 @@ export const aiContributors: AIContributor[] = [
       { year: "2018", event: "Turing Award" },
       { year: "2023", event: "Left Google to warn about AI risks" },
       { year: "2024", event: "Nobel Prize in Physics" },
+    ],
+    featuredMedia: [
+      { title: "Geoffrey Hinton: The Godfather of AI", type: "podcast", url: "https://www.youtube.com/watch?v=rGgGOccMEiY", host: "Lex Fridman Podcast", duration: "2h 33m", year: "2024" },
+      { title: "Geoffrey Hinton: Will AI End Humanity?", type: "interview", url: "https://www.youtube.com/watch?v=Y6Sgp7y178k", host: "60 Minutes", duration: "13m", year: "2023" },
+      { title: "The Neural Network Revolution", type: "lecture", url: "https://www.youtube.com/watch?v=VhmE_UXDOGs", host: "Royal Institution", duration: "1h 2m", year: "2024" },
+      { title: "Nobel Prize Press Conference", type: "interview", url: "https://www.nobelprize.org/prizes/physics/2024/hinton/", host: "Nobel Foundation", duration: "25m", year: "2024" },
     ],
   },
   {
@@ -270,6 +284,7 @@ export const aiContributors: AIContributor[] = [
     awards: "2018 Turing Award, Legion of Honour (France), IEEE Neural Network Pioneer Award",
     education: "PhD in Computer Science, Université Pierre et Marie Curie (1987).",
     twitter: "https://x.com/ylecun",
+    linkedin: "https://www.linkedin.com/in/yann-lecun-0b999/",
     website: "https://yann.lecun.com/",
     googleScholar: "https://scholar.google.com/citations?user=WLN3QrAAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981e9acaed6b0f4aec933",
@@ -295,6 +310,7 @@ export const aiContributors: AIContributor[] = [
     awards: "TIME Person of the Year 2025, Forbes 30 Under 30, TIME100 AI",
     education: "Dropped out of Stanford University (Computer Science, 2005). Former president of Y Combinator.",
     twitter: "https://x.com/sama",
+    linkedin: "https://www.linkedin.com/in/samaltman/",
     website: "https://blog.samaltman.com/",
     github: "https://github.com/sama",
     googleScholar: "https://scholar.google.com/citations?user=K_2IHEAAAAAJ",
@@ -328,6 +344,7 @@ export const aiContributors: AIContributor[] = [
     awards: "NAE Member, ACM Fellow, ACM SIGOPS Hall of Fame",
     education: "PhD in Computer Science, University of Washington (1996).",
     twitter: "https://x.com/JeffDean",
+    linkedin: "https://www.linkedin.com/in/jeff-dean-8b212555/",
     website: "https://research.google/people/jeff/",
     googleScholar: "https://scholar.google.com/citations?user=NMS69lQAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981418254ef7670bbd9a4",
@@ -352,6 +369,7 @@ export const aiContributors: AIContributor[] = [
     keyInfluence: "Created AlphaGo — the moment AI beat human intuition. AlphaZero mastered chess/Go/shogi from scratch.",
     awards: "ACM Prize in Computing 2019",
     education: "PhD in Computer Science, University of Cambridge (1999).",
+    linkedin: "https://www.linkedin.com/in/david-silver-0b344b/",
     website: "https://www.davidsilver.uk/",
     googleScholar: "https://scholar.google.com/citations?user=1L4GCDAAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d919816b9569e86be0e08e54",
@@ -384,6 +402,7 @@ export const aiContributors: AIContributor[] = [
     awards: "",
     education: "PhD in Computer Science, UC Berkeley (2011).",
     twitter: "https://x.com/percyliang",
+    linkedin: "https://www.linkedin.com/in/percy-liang-0862984/",
     website: "https://cs.stanford.edu/~pliang/",
     github: "https://github.com/percyliang",
     googleScholar: "https://scholar.google.com/citations?user=uKoJYFQAAAAJ",
@@ -408,6 +427,7 @@ export const aiContributors: AIContributor[] = [
     awards: "",
     education: "MS in Material Sciences & Engineering, Stanford University. BE, IIT Kharagpur.",
     twitter: "https://x.com/sundarpichai",
+    linkedin: "https://www.linkedin.com/in/sundarpichai/",
     website: "https://about.google/",
     googleScholar: "https://scholar.google.com/citations?user=0NOr2MQAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d9198111a1b6ccf3dadfa8bd",
@@ -428,6 +448,7 @@ export const aiContributors: AIContributor[] = [
     awards: "Forbes 30 Under 30, Globe and Mail Top 40 Under 40",
     education: "BASc in Engineering Science, University of Toronto (2017).",
     twitter: "https://x.com/aidangomez",
+    linkedin: "https://www.linkedin.com/in/aidangomez/",
     website: "https://cohere.com/",
     googleScholar: "https://scholar.google.com/citations?user=gMbMj18AAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981648eadcd3e366073b6",
@@ -452,6 +473,7 @@ export const aiContributors: AIContributor[] = [
     awards: "",
     education: "PhD in Electrical Engineering & Computer Science, MIT.",
     twitter: "https://x.com/lexfridman",
+    linkedin: "https://www.linkedin.com/in/lexfridman/",
     website: "https://lexfridman.com/",
     github: "https://github.com/lexfridman",
     youtube: "https://youtube.com/@lexfridman",
@@ -479,6 +501,7 @@ export const aiContributors: AIContributor[] = [
     awards: "TIME100 AI 2024",
     education: "MS in Engineering, Dartmouth College.",
     twitter: "https://x.com/maboriramurati",
+    linkedin: "https://www.linkedin.com/in/maboriramurati/",
     googleScholar: "https://scholar.google.com/citations?user=Y6-OXYAAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d919814ebcc4cefe1f9c37bd",
     myTake: "Murati is one of the most underrated figures in AI. She actually shipped ChatGPT and GPT-4 — turning research into product. Her new venture Thinking Machines Lab, focused on agentic AI, suggests she sees the next frontier beyond chat interfaces. One to watch closely.",
@@ -498,6 +521,7 @@ export const aiContributors: AIContributor[] = [
     awards: "MIT Technology Review 35 Under 35, Sloan Fellow",
     education: "PhD in Computer Science, UC Berkeley (2018).",
     twitter: "https://x.com/chelseabfinn",
+    linkedin: "https://www.linkedin.com/in/chelsea-finn-8a924771/",
     website: "https://ai.stanford.edu/~cbfinn/",
     github: "https://github.com/cbfinn",
     googleScholar: "https://scholar.google.com/citations?user=vUPPg3gAAAAJ",
@@ -522,6 +546,7 @@ export const aiContributors: AIContributor[] = [
     awards: "",
     education: "PhD in Machine Learning, University of Oxford.",
     twitter: "https://x.com/saaborrahooker",
+    linkedin: "https://www.linkedin.com/in/sara-hooker/",
     website: "https://www.sarahooker.me/",
     github: "https://github.com/sarahooker",
     googleScholar: "https://scholar.google.com/citations?user=0Tnz_L8AAAAJ",
@@ -547,6 +572,7 @@ export const aiContributors: AIContributor[] = [
     awards: "Bestselling author of 'Rebooting AI', prominent AI skeptic voice",
     education: "PhD in Brain and Cognitive Sciences, MIT (1993).",
     twitter: "https://x.com/GaryMarcus",
+    linkedin: "https://www.linkedin.com/in/gary-marcus/",
     website: "https://garymarcus.com/",
     googleScholar: "https://scholar.google.com/citations?user=dJiSBSQAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d919813e8119fd8ed03eba3b",
@@ -590,6 +616,7 @@ export const aiContributors: AIContributor[] = [
     awards: "Founded Salesforce AI Research, created GloVe embeddings",
     education: "PhD in Computer Science, Princeton University (2014).",
     twitter: "https://x.com/RichardSocher",
+    linkedin: "https://www.linkedin.com/in/richardsocher/",
     website: "https://www.socher.org/",
     googleScholar: "https://scholar.google.com/citations?user=FaOcyfMAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981cc90f7ee253010a763",
@@ -633,6 +660,7 @@ export const aiContributors: AIContributor[] = [
     awards: "Co-founder of Center for Humane Technology, testified before US Congress",
     education: "BS in Computer Science, Stanford University.",
     twitter: "https://x.com/tristanharris",
+    linkedin: "https://www.linkedin.com/in/tristanharris/",
     website: "https://www.humanetech.com/",
     googleScholar: "https://scholar.google.com/citations?user=TQk_m2sAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981878679e60509f81007",
@@ -739,6 +767,7 @@ export const aiContributors: AIContributor[] = [
     awards: "Co-founder of Hugging Face, leading open-source AI platform",
     education: "PhD, Physics, Universität Heidelberg.",
     twitter: "https://x.com/Thom_Wolf",
+    linkedin: "https://www.linkedin.com/in/thomas-wolf-a056857/",
     website: "https://huggingface.co/",
     github: "https://github.com/thomwolf",
     googleScholar: "https://scholar.google.com/citations?user=j35feEMAAAAJ",
