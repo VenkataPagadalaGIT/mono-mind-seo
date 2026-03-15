@@ -926,6 +926,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "dario-amodei", name: "Dario Amodei", rank: 7,
     bio: "CEO & Co-founder of Anthropic. Former VP Research at OpenAI. Built Claude. Pioneer of Constitutional AI & RLHF. TIME100 AI 2025.",
+    photoUrl: "/photos/dario-amodei.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 2.0",
     segment: "AI Safety & Alignment", specialty: ["AI Safety", "LLMs"],
     affiliation: "Anthropic", expertType: "Founder/CEO", country: "USA",
     keyInfluence: "Built Claude & Constitutional AI. Leading the safety-first approach to frontier AI development.",
