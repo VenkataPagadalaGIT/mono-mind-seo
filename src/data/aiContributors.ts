@@ -432,7 +432,6 @@ export const aiContributors: AIContributor[] = [
     bio: "CEO of Alphabet/Google. Overseeing Gemini AI, Google DeepMind, and AI-first transformation.",
     photoUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Sundar_Pichai_-_2023_%28cropped%29.jpg/440px-Sundar_Pichai_-_2023_%28cropped%29.jpg",
     photoCredit: "Photo: Wikimedia Commons / CC BY 2.0",
-    bio: "CEO of Google & Alphabet. Oversees DeepMind integration. Launched Gemini. Driving AI-first transformation.",
     segment: "Enterprise & Applied AI",
     specialty: ["AI Infrastructure", "LLMs"],
     affiliation: "Google / Alphabet",
