@@ -1118,6 +1118,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "zuckerberg", name: "Mark Zuckerberg", rank: 30,
     bio: "CEO of Meta. Champions open-weight AI strategy (Llama). Leading frontier superintelligence research at Meta.",
+    photoUrl: "/photos/zuckerberg.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 2.0",
     segment: "Foundation Models & LLMs", specialty: ["LLMs", "Open Source AI"],
     affiliation: "Meta", expertType: "Industry Leader", country: "USA",
     keyInfluence: "Open-sourced Llama — shifted industry toward open-weight models. Invested $65B+ in AI infrastructure.",
