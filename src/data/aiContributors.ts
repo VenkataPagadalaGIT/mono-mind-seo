@@ -705,8 +705,7 @@ export const aiContributors: AIContributor[] = [
     name: "Hugo Touvron",
     rank: 83,
     bio: "Research scientist at Meta FAIR. Lead author of Llama 1 and Llama 2 papers. Pioneer of open-weight LLMs.",
-    photoUrl: "/photos/touvron.jpg",
-    photoCredit: "Illustration · AI-generated portrait",
+    // No real photo available
     segment: "Foundation Models & LLMs",
     specialty: ["LLMs", "Open Source AI"],
     affiliation: "Meta AI (FAIR)",
