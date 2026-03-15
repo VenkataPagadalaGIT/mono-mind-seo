@@ -376,7 +376,8 @@ export const aiContributors: AIContributor[] = [
     name: "David Silver",
     rank: 19,
     bio: "Former lead researcher at DeepMind. Creator of AlphaGo & AlphaZero. Left DeepMind in 2026 to found Ineffable Intelligence.",
-    // No real photo available
+    photoUrl: "/photos/silver.jpg",
+    photoCredit: "Photo: Wikimedia Commons",
     segment: "Reinforcement Learning & Decision",
     specialty: ["Reinforcement Learning", "AGI"],
     affiliation: "Ineffable Intelligence (founder)",
