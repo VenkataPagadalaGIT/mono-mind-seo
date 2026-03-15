@@ -11,7 +11,7 @@ import AILearningRoadmap from "@/components/AILearningRoadmap";
 import AIEncyclopedia from "@/components/AIEncyclopedia";
 import { aiContributors } from "@/data/aiContributors";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Users, Clock, Brain, FileText, Library, Linkedin, Mail } from "lucide-react";
+import { ArrowLeft, ArrowRight, Linkedin, Mail } from "lucide-react";
 import authorPhoto from "@/assets/venkata-pagadala.jpeg";
 
 const pageTocSections = [
