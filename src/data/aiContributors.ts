@@ -499,6 +499,7 @@ export const aiContributors: AIContributor[] = [
     linkedin: "https://www.linkedin.com/in/lexfridman/",
     website: "https://lexfridman.com/",
     github: "https://github.com/lexfridman",
+    githubFollowers: "~15K",
     youtube: "https://youtube.com/@lexfridman",
     googleScholar: "https://scholar.google.com/citations?user=wZH_N7cAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d919819ca735c38a70fbd80b",
