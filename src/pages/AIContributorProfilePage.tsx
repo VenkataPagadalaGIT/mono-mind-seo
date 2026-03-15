@@ -281,7 +281,7 @@ const AIContributorProfilePage = () => {
           {/* ── Featured Media (Podcasts/Interviews) ── */}
           {contributor.featuredMedia && contributor.featuredMedia.length > 0 && (
             <ScrollReveal delay={100}>
-              <div className="mb-10">
+              <div id="media" className="mb-10 scroll-mt-24">
                 <h2 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-6">
                   🎧 Podcasts & Interviews
                 </h2>
