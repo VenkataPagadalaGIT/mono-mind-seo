@@ -242,6 +242,21 @@ const Lab = () => {
           <KnowledgeGraph />
         </ScrollReveal>
 
+        {/* ── AI Contributors Explorer ── */}
+        <div className="mt-20">
+          <ScrollReveal>
+            <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/40 uppercase mb-4">
+              Top 100 AI Contributors (2026)
+            </p>
+            <p className="font-mono text-sm text-muted-foreground leading-relaxed mb-8 max-w-2xl">
+              An interactive exploration of the people shaping AI — from researchers and founders to policy advocates. Switch between graph and directory views, click to explore each profile.
+            </p>
+          </ScrollReveal>
+          <ScrollReveal delay={200}>
+            <AIContributorsExplorer />
+          </ScrollReveal>
+        </div>
+
         {/* ── Solutions Overview ── */}
         <div className="mt-20">
           <ScrollReveal>
