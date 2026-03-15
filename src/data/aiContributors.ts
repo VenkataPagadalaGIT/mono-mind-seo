@@ -1155,6 +1155,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "hopfield", name: "John Hopfield", rank: 35,
     bio: "2024 Nobel Prize in Physics. Invented Hopfield networks. Pioneered neural network models of associative memory.",
+    photoUrl: "/photos/hopfield.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 4.0",
     segment: "ML Theory & Optimization", specialty: ["Deep Learning", "ML Theory"],
     affiliation: "Princeton University (emeritus)", expertType: "Researcher", country: "USA",
     keyInfluence: "Invented Hopfield networks in 1982 — foundational work connecting physics and neural computation.",
