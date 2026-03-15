@@ -50,10 +50,11 @@ const Home = () => {
         <div className="h-8 flex items-center justify-center">
           <TypewriterText
             words={[
-              "AI Product Manager — Search",
-              "Lead Technical Product Manager",
+              "AI Systems Architect",
               "Published Researcher",
+              "Business & Market Intelligence",
               "Enterprise SEO & Automation",
+              "Building the Future of Search",
             ]}
             className="font-mono text-sm sm:text-base text-foreground/60"
           />
