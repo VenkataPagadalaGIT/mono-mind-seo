@@ -546,6 +546,7 @@ export const aiContributors: AIContributor[] = [
     awards: "",
     education: "PhD in Machine Learning, University of Oxford.",
     twitter: "https://x.com/saaborrahooker",
+    linkedin: "https://www.linkedin.com/in/sara-hooker/",
     website: "https://www.sarahooker.me/",
     github: "https://github.com/sarahooker",
     googleScholar: "https://scholar.google.com/citations?user=0Tnz_L8AAAAJ",
