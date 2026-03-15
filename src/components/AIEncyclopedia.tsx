@@ -1,8 +1,6 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { encyclopediaConcepts, ENCYCLOPEDIA_CATEGORIES, type EncyclopediaConcept } from "@/data/aiEncyclopedia";
-import { Search, ChevronDown, ChevronUp, ExternalLink, Tag, BookOpen, ArrowRight } from "lucide-react";
-
-console.log("[AIEncyclopedia] encyclopediaConcepts loaded:", encyclopediaConcepts?.length, "items");
+import { Search, ChevronDown, ChevronUp, ExternalLink, Tag, BookOpen } from "lucide-react";
 
 const diffBadge: Record<string, string> = {
   beginner: "border-green-500/30 text-green-400",
@@ -10,15 +8,13 @@ const diffBadge: Record<string, string> = {
   advanced: "border-red-500/30 text-red-400",
 };
 
-const ConceptCard = ({ concept }: { concept: EncyclopediaConcept }) => {
-  const [expanded, setExpanded] = useState(false);
-
+const ConceptCard = ({ concept, isOpen, onToggle }: { concept: EncyclopediaConcept; isOpen: boolean; onToggle: () => void }) => {
   const cat = ENCYCLOPEDIA_CATEGORIES.find((c) => c.label === concept.category);
 
   return (
     <div className="border border-border hover:border-foreground/20 transition-all">
       <button
-        onClick={() => setExpanded(!expanded)}
+        onClick={onToggle}
         className="w-full text-left px-5 py-4 flex items-start gap-3"
       >
         <span className="text-lg shrink-0 mt-0.5">{concept.emoji}</span>
@@ -34,7 +30,7 @@ const ConceptCard = ({ concept }: { concept: EncyclopediaConcept }) => {
           </p>
         </div>
         <div className="shrink-0 mt-1">
-          {expanded ? (
+          {isOpen ? (
             <ChevronUp size={14} className="text-muted-foreground/30" />
           ) : (
             <ChevronDown size={14} className="text-muted-foreground/30" />
@@ -42,31 +38,27 @@ const ConceptCard = ({ concept }: { concept: EncyclopediaConcept }) => {
         </div>
       </button>
 
-      {expanded && (
+      {isOpen && (
         <div className="px-5 pb-5 border-t border-border pt-4 space-y-4">
           <p className="font-mono text-xs text-muted-foreground/60 leading-relaxed">
             {concept.description}
           </p>
 
-          {/* Category */}
-          <div className="flex items-center gap-2">
-            <span
-              className="font-mono text-[9px] uppercase tracking-wider border px-2 py-1"
-              style={{ borderColor: cat?.color + "40", color: cat?.color }}
-            >
-              {cat?.emoji} {concept.category}
-            </span>
-          </div>
+          {cat && (
+            <div className="flex items-center gap-2">
+              <Tag size={10} className="text-muted-foreground/30" />
+              <span className="font-mono text-[10px]" style={{ color: cat.color }}>
+                {cat.emoji} {cat.label}
+              </span>
+            </div>
+          )}
 
-          {/* Key Terms */}
           {concept.keyTerms.length > 0 && (
             <div>
-              <p className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-muted-foreground/30 mb-2">
-                <Tag size={10} /> Key Terms
-              </p>
+              <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground/30 mb-2">Key Terms</p>
               <div className="flex flex-wrap gap-1.5">
                 {concept.keyTerms.map((term) => (
-                  <span key={term} className="font-mono text-[10px] text-muted-foreground/50 border border-border px-2 py-0.5">
+                  <span key={term} className="font-mono text-[10px] px-2 py-0.5 border border-border text-muted-foreground/50">
                     {term}
                   </span>
                 ))}
@@ -74,23 +66,19 @@ const ConceptCard = ({ concept }: { concept: EncyclopediaConcept }) => {
             </div>
           )}
 
-          {/* Prerequisites */}
           {concept.prerequisites.length > 0 && (
             <div>
-              <p className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-muted-foreground/30 mb-2">
-                <ArrowRight size={10} /> Prerequisites
-              </p>
+              <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground/30 mb-2">Prerequisites</p>
               <div className="flex flex-wrap gap-1.5">
-                {concept.prerequisites.map((prereq) => (
-                  <span key={prereq} className="font-mono text-[10px] text-muted-foreground/40 border border-border/50 px-2 py-0.5">
-                    {prereq}
+                {concept.prerequisites.map((p) => (
+                  <span key={p} className="font-mono text-[10px] px-2 py-0.5 border border-border text-muted-foreground/40 italic">
+                    {p}
                   </span>
                 ))}
               </div>
             </div>
           )}
 
-          {/* Real-World Applications */}
           {concept.realWorldApps && (
             <div>
               <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground/30 mb-1">Real-World Applications</p>
@@ -98,7 +86,6 @@ const ConceptCard = ({ concept }: { concept: EncyclopediaConcept }) => {
             </div>
           )}
 
-          {/* Learn More */}
           {concept.learnMore.length > 0 && (
             <div>
               <p className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-muted-foreground/30 mb-2">
@@ -130,9 +117,10 @@ const AIEncyclopedia = () => {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>("");
   const [activeDifficulty, setActiveDifficulty] = useState<string>("");
+  const [openId, setOpenId] = useState<string | null>(null);
 
   const filtered = useMemo(() => {
-    let items = encyclopediaConcepts;
+    let items = [...encyclopediaConcepts];
     if (activeCategory) items = items.filter((c) => c.category === activeCategory);
     if (activeDifficulty) items = items.filter((c) => c.difficulty === activeDifficulty);
     if (search) {
@@ -233,10 +221,15 @@ const AIEncyclopedia = () => {
         ))}
       </div>
 
-      {/* Concepts */}
+      {/* Concepts list */}
       <div className="space-y-2">
         {filtered.map((concept) => (
-          <ConceptCard key={concept.id} concept={concept} />
+          <ConceptCard
+            key={concept.id}
+            concept={concept}
+            isOpen={openId === concept.id}
+            onToggle={() => setOpenId(openId === concept.id ? null : concept.id)}
+          />
         ))}
       </div>
 
