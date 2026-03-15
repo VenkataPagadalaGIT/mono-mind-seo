@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
+import PageSidebar from "@/components/PageSidebar";
 import StateOfAIEssay from "@/components/StateOfAIEssay";
 import NarrativeChapters from "@/components/NarrativeChapters";
 import AIContributorsExplorer from "@/components/AIContributorsExplorer";
