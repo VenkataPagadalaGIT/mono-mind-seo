@@ -483,7 +483,7 @@ export const aiContributors: AIContributor[] = [
     rank: 43,
     bio: "MIT researcher and host of the Lex Fridman Podcast. 400+ deep interviews with AI pioneers.",
     photoUrl: "/photos/fridman.jpg",
-    photoCredit: "Illustration · AI-generated portrait",
+    photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "AI Education & Communication",
     specialty: ["Robotics", "AI Education"],
     affiliation: "MIT / Lex Fridman Podcast",
