@@ -41,7 +41,7 @@ function parseLinks(raw: string): RoadmapResource[] {
   return items;
 }
 
-export const roadmapTopics: RoadmapTopic[] = [
+export const roadmapTopics: RoadmapTopic[] = ([
   {
     id: "what-is-ai", topic: "What is AI? — The Big Picture",
     description: "Understand what Artificial Intelligence actually is, its history, different types (narrow vs general AI), and where it's headed. Get the mental map before diving into code.",
