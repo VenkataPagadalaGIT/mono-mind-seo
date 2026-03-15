@@ -284,6 +284,7 @@ export const aiContributors: AIContributor[] = [
     awards: "2018 Turing Award, Legion of Honour (France), IEEE Neural Network Pioneer Award",
     education: "PhD in Computer Science, Université Pierre et Marie Curie (1987).",
     twitter: "https://x.com/ylecun",
+    linkedin: "https://www.linkedin.com/in/yann-lecun-0b999/",
     website: "https://yann.lecun.com/",
     googleScholar: "https://scholar.google.com/citations?user=WLN3QrAAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981e9acaed6b0f4aec933",
