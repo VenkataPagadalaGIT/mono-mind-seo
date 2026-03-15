@@ -532,6 +532,8 @@ export const aiContributors: AIContributor[] = [
     name: "Chelsea Finn",
     rank: 49,
     bio: "Associate Professor at Stanford. Co-founder of Physical Intelligence. Created MAML.",
+    photoUrl: "/photos/finn.jpg",
+    photoCredit: "Illustration · AI-generated portrait",
     segment: "Robotics & Autonomous Systems",
     specialty: ["Robotics", "Reinforcement Learning", "ML Theory"],
     affiliation: "Stanford / Physical Intelligence",
