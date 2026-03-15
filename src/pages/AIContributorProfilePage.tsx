@@ -653,51 +653,6 @@ const AIContributorProfilePage = () => {
             </ScrollReveal>
           )}
 
-          {/* ── External Links ── */}
-          <ScrollReveal delay={100}>
-            <div id="links" className="border border-border p-6 mb-10 scroll-mt-24">
-              <h2 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-4">Links & Profiles</h2>
-              <div className="flex flex-wrap gap-2">
-                {contributor.linkedin && (
-                  <a href={contributor.linkedin} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 font-mono text-[11px] text-foreground/60 hover:text-foreground border border-border px-3 py-2 transition-colors">
-                    <Linkedin size={12} /> LinkedIn <ExternalLink size={8} />
-                  </a>
-                )}
-                {contributor.twitter && (
-                  <a href={contributor.twitter} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 font-mono text-[11px] text-foreground/60 hover:text-foreground border border-border px-3 py-2 transition-colors">
-                    𝕏 Twitter <ExternalLink size={8} />
-                  </a>
-                )}
-                {contributor.website && (
-                  <a href={contributor.website} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 font-mono text-[11px] text-foreground/60 hover:text-foreground border border-border px-3 py-2 transition-colors">
-                    Website <ExternalLink size={8} />
-                  </a>
-                )}
-                {contributor.github && (
-                  <a href={contributor.github} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 font-mono text-[11px] text-foreground/60 hover:text-foreground border border-border px-3 py-2 transition-colors">
-                    <Github size={12} /> GitHub <ExternalLink size={8} />
-                  </a>
-                )}
-                {contributor.googleScholar && (
-                  <a href={contributor.googleScholar} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 font-mono text-[11px] text-foreground/60 hover:text-foreground border border-border px-3 py-2 transition-colors">
-                    Scholar <ExternalLink size={8} />
-                  </a>
-                )}
-                {contributor.youtube && (
-                  <a href={contributor.youtube} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 font-mono text-[11px] text-foreground/60 hover:text-foreground border border-border px-3 py-2 transition-colors">
-                    YouTube <ExternalLink size={8} />
-                  </a>
-                )}
-              </div>
-            </div>
-          </ScrollReveal>
-
           {/* ── Prev/Next Navigation ── */}
           <ScrollReveal delay={100}>
             <div className="grid grid-cols-2 gap-4 mb-10">
