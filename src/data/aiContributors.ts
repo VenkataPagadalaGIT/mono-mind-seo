@@ -427,6 +427,7 @@ export const aiContributors: AIContributor[] = [
     awards: "",
     education: "MS in Material Sciences & Engineering, Stanford University. BE, IIT Kharagpur.",
     twitter: "https://x.com/sundarpichai",
+    linkedin: "https://www.linkedin.com/in/sundarpichai/",
     website: "https://about.google/",
     googleScholar: "https://scholar.google.com/citations?user=0NOr2MQAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d9198111a1b6ccf3dadfa8bd",
