@@ -19,6 +19,8 @@ import Research from "./pages/Research";
 import Contact from "./pages/Contact";
 import AIContributors from "./pages/AIContributors";
 import AIContributorProfilePage from "./pages/AIContributorProfilePage";
+import Notebook from "./pages/Notebook";
+import BusinessNotebook from "./pages/BusinessNotebook";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
