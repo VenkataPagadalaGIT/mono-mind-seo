@@ -1386,6 +1386,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "rus", name: "Daniela Rus", rank: 64,
     bio: "Director of MIT CSAIL. Pioneer of soft robotics and autonomous systems.",
+    photoUrl: "/photos/rus.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "Robotics & Autonomous Systems", specialty: ["Robotics"],
     affiliation: "MIT CSAIL", expertType: "Researcher", country: "Romania/USA",
     keyInfluence: "Directing MIT CSAIL and pioneering soft robotics and scalable robot design.",
