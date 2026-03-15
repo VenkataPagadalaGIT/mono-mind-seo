@@ -197,7 +197,6 @@ const AIContributors = () => {
                   <Mail size={10} /> Get in Touch
                 </a>
               </div>
-            </div>
           </div>
         </div>
 
