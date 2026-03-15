@@ -310,6 +310,7 @@ export const aiContributors: AIContributor[] = [
     awards: "TIME Person of the Year 2025, Forbes 30 Under 30, TIME100 AI",
     education: "Dropped out of Stanford University (Computer Science, 2005). Former president of Y Combinator.",
     twitter: "https://x.com/sama",
+    linkedin: "https://www.linkedin.com/in/samaltman/",
     website: "https://blog.samaltman.com/",
     github: "https://github.com/sama",
     googleScholar: "https://scholar.google.com/citations?user=K_2IHEAAAAAJ",
