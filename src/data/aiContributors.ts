@@ -1169,6 +1169,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "suleyman", name: "Mustafa Suleyman", rank: 36,
     bio: "CEO of Microsoft AI. Co-founder of DeepMind. Founded Inflection AI. Author of The Coming Wave.",
+    photoUrl: "/photos/suleyman.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 2.0",
     segment: "Enterprise & Applied AI", specialty: ["LLMs", "AI Policy"],
     affiliation: "Microsoft AI", expertType: "Founder/CEO", country: "UK",
     keyInfluence: "Co-founded DeepMind. Now CEO of Microsoft AI. Author of 'The Coming Wave'.",
