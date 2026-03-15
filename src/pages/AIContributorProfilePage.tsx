@@ -423,7 +423,7 @@ const AIContributorProfilePage = () => {
           {/* ── Awards ── */}
           {contributor.awards && (
             <ScrollReveal delay={100}>
-              <div className="border border-border p-5 mb-10">
+              <div id="awards" className="border border-border p-5 mb-10 scroll-mt-24">
                 <h3 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-2">Awards & Recognition</h3>
                 <div className="flex items-start gap-2">
                   <Award size={12} className="text-muted-foreground/30 mt-0.5 shrink-0" />
