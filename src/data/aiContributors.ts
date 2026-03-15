@@ -912,6 +912,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "sutskever", name: "Ilya Sutskever", rank: 6,
     bio: "Co-founder of OpenAI & SSI. Key author of AlexNet, seq2seq, GPT-2/3/4. SSI valued at $32B.",
+    photoUrl: "/photos/sutskever.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 3.0",
     segment: "AI Safety & Alignment", specialty: ["Deep Learning", "NLP", "AI Safety", "AGI"],
     affiliation: "Safe Superintelligence Inc. (SSI)", expertType: "Founder/CEO", country: "Israel/Canada",
     keyInfluence: "Key architect behind GPT-2/3/4. Left OpenAI to build safe superintelligence.",
