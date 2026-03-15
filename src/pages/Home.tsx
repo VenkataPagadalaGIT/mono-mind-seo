@@ -9,9 +9,9 @@ import ScrollReveal from "@/components/ScrollReveal";
 
 const Home = () => {
   useEffect(() => {
-    document.title = "Venkata Pagadala — AI Product Owner & Technical SEO Lead";
+    document.title = "Venkata Pagadala — AI Systems Builder, Researcher & Business Strategist";
     const meta = document.querySelector('meta[name="description"]');
-    const content = "Venkata Pagadala — AI Product Owner, Technical SEO Lead, and Published Researcher. Building AI systems and scaling organic search for Fortune 500 brands.";
+    const content = "Venkata Pagadala — AI Systems Architect, Published Researcher, and Business Strategist. Building production AI systems, knowledge graphs, and enterprise search at scale.";
     if (meta) meta.setAttribute("content", content);
   }, []);
 
