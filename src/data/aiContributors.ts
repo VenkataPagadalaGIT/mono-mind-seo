@@ -376,7 +376,8 @@ export const aiContributors: AIContributor[] = [
     name: "David Silver",
     rank: 19,
     bio: "Former lead researcher at DeepMind. Creator of AlphaGo & AlphaZero. Left DeepMind in 2026 to found Ineffable Intelligence.",
-    // No real photo available
+    photoUrl: "/photos/silver.jpg",
+    photoCredit: "Photo: Wikimedia Commons",
     segment: "Reinforcement Learning & Decision",
     specialty: ["Reinforcement Learning", "AGI"],
     affiliation: "Ineffable Intelligence (founder)",
@@ -409,7 +410,8 @@ export const aiContributors: AIContributor[] = [
     name: "Percy Liang",
     rank: 21,
     bio: "Associate Professor at Stanford. Co-founder of Together AI. Created HELM benchmark.",
-    // No real photo available
+    photoUrl: "/photos/liang.jpg",
+    photoCredit: "Photo: Wikimedia Commons",
     segment: "Open Source AI & Platforms",
     specialty: ["NLP", "LLMs", "Open Source AI"],
     affiliation: "Stanford / Together AI",
@@ -518,7 +520,8 @@ export const aiContributors: AIContributor[] = [
     name: "Mira Murati",
     rank: 44,
     bio: "Former CTO of OpenAI. Led ChatGPT and GPT-4 launches. Founded Thinking Machines Lab in 2025 for agentic AI.",
-    // No real photo available
+    photoUrl: "/photos/murati.jpg",
+    photoCredit: "Photo: Wikimedia Commons",
     segment: "Foundation Models & LLMs",
     specialty: ["LLMs", "Generative AI"],
     affiliation: "Thinking Machines Lab",
@@ -539,7 +542,8 @@ export const aiContributors: AIContributor[] = [
     name: "Chelsea Finn",
     rank: 49,
     bio: "Associate Professor at Stanford. Co-founder of Physical Intelligence. Created MAML.",
-    // No real photo available
+    photoUrl: "/photos/finn.jpg",
+    photoCredit: "Photo: Wikimedia Commons",
     segment: "Robotics & Autonomous Systems",
     specialty: ["Robotics", "Reinforcement Learning", "ML Theory"],
     affiliation: "Stanford / Physical Intelligence",
@@ -567,7 +571,8 @@ export const aiContributors: AIContributor[] = [
     name: "Sara Hooker",
     rank: 50,
     bio: "Head of Cohere for AI research lab. Former Google Brain. Champion of efficient ML and responsible AI.",
-    // No real photo available
+    photoUrl: "/photos/hooker.jpg",
+    photoCredit: "Photo: Wikimedia Commons",
     segment: "Open Source AI & Platforms",
     specialty: ["Deep Learning", "AI Ethics", "Open Source AI"],
     affiliation: "Cohere for AI",
@@ -644,7 +649,8 @@ export const aiContributors: AIContributor[] = [
     name: "Richard Socher",
     rank: 69,
     bio: "CEO of You.com. Former Chief Scientist at Salesforce. Created GloVe. Pioneer of recursive NNs for NLP.",
-    // No real photo available
+    photoUrl: "/photos/socher.jpg",
+    photoCredit: "Photo: Wikimedia Commons",
     segment: "NLP & Language Technology",
     specialty: ["NLP", "LLMs"],
     affiliation: "You.com",
@@ -669,7 +675,8 @@ export const aiContributors: AIContributor[] = [
     name: "Jan Leike",
     rank: 74,
     bio: "Head of Alignment at Anthropic. Former OpenAI Superalignment team leader. Key RLHF researcher.",
-    // No real photo available
+    photoUrl: "/photos/leike.jpg",
+    photoCredit: "Photo: Wikimedia Commons",
     segment: "AI Safety & Alignment",
     specialty: ["AI Safety"],
     affiliation: "Anthropic",
@@ -690,7 +697,8 @@ export const aiContributors: AIContributor[] = [
     name: "Tristan Harris",
     rank: 76,
     bio: "Co-founder of Center for Humane Technology. Star of The Social Dilemma. Leading voice on responsible AI.",
-    // No real photo available
+    photoUrl: "/photos/harris.jpg",
+    photoCredit: "Photo: Wikimedia Commons",
     segment: "AI Ethics & Policy",
     specialty: ["AI Ethics", "AI Policy"],
     affiliation: "Center for Humane Technology",
@@ -717,7 +725,8 @@ export const aiContributors: AIContributor[] = [
     name: "Hugo Touvron",
     rank: 83,
     bio: "Research scientist at Meta FAIR. Lead author of Llama 1 and Llama 2 papers. Pioneer of open-weight LLMs.",
-    // No real photo available
+    photoUrl: "/photos/touvron.jpg",
+    photoCredit: "Photo: Wikimedia Commons",
     segment: "Foundation Models & LLMs",
     specialty: ["LLMs", "Open Source AI"],
     affiliation: "Meta AI (FAIR)",
@@ -740,7 +749,8 @@ export const aiContributors: AIContributor[] = [
     name: "Bill Dally",
     rank: 87,
     bio: "Chief Scientist at NVIDIA. Stanford professor. Queen Elizabeth Prize 2025. Pioneer of GPU computing for AI.",
-    // No real photo available
+    photoUrl: "/photos/dally.jpg",
+    photoCredit: "Photo: Wikimedia Commons",
     segment: "AI Hardware & Infrastructure",
     specialty: ["AI Hardware", "AI Infrastructure"],
     affiliation: "NVIDIA / Stanford",
@@ -760,7 +770,8 @@ export const aiContributors: AIContributor[] = [
     name: "Alexandr Zhavoronkov",
     rank: 89,
     bio: "CEO of Insilico Medicine. Pioneer of AI-driven drug discovery. First AI-discovered drug in clinical trials.",
-    // No real photo available
+    photoUrl: "/photos/zhavoronkov.jpg",
+    photoCredit: "Photo: Wikimedia Commons",
     segment: "AI for Science & Healthcare",
     specialty: ["Drug Discovery", "Generative AI"],
     affiliation: "Insilico Medicine",
@@ -781,7 +792,8 @@ export const aiContributors: AIContributor[] = [
     name: "Anca Dragan",
     rank: 94,
     bio: "Director at Google DeepMind. Former UC Berkeley professor. Pioneer of AI alignment through human-robot interaction.",
-    // No real photo available
+    photoUrl: "/photos/dragan.jpg",
+    photoCredit: "Photo: Wikimedia Commons",
     segment: "AI Safety & Alignment",
     specialty: ["Robotics", "AI Safety"],
     affiliation: "Google DeepMind",
@@ -802,7 +814,8 @@ export const aiContributors: AIContributor[] = [
     name: "Thomas Wolf",
     rank: 95,
     bio: "Co-founder & CSO of Hugging Face. Creator of the Transformers library. Champion of open-source AI.",
-    // No real photo available
+    photoUrl: "/photos/wolf.jpg",
+    photoCredit: "Photo: Wikimedia Commons",
     segment: "Open Source AI & Platforms",
     specialty: ["Open Source AI", "NLP"],
     affiliation: "Hugging Face",
@@ -831,7 +844,8 @@ export const aiContributors: AIContributor[] = [
     name: "Emily Bender",
     rank: 98,
     bio: "Professor at UW. Co-author of Stochastic Parrots. Leading voice on responsible NLP and LLM limitations.",
-    // No real photo available
+    photoUrl: "/photos/bender.jpg",
+    photoCredit: "Photo: Wikimedia Commons",
     segment: "AI Ethics & Policy",
     specialty: ["NLP", "AI Ethics"],
     affiliation: "University of Washington",
@@ -856,7 +870,8 @@ export const aiContributors: AIContributor[] = [
     name: "Albert Gu",
     rank: 99,
     bio: "Assistant Professor at CMU. Co-founder of Cartesia. Creator of Mamba — challenging transformer dominance.",
-    // No real photo available
+    photoUrl: "/photos/gu.jpg",
+    photoCredit: "Photo: Wikimedia Commons",
     segment: "ML Theory & Optimization",
     specialty: ["Deep Learning", "Transformers"],
     affiliation: "CMU / Cartesia",
@@ -883,6 +898,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "bengio", name: "Yoshua Bengio", rank: 2,
     bio: "Turing Award 2018. Scientific Director of Mila. Pioneer of attention mechanisms and generative models. Major AI safety advocate.",
+    photoUrl: "/photos/bengio.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "Foundation Models & LLMs", specialty: ["Deep Learning", "NLP", "AI Safety"],
     affiliation: "Mila / Université de Montréal", expertType: "Researcher", country: "Canada",
     keyInfluence: "Most-cited computer scientist alive. Pioneered attention mechanisms that led to transformers.",
@@ -896,6 +912,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "sutskever", name: "Ilya Sutskever", rank: 6,
     bio: "Co-founder of OpenAI & SSI. Key author of AlexNet, seq2seq, GPT-2/3/4. SSI valued at $32B.",
+    photoUrl: "/photos/sutskever.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 3.0",
     segment: "AI Safety & Alignment", specialty: ["Deep Learning", "NLP", "AI Safety", "AGI"],
     affiliation: "Safe Superintelligence Inc. (SSI)", expertType: "Founder/CEO", country: "Israel/Canada",
     keyInfluence: "Key architect behind GPT-2/3/4. Left OpenAI to build safe superintelligence.",
@@ -909,6 +926,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "dario-amodei", name: "Dario Amodei", rank: 7,
     bio: "CEO & Co-founder of Anthropic. Former VP Research at OpenAI. Built Claude. Pioneer of Constitutional AI & RLHF. TIME100 AI 2025.",
+    photoUrl: "/photos/dario-amodei.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 2.0",
     segment: "AI Safety & Alignment", specialty: ["AI Safety", "LLMs"],
     affiliation: "Anthropic", expertType: "Founder/CEO", country: "USA",
     keyInfluence: "Built Claude & Constitutional AI. Leading the safety-first approach to frontier AI development.",
@@ -922,6 +940,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "feifei-li", name: "Fei-Fei Li", rank: 9,
     bio: "Created ImageNet. Co-directed Stanford HAI. Founded World Labs (spatial AI). Launched Marble in 2026.",
+    photoUrl: "/photos/feifei-li.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 2.0",
     segment: "Computer Vision & Perception", specialty: ["Computer Vision", "AI Ethics"],
     affiliation: "Stanford / World Labs", expertType: "Researcher", country: "USA/China",
     keyInfluence: "Created ImageNet — the dataset that ignited the deep learning revolution.",
@@ -935,6 +954,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "karpathy", name: "Andrej Karpathy", rank: 10,
     bio: "Former Director of AI at Tesla. OpenAI founding member. Founded Eureka Labs. Top AI educator on YouTube.",
+    photoUrl: "/photos/karpathy.png", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "AI Education & Communication", specialty: ["Deep Learning", "Computer Vision", "AI Education"],
     affiliation: "Eureka Labs (founder)", expertType: "Founder/CEO", country: "Slovakia/USA",
     keyInfluence: "Built Tesla's AI vision stack. Top AI educator on YouTube (2M+ subscribers). nanoGPT democratized LLM training.",
@@ -950,6 +970,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "huang", name: "Jensen Huang", rank: 11,
     bio: "CEO & Co-founder of NVIDIA. Built the AI hardware backbone. NVIDIA reached $3T market cap. Queen Elizabeth Prize 2025.",
+    photoUrl: "/photos/huang.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "AI Hardware & Infrastructure", specialty: ["AI Hardware", "AI Infrastructure"],
     affiliation: "NVIDIA", expertType: "Industry Leader", country: "USA/Taiwan",
     keyInfluence: "Built the GPU infrastructure backbone powering the entire AI revolution.",
@@ -963,6 +984,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "goodfellow", name: "Ian Goodfellow", rank: 12,
     bio: "Invented GANs. Author of Deep Learning textbook. Researcher at DeepMind.",
+    photoUrl: "/photos/goodfellow.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 2.0",
     segment: "Generative AI & Creative", specialty: ["Generative AI", "Deep Learning"],
     affiliation: "Google DeepMind", expertType: "Researcher", country: "USA",
     keyInfluence: "Invented GANs — one of the most important breakthroughs in generative AI.",
@@ -989,6 +1011,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "abbeel", name: "Pieter Abbeel", rank: 18,
     bio: "Professor at UC Berkeley. Co-founder of Covariant. Director of Berkeley Robot Learning Lab. Deep RL pioneer.",
+    photoUrl: "/photos/abbeel.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "Robotics & Autonomous Systems", specialty: ["Robotics", "Reinforcement Learning"],
     affiliation: "UC Berkeley / Covariant", expertType: "Founder/CEO", country: "Belgium/USA",
     keyInfluence: "Bridged deep RL with real-world robotics. Co-founder of Covariant.",
@@ -1014,6 +1037,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "thrun", name: "Sebastian Thrun", rank: 22,
     bio: "Creator of Google Self-Driving Car. Founded Udacity. Pioneer of autonomous vehicles.",
+    photoUrl: "/photos/thrun.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 4.0",
     segment: "Robotics & Autonomous Systems", specialty: ["Robotics", "AI Education"],
     affiliation: "Kitty Hawk / Stanford", expertType: "Founder/CEO", country: "Germany/USA",
     keyInfluence: "Created Google's self-driving car (now Waymo). Founded Udacity. Won DARPA Grand Challenge.",
@@ -1027,6 +1051,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "howard", name: "Jeremy Howard", rank: 23,
     bio: "Co-founder of fast.ai & answer.ai. Pioneer of ULMFiT. Champion of accessible AI education.",
+    photoUrl: "/photos/howard.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "AI Education & Communication", specialty: ["Deep Learning", "AI Education", "Open Source AI"],
     affiliation: "answer.ai / fast.ai", expertType: "Founder/CEO", country: "Australia/USA",
     keyInfluence: "Invented ULMFiT (transfer learning for NLP). fast.ai made deep learning accessible to millions.",
@@ -1040,6 +1065,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "kaifulee", name: "Kai-Fu Lee", rank: 24,
     bio: "CEO of Sinovation Ventures. Founded 01.AI. Former president of Google China. Author of AI Superpowers.",
+    photoUrl: "/photos/kaifulee.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 2.0",
     segment: "Foundation Models & LLMs", specialty: ["LLMs", "AI Policy"],
     affiliation: "Sinovation Ventures / 01.AI", expertType: "Founder/CEO", country: "Taiwan/China",
     keyInfluence: "Bridge between US and China AI ecosystems. Founded 01.AI (Yi models).",
@@ -1053,6 +1079,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "gebru", name: "Timnit Gebru", rank: 25,
     bio: "Founder of DAIR Institute. Former Google Ethical AI co-lead. Pioneer of AI bias research.",
+    photoUrl: "/photos/gebru.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 2.0",
     segment: "AI Ethics & Policy", specialty: ["AI Ethics", "AI Policy"],
     affiliation: "DAIR Institute", expertType: "Policy Advocate", country: "Ethiopia/USA",
     keyInfluence: "Exposed facial recognition bias with Gender Shades. Founded DAIR Institute.",
@@ -1078,6 +1105,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "nadella", name: "Satya Nadella", rank: 29,
     bio: "CEO of Microsoft. Drove $100B+ AI investment including OpenAI partnership. Deployed Copilot across products.",
+    photoUrl: "/photos/nadella.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 2.0",
     segment: "Enterprise & Applied AI", specialty: ["AI Infrastructure", "LLMs"],
     affiliation: "Microsoft", expertType: "Industry Leader", country: "India/USA",
     keyInfluence: "Made the $13B bet on OpenAI. Deployed Copilot across entire Microsoft ecosystem.",
@@ -1090,6 +1118,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "zuckerberg", name: "Mark Zuckerberg", rank: 30,
     bio: "CEO of Meta. Champions open-weight AI strategy (Llama). Leading frontier superintelligence research at Meta.",
+    photoUrl: "/photos/zuckerberg.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 2.0",
     segment: "Foundation Models & LLMs", specialty: ["LLMs", "Open Source AI"],
     affiliation: "Meta", expertType: "Industry Leader", country: "USA",
     keyInfluence: "Open-sourced Llama — shifted industry toward open-weight models. Invested $65B+ in AI infrastructure.",
@@ -1101,6 +1130,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "musk", name: "Elon Musk", rank: 32,
     bio: "CEO of xAI, Tesla, SpaceX. Founded xAI for Grok. Vocal AI safety advocate and OpenAI critic.",
+    photoUrl: "/photos/musk.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 3.0",
     segment: "Foundation Models & LLMs", specialty: ["AGI", "AI Policy"],
     affiliation: "xAI / Tesla / SpaceX", expertType: "Founder/CEO", country: "South Africa/USA",
     keyInfluence: "Built Colossus (world's largest GPU cluster). Founded xAI for Grok.",
@@ -1125,6 +1155,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "hopfield", name: "John Hopfield", rank: 35,
     bio: "2024 Nobel Prize in Physics. Invented Hopfield networks. Pioneered neural network models of associative memory.",
+    photoUrl: "/photos/hopfield.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 4.0",
     segment: "ML Theory & Optimization", specialty: ["Deep Learning", "ML Theory"],
     affiliation: "Princeton University (emeritus)", expertType: "Researcher", country: "USA",
     keyInfluence: "Invented Hopfield networks in 1982 — foundational work connecting physics and neural computation.",
@@ -1138,6 +1169,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "suleyman", name: "Mustafa Suleyman", rank: 36,
     bio: "CEO of Microsoft AI. Co-founder of DeepMind. Founded Inflection AI. Author of The Coming Wave.",
+    photoUrl: "/photos/suleyman.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 2.0",
     segment: "Enterprise & Applied AI", specialty: ["LLMs", "AI Policy"],
     affiliation: "Microsoft AI", expertType: "Founder/CEO", country: "UK",
     keyInfluence: "Co-founded DeepMind. Now CEO of Microsoft AI. Author of 'The Coming Wave'.",
@@ -1173,6 +1205,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "yudkowsky", name: "Eliezer Yudkowsky", rank: 40,
     bio: "Co-founder of MIRI. Leading AI safety theorist. Author of Rationality sequences. Most prominent voice on AI existential risk.",
+    photoUrl: "/photos/yudkowsky.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 3.0",
     segment: "AI Safety & Alignment", specialty: ["AI Safety", "AGI"],
     affiliation: "MIRI", expertType: "Policy Advocate", country: "USA",
     keyInfluence: "Most prominent voice on AI existential risk. Built LessWrong community.",
@@ -1532,6 +1565,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "chollet", name: "François Chollet", rank: 91,
     bio: "Creator of Keras. Software engineer at Google. Founded ARC Prize for measuring real AI intelligence.",
+    photoUrl: "/photos/chollet.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "Open Source AI & Platforms", specialty: ["Deep Learning", "Open Source AI"],
     affiliation: "Google / ARC Prize", expertType: "Researcher", country: "France/USA",
     keyInfluence: "Created Keras democratizing deep learning and designed the ARC-AGI benchmark.",
@@ -1586,6 +1620,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "hassabis", name: "Demis Hassabis", rank: 4,
     bio: "CEO of Google DeepMind. 2024 Nobel Prize in Chemistry for AlphaFold. Pioneer of AGI research. Founded Isomorphic Labs.",
+    photoUrl: "/photos/hassabis.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 4.0",
     segment: "AI for Science & Healthcare", specialty: ["AGI", "Reinforcement Learning", "Drug Discovery"],
     affiliation: "Google DeepMind / Isomorphic Labs", expertType: "Founder/CEO", country: "UK",
     keyInfluence: "Solved protein folding with AlphaFold. Built AlphaGo. Leading the path to AGI at DeepMind.",
@@ -1599,6 +1634,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "ng", name: "Andrew Ng", rank: 5,
     bio: "Co-founder of Coursera & Google Brain. Founded DeepLearning.AI & Landing AI. Most influential AI educator globally.",
+    photoUrl: "/photos/ng.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 2.0",
     segment: "AI Education & Communication", specialty: ["Deep Learning", "AI Education", "Computer Vision"],
     affiliation: "DeepLearning.AI / Stanford / Landing AI", expertType: "Educator", country: "USA/UK",
     keyInfluence: "Most influential AI educator globally. Coursera ML course taken by 5M+ people. Coined 'Data-Centric AI'.",
@@ -1625,6 +1661,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "schmidhuber", name: "Jürgen Schmidhuber", rank: 16,
     bio: "Co-inventor of LSTM networks. Pioneer of recurrent neural networks. Professor at KAUST.",
+    photoUrl: "/photos/schmidhuber.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "Foundation Models & LLMs", specialty: ["Deep Learning", "NLP"],
     affiliation: "KAUST / IDSIA", expertType: "Researcher", country: "Germany/Switzerland",
     keyInfluence: "Co-invented LSTM — foundational architecture for all sequence modeling. Claims priority on many deep learning ideas.",
@@ -1638,6 +1675,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "russell", name: "Stuart Russell", rank: 17,
     bio: "Professor at UC Berkeley. Author of AI: A Modern Approach. Director of CHAI. Leading voice on AI existential risk.",
+    photoUrl: "/photos/russell.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "AI Safety & Alignment", specialty: ["AI Safety", "Robotics"],
     affiliation: "UC Berkeley / CHAI", expertType: "Researcher", country: "UK/USA",
     keyInfluence: "Wrote THE AI textbook used globally. Leading voice warning about AI existential risk. Founded CHAI.",
@@ -1687,6 +1725,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "wang-alexandr", name: "Alexandr Wang", rank: 38,
     bio: "CEO & Co-founder of Scale AI. Youngest self-made AI billionaire. Major US defense AI contractor. TIME100 AI 2025.",
+    photoUrl: "/photos/wang-alexandr.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 4.0",
     segment: "AI Hardware & Infrastructure", specialty: ["AI Infrastructure", "LLMs"],
     affiliation: "Scale AI", expertType: "Founder/CEO", country: "USA",
     keyInfluence: "Built the data labeling infrastructure behind GPT-4. Youngest self-made AI billionaire.",
@@ -1797,6 +1836,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "emad", name: "Emad Mostaque", rank: 84,
     bio: "Founder of Stability AI. Launched Stable Diffusion. Pioneer of open-source generative AI. Stepped down as CEO in 2024.",
+    photoUrl: "/photos/emad.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 2.0",
     segment: "Generative AI & Creative", specialty: ["Generative AI", "Open Source AI"],
     affiliation: "Stability AI (founder)", expertType: "Founder/CEO", country: "UK/Bangladesh",
     keyInfluence: "Launched Stable Diffusion — the open-source image generation model that democratized AI art.",
