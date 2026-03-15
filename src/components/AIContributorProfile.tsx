@@ -241,7 +241,23 @@ const AIContributorProfile = ({ contributor, onClose, onSelectContributor }: Pro
                 YouTube <ExternalLink size={8} />
               </a>
             )}
+          {contributor.linkedin && (
+              <a href={contributor.linkedin} target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 font-mono text-[10px] text-foreground/60 hover:text-foreground border border-border px-2 py-1 transition-colors">
+                <Linkedin size={10} /> LinkedIn <ExternalLink size={8} />
+              </a>
+            )}
           </div>
+        </div>
+
+        {/* View Full Profile */}
+        <div className="border-t border-border pt-4 mt-4">
+          <Link
+            to={`/ai-contributors/${contributor.id}`}
+            className="w-full flex items-center justify-center gap-2 border border-foreground px-4 py-3 font-mono text-xs text-foreground hover:bg-foreground hover:text-background transition-all tracking-widest uppercase"
+          >
+            View Full Profile <ArrowRight size={12} />
+          </Link>
         </div>
       </div>
     </div>
