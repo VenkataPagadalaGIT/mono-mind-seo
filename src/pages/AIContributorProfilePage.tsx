@@ -259,7 +259,7 @@ const AIContributorProfilePage = () => {
           {/* ── My Take ── */}
           {contributor.myTake && (
             <ScrollReveal delay={100}>
-              <div className="border border-foreground/20 bg-foreground/[0.03] p-6 sm:p-8 mb-10">
+              <div id="my-take" className="border border-foreground/20 bg-foreground/[0.03] p-6 sm:p-8 mb-10 scroll-mt-24">
                 <h2 className="font-mono text-[10px] text-foreground/50 uppercase tracking-widest mb-4">
                   💡 My Take
                 </h2>
