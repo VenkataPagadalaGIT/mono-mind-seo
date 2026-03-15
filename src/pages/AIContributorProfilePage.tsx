@@ -526,30 +526,26 @@ const AIContributorProfilePage = () => {
                       href={media.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="border border-border p-5 hover:border-foreground/20 transition-all group"
+                      className="border border-border p-4 hover:border-foreground/20 transition-all group"
                     >
-                      <div className="flex items-start gap-3">
-                        <div className="w-10 h-10 border border-border flex items-center justify-center shrink-0 group-hover:border-foreground/30 transition-colors">
-                          <Play size={14} className="text-muted-foreground/30 group-hover:text-foreground transition-colors" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="font-display text-sm font-bold text-foreground group-hover:text-glow transition-all mb-1 line-clamp-2">
-                            {media.title}
-                          </p>
-                          <p className="font-mono text-[10px] text-muted-foreground/40 mb-1">
-                            {media.host}
-                          </p>
-                          <div className="flex items-center gap-3">
-                            <span className="font-mono text-[9px] text-muted-foreground/20 capitalize">{media.type}</span>
-                            {media.duration && (
-                              <span className="flex items-center gap-1 font-mono text-[9px] text-muted-foreground/20">
-                                <Clock size={8} /> {media.duration}
-                              </span>
-                            )}
-                            {media.year && (
-                              <span className="font-mono text-[9px] text-muted-foreground/20">{media.year}</span>
-                            )}
-                          </div>
+                      <ResourceThumbnail url={media.url} />
+                      <div className="mt-3">
+                        <p className="font-display text-sm font-bold text-foreground group-hover:text-glow transition-all mb-1 line-clamp-2">
+                          {media.title}
+                        </p>
+                        <p className="font-mono text-[10px] text-muted-foreground/40 mb-1">
+                          {media.host}
+                        </p>
+                        <div className="flex items-center gap-3">
+                          <span className="font-mono text-[9px] text-muted-foreground/20 capitalize">{media.type}</span>
+                          {media.duration && (
+                            <span className="flex items-center gap-1 font-mono text-[9px] text-muted-foreground/20">
+                              <Clock size={8} /> {media.duration}
+                            </span>
+                          )}
+                          {media.year && (
+                            <span className="font-mono text-[9px] text-muted-foreground/20">{media.year}</span>
+                          )}
                         </div>
                       </div>
                     </a>
