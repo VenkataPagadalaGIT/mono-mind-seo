@@ -235,9 +235,7 @@ const AIEncyclopedia = () => {
       {/* Concepts */}
       <div className="space-y-2">
         {filtered.map((concept) => (
-          <ScrollReveal key={concept.id} delay={0}>
-            <ConceptCard concept={concept} />
-          </ScrollReveal>
+          <ConceptCard key={concept.id} concept={concept} />
         ))}
       </div>
 
