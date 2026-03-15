@@ -206,7 +206,7 @@ const AIContributors = () => {
               </div>
             </div>
           </div>
-        </ScrollReveal>
+        </div>
 
         {/* Top-level tabs */}
         <ScrollReveal delay={50}>
