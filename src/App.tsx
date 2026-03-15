@@ -43,6 +43,7 @@ const App = () => (
           <Route path="/solutions/:slug" element={<ServiceLanding />} />
           <Route path="/research" element={<Research />} />
           <Route path="/ai-contributors" element={<AIContributors />} />
+          <Route path="/ai-contributors/:id" element={<AIContributorProfilePage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
