@@ -394,7 +394,7 @@ const AIContributorProfilePage = () => {
 
           {/* ── Details Grid ── */}
           <ScrollReveal delay={100}>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+            <div id="details" className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10 scroll-mt-24">
               <div className="border border-border p-5">
                 <h3 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-2">Specialties</h3>
                 <div className="flex flex-wrap gap-1.5">
