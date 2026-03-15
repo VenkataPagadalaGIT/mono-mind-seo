@@ -234,7 +234,7 @@ const AIContributorProfilePage = () => {
 
           {/* ── Bio ── */}
           <ScrollReveal delay={100}>
-            <div className="mb-10">
+            <div id="biography" className="mb-10 scroll-mt-24">
               <h2 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-4">Biography</h2>
               <p className="font-mono text-sm text-muted-foreground leading-[1.9] max-w-3xl">
                 {contributor.longBio || contributor.bio}
