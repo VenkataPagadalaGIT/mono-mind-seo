@@ -24,6 +24,8 @@ export interface AIContributor {
   linkedin?: string;
   website?: string;
   github?: string;
+  githubFollowers?: string;
+  githubPinnedRepos?: string[];
   googleScholar?: string;
   youtube?: string;
   notionUrl: string;
