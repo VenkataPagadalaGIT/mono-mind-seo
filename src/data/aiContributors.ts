@@ -842,8 +842,7 @@ export const aiContributors: AIContributor[] = [
     name: "Albert Gu",
     rank: 99,
     bio: "Assistant Professor at CMU. Co-founder of Cartesia. Creator of Mamba — challenging transformer dominance.",
-    photoUrl: "/photos/gu.jpg",
-    photoCredit: "Illustration · AI-generated portrait",
+    // No real photo available
     segment: "ML Theory & Optimization",
     specialty: ["Deep Learning", "Transformers"],
     affiliation: "CMU / Cartesia",
