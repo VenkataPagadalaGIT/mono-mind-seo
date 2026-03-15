@@ -1051,6 +1051,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "howard", name: "Jeremy Howard", rank: 23,
     bio: "Co-founder of fast.ai & answer.ai. Pioneer of ULMFiT. Champion of accessible AI education.",
+    photoUrl: "/photos/howard.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "AI Education & Communication", specialty: ["Deep Learning", "AI Education", "Open Source AI"],
     affiliation: "answer.ai / fast.ai", expertType: "Founder/CEO", country: "Australia/USA",
     keyInfluence: "Invented ULMFiT (transfer learning for NLP). fast.ai made deep learning accessible to millions.",
