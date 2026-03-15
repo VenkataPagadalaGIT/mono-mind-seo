@@ -251,8 +251,8 @@ export const aiContributors: AIContributor[] = [
     notionUrl: "https://www.notion.so/323882e4d9198151ba9cf617f1147229",
     quote: "The idea that this stuff could actually get smarter than people — a few years ago I thought it was 30 to 50 years or even longer away. Now I think it's more like 5 to 20 years.",
     myTake: "Hinton is the root node of the entire modern AI tree. Almost every major figure in deep learning was either his student or influenced by his work. His departure from Google to warn about AI risks carries weight precisely because of his unmatched credibility. Required study for anyone entering AI.",
-    photoUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Geoffrey_Hinton_-_Collision_2023_-_Centre_Stage%2C_May_31_%28cropped%29.jpg/440px-Geoffrey_Hinton_-_Collision_2023_-_Centre_Stage%2C_May_31_%28cropped%29.jpg",
-    photoCredit: "Photo: Collision Conf / Wikimedia Commons / CC BY 2.0",
+    photoUrl: "/photos/hinton.jpg",
+    photoCredit: "Illustration · AI-generated portrait",
     whyTheyMatter: "Without Hinton, there is no modern AI. Backpropagation, which he popularized in 1986, is still the fundamental algorithm that trains every neural network today. His intellectual lineage — students like Ilya Sutskever (co-founder of OpenAI), Yann LeCun, and dozens of others — built the entire industry. When Hinton speaks about AI risks, the world listens because he earned that authority over 40 years of being right when others were wrong.",
     resources: [
       { title: "Learning representations by back-propagating errors", type: "paper", url: "https://www.nature.com/articles/323533a0", year: "1986", description: "The paper that made neural networks trainable. Still the foundation of all deep learning." },
