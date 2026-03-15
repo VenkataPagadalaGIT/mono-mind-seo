@@ -369,6 +369,7 @@ export const aiContributors: AIContributor[] = [
     keyInfluence: "Created AlphaGo — the moment AI beat human intuition. AlphaZero mastered chess/Go/shogi from scratch.",
     awards: "ACM Prize in Computing 2019",
     education: "PhD in Computer Science, University of Cambridge (1999).",
+    linkedin: "https://www.linkedin.com/in/david-silver-0b344b/",
     website: "https://www.davidsilver.uk/",
     googleScholar: "https://scholar.google.com/citations?user=1L4GCDAAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d919816b9569e86be0e08e54",
