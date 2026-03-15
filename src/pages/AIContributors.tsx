@@ -144,7 +144,6 @@ const AIContributors = () => {
         {/* Hero — two column */}
         <ScrollReveal>
           <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8 mb-8">
-            {/* Left: title & description */}
             <div className="flex-1">
               <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/30 mb-3 uppercase">
                 The AI Notebook · 2026 Edition
@@ -155,10 +154,9 @@ const AIContributors = () => {
               <p className="font-mono text-xs text-muted-foreground/60 max-w-xl leading-relaxed">
                 Your complete AI learning companion — from zero to hero. A roadmap with 90+ resources, 110 concepts explained, and 100 contributors profiled.
               </p>
-              <AuthorByline />
             </div>
 
-            {/* Right: author bio card */}
+            {/* Author card */}
             <div className="lg:w-64 shrink-0 border border-border/50 rounded-lg p-5">
               <div className="flex items-center gap-3 mb-3">
                 <img
@@ -168,11 +166,11 @@ const AIContributors = () => {
                 />
                 <div>
                   <h3 className="font-display text-sm font-bold text-foreground">Venkata Pagadala</h3>
-                  <p className="font-mono text-[9px] text-muted-foreground/40">AI Systems Architect & Venture Builder</p>
+                  <p className="font-mono text-[9px] text-muted-foreground/40">Curator</p>
                 </div>
               </div>
               <p className="font-mono text-[10px] text-muted-foreground/50 leading-relaxed mb-3">
-                Building the future of search and agentic automation. Harvard & MIT certified.
+                AI Product & Research. Search — SEO, GEO & Automation at enterprise level. 10M+ pages managed.
               </p>
               <div className="flex flex-wrap gap-3 mb-3">
                 {[
