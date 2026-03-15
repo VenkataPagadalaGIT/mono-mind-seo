@@ -6,7 +6,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 import { aiContributors, SEGMENT_COLORS } from "@/data/aiContributors";
 import {
   ArrowLeft, ArrowRight, ExternalLink, GraduationCap, Award, MapPin,
-  Quote, BookOpen, Link2, Play, Clock, Linkedin, Github, Share2, Copy, Check
+  Quote, BookOpen, Link2, Play, Clock, Linkedin, Github, Share2, Copy, Check, Star, Users
 } from "lucide-react";
 import { useState } from "react";
 
