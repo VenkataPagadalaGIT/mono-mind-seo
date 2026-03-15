@@ -18,6 +18,38 @@ const MEDIA_ICONS: Record<string, typeof Play> = {
   podcast: Play, interview: Play, documentary: Play, lecture: Play,
 };
 
+/** Extract YouTube video ID from various URL formats */
+function getYouTubeId(url: string): string | null {
+  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([a-zA-Z0-9_-]{11})/);
+  return match ? match[1] : null;
+}
+
+/** Get thumbnail URL for a resource URL (YouTube supported) */
+function getThumbnail(url: string): string | null {
+  const ytId = getYouTubeId(url);
+  return ytId ? `https://img.youtube.com/vi/${ytId}/mqdefault.jpg` : null;
+}
+
+/** Reusable thumbnail component */
+const ResourceThumbnail = ({ url }: { url: string }) => {
+  const thumb = getThumbnail(url);
+  if (!thumb) {
+    return (
+      <div className="w-28 h-16 border border-border flex items-center justify-center shrink-0 bg-muted/20 group-hover:border-foreground/30 transition-colors">
+        <Play size={16} className="text-muted-foreground/30 group-hover:text-foreground transition-colors" />
+      </div>
+    );
+  }
+  return (
+    <div className="w-28 h-16 shrink-0 relative overflow-hidden border border-border group-hover:border-foreground/30 transition-colors">
+      <img src={thumb} alt="" className="w-full h-full object-cover" loading="lazy" />
+      <div className="absolute inset-0 flex items-center justify-center bg-background/40 group-hover:bg-background/20 transition-colors">
+        <Play size={16} className="text-foreground/70" fill="currentColor" />
+      </div>
+    </div>
+  );
+};
+
 const AIContributorProfilePage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
