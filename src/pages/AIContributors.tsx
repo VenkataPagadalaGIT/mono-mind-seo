@@ -80,9 +80,53 @@ const AIContributors = () => {
   useEffect(() => {
     const meta = TAB_META[topTab];
     document.title = meta.title;
+
+    // Meta description
     const descTag = document.querySelector('meta[name="description"]');
     if (descTag) descTag.setAttribute("content", meta.description);
 
+    // Self-referencing canonical
+    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", meta.canonical);
+
+    // OG tags
+    const ogTags: Record<string, string> = {
+      "og:title": meta.ogTitle,
+      "og:description": meta.description,
+      "og:url": meta.canonical,
+      "og:type": "article",
+    };
+    Object.entries(ogTags).forEach(([prop, content]) => {
+      let tag = document.querySelector(`meta[property="${prop}"]`) as HTMLMetaElement;
+      if (!tag) {
+        tag = document.createElement("meta");
+        tag.setAttribute("property", prop);
+        document.head.appendChild(tag);
+      }
+      tag.setAttribute("content", content);
+    });
+
+    // Twitter tags
+    const twitterTags: Record<string, string> = {
+      "twitter:title": meta.ogTitle,
+      "twitter:description": meta.description,
+    };
+    Object.entries(twitterTags).forEach(([name, content]) => {
+      let tag = document.querySelector(`meta[name="${name}"]`) as HTMLMetaElement;
+      if (!tag) {
+        tag = document.createElement("meta");
+        tag.setAttribute("name", name);
+        document.head.appendChild(tag);
+      }
+      tag.setAttribute("content", content);
+    });
+
+    // JSON-LD structured data
     let jsonLd = document.querySelector('script[data-ai-notebook-ld]');
     if (!jsonLd) {
       jsonLd = document.createElement("script");
@@ -93,19 +137,32 @@ const AIContributors = () => {
     jsonLd.textContent = JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Article",
-      headline: meta.title.split(" | ")[0],
+      headline: meta.ogTitle,
       description: meta.description,
+      url: meta.canonical,
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": meta.canonical,
+      },
       author: {
         "@type": "Person",
         name: "Venkata Pagadala",
-        url: "https://mono-mind-seo.lovable.app/about",
+        url: "https://venkatapagadala.com/about",
+        jobTitle: "AI Product Owner & Technical SEO Lead",
       },
       publisher: {
         "@type": "Person",
         name: "Venkata Pagadala",
+        url: "https://venkatapagadala.com",
       },
       datePublished: "2026-01-15",
       dateModified: "2026-03-15",
+      inLanguage: "en-US",
+      isPartOf: {
+        "@type": "WebSite",
+        name: "Venkata Pagadala",
+        url: "https://venkatapagadala.com",
+      },
     });
 
     return () => {
