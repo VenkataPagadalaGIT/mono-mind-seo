@@ -635,6 +635,8 @@ export const aiContributors: AIContributor[] = [
     name: "Richard Socher",
     rank: 69,
     bio: "CEO of You.com. Former Chief Scientist at Salesforce. Created GloVe. Pioneer of recursive NNs for NLP.",
+    photoUrl: "/photos/socher.jpg",
+    photoCredit: "Illustration · AI-generated portrait",
     segment: "NLP & Language Technology",
     specialty: ["NLP", "LLMs"],
     affiliation: "You.com",
