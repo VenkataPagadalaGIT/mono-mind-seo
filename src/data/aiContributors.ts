@@ -813,6 +813,8 @@ export const aiContributors: AIContributor[] = [
     linkedin: "https://www.linkedin.com/in/thomas-wolf-a056857/",
     website: "https://huggingface.co/",
     github: "https://github.com/thomwolf",
+    githubFollowers: "~10K+",
+    githubPinnedRepos: ["transformers", "datasets", "accelerate"],
     googleScholar: "https://scholar.google.com/citations?user=j35feEMAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981419a79d2251397cd30",
     quote: "We believe in democratizing good machine learning, one commit at a time.",
