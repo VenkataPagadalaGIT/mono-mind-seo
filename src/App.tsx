@@ -17,6 +17,7 @@ import ServiceLanding from "./pages/ServiceLanding";
 import Solutions from "./pages/Solutions";
 import Research from "./pages/Research";
 import Contact from "./pages/Contact";
+import AIContributors from "./pages/AIContributors";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -40,6 +41,7 @@ const App = () => (
           <Route path="/solutions" element={<Solutions />} />
           <Route path="/solutions/:slug" element={<ServiceLanding />} />
           <Route path="/research" element={<Research />} />
+          <Route path="/ai-contributors" element={<AIContributors />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
