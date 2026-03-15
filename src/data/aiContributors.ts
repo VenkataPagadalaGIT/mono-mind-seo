@@ -473,6 +473,7 @@ export const aiContributors: AIContributor[] = [
     awards: "",
     education: "PhD in Electrical Engineering & Computer Science, MIT.",
     twitter: "https://x.com/lexfridman",
+    linkedin: "https://www.linkedin.com/in/lexfridman/",
     website: "https://lexfridman.com/",
     github: "https://github.com/lexfridman",
     youtube: "https://youtube.com/@lexfridman",
