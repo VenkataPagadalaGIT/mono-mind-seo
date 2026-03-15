@@ -5,6 +5,7 @@ import { Menu, X } from "lucide-react";
 const navLinks = [
   { label: "Home", to: "/" },
   { label: "About", to: "/about" },
+  { label: "Notebook", to: "/notebook" },
   { label: "Lab", to: "/publications" },
   { label: "Insights", to: "/insights" },
   { label: "Contact", to: "/contact" },
@@ -44,7 +45,9 @@ const Navbar = () => {
                 key={link.to}
                 to={link.to}
                 className={`font-mono text-xs tracking-wider uppercase transition-all hover:text-foreground ${
-                  location.pathname === link.to || (link.to === "/solutions" && location.pathname.startsWith("/solutions"))
+                  location.pathname === link.to || 
+                  (link.to === "/solutions" && location.pathname.startsWith("/solutions")) ||
+                  (link.to === "/notebook" && location.pathname.startsWith("/notebook"))
                     ? "text-foreground" : "text-muted-foreground"
                 }`}
               >
