@@ -1011,6 +1011,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "abbeel", name: "Pieter Abbeel", rank: 18,
     bio: "Professor at UC Berkeley. Co-founder of Covariant. Director of Berkeley Robot Learning Lab. Deep RL pioneer.",
+    photoUrl: "/photos/abbeel.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "Robotics & Autonomous Systems", specialty: ["Robotics", "Reinforcement Learning"],
     affiliation: "UC Berkeley / Covariant", expertType: "Founder/CEO", country: "Belgium/USA",
     keyInfluence: "Bridged deep RL with real-world robotics. Co-founder of Covariant.",
