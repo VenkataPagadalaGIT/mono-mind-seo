@@ -328,7 +328,7 @@ const AIContributors = () => {
                 </div>
               </div>
 
-              <AuthorSidebar />
+              <PageSidebar sections={pageTocSections} shareTitle="Top 100 AI Contributors 2026 — The Definitive AI Notebook" />
             </div>
           </>
         )}
