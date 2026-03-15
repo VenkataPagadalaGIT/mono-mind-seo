@@ -767,6 +767,7 @@ export const aiContributors: AIContributor[] = [
     awards: "Co-founder of Hugging Face, leading open-source AI platform",
     education: "PhD, Physics, Universität Heidelberg.",
     twitter: "https://x.com/Thom_Wolf",
+    linkedin: "https://www.linkedin.com/in/thomas-wolf-a056857/",
     website: "https://huggingface.co/",
     github: "https://github.com/thomwolf",
     googleScholar: "https://scholar.google.com/citations?user=j35feEMAAAAJ",
