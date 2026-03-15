@@ -453,6 +453,8 @@ export const aiContributors: AIContributor[] = [
     name: "Aidan Gomez",
     rank: 41,
     bio: "CEO & Co-founder of Cohere. Co-author of Attention Is All You Need at age 20. Enterprise-focused LLMs.",
+    photoUrl: "/photos/gomez.jpg",
+    photoCredit: "Illustration · AI-generated portrait",
     segment: "Foundation Models & LLMs",
     specialty: ["Transformers", "NLP", "LLMs"],
     affiliation: "Cohere",
