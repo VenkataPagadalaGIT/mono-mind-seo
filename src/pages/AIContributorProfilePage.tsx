@@ -450,10 +450,10 @@ const AIContributorProfilePage = () => {
                   <div className="space-y-3">
                     {podcasts.map((res, i) => (
                       <a key={i} href={res.url} target="_blank" rel="noopener noreferrer"
-                        className="block border border-border p-5 hover:border-foreground/20 transition-all group">
-                        <div className="flex items-start gap-3">
-                          <span className="text-sm mt-0.5">🎧</span>
-                          <div className="flex-1">
+                        className="block border border-border p-4 hover:border-foreground/20 transition-all group">
+                        <div className="flex items-start gap-4">
+                          <ResourceThumbnail url={res.url} />
+                          <div className="flex-1 min-w-0">
                             <div className="flex items-start justify-between gap-2 mb-1">
                               <p className="font-display text-sm font-bold text-foreground group-hover:text-glow transition-all">{res.title}</p>
                               <ExternalLink size={10} className="text-muted-foreground/20 group-hover:text-foreground/40 shrink-0 mt-1" />
