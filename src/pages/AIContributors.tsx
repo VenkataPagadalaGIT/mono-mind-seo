@@ -13,6 +13,16 @@ import { aiContributors } from "@/data/aiContributors";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Users, BookOpen, Clock, Map, Brain, FileText, Library, Sparkles } from "lucide-react";
 
+const pageTocSections = [
+  { label: "Database", id: "explorer-section" },
+  { label: "Overview", id: "essay-section" },
+  { label: "Chapters", id: "chapters-section" },
+  { label: "Paths", id: "paths-section" },
+  { label: "Timeline", id: "timeline-section" },
+  { label: "Glossary", id: "glossary-section" },
+  { label: "Reading Lists", id: "reading-section" },
+];
+
 const STORAGE_KEY = "ai-contributors-explored";
 
 const sections = [
