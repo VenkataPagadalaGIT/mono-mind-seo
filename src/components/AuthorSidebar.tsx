@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import authorPhoto from "@/assets/venkata-pagadala.jpeg";
 
 const AuthorSidebar = () => (
-  <aside className="hidden xl:block xl:w-56 shrink-0">
+  <aside className="hidden lg:block lg:w-52 shrink-0">
     <div className="sticky top-28">
       <p className="font-mono text-[9px] text-muted-foreground/30 uppercase tracking-widest mb-4">
         About the Author

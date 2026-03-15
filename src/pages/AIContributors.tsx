@@ -195,7 +195,8 @@ const AIContributors = () => {
 
         {/* === ROADMAP TAB === */}
         {topTab === "roadmap" && (
-          <div className="flex gap-10">
+          <div className="lg:flex lg:gap-10">
+            <AuthorSidebar />
             <div className="flex-1 min-w-0">
               <div className="mb-6">
                 <h2 className="font-display text-xl font-bold text-foreground mb-1">
@@ -207,13 +208,13 @@ const AIContributors = () => {
               </div>
               <AILearningRoadmap />
             </div>
-            <AuthorSidebar />
           </div>
         )}
 
         {/* === ENCYCLOPEDIA TAB === */}
         {topTab === "encyclopedia" && (
-          <div className="flex gap-10">
+          <div className="lg:flex lg:gap-10">
+            <AuthorSidebar />
             <div className="flex-1 min-w-0">
               <div className="mb-6">
                 <h2 className="font-display text-xl font-bold text-foreground mb-1">
@@ -225,7 +226,6 @@ const AIContributors = () => {
               </div>
               <AIEncyclopedia />
             </div>
-            <AuthorSidebar />
           </div>
         )}
 
@@ -249,9 +249,9 @@ const AIContributors = () => {
               </div>
             </ScrollReveal>
 
-            {/* Three-column layout: left sidebar | content | author sidebar */}
+            {/* Three-column layout: author sidebar | nav sidebar | content */}
             <div className="lg:flex lg:gap-10">
-              <PageSidebar sections={pageTocSections} shareTitle="Top 100 AI Contributors 2026 — The Definitive AI Notebook" />
+              <AuthorSidebar />
 
               <div className="flex-1 min-w-0">
                 <div ref={contentRef}>
@@ -328,7 +328,7 @@ const AIContributors = () => {
                 </div>
               </div>
 
-              <AuthorSidebar />
+              <PageSidebar sections={pageTocSections} shareTitle="Top 100 AI Contributors 2026 — The Definitive AI Notebook" />
             </div>
           </>
         )}
