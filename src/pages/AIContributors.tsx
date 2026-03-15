@@ -159,7 +159,6 @@ const AIContributors = () => {
               <div className="flex flex-wrap gap-6 mb-10 pb-8 border-b border-border">
                 {[
                   { label: "Contributors", value: String(aiContributors.length) },
-                  { label: "Chapters", value: "6" },
                   { label: "Concepts", value: "20" },
                   { label: "Resources", value: "25+" },
                   { label: "Explored", value: `${exploredIds.size}/${aiContributors.length}` },
