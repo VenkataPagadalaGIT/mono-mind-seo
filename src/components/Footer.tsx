@@ -61,7 +61,20 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Machine-Readable */}
+          {/* AI Notebook */}
+          <div>
+            <p className="font-mono text-[10px] tracking-[0.2em] text-muted-foreground/40 uppercase mb-4">AI Notebook</p>
+            <ul className="space-y-2">
+              {notebookLinks.map((link) => (
+                <li key={link.to + link.label}>
+                  <Link to={link.to} className="font-mono text-[11px] text-muted-foreground/60 hover:text-foreground transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           <div>
             <p className="font-mono text-[10px] tracking-[0.2em] text-muted-foreground/40 uppercase mb-4">For Machines</p>
             <ul className="space-y-2">
