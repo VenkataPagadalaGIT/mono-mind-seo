@@ -3,6 +3,7 @@ export interface AIResource {
   type: "paper" | "talk" | "interview" | "book" | "podcast" | "project";
   url: string;
   year?: string;
+  description?: string;
 }
 
 export interface AIContributor {
@@ -10,6 +11,7 @@ export interface AIContributor {
   name: string;
   rank: number;
   bio: string;
+  longBio?: string;
   segment: string;
   specialty: string[];
   affiliation: string;
@@ -19,6 +21,7 @@ export interface AIContributor {
   awards: string;
   education: string;
   twitter?: string;
+  linkedin?: string;
   website?: string;
   github?: string;
   googleScholar?: string;
@@ -29,6 +32,8 @@ export interface AIContributor {
   resources?: AIResource[];
   connections?: string[]; // ids of related contributors
   milestones?: { year: string; event: string }[];
+  featuredMedia?: { title: string; type: "podcast" | "interview" | "documentary" | "lecture"; url: string; host?: string; duration?: string; year?: string }[];
+  whyTheyMatter?: string;
 }
 
 export const AI_SEGMENTS = [
