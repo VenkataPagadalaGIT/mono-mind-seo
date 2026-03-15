@@ -245,7 +245,7 @@ const AIContributorProfilePage = () => {
           {/* ── Why They Matter ── */}
           {contributor.whyTheyMatter && (
             <ScrollReveal delay={100}>
-              <div className="border border-foreground/20 bg-foreground/[0.02] p-6 sm:p-8 mb-10">
+              <div id="why" className="border border-foreground/20 bg-foreground/[0.02] p-6 sm:p-8 mb-10 scroll-mt-24">
                 <h2 className="font-mono text-[10px] text-foreground/50 uppercase tracking-widest mb-4">
                   Why They Matter
                 </h2>
