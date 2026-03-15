@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowDown, Linkedin } from "lucide-react";
+import { ArrowDown, ArrowRight, Linkedin } from "lucide-react";
 import WireframeGrid from "@/components/WireframeGrid";
 import FloatingBlocks from "@/components/FloatingBlocks";
 import TypewriterText from "@/components/TypewriterText";
