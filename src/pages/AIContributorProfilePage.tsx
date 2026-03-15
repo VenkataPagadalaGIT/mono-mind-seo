@@ -22,9 +22,11 @@ const AIContributorProfilePage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const contributor = aiContributors.find((c) => c.id === id);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    setCopied(false);
   }, [id]);
 
   if (!contributor) {
