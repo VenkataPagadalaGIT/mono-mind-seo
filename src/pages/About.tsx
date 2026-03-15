@@ -235,11 +235,11 @@ const About = () => {
                 </p>
                 <div className="space-y-4">
                   {[
-                    { title: "Disruptive Strategies — Business Administration & Management", sub: "Harvard University — 2019" },
-                    { title: "Cybersecurity: Technology, Application and Policy", sub: "Massachusetts Institute of Technology (MIT) — 2016" },
-                    { title: "Master's Degree in Computer Science", sub: "New England College — 2015–2016" },
-                    { title: "MBA — Human Resources Development (Marketing Management)", sub: "National Institute of Business Management (NIBM) — 2015–2016" },
-                    { title: "Bachelor's Degree in Computer Science", sub: "KL University — 2011–2015" },
+                    { title: "Disruptive Strategy", sub: "Harvard University" },
+                    { title: "Cyber Security", sub: "Massachusetts Institute of Technology (MIT)" },
+                    { title: "M.S. Computer Information Systems (GPA: 4.0)", sub: "New England College" },
+                    { title: "MBA", sub: "National Institute of Business Management" },
+                    { title: "B.E. Computer Science", sub: "KL University" },
                   ].map((edu) => (
                     <div key={edu.title} className="border border-border p-6 border-glow-hover">
                       <div className="font-display text-lg font-semibold text-foreground">{edu.title}</div>
