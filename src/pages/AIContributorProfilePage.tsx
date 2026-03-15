@@ -132,7 +132,7 @@ const AIContributorProfilePage = () => {
       </Helmet>
 
       <div className="min-h-screen bg-background pt-24 pb-20 px-6">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           {/* Breadcrumb */}
           <ScrollReveal>
             <nav className="flex items-center gap-2 font-mono text-[10px] tracking-widest uppercase text-muted-foreground/40 mb-10">
