@@ -11,14 +11,14 @@ const stats = [
 ];
 
 const skills = [
-  "AI Product Strategy", "MCP Integrations", "A2A Pipelines", "Claude Code",
-  "RAG Engines", "Knowledge Graphs", "Technical SEO", "Python", "SQL",
-  "Crawl Optimization", "Schema Markup", "Topic Clustering",
-  "Google Search Console", "Ahrefs", "Semrush", "Screaming Frog",
-  "Botify", "ContentKing", "BigQuery", "Looker Studio", "PowerBI",
-  "LLM Optimization", "NLP", "Generative AI", "Data Engineering",
-  "GPT-4", "Adobe Analytics", "Google Analytics", "Akamai CDN",
-  "Agile/Scrum", "Core Web Vitals", "JSON-LD", "International SEO",
+  "MCP", "A2A", "Claude Code", "RAG Systems", "Knowledge Graphs",
+  "Vector Embeddings", "Cosine Similarity", "Topic Clustering",
+  "LLM Optimization", "GPT-4", "Claude", "Entity Recognition", "NLP", "AI Agents",
+  "JSON-LD", "Canonical Tags", "Crawl Budget", "Log File Analysis",
+  "Core Web Vitals", "hreflang", "Site Migrations", "Sitemaps",
+  "Google Cloud Knowledge Graph API", "Botify", "Screaming Frog",
+  "Ahrefs", "Semrush", "Google Search Console", "BigQuery", "SQL",
+  "Python", "GA4", "PowerBI",
 ];
 
 const experiences = [
