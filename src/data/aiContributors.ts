@@ -1093,6 +1093,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "mitchell", name: "Margaret Mitchell", rank: 27,
     bio: "Chief Ethics Scientist at Hugging Face. Former Google AI ethics co-lead. Creator of Model Cards.",
+    photoUrl: "/photos/mitchell.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "AI Ethics & Policy", specialty: ["AI Ethics", "NLP", "Open Source AI"],
     affiliation: "Hugging Face", expertType: "Researcher", country: "USA",
     keyInfluence: "Created Model Cards concept — now standard for AI documentation.",
