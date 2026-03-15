@@ -631,6 +631,7 @@ export const aiContributors: AIContributor[] = [
     awards: "TIME100 AI, Baidu founder",
     education: "PhD in Computer Science, SUNY Buffalo (1994).",
     github: "https://github.com/PaddlePaddle",
+    githubPinnedRepos: ["Paddle", "PaddleNLP", "PaddleOCR"],
     googleScholar: "https://scholar.google.com/citations?user=v3LVROIAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d9198142a535ef174f34ae6f",
     myTake: "Li represents the parallel AI universe developing in China. Baidu's ERNIE models and Apollo autonomous driving platform are massive — yet largely invisible to Western audiences. Understanding China's AI ecosystem through Li's work is critical for anyone thinking about AI geopolitics.",
