@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import ScrollReveal from "@/components/ScrollReveal";
+import PageSidebar, { TocItem } from "@/components/PageSidebar";
 
 import { aiContributors, SEGMENT_COLORS } from "@/data/aiContributors";
 import {
