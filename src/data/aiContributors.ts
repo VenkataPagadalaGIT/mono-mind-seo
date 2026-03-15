@@ -1634,6 +1634,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "ng", name: "Andrew Ng", rank: 5,
     bio: "Co-founder of Coursera & Google Brain. Founded DeepLearning.AI & Landing AI. Most influential AI educator globally.",
+    photoUrl: "/photos/ng.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 2.0",
     segment: "AI Education & Communication", specialty: ["Deep Learning", "AI Education", "Computer Vision"],
     affiliation: "DeepLearning.AI / Stanford / Landing AI", expertType: "Educator", country: "USA/UK",
     keyInfluence: "Most influential AI educator globally. Coursera ML course taken by 5M+ people. Coined 'Data-Centric AI'.",
