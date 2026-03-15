@@ -1661,6 +1661,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "schmidhuber", name: "Jürgen Schmidhuber", rank: 16,
     bio: "Co-inventor of LSTM networks. Pioneer of recurrent neural networks. Professor at KAUST.",
+    photoUrl: "/photos/schmidhuber.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "Foundation Models & LLMs", specialty: ["Deep Learning", "NLP"],
     affiliation: "KAUST / IDSIA", expertType: "Researcher", country: "Germany/Switzerland",
     keyInfluence: "Co-invented LSTM — foundational architecture for all sequence modeling. Claims priority on many deep learning ideas.",
