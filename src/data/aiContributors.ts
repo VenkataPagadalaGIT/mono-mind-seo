@@ -1143,6 +1143,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "manning", name: "Christopher Manning", rank: 34,
     bio: "Professor at Stanford. Director of Stanford AI Lab. Pioneer of NLP. Created Stanford CoreNLP.",
+    photoUrl: "/photos/manning.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "NLP & Language Technology", specialty: ["NLP", "Transformers"],
     affiliation: "Stanford NLP Group", expertType: "Researcher", country: "Australia/USA",
     keyInfluence: "Created Stanford CoreNLP and GloVe. His NLP courses trained a generation of researchers.",
