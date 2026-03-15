@@ -769,8 +769,7 @@ export const aiContributors: AIContributor[] = [
     name: "Anca Dragan",
     rank: 94,
     bio: "Director at Google DeepMind. Former UC Berkeley professor. Pioneer of AI alignment through human-robot interaction.",
-    photoUrl: "/photos/dragan.jpg",
-    photoCredit: "Illustration · AI-generated portrait",
+    // No real photo available
     segment: "AI Safety & Alignment",
     specialty: ["Robotics", "AI Safety"],
     affiliation: "Google DeepMind",
