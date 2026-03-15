@@ -308,7 +308,7 @@ export const aiContributors: AIContributor[] = [
     rank: 8,
     bio: "CEO of OpenAI. Led development of ChatGPT & GPT series. TIME Person of the Year 2025.",
     photoUrl: "/photos/altman.jpg",
-    photoCredit: "Illustration · AI-generated portrait",
+    photoCredit: "Photo: Wikimedia Commons / CC BY 2.0",
     segment: "Foundation Models & LLMs",
     specialty: ["LLMs", "AGI", "AI Policy"],
     affiliation: "OpenAI",
