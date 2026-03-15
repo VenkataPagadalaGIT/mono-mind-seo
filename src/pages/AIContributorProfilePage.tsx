@@ -328,7 +328,7 @@ const AIContributorProfilePage = () => {
           {/* ── Key Resources ── */}
           {contributor.resources && contributor.resources.length > 0 && (
             <ScrollReveal delay={100}>
-              <div className="mb-10">
+              <div id="resources" className="mb-10 scroll-mt-24">
                 <h2 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-6">
                   📄 Key Resources & Papers
                 </h2>
