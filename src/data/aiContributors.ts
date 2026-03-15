@@ -34,6 +34,8 @@ export interface AIContributor {
   milestones?: { year: string; event: string }[];
   featuredMedia?: { title: string; type: "podcast" | "interview" | "documentary" | "lecture"; url: string; host?: string; duration?: string; year?: string }[];
   whyTheyMatter?: string;
+  photoUrl?: string;
+  photoCredit?: string; // e.g. "Photo: Wikimedia Commons / CC BY 2.0"
 }
 
 export const AI_SEGMENTS = [
