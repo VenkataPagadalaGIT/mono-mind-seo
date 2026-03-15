@@ -1,4 +1,5 @@
-import { X, ExternalLink, GraduationCap, Award, MapPin, Quote, BookOpen, Link2 } from "lucide-react";
+import { X, ExternalLink, GraduationCap, Award, MapPin, Quote, BookOpen, Link2, ArrowRight, Linkedin } from "lucide-react";
+import { Link } from "react-router-dom";
 import { SEGMENT_COLORS, aiContributors, type AIContributor } from "@/data/aiContributors";
 
 interface Props {
