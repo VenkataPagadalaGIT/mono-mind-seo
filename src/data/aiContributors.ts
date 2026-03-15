@@ -550,6 +550,8 @@ export const aiContributors: AIContributor[] = [
     linkedin: "https://www.linkedin.com/in/chelsea-finn-8a924771/",
     website: "https://ai.stanford.edu/~cbfinn/",
     github: "https://github.com/cbfinn",
+    githubFollowers: "~2K",
+    githubPinnedRepos: ["maml", "maml_rl"],
     googleScholar: "https://scholar.google.com/citations?user=vUPPg3gAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981f69300d73c3fbaab0d",
     myTake: "Finn's MAML paper is one of the most elegant ideas in ML — teach a model how to learn quickly from few examples. Physical Intelligence is betting that the same kind of foundation model approach that worked for language will work for robotics. If they're right, it's transformative.",
