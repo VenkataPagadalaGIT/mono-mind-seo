@@ -578,6 +578,7 @@ export const aiContributors: AIContributor[] = [
     linkedin: "https://www.linkedin.com/in/sara-hooker/",
     website: "https://www.sarahooker.me/",
     github: "https://github.com/sarahooker",
+    githubFollowers: "~1K",
     googleScholar: "https://scholar.google.com/citations?user=0Tnz_L8AAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981c3a245ffaa458d0e9c",
     quote: "The Hardware Lottery — when a research idea wins because it's compatible with available hardware, not because it's the best idea.",
