@@ -145,7 +145,7 @@ const AIContributors = () => {
 
         {/* === ENCYCLOPEDIA TAB === */}
         {topTab === "encyclopedia" && (
-          <ScrollReveal>
+          <div>
             <div className="mb-6">
               <h2 className="font-display text-xl font-bold text-foreground mb-1">
                 🧠 AI Concepts Encyclopedia — Zero to Hero (2026)
@@ -155,7 +155,7 @@ const AIContributors = () => {
               </p>
             </div>
             <AIEncyclopedia />
-          </ScrollReveal>
+          </div>
         )}
 
         {/* === CONTRIBUTORS TAB === */}
