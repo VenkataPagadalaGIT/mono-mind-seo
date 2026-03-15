@@ -1294,6 +1294,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "koller", name: "Daphne Koller", rank: 53,
     bio: "CEO of insitro. Co-founder of Coursera. Stanford professor. Pioneer of probabilistic graphical models.",
+    photoUrl: "/photos/koller.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "AI for Science & Healthcare", specialty: ["ML Theory", "Drug Discovery", "AI Education"],
     affiliation: "insitro", expertType: "Founder/CEO", country: "Israel/USA",
     keyInfluence: "Bridging AI and biology through probabilistic graphical models and drug discovery.",
