@@ -160,8 +160,60 @@ const AIContributorProfilePage = () => {
             </div>
           </ScrollReveal>
 
-          {/* ── Jump to Section + Share ── */}
+          {/* ── Details Grid (moved to top) ── */}
           <ScrollReveal delay={30}>
+            <div id="details" className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10 scroll-mt-24">
+              <div className="border border-border p-5">
+                <h3 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-2">Specialties</h3>
+                <div className="flex flex-wrap gap-1.5">
+                  {contributor.specialty.map((s) => (
+                    <span key={s} className="font-mono text-[10px] border border-border px-2 py-1 text-muted-foreground/60">{s}</span>
+                  ))}
+                </div>
+              </div>
+              <div className="border border-border p-5">
+                <h3 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-2">Location</h3>
+                <div className="flex items-center gap-2">
+                  <MapPin size={12} className="text-muted-foreground/30" />
+                  <span className="font-mono text-sm text-muted-foreground">{contributor.country}</span>
+                </div>
+              </div>
+              <div className="border border-border p-5">
+                <h3 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-2">Education</h3>
+                <div className="flex items-start gap-2">
+                  <GraduationCap size={12} className="text-muted-foreground/30 mt-0.5 shrink-0" />
+                  <span className="font-mono text-[11px] text-muted-foreground leading-relaxed">{contributor.education}</span>
+                </div>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* ── Timeline (moved to top) ── */}
+          {contributor.milestones && contributor.milestones.length > 0 && (
+            <ScrollReveal delay={40}>
+              <div id="timeline" className="mb-10 scroll-mt-24">
+                <h2 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-6">
+                  Timeline
+                </h2>
+                <div className="relative pl-6">
+                  <div className="absolute left-2 top-2 bottom-2 w-px bg-border" />
+                  {contributor.milestones.map((m, i) => (
+                    <div key={i} className="flex items-start gap-4 mb-4 relative">
+                      <div
+                        className="absolute left-[-16px] top-1.5 w-3 h-3 border-2 bg-background rounded-full"
+                        style={{ borderColor: color }}
+                      />
+                      <span className="font-mono text-xs text-muted-foreground/30 shrink-0 w-10 font-bold">{m.year}</span>
+                      <span className="font-mono text-sm text-muted-foreground leading-relaxed">{m.event}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </ScrollReveal>
+          )}
+
+          {/* ── Jump to Section + Share ── */}
+          <ScrollReveal delay={50}>
             <div className="border border-border p-5 mb-8">
               <p className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-3">Jump to Section</p>
               <div className="flex flex-wrap gap-2 mb-4">
@@ -171,10 +223,10 @@ const AIContributorProfilePage = () => {
                   contributor.whyTheyMatter && { label: "Why They Matter", id: "why" },
                   contributor.myTake && { label: "My Take", id: "my-take" },
                   { label: "Key Influence", id: "influence" },
-                  contributor.featuredMedia?.length && { label: "Podcasts", id: "media" },
-                  contributor.resources?.length && { label: "Resources", id: "resources" },
-                  contributor.milestones?.length && { label: "Timeline", id: "timeline" },
-                  { label: "Details", id: "details" },
+                  (contributor.resources?.filter(r => r.type === "paper").length ?? 0) > 0 && { label: "Research Papers", id: "papers" },
+                  (contributor.resources?.filter(r => ["talk", "interview"].includes(r.type)).length ?? 0) > 0 && { label: "Videos & Interviews", id: "videos" },
+                  (contributor.resources?.filter(r => r.type === "podcast").length ?? 0) > 0 && { label: "Podcasts", id: "podcasts-res" },
+                  contributor.featuredMedia?.length && { label: "Featured Media", id: "media" },
                   contributor.awards && { label: "Awards", id: "awards" },
                   (contributor.connections?.length ?? 0) > 0 && { label: "Connections", id: "connections" },
                   { label: "Links", id: "links" },
@@ -278,12 +330,162 @@ const AIContributorProfilePage = () => {
             </div>
           </ScrollReveal>
 
-          {/* ── Featured Media (Podcasts/Interviews) ── */}
+          {/* ── Research Papers (separated) ── */}
+          {(() => {
+            const papers = contributor.resources?.filter(r => r.type === "paper") || [];
+            if (papers.length === 0) return null;
+            return (
+              <ScrollReveal delay={100}>
+                <div id="papers" className="mb-10 scroll-mt-24">
+                  <h2 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-6">
+                    📄 Research Papers
+                  </h2>
+                  <div className="space-y-3">
+                    {papers.map((res, i) => (
+                      <a key={i} href={res.url} target="_blank" rel="noopener noreferrer"
+                        className="block border border-border p-5 hover:border-foreground/20 transition-all group">
+                        <div className="flex items-start gap-3">
+                          <span className="text-sm mt-0.5">📄</span>
+                          <div className="flex-1">
+                            <div className="flex items-start justify-between gap-2 mb-1">
+                              <p className="font-display text-sm font-bold text-foreground group-hover:text-glow transition-all">{res.title}</p>
+                              <ExternalLink size={10} className="text-muted-foreground/20 group-hover:text-foreground/40 shrink-0 mt-1" />
+                            </div>
+                            <div className="flex items-center gap-3 mb-2">
+                              {res.year && <span className="font-mono text-[9px] text-muted-foreground/20">{res.year}</span>}
+                            </div>
+                            {res.description && (
+                              <p className="font-mono text-[11px] text-muted-foreground/50 leading-relaxed group-hover:text-muted-foreground transition-colors">{res.description}</p>
+                            )}
+                          </div>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </ScrollReveal>
+            );
+          })()}
+
+          {/* ── Videos & Interviews (separated) ── */}
+          {(() => {
+            const videos = contributor.resources?.filter(r => ["talk", "interview"].includes(r.type)) || [];
+            if (videos.length === 0) return null;
+            return (
+              <ScrollReveal delay={100}>
+                <div id="videos" className="mb-10 scroll-mt-24">
+                  <h2 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-6">
+                    🎙️ Videos & Interviews
+                  </h2>
+                  <div className="space-y-3">
+                    {videos.map((res, i) => (
+                      <a key={i} href={res.url} target="_blank" rel="noopener noreferrer"
+                        className="block border border-border p-5 hover:border-foreground/20 transition-all group">
+                        <div className="flex items-start gap-3">
+                          <span className="text-sm mt-0.5">{RESOURCE_ICONS[res.type] || "🎙️"}</span>
+                          <div className="flex-1">
+                            <div className="flex items-start justify-between gap-2 mb-1">
+                              <p className="font-display text-sm font-bold text-foreground group-hover:text-glow transition-all">{res.title}</p>
+                              <ExternalLink size={10} className="text-muted-foreground/20 group-hover:text-foreground/40 shrink-0 mt-1" />
+                            </div>
+                            <div className="flex items-center gap-3 mb-2">
+                              <span className="font-mono text-[9px] text-muted-foreground/30 capitalize">{res.type}</span>
+                              {res.year && <span className="font-mono text-[9px] text-muted-foreground/20">{res.year}</span>}
+                            </div>
+                            {res.description && (
+                              <p className="font-mono text-[11px] text-muted-foreground/50 leading-relaxed group-hover:text-muted-foreground transition-colors">{res.description}</p>
+                            )}
+                          </div>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </ScrollReveal>
+            );
+          })()}
+
+          {/* ── Podcasts (separated) ── */}
+          {(() => {
+            const podcasts = contributor.resources?.filter(r => r.type === "podcast") || [];
+            if (podcasts.length === 0) return null;
+            return (
+              <ScrollReveal delay={100}>
+                <div id="podcasts-res" className="mb-10 scroll-mt-24">
+                  <h2 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-6">
+                    🎧 Podcasts
+                  </h2>
+                  <div className="space-y-3">
+                    {podcasts.map((res, i) => (
+                      <a key={i} href={res.url} target="_blank" rel="noopener noreferrer"
+                        className="block border border-border p-5 hover:border-foreground/20 transition-all group">
+                        <div className="flex items-start gap-3">
+                          <span className="text-sm mt-0.5">🎧</span>
+                          <div className="flex-1">
+                            <div className="flex items-start justify-between gap-2 mb-1">
+                              <p className="font-display text-sm font-bold text-foreground group-hover:text-glow transition-all">{res.title}</p>
+                              <ExternalLink size={10} className="text-muted-foreground/20 group-hover:text-foreground/40 shrink-0 mt-1" />
+                            </div>
+                            <div className="flex items-center gap-3 mb-2">
+                              {res.year && <span className="font-mono text-[9px] text-muted-foreground/20">{res.year}</span>}
+                            </div>
+                            {res.description && (
+                              <p className="font-mono text-[11px] text-muted-foreground/50 leading-relaxed group-hover:text-muted-foreground transition-colors">{res.description}</p>
+                            )}
+                          </div>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </ScrollReveal>
+            );
+          })()}
+
+          {/* ── Other Resources (books, projects, etc.) ── */}
+          {(() => {
+            const other = contributor.resources?.filter(r => !["paper", "talk", "interview", "podcast"].includes(r.type)) || [];
+            if (other.length === 0) return null;
+            return (
+              <ScrollReveal delay={100}>
+                <div id="other-resources" className="mb-10 scroll-mt-24">
+                  <h2 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-6">
+                    📚 Other Resources
+                  </h2>
+                  <div className="space-y-3">
+                    {other.map((res, i) => (
+                      <a key={i} href={res.url} target="_blank" rel="noopener noreferrer"
+                        className="block border border-border p-5 hover:border-foreground/20 transition-all group">
+                        <div className="flex items-start gap-3">
+                          <span className="text-sm mt-0.5">{RESOURCE_ICONS[res.type] || "📄"}</span>
+                          <div className="flex-1">
+                            <div className="flex items-start justify-between gap-2 mb-1">
+                              <p className="font-display text-sm font-bold text-foreground group-hover:text-glow transition-all">{res.title}</p>
+                              <ExternalLink size={10} className="text-muted-foreground/20 group-hover:text-foreground/40 shrink-0 mt-1" />
+                            </div>
+                            <div className="flex items-center gap-3 mb-2">
+                              <span className="font-mono text-[9px] text-muted-foreground/30 capitalize">{res.type}</span>
+                              {res.year && <span className="font-mono text-[9px] text-muted-foreground/20">{res.year}</span>}
+                            </div>
+                            {res.description && (
+                              <p className="font-mono text-[11px] text-muted-foreground/50 leading-relaxed group-hover:text-muted-foreground transition-colors">{res.description}</p>
+                            )}
+                          </div>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </ScrollReveal>
+            );
+          })()}
+
+          {/* ── Featured Media ── */}
           {contributor.featuredMedia && contributor.featuredMedia.length > 0 && (
             <ScrollReveal delay={100}>
               <div id="media" className="mb-10 scroll-mt-24">
                 <h2 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-6">
-                  🎧 Podcasts & Interviews
+                  🎬 Featured Media
                 </h2>
                 <div className="grid sm:grid-cols-2 gap-3">
                   {contributor.featuredMedia.map((media, i) => (
@@ -324,101 +526,6 @@ const AIContributorProfilePage = () => {
               </div>
             </ScrollReveal>
           )}
-
-          {/* ── Key Resources ── */}
-          {contributor.resources && contributor.resources.length > 0 && (
-            <ScrollReveal delay={100}>
-              <div id="resources" className="mb-10 scroll-mt-24">
-                <h2 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-6">
-                  📄 Key Resources & Papers
-                </h2>
-                <div className="space-y-3">
-                  {contributor.resources.map((res, i) => (
-                    <a
-                      key={i}
-                      href={res.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block border border-border p-5 hover:border-foreground/20 transition-all group"
-                    >
-                      <div className="flex items-start gap-3">
-                        <span className="text-sm mt-0.5">{RESOURCE_ICONS[res.type] || "📄"}</span>
-                        <div className="flex-1">
-                          <div className="flex items-start justify-between gap-2 mb-1">
-                            <p className="font-display text-sm font-bold text-foreground group-hover:text-glow transition-all">
-                              {res.title}
-                            </p>
-                            <ExternalLink size={10} className="text-muted-foreground/20 group-hover:text-foreground/40 shrink-0 mt-1" />
-                          </div>
-                          <div className="flex items-center gap-3 mb-2">
-                            <span className="font-mono text-[9px] text-muted-foreground/30 capitalize">{res.type}</span>
-                            {res.year && <span className="font-mono text-[9px] text-muted-foreground/20">{res.year}</span>}
-                          </div>
-                          {res.description && (
-                            <p className="font-mono text-[11px] text-muted-foreground/50 leading-relaxed group-hover:text-muted-foreground transition-colors">
-                              {res.description}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </ScrollReveal>
-          )}
-
-          {/* ── Milestones ── */}
-          {contributor.milestones && contributor.milestones.length > 0 && (
-            <ScrollReveal delay={100}>
-              <div id="timeline" className="mb-10 scroll-mt-24">
-                <h2 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-6">
-                  Timeline
-                </h2>
-                <div className="relative pl-6">
-                  <div className="absolute left-2 top-2 bottom-2 w-px bg-border" />
-                  {contributor.milestones.map((m, i) => (
-                    <div key={i} className="flex items-start gap-4 mb-4 relative">
-                      <div
-                        className="absolute left-[-16px] top-1.5 w-3 h-3 border-2 bg-background rounded-full"
-                        style={{ borderColor: color }}
-                      />
-                      <span className="font-mono text-xs text-muted-foreground/30 shrink-0 w-10 font-bold">{m.year}</span>
-                      <span className="font-mono text-sm text-muted-foreground leading-relaxed">{m.event}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </ScrollReveal>
-          )}
-
-          {/* ── Details Grid ── */}
-          <ScrollReveal delay={100}>
-            <div id="details" className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10 scroll-mt-24">
-              <div className="border border-border p-5">
-                <h3 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-2">Specialties</h3>
-                <div className="flex flex-wrap gap-1.5">
-                  {contributor.specialty.map((s) => (
-                    <span key={s} className="font-mono text-[10px] border border-border px-2 py-1 text-muted-foreground/60">{s}</span>
-                  ))}
-                </div>
-              </div>
-              <div className="border border-border p-5">
-                <h3 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-2">Location</h3>
-                <div className="flex items-center gap-2">
-                  <MapPin size={12} className="text-muted-foreground/30" />
-                  <span className="font-mono text-sm text-muted-foreground">{contributor.country}</span>
-                </div>
-              </div>
-              <div className="border border-border p-5">
-                <h3 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-2">Education</h3>
-                <div className="flex items-start gap-2">
-                  <GraduationCap size={12} className="text-muted-foreground/30 mt-0.5 shrink-0" />
-                  <span className="font-mono text-[11px] text-muted-foreground leading-relaxed">{contributor.education}</span>
-                </div>
-              </div>
-            </div>
-          </ScrollReveal>
 
           {/* ── Awards ── */}
           {contributor.awards && (
