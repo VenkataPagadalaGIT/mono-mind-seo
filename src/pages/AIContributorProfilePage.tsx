@@ -160,10 +160,70 @@ const AIContributorProfilePage = () => {
             </div>
           </ScrollReveal>
 
+          {/* ── Jump to Section + Share ── */}
+          <ScrollReveal delay={30}>
+            <div className="border border-border p-5 mb-8">
+              <p className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-3">Jump to Section</p>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {[
+                  contributor.quote && { label: "Quote", id: "quote" },
+                  { label: "Biography", id: "biography" },
+                  contributor.whyTheyMatter && { label: "Why They Matter", id: "why" },
+                  contributor.myTake && { label: "My Take", id: "my-take" },
+                  { label: "Key Influence", id: "influence" },
+                  contributor.featuredMedia?.length && { label: "Podcasts", id: "media" },
+                  contributor.resources?.length && { label: "Resources", id: "resources" },
+                  contributor.milestones?.length && { label: "Timeline", id: "timeline" },
+                  { label: "Details", id: "details" },
+                  contributor.awards && { label: "Awards", id: "awards" },
+                  (contributor.connections?.length ?? 0) > 0 && { label: "Connections", id: "connections" },
+                  { label: "Links", id: "links" },
+                ].filter(Boolean).map((item: any) => (
+                  <a
+                    key={item.id}
+                    href={`#${item.id}`}
+                    className="font-mono text-[10px] border border-border px-2.5 py-1.5 text-muted-foreground/50 hover:text-foreground hover:border-foreground/30 transition-colors"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+              <div className="border-t border-border pt-4 flex flex-wrap items-center gap-2">
+                <span className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mr-2">Share</span>
+                <a
+                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`${contributor.name} — #${contributor.rank} Top AI Contributor 2026`)}&url=${encodeURIComponent(`https://mono-mind-seo.lovable.app/ai-contributors/${contributor.id}`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-[10px] border border-border px-2.5 py-1.5 text-muted-foreground/50 hover:text-foreground hover:border-foreground/30 transition-colors"
+                >
+                  𝕏 Post
+                </a>
+                <a
+                  href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://mono-mind-seo.lovable.app/ai-contributors/${contributor.id}`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 font-mono text-[10px] border border-border px-2.5 py-1.5 text-muted-foreground/50 hover:text-foreground hover:border-foreground/30 transition-colors"
+                >
+                  <Linkedin size={10} /> LinkedIn
+                </a>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(`https://mono-mind-seo.lovable.app/ai-contributors/${contributor.id}`);
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 2000);
+                  }}
+                  className="inline-flex items-center gap-1 font-mono text-[10px] border border-border px-2.5 py-1.5 text-muted-foreground/50 hover:text-foreground hover:border-foreground/30 transition-colors"
+                >
+                  {copied ? <><Check size={10} /> Copied</> : <><Copy size={10} /> Copy Link</>}
+                </button>
+              </div>
+            </div>
+          </ScrollReveal>
+
           {/* ── Quote ── */}
           {contributor.quote && (
             <ScrollReveal delay={50}>
-              <div className="border-l-2 border-foreground/20 pl-6 mb-10">
+              <div id="quote" className="border-l-2 border-foreground/20 pl-6 mb-10 scroll-mt-24">
                 <Quote size={16} className="text-muted-foreground/15 mb-2" />
                 <p className="font-mono text-sm text-foreground/70 italic leading-[1.9] max-w-2xl">
                   "{contributor.quote}"
