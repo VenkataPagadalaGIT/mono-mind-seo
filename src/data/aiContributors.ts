@@ -420,6 +420,8 @@ export const aiContributors: AIContributor[] = [
     linkedin: "https://www.linkedin.com/in/percy-liang-0862984/",
     website: "https://cs.stanford.edu/~pliang/",
     github: "https://github.com/percyliang",
+    githubFollowers: "~500",
+    githubPinnedRepos: ["helm", "together-ai"],
     googleScholar: "https://scholar.google.com/citations?user=uKoJYFQAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d919816893a4db8a5d49099d",
     myTake: "Liang is quietly one of the most important figures in AI evaluation. Without HELM, we'd have no standardized way to compare LLMs. Together AI represents the thesis that open-source can compete with closed models — a bet that's increasingly looking right.",
