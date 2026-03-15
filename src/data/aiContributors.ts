@@ -24,6 +24,8 @@ export interface AIContributor {
   linkedin?: string;
   website?: string;
   github?: string;
+  githubFollowers?: string;
+  githubPinnedRepos?: string[];
   googleScholar?: string;
   youtube?: string;
   notionUrl: string;
@@ -290,6 +292,8 @@ export const aiContributors: AIContributor[] = [
     twitter: "https://x.com/ylecun",
     linkedin: "https://www.linkedin.com/in/yann-lecun-0b999/",
     website: "https://yann.lecun.com/",
+    github: "https://github.com/ylecun",
+    githubFollowers: "~3K",
     googleScholar: "https://scholar.google.com/citations?user=WLN3QrAAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981e9acaed6b0f4aec933",
     quote: "Our intelligence is what makes us human, and AI is an extension of that quality.",
@@ -321,6 +325,7 @@ export const aiContributors: AIContributor[] = [
     linkedin: "https://www.linkedin.com/in/samaltman/",
     website: "https://blog.samaltman.com/",
     github: "https://github.com/sama",
+    githubFollowers: "~12K",
     googleScholar: "https://scholar.google.com/citations?user=K_2IHEAAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d9198136ba9ae1ea7c5770ae",
     quote: "AI will probably most likely lead to the end of the world, but in the meantime, there'll be great companies.",
@@ -417,6 +422,8 @@ export const aiContributors: AIContributor[] = [
     linkedin: "https://www.linkedin.com/in/percy-liang-0862984/",
     website: "https://cs.stanford.edu/~pliang/",
     github: "https://github.com/percyliang",
+    githubFollowers: "~500",
+    githubPinnedRepos: ["helm", "together-ai"],
     googleScholar: "https://scholar.google.com/citations?user=uKoJYFQAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d919816893a4db8a5d49099d",
     myTake: "Liang is quietly one of the most important figures in AI evaluation. Without HELM, we'd have no standardized way to compare LLMs. Together AI represents the thesis that open-source can compete with closed models — a bet that's increasingly looking right.",
@@ -494,6 +501,7 @@ export const aiContributors: AIContributor[] = [
     linkedin: "https://www.linkedin.com/in/lexfridman/",
     website: "https://lexfridman.com/",
     github: "https://github.com/lexfridman",
+    githubFollowers: "~15K",
     youtube: "https://youtube.com/@lexfridman",
     googleScholar: "https://scholar.google.com/citations?user=wZH_N7cAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d919819ca735c38a70fbd80b",
@@ -544,6 +552,8 @@ export const aiContributors: AIContributor[] = [
     linkedin: "https://www.linkedin.com/in/chelsea-finn-8a924771/",
     website: "https://ai.stanford.edu/~cbfinn/",
     github: "https://github.com/cbfinn",
+    githubFollowers: "~2K",
+    githubPinnedRepos: ["maml", "maml_rl"],
     googleScholar: "https://scholar.google.com/citations?user=vUPPg3gAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981f69300d73c3fbaab0d",
     myTake: "Finn's MAML paper is one of the most elegant ideas in ML — teach a model how to learn quickly from few examples. Physical Intelligence is betting that the same kind of foundation model approach that worked for language will work for robotics. If they're right, it's transformative.",
@@ -570,6 +580,7 @@ export const aiContributors: AIContributor[] = [
     linkedin: "https://www.linkedin.com/in/sara-hooker/",
     website: "https://www.sarahooker.me/",
     github: "https://github.com/sarahooker",
+    githubFollowers: "~1K",
     googleScholar: "https://scholar.google.com/citations?user=0Tnz_L8AAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981c3a245ffaa458d0e9c",
     quote: "The Hardware Lottery — when a research idea wins because it's compatible with available hardware, not because it's the best idea.",
@@ -622,6 +633,7 @@ export const aiContributors: AIContributor[] = [
     awards: "TIME100 AI, Baidu founder",
     education: "PhD in Computer Science, SUNY Buffalo (1994).",
     github: "https://github.com/PaddlePaddle",
+    githubPinnedRepos: ["Paddle", "PaddleNLP", "PaddleOCR"],
     googleScholar: "https://scholar.google.com/citations?user=v3LVROIAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d9198142a535ef174f34ae6f",
     myTake: "Li represents the parallel AI universe developing in China. Baidu's ERNIE models and Apollo autonomous driving platform are massive — yet largely invisible to Western audiences. Understanding China's AI ecosystem through Li's work is critical for anyone thinking about AI geopolitics.",
@@ -803,6 +815,8 @@ export const aiContributors: AIContributor[] = [
     linkedin: "https://www.linkedin.com/in/thomas-wolf-a056857/",
     website: "https://huggingface.co/",
     github: "https://github.com/thomwolf",
+    githubFollowers: "~10K+",
+    githubPinnedRepos: ["transformers", "datasets", "accelerate"],
     googleScholar: "https://scholar.google.com/citations?user=j35feEMAAAAJ",
     notionUrl: "https://www.notion.so/323882e4d91981419a79d2251397cd30",
     quote: "We believe in democratizing good machine learning, one commit at a time.",
@@ -854,6 +868,8 @@ export const aiContributors: AIContributor[] = [
     twitter: "https://x.com/_albertgu",
     website: "https://albertgu.com/",
     github: "https://github.com/state-spaces",
+    githubFollowers: "~8K+",
+    githubPinnedRepos: ["mamba", "state-spaces"],
     googleScholar: "https://scholar.google.com/citations?user=8GKhLs8AAAAJ",
     notionUrl: "https://www.notion.so/323882e4d919814cb79cd99c86a4eb5d",
     quote: "State-space models offer a principled alternative to attention mechanisms with linear-time complexity.",

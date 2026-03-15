@@ -6,7 +6,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 import { aiContributors, SEGMENT_COLORS } from "@/data/aiContributors";
 import {
   ArrowLeft, ArrowRight, ExternalLink, GraduationCap, Award, MapPin,
-  Quote, BookOpen, Link2, Play, Clock, Linkedin, Github, Share2, Copy, Check
+  Quote, BookOpen, Link2, Play, Clock, Linkedin, Github, Share2, Copy, Check, Star, Users
 } from "lucide-react";
 import { useState } from "react";
 
@@ -153,6 +153,7 @@ const AIContributorProfilePage = () => {
                 <nav className="space-y-0.5 mb-6 border-l border-border">
                   {[
                     { label: "Overview", id: "details" },
+                    contributor.github && (contributor.githubFollowers || contributor.githubPinnedRepos) && { label: "GitHub", id: "github-stats" },
                     contributor.milestones?.length && { label: "Timeline", id: "timeline" },
                     contributor.quote && { label: "Quote", id: "quote" },
                     { label: "Biography", id: "biography" },
@@ -302,6 +303,38 @@ const AIContributorProfilePage = () => {
                   <span className="font-mono text-[11px] text-muted-foreground leading-relaxed">{contributor.education}</span>
                 </div>
               </div>
+              {/* GitHub Stats */}
+              {contributor.github && (contributor.githubFollowers || contributor.githubPinnedRepos) && (
+                <div className="border border-border p-4" id="github-stats">
+                  <h3 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-2">
+                    <Github size={10} className="inline mr-1" />GitHub
+                  </h3>
+                  {contributor.githubFollowers && (
+                    <div className="flex items-center gap-1.5 mb-2">
+                      <Users size={10} className="text-muted-foreground/40" />
+                      <span className="font-mono text-sm text-foreground/70">{contributor.githubFollowers} followers</span>
+                    </div>
+                  )}
+                  {contributor.githubPinnedRepos && contributor.githubPinnedRepos.length > 0 && (
+                    <div>
+                      <p className="font-mono text-[9px] text-muted-foreground/30 uppercase tracking-widest mb-1.5">Pinned Repos</p>
+                      <div className="flex flex-wrap gap-1">
+                        {contributor.githubPinnedRepos.map((repo) => (
+                          <a
+                            key={repo}
+                            href={`${contributor.github}/${repo}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-mono text-[10px] border border-border px-2 py-0.5 text-muted-foreground/60 hover:text-foreground hover:border-foreground/30 transition-colors"
+                          >
+                            {repo}
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
               {/* Links & Profiles - inline in grid */}
               <div className="border border-border p-4 sm:col-span-2 lg:col-span-3" id="links">
                 <h3 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-2">Links & Profiles</h3>
