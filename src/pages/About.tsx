@@ -35,18 +35,6 @@ const experiences = [
     ],
   },
   {
-    company: "AT&T",
-    role: "Senior Technical SEO Manager",
-    period: "May 2022 — March 2025",
-    location: "Dallas, Texas",
-    achievements: [
-      "Led technical SEO across 50M+ page ecosystem — crawl optimization, Core Web Vitals, structured data at enterprise scale",
-      "Built Python-based NLP system for automated topic clustering across 50M+ pages",
-      "Managed Botify crawl infrastructure processing 25M+ URLs bi-weekly with automated anomaly detection",
-      "Comprehensive SEO data lake in BigQuery with real-time organic performance tracking",
-    ],
-  },
-  {
     company: "CoStar Group",
     role: "SEO Manager — Apartments.com, ForRent.com, ApartmentFinder.com",
     period: "Oct 2018 — May 2022",
