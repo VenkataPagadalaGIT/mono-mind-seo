@@ -433,7 +433,7 @@ export const aiContributors: AIContributor[] = [
     rank: 31,
     bio: "CEO of Alphabet/Google. Overseeing Gemini AI, Google DeepMind, and AI-first transformation.",
     photoUrl: "/photos/pichai.jpg",
-    photoCredit: "Illustration · AI-generated portrait",
+    photoCredit: "Photo: Wikimedia Commons / CC BY 4.0",
     segment: "Enterprise & Applied AI",
     specialty: ["AI Infrastructure", "LLMs"],
     affiliation: "Google / Alphabet",
