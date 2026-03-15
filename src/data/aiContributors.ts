@@ -1620,6 +1620,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "hassabis", name: "Demis Hassabis", rank: 4,
     bio: "CEO of Google DeepMind. 2024 Nobel Prize in Chemistry for AlphaFold. Pioneer of AGI research. Founded Isomorphic Labs.",
+    photoUrl: "/photos/hassabis.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY 4.0",
     segment: "AI for Science & Healthcare", specialty: ["AGI", "Reinforcement Learning", "Drug Discovery"],
     affiliation: "Google DeepMind / Isomorphic Labs", expertType: "Founder/CEO", country: "UK",
     keyInfluence: "Solved protein folding with AlphaFold. Built AlphaGo. Leading the path to AGI at DeepMind.",
