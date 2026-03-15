@@ -587,6 +587,8 @@ export const aiContributors: AIContributor[] = [
     name: "Gary Marcus",
     rank: 54,
     bio: "Professor emeritus at NYU. Prominent AI critic. Author of Rebooting AI. Advocates hybrid neurosymbolic AI.",
+    photoUrl: "/photos/marcus.jpg",
+    photoCredit: "Illustration · AI-generated portrait",
     segment: "AI Ethics & Policy",
     specialty: ["AI Safety", "AI Policy"],
     affiliation: "Independent / NYU (emeritus)",
