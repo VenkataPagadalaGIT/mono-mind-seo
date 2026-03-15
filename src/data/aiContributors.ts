@@ -402,6 +402,7 @@ export const aiContributors: AIContributor[] = [
     awards: "",
     education: "PhD in Computer Science, UC Berkeley (2011).",
     twitter: "https://x.com/percyliang",
+    linkedin: "https://www.linkedin.com/in/percy-liang-0862984/",
     website: "https://cs.stanford.edu/~pliang/",
     github: "https://github.com/percyliang",
     googleScholar: "https://scholar.google.com/citations?user=uKoJYFQAAAAJ",
