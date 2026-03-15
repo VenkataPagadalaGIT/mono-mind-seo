@@ -10,6 +10,8 @@ interface PageSidebarProps {
   sections: TocItem[];
   shareTitle?: string;
   shareDescription?: string;
+  /** Called when a TOC item is clicked */
+  onSectionClick?: (id: string) => void;
   /** Extra content to render below the TOC */
   children?: React.ReactNode;
 }
