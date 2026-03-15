@@ -371,86 +371,8 @@ const AIContributorProfilePage = () => {
             </ScrollReveal>
           )}
 
-          {/* ── Two-column: Sidebar + Content ── */}
-          <div className="lg:flex lg:gap-8">
-            {/* Sticky Side Nav — desktop only */}
-            <aside className="hidden lg:block lg:w-48 shrink-0">
-              <div className="sticky top-28">
-                <p className="font-mono text-[9px] text-muted-foreground/30 uppercase tracking-widest mb-3">On This Page</p>
-                <nav className="space-y-1 mb-6">
-                  {[
-                    contributor.quote && { label: "Quote", id: "quote" },
-                    { label: "Biography", id: "biography" },
-                    contributor.whyTheyMatter && { label: "Why They Matter", id: "why" },
-                    contributor.myTake && { label: "My Take", id: "my-take" },
-                    { label: "Key Influence", id: "influence" },
-                    (contributor.resources?.filter(r => r.type === "paper").length ?? 0) > 0 && { label: "Papers", id: "papers" },
-                    (contributor.resources?.filter(r => ["talk", "interview"].includes(r.type)).length ?? 0) > 0 && { label: "Videos", id: "videos" },
-                    (contributor.resources?.filter(r => r.type === "podcast").length ?? 0) > 0 && { label: "Podcasts", id: "podcasts-res" },
-                    contributor.featuredMedia?.length && { label: "Media", id: "media" },
-                    contributor.awards && { label: "Awards", id: "awards" },
-                    (contributor.connections?.length ?? 0) > 0 && { label: "Connections", id: "connections" },
-                  ].filter(Boolean).map((item: any) => (
-                    <a
-                      key={item.id}
-                      href={`#${item.id}`}
-                      className="block font-mono text-[10px] text-muted-foreground/40 hover:text-foreground py-1 border-l-2 border-transparent hover:border-foreground/30 pl-3 transition-colors"
-                    >
-                      {item.label}
-                    </a>
-                  ))}
-                </nav>
 
-                {/* Share */}
-                <p className="font-mono text-[9px] text-muted-foreground/30 uppercase tracking-widest mb-2">Share</p>
-                <div className="space-y-1 mb-4">
-                  <a
-                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`${contributor.name} — #${contributor.rank} Top AI Contributor 2026`)}&url=${encodeURIComponent(`https://mono-mind-seo.lovable.app/ai-contributors/${contributor.id}`)}`}
-                    target="_blank" rel="noopener noreferrer"
-                    className="block font-mono text-[10px] text-muted-foreground/40 hover:text-foreground py-1 pl-3 transition-colors"
-                  >𝕏 Post</a>
-                  <a
-                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://mono-mind-seo.lovable.app/ai-contributors/${contributor.id}`)}`}
-                    target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-1 font-mono text-[10px] text-muted-foreground/40 hover:text-foreground py-1 pl-3 transition-colors"
-                  ><Linkedin size={9} /> LinkedIn</a>
-                </div>
 
-                {/* Share with AI */}
-                <p className="font-mono text-[9px] text-muted-foreground/30 uppercase tracking-widest mb-2">Share with AI</p>
-                <div className="space-y-1 mb-4">
-                  <a href={`https://chatgpt.com/?q=${encodeURIComponent(`Tell me about ${contributor.name}, an AI contributor ranked #${contributor.rank}`)}`}
-                    target="_blank" rel="noopener noreferrer"
-                    className="block font-mono text-[10px] text-muted-foreground/40 hover:text-foreground py-1 pl-3 transition-colors">
-                    ChatGPT
-                  </a>
-                  <a href={`https://www.perplexity.ai/search?q=${encodeURIComponent(`${contributor.name} AI researcher ${contributor.affiliation}`)}`}
-                    target="_blank" rel="noopener noreferrer"
-                    className="block font-mono text-[10px] text-muted-foreground/40 hover:text-foreground py-1 pl-3 transition-colors">
-                    Perplexity
-                  </a>
-                  <a href={`https://gemini.google.com/app?q=${encodeURIComponent(`Tell me about ${contributor.name}, ${contributor.affiliation}`)}`}
-                    target="_blank" rel="noopener noreferrer"
-                    className="block font-mono text-[10px] text-muted-foreground/40 hover:text-foreground py-1 pl-3 transition-colors">
-                    Gemini
-                  </a>
-                </div>
-
-                <button
-                  onClick={() => {
-                    navigator.clipboard.writeText(`https://mono-mind-seo.lovable.app/ai-contributors/${contributor.id}`);
-                    setCopied(true);
-                    setTimeout(() => setCopied(false), 2000);
-                  }}
-                  className="flex items-center gap-1 font-mono text-[10px] text-muted-foreground/40 hover:text-foreground py-1 pl-3 transition-colors"
-                >
-                  {copied ? <><Check size={9} /> Copied</> : <><Copy size={9} /> Copy URL</>}
-                </button>
-              </div>
-            </aside>
-
-            {/* Main Content Column */}
-            <div className="flex-1 min-w-0">
               {/* Mobile inline nav */}
               <div className="lg:hidden border border-border p-4 mb-6">
                 <p className="font-mono text-[9px] text-muted-foreground/30 uppercase tracking-widest mb-2">Jump to Section</p>
