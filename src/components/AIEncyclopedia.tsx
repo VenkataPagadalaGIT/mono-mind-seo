@@ -1,7 +1,6 @@
 import { useState, useMemo } from "react";
 import { encyclopediaConcepts, ENCYCLOPEDIA_CATEGORIES, type EncyclopediaConcept } from "@/data/aiEncyclopedia";
 import { Search, ChevronDown, ChevronUp, ExternalLink, Tag, BookOpen, ArrowRight } from "lucide-react";
-import ScrollReveal from "@/components/ScrollReveal";
 
 const diffBadge: Record<string, string> = {
   beginner: "border-green-500/30 text-green-400",
