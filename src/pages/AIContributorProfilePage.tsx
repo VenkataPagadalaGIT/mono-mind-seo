@@ -371,7 +371,7 @@ const AIContributorProfilePage = () => {
           {/* ── Milestones ── */}
           {contributor.milestones && contributor.milestones.length > 0 && (
             <ScrollReveal delay={100}>
-              <div className="mb-10">
+              <div id="timeline" className="mb-10 scroll-mt-24">
                 <h2 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-6">
                   Timeline
                 </h2>
