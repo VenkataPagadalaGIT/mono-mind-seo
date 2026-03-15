@@ -668,6 +668,8 @@ export const aiContributors: AIContributor[] = [
     name: "Tristan Harris",
     rank: 76,
     bio: "Co-founder of Center for Humane Technology. Star of The Social Dilemma. Leading voice on responsible AI.",
+    photoUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Tristan_Harris_in_2022.jpg/440px-Tristan_Harris_in_2022.jpg",
+    photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "AI Ethics & Policy",
     specialty: ["AI Ethics", "AI Policy"],
     affiliation: "Center for Humane Technology",
