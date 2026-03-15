@@ -372,7 +372,6 @@ const AIContributorProfilePage = () => {
           )}
 
 
-
               {/* Mobile inline nav */}
               <div className="lg:hidden border border-border p-4 mb-6">
                 <p className="font-mono text-[9px] text-muted-foreground/30 uppercase tracking-widest mb-2">Jump to Section</p>
@@ -756,7 +755,7 @@ const AIContributorProfilePage = () => {
               </Link>
             </div>
           </ScrollReveal>
-            </div>{/* end content column */}
+            </div>{/* end main content column */}
           </div>{/* end two-column layout */}
         </div>
       </div>
