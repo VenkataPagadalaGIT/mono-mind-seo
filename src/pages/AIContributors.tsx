@@ -69,7 +69,7 @@ const AIContributors = () => {
   });
 
   const [activeSection, setActiveSection] = useState<string>("explorer");
-  const contentRef = useRef<HTMLDivElement>(null);
+  
 
   useEffect(() => {
     const meta = TAB_META[topTab];
