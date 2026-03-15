@@ -1,6 +1,5 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
-import NeuralNetBackground from "@/components/NeuralNetBackground";
 import StateOfAIEssay from "@/components/StateOfAIEssay";
 import NarrativeChapters from "@/components/NarrativeChapters";
 import AIContributorsExplorer from "@/components/AIContributorsExplorer";
@@ -10,15 +9,15 @@ import AIGlossary from "@/components/AIGlossary";
 import CuratedReadingLists from "@/components/CuratedReadingLists";
 import ReadingProgress from "@/components/ReadingProgress";
 import { aiContributors } from "@/data/aiContributors";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Users, BookOpen, Clock, Map, Brain, FileText, Library, Sparkles } from "lucide-react";
 
 const STORAGE_KEY = "ai-contributors-explored";
 
 const sections = [
+  { id: "explorer", label: "Database", icon: Users },
   { id: "essay", label: "Overview", icon: FileText },
   { id: "chapters", label: "Chapters", icon: BookOpen },
-  { id: "explorer", label: "Explorer", icon: Users },
   { id: "paths", label: "Paths", icon: Map },
   { id: "timeline", label: "Timeline", icon: Clock },
   { id: "glossary", label: "Glossary", icon: Brain },
@@ -26,6 +25,7 @@ const sections = [
 ] as const;
 
 const AIContributors = () => {
+  const navigate = useNavigate();
   const [exploredIds, setExploredIds] = useState<Set<string>>(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
@@ -35,13 +35,13 @@ const AIContributors = () => {
     }
   });
 
-  const [activeSection, setActiveSection] = useState<string>("essay");
-  const explorerRef = useRef<HTMLDivElement>(null);
+  const [activeSection, setActiveSection] = useState<string>("explorer");
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     document.title = "Top 100 AI Contributors 2026 | The Definitive AI Notebook | Venkata Pagadala";
     const meta = document.querySelector('meta[name="description"]');
-    const content = "The definitive interactive notebook on the top 100 people shaping AI in 2026. Narrative chapters, curated learning paths, glossary, reading lists, timeline, and personal insights — the go-to book for AI learners.";
+    const content = "The definitive interactive notebook on the top 100 people shaping AI in 2026. Narrative chapters, curated learning paths, glossary, reading lists, timeline, and personal insights.";
     if (meta) meta.setAttribute("content", content);
   }, []);
 
@@ -55,111 +55,68 @@ const AIContributors = () => {
   }, []);
 
   const handleSelectFromOutside = useCallback((id: string) => {
-    handleExplore(id);
-    setActiveSection("explorer");
-    setTimeout(() => {
-      explorerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 100);
-  }, [handleExplore]);
+    navigate(`/ai-contributors/${id}`);
+  }, [navigate]);
 
   return (
-    <div className="min-h-screen bg-background pt-24 pb-20 px-6 relative overflow-hidden">
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <NeuralNetBackground />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-transparent to-background/70" />
-      </div>
-
-      <div className="max-w-6xl mx-auto relative z-10">
+    <div className="min-h-screen bg-background pt-24 pb-20 px-6 relative">
+      <div className="max-w-5xl mx-auto relative z-10">
         {/* Breadcrumb */}
         <ScrollReveal>
           <Link
             to="/publications"
-            className="inline-flex items-center gap-2 font-mono text-[10px] tracking-widest uppercase text-muted-foreground/50 hover:text-foreground transition-colors mb-8"
+            className="inline-flex items-center gap-2 font-mono text-[10px] tracking-widest uppercase text-muted-foreground/40 hover:text-foreground transition-colors mb-10"
           >
             <ArrowLeft size={12} /> Back to Lab
           </Link>
         </ScrollReveal>
 
-        {/* Hero */}
+        {/* Hero — minimal */}
         <ScrollReveal>
           <div className="mb-12">
-            <p className="font-mono text-xs tracking-[0.3em] text-muted-foreground mb-4 uppercase">
+            <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/30 mb-3 uppercase">
               The AI Notebook · 2026 Edition
             </p>
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-bold text-foreground text-glow mb-3">
-              Top 100 AI
+            <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-2">
+              Top 100 AI Contributors
             </h1>
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-bold text-foreground/40 mb-6">
-              Contributors
-            </h1>
-            <p className="font-mono text-xs text-muted-foreground/50 tracking-wider uppercase mb-8">
-              The go-to book for understanding the people shaping artificial intelligence
+            <p className="font-mono text-xs text-muted-foreground/40 max-w-xl leading-relaxed">
+              The definitive reference for understanding the people shaping artificial intelligence.
+              Browse the database, read narrative chapters, or explore by topic.
             </p>
-
-            {/* Table of contents */}
-            <div className="border border-border p-6 mb-8 max-w-md">
-              <p className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-4">Table of Contents</p>
-              <div className="space-y-2">
-                {sections.map((section, i) => (
-                  <button
-                    key={section.id}
-                    onClick={() => {
-                      setActiveSection(section.id);
-                      explorerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-                    }}
-                    className="w-full flex items-center gap-3 py-1.5 group text-left"
-                  >
-                    <span className="font-mono text-[10px] text-muted-foreground/20 w-4">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <section.icon size={12} className="text-muted-foreground/20 group-hover:text-foreground/40 transition-colors" />
-                    <span className="font-mono text-xs text-muted-foreground/50 group-hover:text-foreground transition-colors">
-                      {section.label}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
           </div>
         </ScrollReveal>
 
-        {/* Stats + Progress */}
-        <ScrollReveal delay={100}>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-12">
+        {/* Stats — compact */}
+        <ScrollReveal delay={50}>
+          <div className="flex flex-wrap gap-6 mb-10 pb-8 border-b border-border">
             {[
-              { icon: Users, label: "Contributors", value: String(aiContributors.length) },
-              { icon: BookOpen, label: "Chapters", value: "6" },
-              { icon: Brain, label: "Concepts", value: "20" },
-              { icon: Sparkles, label: "Resources", value: "25+" },
+              { label: "Contributors", value: String(aiContributors.length) },
+              { label: "Chapters", value: "6" },
+              { label: "Concepts", value: "20" },
+              { label: "Resources", value: "25+" },
+              { label: "Explored", value: `${exploredIds.size}/${aiContributors.length}` },
             ].map((stat) => (
-              <div key={stat.label} className="border border-border p-3 text-center border-glow-hover">
-                <stat.icon size={14} className="mx-auto mb-1.5 text-muted-foreground/40" />
-                <p className="font-display text-lg font-bold text-foreground">{stat.value}</p>
-                <p className="font-mono text-[8px] text-muted-foreground/30 uppercase tracking-widest">{stat.label}</p>
+              <div key={stat.label}>
+                <p className="font-mono text-lg font-bold text-foreground">{stat.value}</p>
+                <p className="font-mono text-[9px] text-muted-foreground/25 uppercase tracking-widest">{stat.label}</p>
               </div>
             ))}
           </div>
         </ScrollReveal>
 
-        {/* Reading Progress */}
-        <ScrollReveal delay={150}>
-          <div className="mb-12">
-            <ReadingProgress exploredIds={exploredIds} />
-          </div>
-        </ScrollReveal>
-
-        {/* Section Navigation */}
-        <div ref={explorerRef}>
-          <ScrollReveal delay={200}>
-            <div className="flex flex-wrap gap-1 border border-border p-0.5 mb-8">
+        {/* Section Tabs */}
+        <div ref={contentRef}>
+          <ScrollReveal delay={100}>
+            <div className="flex flex-wrap gap-0 border-b border-border mb-8">
               {sections.map((section) => (
                 <button
                   key={section.id}
                   onClick={() => setActiveSection(section.id)}
-                  className={`flex items-center gap-1.5 px-3 sm:px-4 py-2 font-mono text-[9px] sm:text-[10px] uppercase tracking-widest transition-all ${
+                  className={`flex items-center gap-1.5 px-4 py-2.5 font-mono text-[10px] uppercase tracking-widest transition-all border-b-2 -mb-px ${
                     activeSection === section.id
-                      ? "bg-foreground text-background"
-                      : "text-muted-foreground/40 hover:text-foreground"
+                      ? "border-foreground text-foreground"
+                      : "border-transparent text-muted-foreground/30 hover:text-muted-foreground/60"
                   }`}
                 >
                   <section.icon size={11} />
@@ -170,118 +127,68 @@ const AIContributors = () => {
           </ScrollReveal>
 
           {/* Section Content */}
-          <ScrollReveal>
-            {activeSection === "essay" && (
-              <div>
-                <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-2">
-                  The State of AI, 2026
-                </h2>
-                <p className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-8">
-                  An introduction
-                </p>
-                <StateOfAIEssay />
-              </div>
-            )}
+          {activeSection === "explorer" && (
+            <AIContributorsExplorer onExplore={handleExplore} />
+          )}
 
-            {activeSection === "chapters" && (
-              <div>
-                <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-2">
-                  Narrative Chapters
-                </h2>
-                <p className="font-mono text-xs text-muted-foreground leading-relaxed mb-8 max-w-2xl">
-                  Six stories that weave the top contributors into the narrative arcs defining AI's evolution.
-                  Click any chapter to read the full story and explore the people behind it.
-                </p>
-                <NarrativeChapters onSelectContributor={handleSelectFromOutside} />
-              </div>
-            )}
+          {activeSection === "essay" && (
+            <div>
+              <h2 className="font-display text-xl font-bold text-foreground mb-1">The State of AI, 2026</h2>
+              <p className="font-mono text-[10px] text-muted-foreground/25 uppercase tracking-widest mb-8">An introduction</p>
+              <StateOfAIEssay />
+            </div>
+          )}
 
-            {activeSection === "explorer" && (
-              <div>
-                <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-2">
-                  Interactive Explorer
-                </h2>
-                <p className="font-mono text-xs text-muted-foreground leading-relaxed mb-8 max-w-2xl">
-                  Graph and directory views of all contributors. Click profiles to explore quotes,
-                  key resources, relationship maps, and personal insights.
-                </p>
-                <AIContributorsExplorer onExplore={handleExplore} />
-              </div>
-            )}
+          {activeSection === "chapters" && (
+            <div>
+              <h2 className="font-display text-xl font-bold text-foreground mb-1">Narrative Chapters</h2>
+              <p className="font-mono text-[11px] text-muted-foreground/40 mb-8 max-w-2xl leading-relaxed">
+                Six stories that weave the top contributors into the narrative arcs defining AI's evolution.
+              </p>
+              <NarrativeChapters onSelectContributor={handleSelectFromOutside} />
+            </div>
+          )}
 
-            {activeSection === "paths" && (
-              <div>
-                <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-2">
-                  Learning Paths
-                </h2>
-                <p className="font-mono text-xs text-muted-foreground leading-relaxed mb-8 max-w-2xl">
-                  Curated paths grouping contributors by topic and skill level.
-                  Track your progress as you explore each profile.
-                </p>
-                <LearningPaths
-                  onSelectContributor={handleSelectFromOutside}
-                  exploredIds={exploredIds}
-                />
-              </div>
-            )}
+          {activeSection === "paths" && (
+            <div>
+              <h2 className="font-display text-xl font-bold text-foreground mb-1">Learning Paths</h2>
+              <p className="font-mono text-[11px] text-muted-foreground/40 mb-8 max-w-2xl leading-relaxed">
+                Curated paths grouping contributors by topic and skill level.
+              </p>
+              <LearningPaths onSelectContributor={handleSelectFromOutside} exploredIds={exploredIds} />
+            </div>
+          )}
 
-            {activeSection === "timeline" && (
-              <div>
-                <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-2">
-                  AI Timeline
-                </h2>
-                <p className="font-mono text-xs text-muted-foreground leading-relaxed mb-8 max-w-2xl">
-                  Key milestones from 1986 to today — the breakthroughs, launches, and moments that defined the field.
-                </p>
-                <AITimeline onSelectContributor={handleSelectFromOutside} />
-              </div>
-            )}
+          {activeSection === "timeline" && (
+            <div>
+              <h2 className="font-display text-xl font-bold text-foreground mb-1">AI Timeline</h2>
+              <p className="font-mono text-[11px] text-muted-foreground/40 mb-8 max-w-2xl leading-relaxed">
+                Key milestones from 1986 to today.
+              </p>
+              <AITimeline onSelectContributor={handleSelectFromOutside} />
+            </div>
+          )}
 
-            {activeSection === "glossary" && (
-              <div>
-                <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-2">
-                  AI Concepts Glossary
-                </h2>
-                <p className="font-mono text-xs text-muted-foreground leading-relaxed mb-8 max-w-2xl">
-                  20 essential AI concepts — each linked to the contributors who pioneered them.
-                  Click any name to jump to their full profile.
-                </p>
-                <AIGlossary onSelectContributor={handleSelectFromOutside} />
-              </div>
-            )}
+          {activeSection === "glossary" && (
+            <div>
+              <h2 className="font-display text-xl font-bold text-foreground mb-1">AI Concepts Glossary</h2>
+              <p className="font-mono text-[11px] text-muted-foreground/40 mb-8 max-w-2xl leading-relaxed">
+                20 essential AI concepts linked to the contributors who pioneered them.
+              </p>
+              <AIGlossary onSelectContributor={handleSelectFromOutside} />
+            </div>
+          )}
 
-            {activeSection === "reading" && (
-              <div>
-                <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-2">
-                  Curated Reading Lists
-                </h2>
-                <p className="font-mono text-xs text-muted-foreground leading-relaxed mb-8 max-w-2xl">
-                  The papers, podcasts, and talks that matter most — organized by depth level with
-                  context on why each one is essential.
-                </p>
-                <CuratedReadingLists />
-              </div>
-            )}
-          </ScrollReveal>
+          {activeSection === "reading" && (
+            <div>
+              <h2 className="font-display text-xl font-bold text-foreground mb-1">Curated Reading Lists</h2>
+              <p className="font-mono text-[11px] text-muted-foreground/40 mb-8 max-w-2xl leading-relaxed">
+                The papers, podcasts, and talks that matter most.
+              </p>
+              <CuratedReadingLists />
+            </div>
+          )}
         </div>
-
-        {/* CTA */}
-        <ScrollReveal>
-          <div className="border border-border p-8 text-center mt-20 border-glow-hover">
-            <h3 className="font-display text-xl font-bold text-foreground mb-3">
-              Explore more in The Lab
-            </h3>
-            <p className="font-mono text-xs text-muted-foreground mb-6 max-w-md mx-auto">
-              Published research, active AI systems, and interactive topic explorations.
-            </p>
-            <Link
-              to="/publications"
-              className="inline-flex items-center gap-2 border border-foreground px-6 py-3 font-mono text-xs text-foreground hover:bg-foreground hover:text-background transition-all tracking-widest uppercase"
-            >
-              Visit The Lab <ArrowLeft size={12} className="rotate-180" />
-            </Link>
-          </div>
-        </ScrollReveal>
       </div>
     </div>
   );
