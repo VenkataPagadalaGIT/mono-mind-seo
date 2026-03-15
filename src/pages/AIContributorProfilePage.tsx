@@ -18,6 +18,39 @@ const MEDIA_ICONS: Record<string, typeof Play> = {
   podcast: Play, interview: Play, documentary: Play, lecture: Play,
 };
 
+/** Extract YouTube video ID from various URL formats */
+function getYouTubeId(url: string): string | null {
+  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([a-zA-Z0-9_-]{11})/);
+  return match ? match[1] : null;
+}
+
+/** Get thumbnail URL for a resource URL (YouTube supported) */
+function getThumbnail(url: string): string | null {
+  const ytId = getYouTubeId(url);
+  return ytId ? `https://img.youtube.com/vi/${ytId}/mqdefault.jpg` : null;
+}
+
+/** Reusable thumbnail component */
+const ResourceThumbnail = ({ url, fullWidth }: { url: string; fullWidth?: boolean }) => {
+  const thumb = getThumbnail(url);
+  const sizeClass = fullWidth ? "w-full h-36" : "w-28 h-16";
+  if (!thumb) {
+    return (
+      <div className={`${sizeClass} border border-border flex items-center justify-center shrink-0 bg-muted/20 group-hover:border-foreground/30 transition-colors`}>
+        <Play size={fullWidth ? 24 : 16} className="text-muted-foreground/30 group-hover:text-foreground transition-colors" />
+      </div>
+    );
+  }
+  return (
+    <div className={`${sizeClass} shrink-0 relative overflow-hidden border border-border group-hover:border-foreground/30 transition-colors`}>
+      <img src={thumb} alt="" className="w-full h-full object-cover" loading="lazy" />
+      <div className="absolute inset-0 flex items-center justify-center bg-background/40 group-hover:bg-background/20 transition-colors">
+        <Play size={fullWidth ? 24 : 16} className="text-foreground/70" fill="currentColor" />
+      </div>
+    </div>
+  );
+};
+
 const AIContributorProfilePage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -380,10 +413,10 @@ const AIContributorProfilePage = () => {
                   <div className="space-y-3">
                     {videos.map((res, i) => (
                       <a key={i} href={res.url} target="_blank" rel="noopener noreferrer"
-                        className="block border border-border p-5 hover:border-foreground/20 transition-all group">
-                        <div className="flex items-start gap-3">
-                          <span className="text-sm mt-0.5">{RESOURCE_ICONS[res.type] || "🎙️"}</span>
-                          <div className="flex-1">
+                        className="block border border-border p-4 hover:border-foreground/20 transition-all group">
+                        <div className="flex items-start gap-4">
+                          <ResourceThumbnail url={res.url} />
+                          <div className="flex-1 min-w-0">
                             <div className="flex items-start justify-between gap-2 mb-1">
                               <p className="font-display text-sm font-bold text-foreground group-hover:text-glow transition-all">{res.title}</p>
                               <ExternalLink size={10} className="text-muted-foreground/20 group-hover:text-foreground/40 shrink-0 mt-1" />
@@ -418,10 +451,10 @@ const AIContributorProfilePage = () => {
                   <div className="space-y-3">
                     {podcasts.map((res, i) => (
                       <a key={i} href={res.url} target="_blank" rel="noopener noreferrer"
-                        className="block border border-border p-5 hover:border-foreground/20 transition-all group">
-                        <div className="flex items-start gap-3">
-                          <span className="text-sm mt-0.5">🎧</span>
-                          <div className="flex-1">
+                        className="block border border-border p-4 hover:border-foreground/20 transition-all group">
+                        <div className="flex items-start gap-4">
+                          <ResourceThumbnail url={res.url} />
+                          <div className="flex-1 min-w-0">
                             <div className="flex items-start justify-between gap-2 mb-1">
                               <p className="font-display text-sm font-bold text-foreground group-hover:text-glow transition-all">{res.title}</p>
                               <ExternalLink size={10} className="text-muted-foreground/20 group-hover:text-foreground/40 shrink-0 mt-1" />
@@ -494,30 +527,26 @@ const AIContributorProfilePage = () => {
                       href={media.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="border border-border p-5 hover:border-foreground/20 transition-all group"
+                      className="border border-border p-4 hover:border-foreground/20 transition-all group"
                     >
-                      <div className="flex items-start gap-3">
-                        <div className="w-10 h-10 border border-border flex items-center justify-center shrink-0 group-hover:border-foreground/30 transition-colors">
-                          <Play size={14} className="text-muted-foreground/30 group-hover:text-foreground transition-colors" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="font-display text-sm font-bold text-foreground group-hover:text-glow transition-all mb-1 line-clamp-2">
-                            {media.title}
-                          </p>
-                          <p className="font-mono text-[10px] text-muted-foreground/40 mb-1">
-                            {media.host}
-                          </p>
-                          <div className="flex items-center gap-3">
-                            <span className="font-mono text-[9px] text-muted-foreground/20 capitalize">{media.type}</span>
-                            {media.duration && (
-                              <span className="flex items-center gap-1 font-mono text-[9px] text-muted-foreground/20">
-                                <Clock size={8} /> {media.duration}
-                              </span>
-                            )}
-                            {media.year && (
-                              <span className="font-mono text-[9px] text-muted-foreground/20">{media.year}</span>
-                            )}
-                          </div>
+                      <ResourceThumbnail url={media.url} fullWidth />
+                      <div className="mt-3">
+                        <p className="font-display text-sm font-bold text-foreground group-hover:text-glow transition-all mb-1 line-clamp-2">
+                          {media.title}
+                        </p>
+                        <p className="font-mono text-[10px] text-muted-foreground/40 mb-1">
+                          {media.host}
+                        </p>
+                        <div className="flex items-center gap-3">
+                          <span className="font-mono text-[9px] text-muted-foreground/20 capitalize">{media.type}</span>
+                          {media.duration && (
+                            <span className="flex items-center gap-1 font-mono text-[9px] text-muted-foreground/20">
+                              <Clock size={8} /> {media.duration}
+                            </span>
+                          )}
+                          {media.year && (
+                            <span className="font-mono text-[9px] text-muted-foreground/20">{media.year}</span>
+                          )}
                         </div>
                       </div>
                     </a>
