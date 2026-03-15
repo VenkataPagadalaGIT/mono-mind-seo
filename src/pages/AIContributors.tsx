@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import PageSidebar from "@/components/PageSidebar";
+import AuthorSidebar from "@/components/AuthorSidebar";
 import StateOfAIEssay from "@/components/StateOfAIEssay";
 import AIContributorsExplorer from "@/components/AIContributorsExplorer";
 import AITimeline from "@/components/AITimeline";
@@ -99,7 +100,6 @@ const AIContributors = () => {
     const descTag = document.querySelector('meta[name="description"]');
     if (descTag) descTag.setAttribute("content", meta.description);
 
-    // JSON-LD structured data
     let jsonLd = document.querySelector('script[data-ai-notebook-ld]');
     if (!jsonLd) {
       jsonLd = document.createElement("script");
@@ -146,7 +146,7 @@ const AIContributors = () => {
 
   return (
     <div className="min-h-screen bg-background pt-24 pb-20 px-6 relative">
-      <div className="max-w-5xl mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto relative z-10">
         {/* Breadcrumb */}
         <ScrollReveal>
           <Link
@@ -173,7 +173,7 @@ const AIContributors = () => {
           </div>
         </ScrollReveal>
 
-        {/* Top-level tabs — now use Links for SEO */}
+        {/* Top-level tabs */}
         <ScrollReveal delay={50}>
           <div className="flex flex-wrap gap-0 border-b border-border mb-8">
             {topTabs.map((tab) => (
@@ -195,31 +195,37 @@ const AIContributors = () => {
 
         {/* === ROADMAP TAB === */}
         {topTab === "roadmap" && (
-          <div>
-            <div className="mb-6">
-              <h2 className="font-display text-xl font-bold text-foreground mb-1">
-                🗺️ AI Learning Roadmap — Zero to Hero (2026)
-              </h2>
-              <p className="font-mono text-[11px] text-muted-foreground/40 max-w-2xl leading-relaxed">
-                A structured 18-week curriculum with curated videos, courses, books, repos, and pro tips for each topic. Click any topic to explore all resources.
-              </p>
+          <div className="flex gap-10">
+            <div className="flex-1 min-w-0">
+              <div className="mb-6">
+                <h2 className="font-display text-xl font-bold text-foreground mb-1">
+                  🗺️ AI Learning Roadmap — Zero to Hero (2026)
+                </h2>
+                <p className="font-mono text-[11px] text-muted-foreground/40 max-w-2xl leading-relaxed">
+                  A structured 18-week curriculum with curated videos, courses, books, repos, and pro tips for each topic. Click any topic to explore all resources.
+                </p>
+              </div>
+              <AILearningRoadmap />
             </div>
-            <AILearningRoadmap />
+            <AuthorSidebar />
           </div>
         )}
 
         {/* === ENCYCLOPEDIA TAB === */}
         {topTab === "encyclopedia" && (
-          <div>
-            <div className="mb-6">
-              <h2 className="font-display text-xl font-bold text-foreground mb-1">
-                🧠 AI Concepts Encyclopedia — Zero to Hero (2026)
-              </h2>
-              <p className="font-mono text-[11px] text-muted-foreground/40 max-w-2xl leading-relaxed">
-                110 concepts across 10 categories with descriptions, key terms, prerequisites, and curated learn-more links. Filter by category and difficulty.
-              </p>
+          <div className="flex gap-10">
+            <div className="flex-1 min-w-0">
+              <div className="mb-6">
+                <h2 className="font-display text-xl font-bold text-foreground mb-1">
+                  🧠 AI Concepts Encyclopedia — Zero to Hero (2026)
+                </h2>
+                <p className="font-mono text-[11px] text-muted-foreground/40 max-w-2xl leading-relaxed">
+                  110 concepts across 10 categories with descriptions, key terms, prerequisites, and curated learn-more links. Filter by category and difficulty.
+                </p>
+              </div>
+              <AIEncyclopedia />
             </div>
-            <AIEncyclopedia />
+            <AuthorSidebar />
           </div>
         )}
 
@@ -243,7 +249,7 @@ const AIContributors = () => {
               </div>
             </ScrollReveal>
 
-            {/* Two-column layout */}
+            {/* Three-column layout: left sidebar | content | author sidebar */}
             <div className="lg:flex lg:gap-10">
               <PageSidebar sections={pageTocSections} shareTitle="Top 100 AI Contributors 2026 — The Definitive AI Notebook" />
 
@@ -321,6 +327,8 @@ const AIContributors = () => {
                   </div>
                 </div>
               </div>
+
+              <AuthorSidebar />
             </div>
           </>
         )}

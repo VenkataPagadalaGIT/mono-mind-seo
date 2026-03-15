@@ -11,6 +11,13 @@ const Footer = () => {
     { label: "Contact", to: "/contact" },
   ];
 
+  const notebookLinks = [
+    { label: "AI Notebook", to: "/notebook/ai" },
+    { label: "Top 100 Contributors", to: "/notebook/ai" },
+    { label: "Learning Roadmap", to: "/notebook/ai/roadmap" },
+    { label: "Concepts Encyclopedia", to: "/notebook/ai/encyclopedia" },
+  ];
+
   const files = [
     { name: "llms.txt", path: "/llms.txt" },
     { name: "sitemap.xml", path: "/sitemap.xml" },
@@ -21,7 +28,7 @@ const Footer = () => {
   return (
     <footer className="border-t border-border bg-background">
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
           {/* Brand */}
           <div>
             <Link to="/" className="font-display text-lg font-bold text-foreground">
@@ -54,7 +61,20 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Machine-Readable */}
+          {/* AI Notebook */}
+          <div>
+            <p className="font-mono text-[10px] tracking-[0.2em] text-muted-foreground/40 uppercase mb-4">AI Notebook</p>
+            <ul className="space-y-2">
+              {notebookLinks.map((link) => (
+                <li key={link.to + link.label}>
+                  <Link to={link.to} className="font-mono text-[11px] text-muted-foreground/60 hover:text-foreground transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           <div>
             <p className="font-mono text-[10px] tracking-[0.2em] text-muted-foreground/40 uppercase mb-4">For Machines</p>
             <ul className="space-y-2">
