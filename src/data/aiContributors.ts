@@ -1308,6 +1308,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "yejin", name: "Yejin Choi", rank: 55,
     bio: "Professor at UW. Senior research manager at Allen AI. MacArthur Fellow 2022. Pioneer of commonsense AI.",
+    photoUrl: "/photos/yejin.jpg", photoCredit: "Photo: MacArthur Foundation / used with permission",
     segment: "Foundation Models & LLMs", specialty: ["NLP", "AI Ethics"],
     affiliation: "UW / Allen AI", expertType: "Researcher", country: "South Korea/USA",
     keyInfluence: "Pioneering commonsense reasoning and moral AI with groundbreaking NLP research.",
