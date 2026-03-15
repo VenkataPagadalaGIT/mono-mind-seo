@@ -11,43 +11,67 @@ const stats = [
 ];
 
 const skills = [
-  "AI Product Strategy", "MCP Integrations", "A2A Pipelines", "Claude Code",
-  "RAG Engines", "Knowledge Graphs", "Technical SEO", "Python", "SQL",
-  "Crawl Optimization", "Schema Markup", "Topic Clustering",
-  "Google Search Console", "Ahrefs", "Semrush", "Screaming Frog",
-  "Botify", "ContentKing", "BigQuery", "Looker Studio", "PowerBI",
-  "LLM Optimization", "NLP", "Generative AI", "Data Engineering",
-  "GPT-4", "Adobe Analytics", "Google Analytics", "Akamai CDN",
-  "Agile/Scrum", "Core Web Vitals", "JSON-LD", "International SEO",
+  "MCP", "A2A", "Claude Code", "RAG Systems", "Knowledge Graphs",
+  "Vector Embeddings", "Cosine Similarity", "Topic Clustering",
+  "LLM Optimization", "GPT-4", "Claude", "Entity Recognition", "NLP", "AI Agents",
+  "JSON-LD", "Canonical Tags", "Crawl Budget", "Log File Analysis",
+  "Core Web Vitals", "hreflang", "Site Migrations", "Sitemaps",
+  "Google Cloud Knowledge Graph API", "Botify", "Screaming Frog",
+  "Ahrefs", "Semrush", "Google Search Console", "BigQuery", "SQL",
+  "Python", "GA4", "PowerBI",
 ];
 
 const experiences = [
   {
     company: "AT&T",
-    role: "Lead Technical Product Manager — Automation, AI & SEO",
-    period: "March 2025 — Present",
+    role: "Lead Technical Product Manager, AI & Automation",
+    period: "2024 — Present",
     location: "Atlanta, Georgia",
     achievements: [
-      "AI Product Owner for technical SEO infrastructure across 50M+ pages — own product roadmap for AI-powered search optimization systems",
-      "Built RAG-powered internal linking engine using vector embeddings and entity recognition across 10M+ pages",
-      "Shipping AI integrations connecting LLMs to live SEO data for automated keyword research and content optimization",
-      "Created market share content tool with geo-segmentation generating 3-year competitive roadmaps",
+      "Built AI-powered metadata automation with knowledge graphs and content guardrails (legal, brand voice), scaling to 100K+ pages with multi-model LLM testing",
+      "Shipped RAG-based internal linking engine using vector embeddings, cosine similarity, and entity recognition for intelligent link recommendations",
+      "Built topic clustering system using vector embeddings to map content relationships for programmatic recommendations",
+      "Led AI-powered internal search chatbot using RAG architecture for Answer Engine Optimization (AEO)",
+      "Architected unified JSON-LD schema system across fragmented engineering teams with dynamic generation from CMS/catalog feeds",
+      "Established enterprise crawl infrastructure (Botify 50M+ crawls) with SEO observability, Akamai CDN caching, and Core Web Vitals optimization",
+      "Built market share content optimization tool with nationwide and geo-focused analysis (state, city, zip) and L1-L6 classification",
+      "Unlocked 3-year content roadmap through systematic market share analysis with automated internal linking and schema validation",
     ],
   },
   {
-    company: "CoStar Group",
-    role: "SEO Manager — Apartments.com, ForRent.com, ApartmentFinder.com",
-    period: "Oct 2018 — May 2022",
+    company: "CoStar Group (Apartments.com)",
+    role: "SEO Product Lead (Level 3)",
+    period: "Oct 2022 — 2024",
     location: "Atlanta, Georgia",
     achievements: [
-      "Scaled SEO infrastructure across Apartments.com (100M+ monthly visits), ForRent.com, and ApartmentFinder.com",
-      "Led site migration strategy for multi-domain consolidation with zero traffic loss",
-      "Built automated reporting pipelines integrating Google Search Console, Analytics, and Ahrefs data",
-      "International SEO implementation across 15+ geo-targeted property listing markets",
+      "Owned technical SEO across 5 properties (40M+ pages); shipped AI-powered content translation (GPT-4) across 1M+ pages",
+      "Led cross-functional team of 6 in sprint-based development; built analytics dashboards (BigQuery, SQL, PowerBI)",
     ],
   },
+  {
+    company: "American Addiction Centers",
+    role: "Senior SEO Software Developer",
+    period: "Mar 2019 — Oct 2022",
+    location: "San Diego, California",
+    achievements: [
+      "Led PHP to React.js migration; implemented JSON-LD structured data across 1M+ page healthcare portfolio",
+    ],
+  },
+  {
+    company: "Dyad Ventures",
+    role: "Search Marketing Strategist",
+    period: "Jan 2018 — Mar 2019",
+    location: "",
+    achievements: [],
+  },
+  {
+    company: "Sprout for Business",
+    role: "SEO Manager",
+    period: "Apr 2016 — Dec 2017",
+    location: "",
+    achievements: [],
+  },
 ];
-
 const tocSections = [
   { label: "About", id: "about" },
   { label: "Stats", id: "stats" },
@@ -85,25 +109,24 @@ const About = () => {
               <div className="grid md:grid-cols-5 gap-12 mb-20">
                 <ScrollReveal className="md:col-span-3">
                   <p className="font-mono text-sm leading-relaxed text-muted-foreground mb-6">
-                    I build AI systems that automate SEO at a scale that manual execution can't match. Currently leading 
-                    AI & Automation at AT&T as Lead Technical Product Manager, shipping RAG pipelines, knowledge graphs, 
-                    and programmatic SEO infrastructure across 50M+ pages. Not strategy decks. Production systems.
+                    AI Product Owner and Technical SEO Lead with 10 years of experience building AI-powered search 
+                    infrastructure at enterprise scale (50M+ pages). Hands-on builder with Model Context Protocol (MCP), 
+                    Claude Code, and A2A integrations. Expert in RAG systems, knowledge graphs, vector embeddings, and 
+                    LLM-powered content optimization.
                   </p>
                   <p className="font-mono text-sm leading-relaxed text-muted-foreground mb-6">
-                    AI integrations connecting LLMs to live SEO data for automated keyword research and content optimization. 
-                    A RAG-powered internal linking engine using vector embeddings and entity recognition. Automated pipelines 
-                    that run technical SEO audits at scale. A market share content tool with geo-segmentation that generates 
-                    3-year roadmaps.
+                    Built MCP integrations connecting Claude to SEO data sources for automated keyword analysis and 
+                    topical clustering. Developed A2A pipelines for multi-step SEO analysis combining crawl data, search 
+                    console metrics, and content scoring. Created Claude Code pipelines for programmatic content analysis, 
+                    sub-clustering, and automated technical audits.
                   </p>
                   <p className="font-mono text-sm leading-relaxed text-muted-foreground mb-6">
-                    10 years in Technical SEO — the fundamentals that power how Google ranks content today. Site migrations, 
-                    crawl budget optimization, structured data at enterprise scale, Core Web Vitals, international SEO. 
-                    Tools: Botify (50M+ crawls), Screaming Frog, Ahrefs, SEMrush, BigQuery, Python.
+                    Passionate about Answer Engine Optimization (AEO) and Generative Engine Optimization (GEO) — the next 
+                    frontier of how users discover content through AI-powered search experiences.
                   </p>
                   <p className="font-mono text-sm leading-relaxed text-muted-foreground">
-                    Previously scaled SEO for CoStar Group (Apartments.com, ApartmentFinders.com, ForRent.com) and built 
-                    technical SEO infrastructure across multiple verticals. Published researcher — "Google, SEO and Helpful Content: 
-                    How AI Can Be Helpful for E-Commerce Websites" in the Journal of Digital & Social Media Marketing, December 2024.
+                    Published researcher — "Google, SEO and Helpful Content: How AI Can Be Helpful for E-Commerce Websites" 
+                    in the Journal of Digital & Social Media Marketing, Vol. 12(3), pp. 206-226, December 2024.
                   </p>
                 </ScrollReveal>
 
@@ -212,11 +235,11 @@ const About = () => {
                 </p>
                 <div className="space-y-4">
                   {[
-                    { title: "Disruptive Strategies — Business Administration & Management", sub: "Harvard University — 2019" },
-                    { title: "Cybersecurity: Technology, Application and Policy", sub: "Massachusetts Institute of Technology (MIT) — 2016" },
-                    { title: "Master's Degree in Computer Science", sub: "New England College — 2015–2016" },
-                    { title: "MBA — Human Resources Development (Marketing Management)", sub: "National Institute of Business Management (NIBM) — 2015–2016" },
-                    { title: "Bachelor's Degree in Computer Science", sub: "KL University — 2011–2015" },
+                    { title: "Disruptive Strategy", sub: "Harvard University" },
+                    { title: "Cyber Security", sub: "Massachusetts Institute of Technology (MIT)" },
+                    { title: "M.S. Computer Information Systems (GPA: 4.0)", sub: "New England College" },
+                    { title: "MBA", sub: "National Institute of Business Management" },
+                    { title: "B.E. Computer Science", sub: "KL University" },
                   ].map((edu) => (
                     <div key={edu.title} className="border border-border p-6 border-glow-hover">
                       <div className="font-display text-lg font-semibold text-foreground">{edu.title}</div>
