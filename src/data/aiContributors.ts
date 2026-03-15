@@ -343,6 +343,8 @@ export const aiContributors: AIContributor[] = [
     name: "Jeff Dean",
     rank: 13,
     bio: "Chief Scientist at Google. Co-designed MapReduce, BigTable, TensorFlow. Leads Google's AI research strategy.",
+    photoUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Jeff_Dean%2C_Google_Senior_Fellow.jpg/440px-Jeff_Dean%2C_Google_Senior_Fellow.jpg",
+    photoCredit: "Photo: Google / Wikimedia Commons / CC BY 3.0",
     segment: "AI Hardware & Infrastructure",
     specialty: ["AI Infrastructure", "LLMs"],
     affiliation: "Google DeepMind",
