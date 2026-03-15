@@ -153,6 +153,7 @@ const AIContributorProfilePage = () => {
                 <nav className="space-y-0.5 mb-6 border-l border-border">
                   {[
                     { label: "Overview", id: "details" },
+                    contributor.github && (contributor.githubFollowers || contributor.githubPinnedRepos) && { label: "GitHub", id: "github-stats" },
                     contributor.milestones?.length && { label: "Timeline", id: "timeline" },
                     contributor.quote && { label: "Quote", id: "quote" },
                     { label: "Biography", id: "biography" },
