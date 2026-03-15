@@ -303,9 +303,8 @@ const AIContributors = () => {
               </div>
             </ScrollReveal>
 
-            {/* Three-column layout: author sidebar | nav sidebar | content */}
+            {/* Two-column layout: content | nav sidebar */}
             <div className="lg:flex lg:gap-10">
-              <AuthorSidebar />
 
               <div className="flex-1 min-w-0">
                 <div ref={contentRef}>
