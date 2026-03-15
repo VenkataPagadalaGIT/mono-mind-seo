@@ -1093,6 +1093,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "mitchell", name: "Margaret Mitchell", rank: 27,
     bio: "Chief Ethics Scientist at Hugging Face. Former Google AI ethics co-lead. Creator of Model Cards.",
+    photoUrl: "/photos/mitchell.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "AI Ethics & Policy", specialty: ["AI Ethics", "NLP", "Open Source AI"],
     affiliation: "Hugging Face", expertType: "Researcher", country: "USA",
     keyInfluence: "Created Model Cards concept — now standard for AI documentation.",
@@ -1142,6 +1143,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "manning", name: "Christopher Manning", rank: 34,
     bio: "Professor at Stanford. Director of Stanford AI Lab. Pioneer of NLP. Created Stanford CoreNLP.",
+    photoUrl: "/photos/manning.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "NLP & Language Technology", specialty: ["NLP", "Transformers"],
     affiliation: "Stanford NLP Group", expertType: "Researcher", country: "Australia/USA",
     keyInfluence: "Created Stanford CoreNLP and GloVe. His NLP courses trained a generation of researchers.",
@@ -1217,6 +1219,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "mensch", name: "Arthur Mensch", rank: 42,
     bio: "CEO & Co-founder of Mistral AI. Former DeepMind researcher. Building Europe's leading AI company.",
+    photoUrl: "/photos/mensch.png", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "Foundation Models & LLMs", specialty: ["LLMs", "Open Source AI"],
     affiliation: "Mistral AI", expertType: "Founder/CEO", country: "France",
     keyInfluence: "Built Europe's leading AI company from scratch. Mistral 7B proved open-source can rival closed models.",
@@ -1291,6 +1294,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "koller", name: "Daphne Koller", rank: 53,
     bio: "CEO of insitro. Co-founder of Coursera. Stanford professor. Pioneer of probabilistic graphical models.",
+    photoUrl: "/photos/koller.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "AI for Science & Healthcare", specialty: ["ML Theory", "Drug Discovery", "AI Education"],
     affiliation: "insitro", expertType: "Founder/CEO", country: "Israel/USA",
     keyInfluence: "Bridging AI and biology through probabilistic graphical models and drug discovery.",
@@ -1304,6 +1308,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "yejin", name: "Yejin Choi", rank: 55,
     bio: "Professor at UW. Senior research manager at Allen AI. MacArthur Fellow 2022. Pioneer of commonsense AI.",
+    photoUrl: "/photos/yejin.jpg", photoCredit: "Photo: MacArthur Foundation / used with permission",
     segment: "Foundation Models & LLMs", specialty: ["NLP", "AI Ethics"],
     affiliation: "UW / Allen AI", expertType: "Researcher", country: "South Korea/USA",
     keyInfluence: "Pioneering commonsense reasoning and moral AI with groundbreaking NLP research.",
@@ -1381,6 +1386,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "rus", name: "Daniela Rus", rank: 64,
     bio: "Director of MIT CSAIL. Pioneer of soft robotics and autonomous systems.",
+    photoUrl: "/photos/rus.jpg", photoCredit: "Photo: Wikimedia Commons / CC BY-SA 4.0",
     segment: "Robotics & Autonomous Systems", specialty: ["Robotics"],
     affiliation: "MIT CSAIL", expertType: "Researcher", country: "Romania/USA",
     keyInfluence: "Directing MIT CSAIL and pioneering soft robotics and scalable robot design.",
@@ -1394,6 +1400,7 @@ export const aiContributors: AIContributor[] = [
   {
     id: "malik", name: "Jitendra Malik", rank: 65,
     bio: "Professor at UC Berkeley. Former research director at Meta AI. Pioneer of image segmentation.",
+    photoUrl: "/photos/malik.jpg", photoCredit: "Photo: Wikimedia Commons / Public Domain",
     segment: "Computer Vision & Perception", specialty: ["Computer Vision"],
     affiliation: "UC Berkeley / Meta AI", expertType: "Researcher", country: "India/USA",
     keyInfluence: "Foundational contributions to computer vision, object recognition, and human body modeling.",
