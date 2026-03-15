@@ -8,7 +8,7 @@ const Footer = () => {
     { label: "Solutions", to: "/solutions" },
     { label: "Projects", to: "/projects" },
     { label: "Insights", to: "/insights" },
-    { label: "Publications", to: "/publications" },
+    { label: "Lab", to: "/publications" },
     { label: "Contact", to: "/contact" },
   ];
 
