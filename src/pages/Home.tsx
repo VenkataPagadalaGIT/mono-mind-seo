@@ -26,9 +26,12 @@ const Home = () => {
           [ Portfolio ]
         </p>
 
-        <h1 className="font-display text-5xl sm:text-7xl md:text-8xl font-bold tracking-tight text-foreground text-glow mb-4">
+        <h1 className="font-display text-5xl sm:text-7xl md:text-8xl font-bold tracking-tight text-foreground text-glow mb-2">
           Venkata Pagadala
         </h1>
+        <p className="font-mono text-xs sm:text-sm text-foreground/50 mb-4 tracking-wide">
+          AI Systems · Business Research · Search
+        </p>
 
         <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mb-6">
           {[
