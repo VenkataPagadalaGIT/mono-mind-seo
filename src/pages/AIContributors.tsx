@@ -40,10 +40,10 @@ const TAB_META: Record<TopLevelTab, { title: string; description: string; canoni
     ogTitle: "Best 100 AI Contributors 2026 — The Definitive Directory",
   },
   roadmap: {
-    title: "Best AI Learning Roadmap 2026 — Zero to Hero in 18 Weeks | Venkata Pagadala",
-    description: "The best structured 23-topic AI curriculum with 90+ curated resources — videos, courses, books, repos, and pro tips. Your complete path from beginner to advanced.",
+    title: "Free AI Roadmap March 2026 — Zero to Hero in 18 Weeks | Venkata Pagadala",
+    description: "The best free AI roadmap for March 2026. A structured 23-topic curriculum with 90+ curated resources — videos, courses, books, repos, and pro tips. From beginner to advanced, completely free.",
     canonical: "https://venkatapagadala.com/notebook/ai/roadmap",
-    ogTitle: "Best AI Learning Roadmap 2026 — Zero to Hero in 18 Weeks",
+    ogTitle: "Free AI Roadmap March 2026 — Zero to Hero in 18 Weeks",
   },
   encyclopedia: {
     title: "Best AI Concepts Encyclopedia 2026 — 110 Concepts Explained | Venkata Pagadala",
