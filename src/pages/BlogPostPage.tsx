@@ -74,6 +74,12 @@ const BlogPostPage = () => {
 
   return (
     <div className="min-h-screen bg-background pt-24 pb-20 px-6">
+      <SEO
+        title={post.metaTitle}
+        description={post.metaDescription}
+        canonical={`https://venkatapagadala.com/insights/${pillarSlug}/${postSlug}`}
+        ogType="article"
+      />
       <div className="max-w-3xl mx-auto">
         {/* Breadcrumb */}
         <ScrollReveal>
