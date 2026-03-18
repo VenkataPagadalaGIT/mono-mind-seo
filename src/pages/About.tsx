@@ -100,7 +100,7 @@ const About = () => {
                   {"{01}"} — About
                 </p>
                 <h1 className="font-display text-4xl sm:text-5xl font-bold text-foreground text-glow mb-12">
-                  About Me
+                  Venkata Pagadala — AI Product Owner & SEO Lead
                 </h1>
               </ScrollReveal>
 

@@ -86,9 +86,9 @@ const Projects = () => {
           <p className="font-mono text-xs tracking-[0.3em] text-muted-foreground mb-4 uppercase">
             {"{03}"} — Projects
           </p>
-          <h2 className="font-display text-4xl sm:text-5xl font-bold text-foreground text-glow mb-16">
-            Technical Work
-          </h2>
+          <h1 className="font-display text-4xl sm:text-5xl font-bold text-foreground text-glow mb-16">
+            AI Systems & Technical Projects
+          </h1>
         </ScrollReveal>
 
         {/* Featured: Omniscite */}
