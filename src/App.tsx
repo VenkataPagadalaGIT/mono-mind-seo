@@ -21,6 +21,8 @@ import AIContributors from "./pages/AIContributors";
 import AIContributorProfilePage from "./pages/AIContributorProfilePage";
 import Notebook from "./pages/Notebook";
 import BusinessNotebook from "./pages/BusinessNotebook";
+import AIUpdatesIndex from "./pages/AIUpdates";
+import AIUpdateDetail from "./pages/AIUpdateDetail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
