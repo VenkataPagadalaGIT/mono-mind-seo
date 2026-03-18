@@ -6,9 +6,9 @@ export interface AIUpdate {
   title: string;
   company: string;
   category: UpdateCategory;
-  date: string; // ISO
+  date: string;
   summary: string;
-  body: string; // markdown-ish HTML
+  body: string;
   sourceUrl: string;
   tags: string[];
 }
@@ -27,124 +27,208 @@ export const aiUpdates: AIUpdate[] = [
     slug: "nvidia-nemoclaw-secure-ai-agents",
     title: "NVIDIA NemoClaw: Secure, Always-On AI Agents With One Command",
     company: "NVIDIA",
-    category: "product-launch",
-    date: "2026-03-17",
-    summary: "NVIDIA launched NemoClaw — an open-source stack that adds privacy and security controls to autonomous AI agents. Deploy self-evolving agents anywhere with a single command.",
-    body: `<p>NVIDIA released <strong>NemoClaw</strong>, an open-source framework that wraps <em>OpenClaw</em> with enterprise-grade privacy and security guardrails. The stack enables developers to deploy always-on, self-evolving AI agents with a single command — on any infrastructure.</p>
-<h3>Key Features</h3>
-<ul>
-<li><strong>Secure by default</strong> — built-in privacy controls, sandboxed execution, and audit logging for autonomous agents</li>
-<li><strong>One-command deployment</strong> — spin up production-ready agents instantly on any cloud or on-prem</li>
-<li><strong>Self-evolving architecture</strong> — agents learn and improve continuously without manual retraining</li>
-<li><strong>Open source</strong> — fully available on GitHub under permissive license</li>
-</ul>
-<p>This is a significant step toward making autonomous AI agents safe enough for enterprise deployment. NemoClaw addresses the key blocker most companies face: trusting agents with real-world actions.</p>`,
-    sourceUrl: "https://www.nvidia.com/en-us/ai/nemoclaw/",
-    tags: ["AI Agents", "Security", "Open Source", "NVIDIA", "Autonomous AI"],
-  },
-  {
-    id: "cloudflare-ai-gateway",
-    slug: "cloudflare-ai-gateway-observability",
-    title: "Cloudflare AI Gateway: Unified Observability for LLM Traffic",
-    company: "Cloudflare",
-    category: "product-launch",
-    date: "2026-03-15",
-    summary: "Cloudflare expanded its AI Gateway with unified observability, cost tracking, and rate limiting across all major LLM providers — enabling enterprises to manage AI traffic at the edge.",
-    body: `<p>Cloudflare's <strong>AI Gateway</strong> now provides a single control plane for all LLM API traffic, regardless of provider. Teams can monitor costs, latency, and error rates across OpenAI, Anthropic, Google, and open-source models from one dashboard.</p>
-<h3>What's New</h3>
-<ul>
-<li><strong>Unified analytics</strong> — track spend, token usage, and latency across all providers in real-time</li>
-<li><strong>Smart caching</strong> — cache identical prompts at the edge to reduce costs by up to 90%</li>
-<li><strong>Rate limiting & fallbacks</strong> — automatic failover between providers when rate limits are hit</li>
-<li><strong>Prompt logging</strong> — optional request/response logging for compliance and debugging</li>
-</ul>
-<p>For enterprises running multi-model AI stacks, this solves the fragmentation problem — one gateway to rule them all.</p>`,
-    sourceUrl: "https://developers.cloudflare.com/ai-gateway/",
-    tags: ["LLM Ops", "Observability", "Edge Computing", "Cloudflare", "Cost Optimization"],
-  },
-  {
-    id: "meta-llama-4",
-    slug: "meta-llama-4-scout-maverick",
-    title: "Meta Releases Llama 4: Scout & Maverick Models Push Open-Source Frontier",
-    company: "Meta",
     category: "open-source",
-    date: "2026-03-12",
-    summary: "Meta released Llama 4 Scout (17B active params, 16 experts) and Llama 4 Maverick (17B active, 128 experts) — the most capable open-source models to date, rivaling GPT-4o on benchmarks.",
-    body: `<p>Meta's <strong>Llama 4</strong> family introduces mixture-of-experts (MoE) architecture to open-source AI. Two models launched:</p>
-<h3>Llama 4 Scout</h3>
+    date: "2026-03-16",
+    summary: "Announced at GTC 2026, NemoClaw is NVIDIA's open-source stack that adds privacy and security controls to OpenClaw. It bundles Nemotron models and the new OpenShell runtime into a single-command install for autonomous AI agents.",
+    body: `<p>Announced during Jensen Huang's GTC 2026 keynote on March 16, <strong>NVIDIA NemoClaw</strong> is an open-source stack built on top of <strong>OpenClaw</strong> — which Jensen called "the operating system for personal AI" and compared directly to Mac and Windows.</p>
+
+<h3>What NemoClaw Does</h3>
+<p>NemoClaw bundles <strong>Nemotron</strong> models and the newly announced <strong>OpenShell</strong> runtime into a single-command install:</p>
+<pre><code>curl -fsSL https://nvidia.com/nemoclaw.sh | bash</code></pre>
+
+<h3>Key Architecture</h3>
 <ul>
-<li>17B active parameters, 16 experts, 109B total params</li>
-<li>10M token context window — the longest in any production model</li>
-<li>Runs on a single H100 GPU</li>
+<li><strong>Privacy router</strong> — routes inference between local open models (Nemotron running on your hardware) and cloud frontier models, with policy-based security guardrails</li>
+<li><strong>OpenShell runtime</strong> — isolated sandbox with data privacy and security controls for autonomous AI agents ("claws")</li>
+<li><strong>NVIDIA Agent Toolkit</strong> — the software layer that secures OpenClaw agent operations</li>
 </ul>
-<h3>Llama 4 Maverick</h3>
-<ul>
-<li>17B active parameters, 128 experts, 400B+ total params</li>
-<li>Beats GPT-4o and Gemini 2.0 Flash on reasoning benchmarks</li>
-<li>Natively multimodal: text, image, video understanding</li>
-</ul>
-<p>The MoE architecture means only a fraction of parameters activate per query, keeping inference costs low while maintaining frontier-level quality. This is the strongest argument yet that open-source can compete with closed models.</p>`,
-    sourceUrl: "https://ai.meta.com/blog/llama-4/",
-    tags: ["Open Source", "LLM", "Meta", "Mixture of Experts", "Multimodal"],
+
+<h3>Where It Runs</h3>
+<p>NemoClaw deploys on any dedicated compute: GeForce RTX PCs/laptops, RTX PRO workstations, DGX Station (748GB coherent memory, 20 petaflops, runs models up to 1 trillion parameters), and DGX Spark (supports clustering up to four systems).</p>
+
+<h3>Why It Matters</h3>
+<p>Jensen made the enterprise security case explicit during the keynote: agentic systems inside corporate networks can access sensitive information, execute code, and communicate externally. He paused and told the audience to think about the implications. NemoClaw is designed to fill exactly that security gap.</p>
+<p>Microsoft Security is already using Nemotron and OpenShell for adversarial learning, reporting a <strong>160x improvement</strong> in finding and mitigating AI-based attacks.</p>
+<p>Jensen's bottom line: just as every company needed an HTTP strategy, a Linux strategy, and a Kubernetes strategy, <strong>every company now needs an OpenClaw strategy</strong>.</p>`,
+    sourceUrl: "https://www.nvidia.com/en-us/ai/nemoclaw/",
+    tags: ["AI Agents", "Security", "Open Source", "NVIDIA", "OpenClaw", "NemoClaw", "GTC 2026"],
   },
   {
-    id: "google-gemini-2-5-pro",
-    slug: "google-gemini-2-5-pro-thinking-model",
-    title: "Google Gemini 2.5 Pro: A Thinking Model That Leads Every Benchmark",
-    company: "Google",
-    category: "research",
-    date: "2026-03-10",
-    summary: "Google launched Gemini 2.5 Pro — a 'thinking' model that uses internal reasoning before responding. It tops the Chatbot Arena leaderboard and leads in math, coding, and science benchmarks.",
-    body: `<p>Google DeepMind released <strong>Gemini 2.5 Pro</strong>, introducing a new paradigm: the model 'thinks' through multi-step reasoning before generating its final response.</p>
+    id: "nvidia-vera-rubin-platform",
+    slug: "nvidia-vera-rubin-platform-gtc-2026",
+    title: "NVIDIA Vera Rubin Platform: Seven Chips, Five Racks, One AI Supercomputer",
+    company: "NVIDIA",
+    category: "product-launch",
+    date: "2026-03-16",
+    summary: "The headline hardware announcement at GTC 2026: the Vera Rubin platform combines seven new chips and five rack-scale systems into one coherent AI supercomputer. Jensen claims 40 million times more compute in 10 years since DGX-1.",
+    body: `<p>The <strong>Vera Rubin platform</strong> was the centerpiece hardware announcement at GTC 2026, representing NVIDIA's most ambitious AI infrastructure to date.</p>
+
+<h3>The Lineup</h3>
+<ul>
+<li><strong>Vera Rubin NVL72 GPU rack</strong> — 72 Rubin GPUs + 36 Vera CPUs connected by NVLink 6, with ConnectX-9 SuperNICs and BlueField-4 DPUs. Trains large MoE models with 1/4 the GPUs vs. Blackwell; delivers 10x higher inference throughput per watt at 1/10 the cost per token.</li>
+<li><strong>Vera CPU rack</strong> — 256 Vera CPUs in a liquid-cooled rack, purpose-built for reinforcement learning and agentic AI. 2x efficiency, 50% faster than traditional CPUs. Uses LPDDR5 — the only data center CPU to do so.</li>
+<li><strong>Groq 3 LPX inference rack</strong> — 256 LPU processors with 128GB on-chip SRAM and 640 TB/s scale-up bandwidth. Delivers up to 35x higher inference throughput per megawatt. Samsung manufactures the LP30 chip; shipping Q3 2026.</li>
+<li><strong>BlueField-4 STX storage rack</strong> — AI-native storage with 5x token throughput, 4x energy efficiency, and 2x faster data ingestion.</li>
+<li><strong>Spectrum-6 SPX Ethernet rack</strong> — NVIDIA's first co-packaged optics switch in full production, co-developed with TSMC.</li>
+</ul>
+
+<h3>Key Numbers From the Keynote</h3>
+<ul>
+<li>3.6 exaflops of compute, 260 TB/s all-to-all NVLink bandwidth</li>
+<li>100% liquid cooled with 45°C hot water</li>
+<li>Installation time: 2 days → 2 hours</li>
+<li>First rack already running at Microsoft Azure (confirmed by Satya Nadella)</li>
+<li>AWS deploying 1M+ NVIDIA GPUs plus Groq LPUs</li>
+</ul>
+
+<h3>What's Next</h3>
+<p><strong>Rubin Ultra</strong> (taping out now): 144 GPUs in one NVLink domain via the new Kyber rack. Beyond that, the <strong>Feynman</strong> generation: new GPU, LP40 LPU, Rosa CPU, BlueField-5, CX10.</p>`,
+    sourceUrl: "https://nvidianews.nvidia.com/news/nvidia-vera-rubin-platform",
+    tags: ["NVIDIA", "Hardware", "Vera Rubin", "GPU", "Data Center", "GTC 2026"],
+  },
+  {
+    id: "nvidia-dynamo-1",
+    slug: "nvidia-dynamo-1-ai-factory-os",
+    title: "Dynamo 1.0: NVIDIA's Operating System for AI Factories Enters Production",
+    company: "NVIDIA",
+    category: "product-launch",
+    date: "2026-03-16",
+    summary: "Dynamo 1.0 is NVIDIA's inference optimization software that delivers up to 7x performance boost on Blackwell GPUs. It rearchitects inference by splitting work between GPUs (prefill/attention) and Groq LPUs (decode/generation).",
+    body: `<p>Announced at GTC 2026, <strong>Dynamo 1.0</strong> enters production as what NVIDIA calls the "operating system" for AI factories.</p>
+
+<h3>The Core Insight</h3>
+<p>Jensen explained that throughput and latency are "enemies of each other" in chip design. Dynamo solves this via <strong>disaggregated inference</strong> — splitting prefill and attention (memory-heavy) to Rubin GPUs, and decode/token generation (bandwidth-limited) to Groq LPUs.</p>
+
 <h3>Performance</h3>
 <ul>
-<li>#1 on Chatbot Arena overall and in every category (math, coding, creative writing, science)</li>
-<li>Outperforms o1 and Claude 3.5 Sonnet on GPQA, MATH, and HumanEval</li>
-<li>1M token context window with native code execution</li>
+<li>Up to <strong>7x inference performance boost</strong> on Blackwell GPUs</li>
+<li>Token speeds jumping from 700 to nearly 5,000 per second — same hardware, updated software stack</li>
+<li>Token generation speed across a one-gigawatt factory: 2 million → 700 million (350x increase in two years)</li>
 </ul>
+
+<h3>Adoption</h3>
+<p>Already deployed across:</p>
+<ul>
+<li><strong>Cloud providers:</strong> AWS, Microsoft Azure, Google Cloud, Oracle</li>
+<li><strong>AI-native companies:</strong> Cursor, Perplexity, Baseten, Deep Infra, Fireworks</li>
+<li><strong>Enterprise:</strong> ByteDance, Meituan, PayPal, Pinterest</li>
+</ul>
+
+<h3>Building Blocks</h3>
+<p>Core modules available standalone: <strong>KVBM</strong> (memory management), <strong>NIXL</strong> (GPU-to-GPU data movement), <strong>Grove</strong> (scaling). NVIDIA also contributes TensorRT-LLM CUDA kernels to the <strong>FlashInfer</strong> project for integration with vLLM, SGLang, and LangChain.</p>`,
+    sourceUrl: "https://nvidianews.nvidia.com/news/dynamo-1-0",
+    tags: ["NVIDIA", "Inference", "Dynamo", "AI Infrastructure", "GTC 2026"],
+  },
+  {
+    id: "nvidia-nemotron-coalition",
+    slug: "nvidia-nemotron-coalition-open-frontier-models",
+    title: "NVIDIA Launches Nemotron Coalition: Open Frontier Models With Mistral, Cursor, Perplexity",
+    company: "NVIDIA",
+    category: "open-source",
+    date: "2026-03-16",
+    summary: "NVIDIA announced the Nemotron Coalition — a first-of-its-kind collaboration with Mistral AI, Cursor, LangChain, Perplexity, and others to jointly develop Nemotron 4, the next-gen open frontier model, on NVIDIA DGX Cloud.",
+    body: `<p>At GTC 2026, NVIDIA launched the <strong>Nemotron Coalition</strong>, framing open models as essential to sovereign AI strategy: the goal is to create base models so good that every country can fine-tune them into domain-specific intelligence.</p>
+
+<h3>Coalition Members</h3>
+<p><strong>Mistral AI, Cursor, LangChain, Perplexity, Reflection AI, Sarvam, Thinking Machines Lab, and Black Forest Labs</strong> will jointly develop <strong>Nemotron 4</strong> on NVIDIA DGX Cloud, then release it for anyone to specialize.</p>
+
+<h3>Current Model Family</h3>
+<ul>
+<li><strong>Nemotron 3</strong> — Omni-understanding models for AI agents. Jensen showed that Nemotron 3 in OpenClaw ranks among the top three models in the world. Already adopted by CodeRabbit, CrowdStrike, Cursor, Factory, Perplexity, and ServiceNow.</li>
+<li><strong>Nemotron Nano 3</strong> — Available on Amazon Bedrock, powering Salesforce Agentforce. Salesforce calls it the most cost-efficient model for summarization and generation on their Agentic Benchmark for CRM.</li>
+<li><strong>Cosmos 3</strong> — First world foundation model unifying synthetic world generation, vision reasoning, and action simulation. Built for robotics and autonomous systems.</li>
+</ul>
+
 <h3>Why It Matters</h3>
-<p>The 'thinking' approach represents a shift from pure next-token prediction to structured reasoning chains. This makes the model significantly better at complex, multi-step problems — the exact capability enterprises need for real-world AI deployment.</p>`,
-    sourceUrl: "https://blog.google/technology/google-deepmind/gemini-model-thinking-updates-march-2025/",
-    tags: ["LLM", "Google", "Reasoning", "Benchmarks", "DeepMind"],
+<p>This signals NVIDIA's shift from pure hardware to actively shaping the model ecosystem. By partnering with companies that are actual users of these models (Cursor for coding, Perplexity for search, LangChain for agent frameworks), they're ensuring Nemotron models are optimized for real-world agentic workloads.</p>`,
+    sourceUrl: "https://nvidianews.nvidia.com/news/nvidia-launches-nemotron-coalition-of-leading-global-ai-labs-to-advance-open-frontier-models",
+    tags: ["Open Source", "NVIDIA", "Nemotron", "Mistral", "Cursor", "Perplexity", "GTC 2026"],
   },
   {
-    id: "anthropic-claude-mcp-adoption",
-    slug: "anthropic-mcp-universal-adoption",
-    title: "Anthropic's MCP Protocol Hits Critical Mass: OpenAI, Google, Microsoft Adopt It",
-    company: "Anthropic",
+    id: "nvidia-robotaxis-uber",
+    slug: "nvidia-robotaxis-uber-28-cities-2028",
+    title: "NVIDIA-Powered Robotaxis to Launch With Uber Across 28 Cities by 2028",
+    company: "NVIDIA",
     category: "industry",
-    date: "2026-03-08",
-    summary: "Anthropic's Model Context Protocol (MCP) — the open standard for connecting AI models to external tools — has been adopted by OpenAI, Google, and Microsoft, making it the de facto standard for AI integrations.",
-    body: `<p>What started as Anthropic's internal protocol is now the <strong>universal standard</strong> for connecting AI models to external data and tools. MCP adoption has gone mainstream:</p>
+    date: "2026-03-16",
+    summary: "Jensen Huang declared 'the ChatGPT moment for self-driving cars has arrived.' NVIDIA-powered robotaxis will launch with Uber across 28 cities on four continents by 2028, starting with LA and SF Bay Area in H1 2027.",
+    body: `<p>During the GTC 2026 keynote, Jensen Huang declared the <strong>"ChatGPT moment for self-driving cars has arrived"</strong> and called autonomous vehicles "the first multitrillion-dollar robotics industry."</p>
+
+<h3>Uber Partnership</h3>
 <ul>
-<li><strong>OpenAI</strong> added native MCP support to the Agents SDK and ChatGPT desktop app</li>
-<li><strong>Google DeepMind</strong> integrated MCP into Gemini's tool-use system</li>
-<li><strong>Microsoft</strong> built MCP into Copilot Studio and Azure AI</li>
-<li><strong>Cursor, Windsurf, Replit</strong> — every major AI IDE now supports MCP servers</li>
+<li>NVIDIA-powered robotaxis launching with Uber across <strong>28 cities on four continents</strong> by 2028</li>
+<li>Starting with Los Angeles and SF Bay Area in <strong>H1 2027</strong></li>
+<li>Running on NVIDIA's full-stack DRIVE AV software, Alpamayo open models, and Halos operating system</li>
 </ul>
-<p>MCP is to AI tools what HTTP was to the web — a protocol so useful that adoption became inevitable. If you're building AI systems, MCP fluency is now a core requirement.</p>`,
-    sourceUrl: "https://www.anthropic.com/news/model-context-protocol",
-    tags: ["MCP", "AI Agents", "Anthropic", "Integration", "Protocol"],
+
+<h3>Automotive Partners</h3>
+<p><strong>BYD, Geely, Isuzu, and Nissan</strong> (with Nissan powered by Wayve software) are building Level 4-ready vehicles on NVIDIA DRIVE Hyperion. These four new partners represent <strong>18 million cars built per year</strong>, joining existing partners Mercedes, Toyota, and GM.</p>
+
+<h3>NVIDIA Halos OS</h3>
+<p>A unified safety architecture for AI-driven vehicles, built on ASIL D-certified DriveOS foundations with a three-layer architecture integrating safety middleware and an NCAP five-star active safety stack.</p>
+
+<h3>Ride-Hailing Platforms</h3>
+<p>Beyond Uber, <strong>Bolt, Grab, and Lyft</strong> are also scaling robotaxi development on NVIDIA's platform. Amazon is advancing Alexa Custom Assistant with multimodal edge AI on NVIDIA DRIVE AGX for in-cabin AI intelligence.</p>`,
+    sourceUrl: "https://nvidianews.nvidia.com/news/drive-hyperion-level-4",
+    tags: ["Autonomous Vehicles", "NVIDIA", "Uber", "Robotaxi", "Self-Driving", "GTC 2026"],
   },
   {
-    id: "openai-agents-sdk",
-    slug: "openai-agents-sdk-production-agents",
-    title: "OpenAI Agents SDK: Build Production Multi-Agent Systems in Python",
-    company: "OpenAI",
+    id: "nvidia-dlss-5",
+    slug: "nvidia-dlss-5-ai-graphics-breakthrough",
+    title: "NVIDIA DLSS 5: Fusing 3D Graphics With Generative AI — 'The GPT Moment for Graphics'",
+    company: "NVIDIA",
     category: "product-launch",
-    date: "2026-03-05",
-    summary: "OpenAI released the Agents SDK — a lightweight Python framework for building production multi-agent systems with built-in handoffs, guardrails, and tracing.",
-    body: `<p>OpenAI's <strong>Agents SDK</strong> (successor to Swarm) provides a minimal but production-ready framework for multi-agent orchestration:</p>
-<h3>Core Primitives</h3>
+    date: "2026-03-16",
+    summary: "NVIDIA calls DLSS 5 their most significant graphics breakthrough since real-time ray tracing in 2018. It fuses controllable 3D graphics with generative AI to produce photoreal lighting and materials in real-time 16ms frames.",
+    body: `<p>Jensen described DLSS 5 as fusing two fundamentally different approaches: <strong>controllable 3D graphics</strong> (structured, completely predictive) with <strong>generative AI</strong> (probabilistic yet highly realistic). He called it <strong>"the GPT moment for graphics."</strong></p>
+
+<h3>Technical Approach</h3>
+<p>DLSS 5 infuses pixels with AI-generated photoreal lighting and materials in real-time 16-millisecond frames. Jensen noted this concept of fusing structured information with generative AI will repeat in industry after industry.</p>
+
+<h3>Historical Context</h3>
+<p>Since the original GeForce, NVIDIA has delivered a 375,000x increase in compute: programmable shaders (GeForce 3, 2001) → CUDA (GeForce 8800 GTX, 2006) → real-time ray tracing (RTX 2080 Ti, 2018) → path tracing and neural shaders (RTX 5090, 2025) → DLSS 5.</p>
+
+<h3>Publishers Signed On</h3>
+<p>Bethesda, CAPCOM, Hotta Studio, NetEase, NCSOFT, S-GAME, Tencent, Ubisoft, and Warner Bros. Games. Arriving fall 2026.</p>
+
+<h3>The Caveat</h3>
+<p>This kind of predictive rendering can create visual "hallucinations" — artifacts when the AI prediction gets it wrong. This has been a sore point for gamers historically, but the breadth of publisher commitment suggests the industry believes it's solvable.</p>`,
+    sourceUrl: "https://nvidianews.nvidia.com/news/nvidia-dlss-5-delivers-ai-powered-breakthrough-in-visual-fidelity-for-games",
+    tags: ["NVIDIA", "DLSS", "Graphics", "Gaming", "Generative AI", "GTC 2026"],
+  },
+  {
+    id: "gtc-2026-big-numbers",
+    slug: "nvidia-gtc-2026-keynote-big-numbers",
+    title: "GTC 2026 Keynote: Jensen's Big Numbers — $1T Demand, 40M× Compute, Agentic AI Era",
+    company: "NVIDIA",
+    category: "industry",
+    date: "2026-03-16",
+    summary: "Jensen Huang's 2-hour GTC 2026 keynote laid out paradigm shifts: $1 trillion in AI infrastructure demand through 2027, computing demand up 1 million times in 2 years, 'every SaaS company will become an AaaS company,' and 'tokens per watt' as the new CEO metric.",
+    body: `<p>Jensen Huang's two-hour GTC 2026 keynote (March 16, 2026) packed more announcements than any previous GTC. Here are the key signals for anyone building or investing in AI.</p>
+
+<h3>The Big Numbers</h3>
 <ul>
-<li><strong>Agents</strong> — LLMs configured with instructions and tools</li>
-<li><strong>Handoffs</strong> — agents delegate to specialized sub-agents</li>
-<li><strong>Guardrails</strong> — input/output validation to keep agents on-task</li>
-<li><strong>Tracing</strong> — built-in observability for debugging agent workflows</li>
+<li><strong>$1 trillion in demand through 2027</strong> — up from $500B just one year ago. Jensen said he's "certain computing demand will be much higher than that"</li>
+<li><strong>Computing demand up 1 million times in 2 years</strong> — 10,000x increase in per-task compute × ~100x more usage</li>
+<li><strong>$150 billion in AI startup investment</strong> — the largest venture investment wave in human history, with individual rounds hitting billions</li>
+<li><strong>40 million times more compute in 10 years</strong> — from DGX-1 to Vera Rubin</li>
+<li><strong>Token generation: 2M → 700M per second</strong> — 350x increase in a one-gigawatt factory over two years</li>
 </ul>
-<h3>Why This Matters</h3>
-<p>The SDK includes native MCP support, meaning agents can connect to any external tool via the Model Context Protocol. Combined with OpenAI's Responses API, this is the most integrated agent development experience available.</p>`,
-    sourceUrl: "https://openai.com/index/new-tools-for-building-agents/",
-    tags: ["AI Agents", "OpenAI", "SDK", "Multi-Agent", "Python"],
+
+<h3>The Paradigm Shifts</h3>
+<ul>
+<li><strong>"The inference inflection has arrived"</strong> — AI now has to think, reason, and do; inference is the dominant workload</li>
+<li><strong>Computing shifted from retrieval to generation</strong> — this single shift changes how computers are architected</li>
+<li><strong>"Moore's law has run out of steam"</strong> — accelerated computing with continuous algorithmic optimization is the only path forward</li>
+<li><strong>Every SaaS company will become an AaaS company</strong> — "agentic as a service," manufacturing and consuming tokens instead of just storing files</li>
+<li><strong>"Tokens per watt" is the new CEO metric</strong> — every data center is power-constrained</li>
+<li><strong>Token budgets as employee compensation</strong> — Jensen predicts annual token budgets will become a standard recruiting tool, amplifying engineers 10x</li>
+</ul>
+
+<h3>Notable Moments</h3>
+<p>A Disney Research Olaf robot walked onstage, trained using NVIDIA's Newton physics simulator and Isaac Lab on a Jetson compute module. Jensen teased future Disneyland AI characters. 110 robots were on display at the GTC show floor.</p>
+<p>30,000 attendees from 190 countries. 17 press releases and three major blog posts dropped in a single day.</p>`,
+    sourceUrl: "https://www.youtube.com/live/jw_o0xr8MWU",
+    tags: ["NVIDIA", "GTC 2026", "Jensen Huang", "Agentic AI", "AI Infrastructure", "Keynote"],
   },
 ];
