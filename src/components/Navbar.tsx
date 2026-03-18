@@ -46,10 +46,11 @@ const Navbar = () => {
                 key={link.to}
                 to={link.to}
                 className={`font-mono text-xs tracking-wider uppercase transition-all hover:text-foreground ${
-                  location.pathname === link.to || 
-                  (link.to === "/solutions" && location.pathname.startsWith("/solutions")) ||
-                  (link.to === "/notebook" && location.pathname.startsWith("/notebook"))
-                    ? "text-foreground" : "text-muted-foreground"
+                   location.pathname === link.to || 
+                   (link.to === "/solutions" && location.pathname.startsWith("/solutions")) ||
+                   (link.to === "/notebook" && location.pathname.startsWith("/notebook")) ||
+                   (link.to === "/ai-updates" && location.pathname.startsWith("/ai-updates"))
+                     ? "text-foreground" : "text-muted-foreground"
                 }`}
               >
                 {link.label}
