@@ -2,7 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { services } from "@/components/ServicesGrid";
 import ScrollReveal from "@/components/ScrollReveal";
 import { ArrowLeft, ArrowRight, CheckCircle } from "lucide-react";
-import { useEffect } from "react";
+import SEO from "@/components/SEO";
 
 const serviceDetails: Record<string, {
   headline: string;
