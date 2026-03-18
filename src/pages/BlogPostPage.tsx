@@ -15,20 +15,6 @@ const BlogPostPage = () => {
     window.scrollTo(0, 0);
   }, [postSlug]);
 
-  useEffect(() => {
-    if (post) {
-      document.title = post.metaTitle;
-      const meta = document.querySelector('meta[name="description"]');
-      if (meta) meta.setAttribute("content", post.metaDescription);
-      else {
-        const m = document.createElement("meta");
-        m.name = "description";
-        m.content = post.metaDescription;
-        document.head.appendChild(m);
-      }
-    }
-  }, [post]);
-
   if (!post || !pillar) {
     return (
       <div className="min-h-screen bg-background pt-24 pb-20 px-6 flex items-center justify-center">
