@@ -40,10 +40,10 @@ const TAB_META: Record<TopLevelTab, { title: string; description: string; canoni
     ogTitle: "Best 100 AI Contributors 2026 — The Definitive Directory",
   },
   roadmap: {
-    title: "Best AI Learning Roadmap 2026 — Zero to Hero in 18 Weeks | Venkata Pagadala",
-    description: "The best structured 23-topic AI curriculum with 90+ curated resources — videos, courses, books, repos, and pro tips. Your complete path from beginner to advanced.",
+    title: "Free AI Roadmap March 2026 — Zero to Hero in 18 Weeks | Venkata Pagadala",
+    description: "The best free AI roadmap for March 2026. A structured 23-topic curriculum with 90+ curated resources — videos, courses, books, repos, and pro tips. From beginner to advanced, completely free.",
     canonical: "https://venkatapagadala.com/notebook/ai/roadmap",
-    ogTitle: "Best AI Learning Roadmap 2026 — Zero to Hero in 18 Weeks",
+    ogTitle: "Free AI Roadmap March 2026 — Zero to Hero in 18 Weeks",
   },
   encyclopedia: {
     title: "Best AI Concepts Encyclopedia 2026 — 110 Concepts Explained | Venkata Pagadala",
@@ -134,7 +134,7 @@ const AIContributors = () => {
       jsonLd.setAttribute("data-ai-notebook-ld", "true");
       document.head.appendChild(jsonLd);
     }
-    jsonLd.textContent = JSON.stringify({
+    const ldData: Record<string, unknown> = {
       "@context": "https://schema.org",
       "@type": "Article",
       headline: meta.ogTitle,
@@ -156,14 +156,28 @@ const AIContributors = () => {
         url: "https://venkatapagadala.com",
       },
       datePublished: "2026-01-15",
-      dateModified: "2026-03-15",
+      dateModified: "2026-03-18",
       inLanguage: "en-US",
       isPartOf: {
         "@type": "WebSite",
         name: "Venkata Pagadala",
         url: "https://venkatapagadala.com",
       },
-    });
+    };
+
+    // Add Course structured data for roadmap
+    if (topTab === "roadmap") {
+      (ldData as Record<string, unknown>)["@type"] = "Course";
+      ldData.name = "Free AI Roadmap — Zero to Hero in 18 Weeks";
+      ldData.provider = { "@type": "Person", name: "Venkata Pagadala", url: "https://venkatapagadala.com" };
+      ldData.isAccessibleForFree = true;
+      ldData.offers = { "@type": "Offer", price: "0", priceCurrency: "USD", availability: "https://schema.org/InStock" };
+      ldData.educationalLevel = "Beginner to Advanced";
+      ldData.numberOfCredits = 0;
+      ldData.hasCourseInstance = { "@type": "CourseInstance", courseMode: "online", courseWorkload: "PT18W" };
+    }
+
+    jsonLd.textContent = JSON.stringify(ldData);
 
     return () => {
       const el = document.querySelector('script[data-ai-notebook-ld]');
@@ -288,12 +302,12 @@ const AIContributors = () => {
           <div>
             <div className="flex-1 min-w-0">
               <div className="mb-6">
-                <h2 className="font-display text-xl font-bold text-foreground mb-1">
-                  🗺️ AI Learning Roadmap — Zero to Hero (2026)
-                </h2>
-                <p className="font-mono text-[11px] text-muted-foreground/40 max-w-2xl leading-relaxed">
-                  A structured 18-week curriculum with curated videos, courses, books, repos, and pro tips for each topic. Click any topic to explore all resources.
-                </p>
+                 <h2 className="font-display text-xl font-bold text-foreground mb-1">
+                   🗺️ Free AI Roadmap — Zero to Hero (March 2026)
+                 </h2>
+                 <p className="font-mono text-[11px] text-muted-foreground/40 max-w-2xl leading-relaxed">
+                   A free, structured 18-week AI curriculum with 90+ curated resources — videos, courses, books, repos, and pro tips. Your complete free AI learning roadmap for 2026.
+                 </p>
               </div>
               <AILearningRoadmap />
             </div>
