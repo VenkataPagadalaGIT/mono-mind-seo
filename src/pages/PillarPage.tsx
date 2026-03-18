@@ -2,7 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { getPillarBySlug, getBlogsByPillar } from "@/data/insights";
 import ScrollReveal from "@/components/ScrollReveal";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useEffect } from "react";
+import SEO from "@/components/SEO";
 
 const PillarPage = () => {
   const { slug } = useParams<{ slug: string }>();
