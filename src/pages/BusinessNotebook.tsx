@@ -2,6 +2,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 import PageSidebar from "@/components/PageSidebar";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Briefcase, BookOpen, FileText, Lightbulb } from "lucide-react";
+import SEO from "@/components/SEO";
 
 const tocSections = [
   { label: "Overview", id: "overview" },
