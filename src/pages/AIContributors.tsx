@@ -288,12 +288,12 @@ const AIContributors = () => {
           <div>
             <div className="flex-1 min-w-0">
               <div className="mb-6">
-                <h2 className="font-display text-xl font-bold text-foreground mb-1">
-                  🗺️ AI Learning Roadmap — Zero to Hero (2026)
-                </h2>
-                <p className="font-mono text-[11px] text-muted-foreground/40 max-w-2xl leading-relaxed">
-                  A structured 18-week curriculum with curated videos, courses, books, repos, and pro tips for each topic. Click any topic to explore all resources.
-                </p>
+                 <h2 className="font-display text-xl font-bold text-foreground mb-1">
+                   🗺️ Free AI Roadmap — Zero to Hero (March 2026)
+                 </h2>
+                 <p className="font-mono text-[11px] text-muted-foreground/40 max-w-2xl leading-relaxed">
+                   A free, structured 18-week AI curriculum with 90+ curated resources — videos, courses, books, repos, and pro tips. Your complete free AI learning roadmap for 2026.
+                 </p>
               </div>
               <AILearningRoadmap />
             </div>
