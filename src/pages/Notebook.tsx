@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Brain, Briefcase, ArrowRight, Users, BookOpen, Clock, Map, Library } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import PageSidebar from "@/components/PageSidebar";
+import SEO from "@/components/SEO";
 
 const notebooks = [
   {
