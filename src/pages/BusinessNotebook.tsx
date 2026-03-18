@@ -2,6 +2,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 import PageSidebar from "@/components/PageSidebar";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Briefcase, BookOpen, FileText, Lightbulb } from "lucide-react";
+import SEO from "@/components/SEO";
 
 const tocSections = [
   { label: "Overview", id: "overview" },
@@ -12,6 +13,11 @@ const tocSections = [
 const BusinessNotebook = () => {
   return (
     <div className="min-h-screen bg-background pt-24 pb-20">
+      <SEO
+        title="Business Notebook | AI Strategy & Frameworks | Venkata Pagadala"
+        description="Strategic frameworks, case studies, and playbooks for building and scaling with AI — a living reference for founders, operators, and strategists."
+        canonical="https://venkatapagadala.com/notebook/business"
+      />
       <div className="max-w-7xl mx-auto px-6 lg:flex lg:gap-10">
         <div className="flex-1 min-w-0">
           <ScrollReveal>

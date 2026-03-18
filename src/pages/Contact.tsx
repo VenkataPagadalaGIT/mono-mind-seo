@@ -1,9 +1,9 @@
-import { useEffect } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import ParticleCanvas from "@/components/ParticleCanvas";
 import KitSignupForm from "@/components/KitSignupForm";
 import PageSidebar from "@/components/PageSidebar";
 import { Mail, MapPin, Linkedin } from "lucide-react";
+import SEO from "@/components/SEO";
 
 const tocSections = [
   { label: "Email", id: "email" },
@@ -13,15 +13,14 @@ const tocSections = [
 ];
 
 const Contact = () => {
-  useEffect(() => {
-    document.title = "Contact | Venkata Pagadala — AI & SEO Consulting";
-    const meta = document.querySelector('meta[name="description"]');
-    const content = "Get in touch with Venkata Pagadala for AI systems consulting, enterprise SEO, and technical product management.";
-    if (meta) meta.setAttribute("content", content);
-  }, []);
 
   return (
     <div className="min-h-screen bg-background pt-24 pb-20 px-6 relative">
+      <SEO
+        title="Contact | Venkata Pagadala — AI & SEO Consulting"
+        description="Get in touch with Venkata Pagadala for AI systems consulting, enterprise SEO, and technical product management."
+        canonical="https://venkatapagadala.com/contact"
+      />
       <ParticleCanvas />
 
       <div className="max-w-4xl mx-auto relative z-10">

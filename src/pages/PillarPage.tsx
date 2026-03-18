@@ -2,26 +2,12 @@ import { useParams, Link } from "react-router-dom";
 import { getPillarBySlug, getBlogsByPillar } from "@/data/insights";
 import ScrollReveal from "@/components/ScrollReveal";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useEffect } from "react";
+import SEO from "@/components/SEO";
 
 const PillarPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const pillar = getPillarBySlug(slug || "");
   const relatedPosts = getBlogsByPillar(slug || "");
-
-  useEffect(() => {
-    if (pillar) {
-      document.title = pillar.metaTitle;
-      const meta = document.querySelector('meta[name="description"]');
-      if (meta) meta.setAttribute("content", pillar.metaDescription);
-      else {
-        const m = document.createElement("meta");
-        m.name = "description";
-        m.content = pillar.metaDescription;
-        document.head.appendChild(m);
-      }
-    }
-  }, [pillar]);
 
   if (!pillar) {
     return (
@@ -39,6 +25,12 @@ const PillarPage = () => {
 
   return (
     <div className="min-h-screen bg-background pt-24 pb-20 px-6">
+      <SEO
+        title={pillar.metaTitle}
+        description={pillar.metaDescription}
+        canonical={`https://venkatapagadala.com/insights/${slug}`}
+        ogType="article"
+      />
       <div className="max-w-4xl mx-auto">
         {/* Breadcrumb */}
         <ScrollReveal>

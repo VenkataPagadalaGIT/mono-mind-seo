@@ -3,6 +3,7 @@ import { getBlogBySlug, getPillarBySlug, getBlogsByPillar } from "@/data/insight
 import ScrollReveal from "@/components/ScrollReveal";
 import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
 import { useEffect } from "react";
+import SEO from "@/components/SEO";
 
 const BlogPostPage = () => {
   const { pillarSlug, postSlug } = useParams<{ pillarSlug: string; postSlug: string }>();
@@ -13,20 +14,6 @@ const BlogPostPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [postSlug]);
-
-  useEffect(() => {
-    if (post) {
-      document.title = post.metaTitle;
-      const meta = document.querySelector('meta[name="description"]');
-      if (meta) meta.setAttribute("content", post.metaDescription);
-      else {
-        const m = document.createElement("meta");
-        m.name = "description";
-        m.content = post.metaDescription;
-        document.head.appendChild(m);
-      }
-    }
-  }, [post]);
 
   if (!post || !pillar) {
     return (
@@ -87,6 +74,12 @@ const BlogPostPage = () => {
 
   return (
     <div className="min-h-screen bg-background pt-24 pb-20 px-6">
+      <SEO
+        title={post.metaTitle}
+        description={post.metaDescription}
+        canonical={`https://venkatapagadala.com/insights/${pillarSlug}/${postSlug}`}
+        ogType="article"
+      />
       <div className="max-w-3xl mx-auto">
         {/* Breadcrumb */}
         <ScrollReveal>

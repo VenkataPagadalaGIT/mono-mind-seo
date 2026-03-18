@@ -2,7 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { services } from "@/components/ServicesGrid";
 import ScrollReveal from "@/components/ScrollReveal";
 import { ArrowLeft, ArrowRight, CheckCircle } from "lucide-react";
-import { useEffect } from "react";
+import SEO from "@/components/SEO";
 
 const serviceDetails: Record<string, {
   headline: string;
@@ -119,21 +119,6 @@ const ServiceLanding = () => {
   const service = services.find((s) => s.slug === slug);
   const details = serviceDetails[slug || ""];
 
-  useEffect(() => {
-    if (service && details) {
-      document.title = `${details.headline} | Venkata Pagadala`;
-      const meta = document.querySelector('meta[name="description"]');
-      const content = details.description;
-      if (meta) meta.setAttribute("content", content);
-      else {
-        const m = document.createElement("meta");
-        m.name = "description";
-        m.content = content;
-        document.head.appendChild(m);
-      }
-    }
-  }, [service, details]);
-
   if (!service || !details) {
     return (
       <div className="min-h-screen bg-background pt-24 pb-20 px-6 flex items-center justify-center">
@@ -148,6 +133,11 @@ const ServiceLanding = () => {
 
   return (
     <div className="min-h-screen bg-background pt-24 pb-20 px-6">
+      <SEO
+        title={`${details.headline} | Venkata Pagadala`}
+        description={details.description}
+        canonical={`https://venkatapagadala.com/solutions/${slug}`}
+      />
       <div className="max-w-5xl mx-auto">
         {/* Breadcrumb */}
         <ScrollReveal>

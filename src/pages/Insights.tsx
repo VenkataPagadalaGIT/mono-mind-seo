@@ -4,21 +4,10 @@ import ScrollReveal from "@/components/ScrollReveal";
 import PageSidebar from "@/components/PageSidebar";
 
 import { ArrowRight } from "lucide-react";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
+import SEO from "@/components/SEO";
 
 const Insights = () => {
-  useEffect(() => {
-    document.title = "Insights | AI, SEO & Machine Learning | Venkata Pagadala";
-    const meta = document.querySelector('meta[name="description"]');
-    const content = "Deep dives into AI agents, machine learning, RAG engines, knowledge graphs, and enterprise technical SEO — by Venkata Pagadala.";
-    if (meta) meta.setAttribute("content", content);
-    else {
-      const m = document.createElement("meta");
-      m.name = "description";
-      m.content = content;
-      document.head.appendChild(m);
-    }
-  }, []);
 
   const tocSections = useMemo(() => 
     pillarPages.map((p) => ({ label: p.headline.slice(0, 30), id: p.slug })),
@@ -27,6 +16,11 @@ const Insights = () => {
 
   return (
     <div className="min-h-screen bg-background pt-24 pb-20 px-6">
+      <SEO
+        title="Insights | AI, SEO & Machine Learning | Venkata Pagadala"
+        description="Deep dives into AI agents, machine learning, RAG engines, knowledge graphs, and enterprise technical SEO — by Venkata Pagadala."
+        canonical="https://venkatapagadala.com/insights"
+      />
       <div className="max-w-5xl mx-auto">
         <ScrollReveal>
           <p className="font-mono text-xs tracking-[0.3em] text-muted-foreground mb-4 uppercase">

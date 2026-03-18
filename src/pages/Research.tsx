@@ -2,28 +2,21 @@ import ScrollReveal from "@/components/ScrollReveal";
 import KnowledgeGraph from "@/components/KnowledgeGraph";
 import NeuralNetBackground from "@/components/NeuralNetBackground";
 import PageSidebar from "@/components/PageSidebar";
-import { useEffect } from "react";
+import SEO from "@/components/SEO";
 
 const tocSections = [
   { label: "Knowledge Graph", id: "knowledge-graph" },
 ];
 
 const Research = () => {
-  useEffect(() => {
-    document.title = "Topic Explorer | AI & SEO Research Graph | Venkata Pagadala";
-    const meta = document.querySelector('meta[name="description"]');
-    const content = "Explore an interactive topic graph across AI systems, SEO, machine learning, and enterprise automation — by Venkata Pagadala.";
-    if (meta) meta.setAttribute("content", content);
-    else {
-      const m = document.createElement("meta");
-      m.name = "description";
-      m.content = content;
-      document.head.appendChild(m);
-    }
-  }, []);
 
   return (
     <div className="min-h-screen bg-background pt-24 pb-20 px-6 relative overflow-hidden">
+      <SEO
+        title="Topic Explorer | AI & SEO Research Graph | Venkata Pagadala"
+        description="Explore an interactive topic graph across AI systems, SEO, machine learning, and enterprise automation — by Venkata Pagadala."
+        canonical="https://venkatapagadala.com/research"
+      />
       <div className="fixed inset-0 z-0 pointer-events-none">
         <NeuralNetBackground />
         <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/60" />
