@@ -134,7 +134,7 @@ const AIContributors = () => {
       jsonLd.setAttribute("data-ai-notebook-ld", "true");
       document.head.appendChild(jsonLd);
     }
-    jsonLd.textContent = JSON.stringify({
+    const ldData: Record<string, unknown> = {
       "@context": "https://schema.org",
       "@type": "Article",
       headline: meta.ogTitle,
@@ -156,14 +156,28 @@ const AIContributors = () => {
         url: "https://venkatapagadala.com",
       },
       datePublished: "2026-01-15",
-      dateModified: "2026-03-15",
+      dateModified: "2026-03-18",
       inLanguage: "en-US",
       isPartOf: {
         "@type": "WebSite",
         name: "Venkata Pagadala",
         url: "https://venkatapagadala.com",
       },
-    });
+    };
+
+    // Add Course structured data for roadmap
+    if (topTab === "roadmap") {
+      (ldData as Record<string, unknown>)["@type"] = "Course";
+      ldData.name = "Free AI Roadmap — Zero to Hero in 18 Weeks";
+      ldData.provider = { "@type": "Person", name: "Venkata Pagadala", url: "https://venkatapagadala.com" };
+      ldData.isAccessibleForFree = true;
+      ldData.offers = { "@type": "Offer", price: "0", priceCurrency: "USD", availability: "https://schema.org/InStock" };
+      ldData.educationalLevel = "Beginner to Advanced";
+      ldData.numberOfCredits = 0;
+      ldData.hasCourseInstance = { "@type": "CourseInstance", courseMode: "online", courseWorkload: "PT18W" };
+    }
+
+    jsonLd.textContent = JSON.stringify(ldData);
 
     return () => {
       const el = document.querySelector('script[data-ai-notebook-ld]');
