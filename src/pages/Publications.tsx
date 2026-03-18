@@ -1,5 +1,4 @@
 import ScrollReveal from "@/components/ScrollReveal";
-import ScrollReveal from "@/components/ScrollReveal";
 import SEO from "@/components/SEO";
 import NeuralNetBackground from "@/components/NeuralNetBackground";
 import KnowledgeGraph from "@/components/KnowledgeGraph";

@@ -1,5 +1,4 @@
 import ScrollReveal from "@/components/ScrollReveal";
-import ScrollReveal from "@/components/ScrollReveal";
 import SEO from "@/components/SEO";
 
 const featuredProject = {
