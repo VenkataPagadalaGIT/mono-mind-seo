@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
+import SEO from "@/components/SEO";
 
 const featuredProject = {
   title: "Omniscite",

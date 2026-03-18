@@ -11,6 +11,11 @@ const Home = () => {
 
   return (
     <div className="relative min-h-screen flex flex-col bg-background overflow-hidden">
+      <SEO
+        title="Venkata Pagadala — AI Product Owner & Technical SEO Lead"
+        description="Venkata Pagadala — AI Product Owner, Technical SEO Lead, and Published Researcher. Building production AI systems, knowledge graphs, and enterprise search at scale. 10+ years scaling organic search for Fortune 500 brands."
+        canonical="https://venkatapagadala.com"
+      />
       <div className="relative min-h-screen flex flex-col items-center justify-center">
       <WireframeGrid />
       <FloatingBlocks />

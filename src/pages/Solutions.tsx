@@ -5,21 +5,10 @@ import SolutionsGraph from "@/components/SolutionsGraph";
 import NeuralNetBackground from "@/components/NeuralNetBackground";
 import PageSidebar from "@/components/PageSidebar";
 import { ArrowRight } from "lucide-react";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
+import SEO from "@/components/SEO";
 
 const Solutions = () => {
-  useEffect(() => {
-    document.title = "Solutions | AI Systems, SEO & Automation | Venkata Pagadala";
-    const meta = document.querySelector('meta[name="description"]');
-    const content = "Enterprise AI systems, knowledge graphs, RAG engines, technical SEO, AEO, and performance analytics — solutions for Fortune 500 and growth-stage companies.";
-    if (meta) meta.setAttribute("content", content);
-    else {
-      const m = document.createElement("meta");
-      m.name = "description";
-      m.content = content;
-      document.head.appendChild(m);
-    }
-  }, []);
 
   const tocSections = useMemo(() => [
     { label: "Overview", id: "overview" },
