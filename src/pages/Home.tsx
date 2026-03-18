@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowDown, ArrowRight, Linkedin } from "lucide-react";
 import WireframeGrid from "@/components/WireframeGrid";
@@ -6,14 +5,9 @@ import FloatingBlocks from "@/components/FloatingBlocks";
 import TypewriterText from "@/components/TypewriterText";
 import SolutionsGraph from "@/components/SolutionsGraph";
 import ScrollReveal from "@/components/ScrollReveal";
+import SEO from "@/components/SEO";
 
 const Home = () => {
-  useEffect(() => {
-    document.title = "Venkata Pagadala — AI Systems Builder, Researcher & Business Strategist";
-    const meta = document.querySelector('meta[name="description"]');
-    const content = "Venkata Pagadala — AI Systems Architect, Published Researcher, and Business Strategist. Building production AI systems, knowledge graphs, and enterprise search at scale.";
-    if (meta) meta.setAttribute("content", content);
-  }, []);
 
   return (
     <div className="relative min-h-screen flex flex-col bg-background overflow-hidden">
