@@ -9,20 +9,6 @@ const PillarPage = () => {
   const pillar = getPillarBySlug(slug || "");
   const relatedPosts = getBlogsByPillar(slug || "");
 
-  useEffect(() => {
-    if (pillar) {
-      document.title = pillar.metaTitle;
-      const meta = document.querySelector('meta[name="description"]');
-      if (meta) meta.setAttribute("content", pillar.metaDescription);
-      else {
-        const m = document.createElement("meta");
-        m.name = "description";
-        m.content = pillar.metaDescription;
-        document.head.appendChild(m);
-      }
-    }
-  }, [pillar]);
-
   if (!pillar) {
     return (
       <div className="min-h-screen bg-background pt-24 pb-20 px-6 flex items-center justify-center">
