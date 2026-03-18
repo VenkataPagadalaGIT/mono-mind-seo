@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import ScrollReveal from "@/components/ScrollReveal";
 import SEO from "@/components/SEO";
 import ScrollReveal from "@/components/ScrollReveal";
 import PageSidebar from "@/components/PageSidebar";
