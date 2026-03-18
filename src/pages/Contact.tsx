@@ -16,6 +16,11 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-background pt-24 pb-20 px-6 relative">
+      <SEO
+        title="Contact | Venkata Pagadala — AI & SEO Consulting"
+        description="Get in touch with Venkata Pagadala for AI systems consulting, enterprise SEO, and technical product management."
+        canonical="https://venkatapagadala.com/contact"
+      />
       <ParticleCanvas />
 
       <div className="max-w-4xl mx-auto relative z-10">

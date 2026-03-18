@@ -82,15 +82,13 @@ const tocSections = [
 ];
 
 const About = () => {
-  useEffect(() => {
-    document.title = "About Venkata Pagadala | AI Product Owner & SEO Leader";
-    const meta = document.querySelector('meta[name="description"]');
-    const content = "10+ years building AI systems and scaling organic search for Fortune 500 brands. Lead Technical Product Manager at AT&T. Published researcher.";
-    if (meta) meta.setAttribute("content", content);
-  }, []);
-
   return (
     <div className="min-h-screen bg-background pt-24 pb-20 px-6">
+      <SEO
+        title="About Venkata Pagadala | AI Product Owner & Technical SEO Lead"
+        description="10+ years building AI systems and scaling organic search for Fortune 500 brands. Lead Technical Product Manager at AT&T. Published researcher in AI-assisted SEO."
+        canonical="https://venkatapagadala.com/about"
+      />
       <div className="max-w-6xl mx-auto">
         <div className="lg:flex lg:gap-10">
           <PageSidebar sections={tocSections} shareTitle="About Venkata Pagadala — AI Product Owner & SEO Leader" />

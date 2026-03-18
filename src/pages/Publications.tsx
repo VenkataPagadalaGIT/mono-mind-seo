@@ -102,15 +102,13 @@ const tocSections = [
 ];
 
 const Lab = () => {
-  useEffect(() => {
-    document.title = "Lab | AI Research, Systems & Projects | Venkata Pagadala";
-    const meta = document.querySelector('meta[name="description"]');
-    const content = "Original AI research, production systems, published papers, and interactive explorations — building at the intersection of AI, business intelligence, and search.";
-    if (meta) meta.setAttribute("content", content);
-  }, []);
-
   return (
     <div className="min-h-screen bg-background pt-24 pb-20 px-6 relative overflow-hidden">
+      <SEO
+        title="Lab | AI Research, Systems & Projects | Venkata Pagadala"
+        description="Original AI research, production systems, published papers, and interactive explorations — building at the intersection of AI, business intelligence, and search."
+        canonical="https://venkatapagadala.com/publications"
+      />
       <div className="fixed inset-0 z-0 pointer-events-none">
         <NeuralNetBackground />
         <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-transparent to-background/70" />

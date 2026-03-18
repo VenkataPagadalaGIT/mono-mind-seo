@@ -18,6 +18,11 @@ const Solutions = () => {
 
   return (
     <div className="min-h-screen bg-background pt-24 pb-20 px-6 relative overflow-hidden">
+      <SEO
+        title="AI & SEO Solutions | Enterprise Systems & Automation | Venkata Pagadala"
+        description="Enterprise AI systems, knowledge graphs, RAG engines, technical SEO, AEO, and performance analytics — solutions for Fortune 500 and growth-stage companies."
+        canonical="https://venkatapagadala.com/solutions"
+      />
       <div className="fixed inset-0 z-0 pointer-events-none">
         <NeuralNetBackground />
         <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-transparent to-background/70" />
