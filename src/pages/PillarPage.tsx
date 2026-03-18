@@ -25,6 +25,12 @@ const PillarPage = () => {
 
   return (
     <div className="min-h-screen bg-background pt-24 pb-20 px-6">
+      <SEO
+        title={pillar.metaTitle}
+        description={pillar.metaDescription}
+        canonical={`https://venkatapagadala.com/insights/${slug}`}
+        ogType="article"
+      />
       <div className="max-w-4xl mx-auto">
         {/* Breadcrumb */}
         <ScrollReveal>

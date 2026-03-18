@@ -37,6 +37,11 @@ const tocSections = [
 const Notebook = () => {
   return (
     <div className="min-h-screen bg-background pt-24 pb-20">
+      <SEO
+        title="Research Notebooks | AI & Business | Venkata Pagadala"
+        description="Deep-dive reference notebooks on AI contributors, learning roadmaps, concepts encyclopedia, and business strategy — by Venkata Pagadala."
+        canonical="https://venkatapagadala.com/notebook"
+      />
       <div className="max-w-7xl mx-auto px-6 lg:flex lg:gap-10">
         <div className="flex-1 min-w-0">
           <ScrollReveal>

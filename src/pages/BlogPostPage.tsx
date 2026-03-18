@@ -3,6 +3,7 @@ import { getBlogBySlug, getPillarBySlug, getBlogsByPillar } from "@/data/insight
 import ScrollReveal from "@/components/ScrollReveal";
 import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
 import { useEffect } from "react";
+import SEO from "@/components/SEO";
 
 const BlogPostPage = () => {
   const { pillarSlug, postSlug } = useParams<{ pillarSlug: string; postSlug: string }>();
