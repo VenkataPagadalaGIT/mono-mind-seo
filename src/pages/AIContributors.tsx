@@ -216,7 +216,7 @@ const AIContributors = () => {
               The AI Notebook · 2026 Edition
             </p>
             <h1 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-1">
-              AI Notebook
+              {topTab === "roadmap" ? "Free AI Roadmap — March 2026" : topTab === "encyclopedia" ? "AI Concepts Encyclopedia 2026" : "Top 100 AI Contributors 2026"}
             </h1>
             <p className="font-mono text-xs text-muted-foreground/60 max-w-xl leading-relaxed">
               Your complete AI learning companion — from zero to hero. A roadmap with 90+ resources, 110 concepts explained, and 100 contributors profiled.

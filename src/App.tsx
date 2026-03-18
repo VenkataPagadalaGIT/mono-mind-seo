@@ -21,6 +21,8 @@ import AIContributors from "./pages/AIContributors";
 import AIContributorProfilePage from "./pages/AIContributorProfilePage";
 import Notebook from "./pages/Notebook";
 import BusinessNotebook from "./pages/BusinessNotebook";
+import AIUpdatesIndex from "./pages/AIUpdates";
+import AIUpdateDetail from "./pages/AIUpdateDetail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -49,6 +51,8 @@ const App = () => (
           <Route path="/notebook/ai/roadmap" element={<AIContributors />} />
           <Route path="/notebook/ai/encyclopedia" element={<AIContributors />} />
           <Route path="/notebook/business" element={<BusinessNotebook />} />
+          <Route path="/ai-updates" element={<AIUpdatesIndex />} />
+          <Route path="/ai-updates/:slug" element={<AIUpdateDetail />} />
           <Route path="/ai-contributors" element={<AIContributors />} />
           <Route path="/ai-contributors/:id" element={<AIContributorProfilePage />} />
           <Route path="/contact" element={<Contact />} />
