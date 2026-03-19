@@ -112,6 +112,11 @@ const TopicCard = ({ topic }: { topic: RoadmapTopic }) => {
               </p>
             </div>
           )}
+
+          <CrossLinks
+            relatedConcepts={roadmapToEncyclopedia[topic.id]}
+            relatedContributors={roadmapToContributors[topic.id]}
+          />
         </div>
       )}
     </div>
