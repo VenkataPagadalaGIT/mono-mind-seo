@@ -178,7 +178,38 @@ const AIContributors = () => {
       ldData.hasCourseInstance = { "@type": "CourseInstance", courseMode: "online", courseWorkload: "PT18W" };
     }
 
+    // FAQPage schema for encyclopedia
+    if (topTab === "encyclopedia") {
+      ldData["@type"] = "Article";
+    }
+
     jsonLd.textContent = JSON.stringify(ldData);
+
+    // FAQPage JSON-LD for encyclopedia (separate script)
+    let faqLd = document.querySelector('script[data-faq-ld]');
+    if (topTab === "encyclopedia") {
+      if (!faqLd) {
+        faqLd = document.createElement("script");
+        faqLd.setAttribute("type", "application/ld+json");
+        faqLd.setAttribute("data-faq-ld", "true");
+        document.head.appendChild(faqLd);
+      }
+      const faqItems = encyclopediaConcepts.slice(0, 30).map((c) => ({
+        "@type": "Question",
+        name: `What is ${c.concept}?`,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: c.description,
+        },
+      }));
+      faqLd.textContent = JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqItems,
+      });
+    } else if (faqLd) {
+      faqLd.remove();
+    }
 
     // BreadcrumbList JSON-LD
     let breadcrumbLd = document.querySelector('script[data-breadcrumb-ld]');
