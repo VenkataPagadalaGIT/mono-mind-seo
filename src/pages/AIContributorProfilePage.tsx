@@ -642,6 +642,19 @@ const AIContributorProfilePage = () => {
             </ScrollReveal>
           )}
 
+          {/* ── Related Content Cross-Links ── */}
+          {(contributorToRoadmap[contributor.id] || contributorToEncyclopedia[contributor.id]) && (
+            <ScrollReveal delay={100}>
+              <div id="related-content" className="border border-border p-5 mb-10 scroll-mt-24">
+                <h3 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-3">Explore Related Content</h3>
+                <CrossLinks
+                  relatedTopics={contributorToRoadmap[contributor.id]}
+                  relatedConcepts={contributorToEncyclopedia[contributor.id]}
+                />
+              </div>
+            </ScrollReveal>
+          )}
+
           {/* ── Connected Contributors ── */}
           {connectedContributors.length > 0 && (
             <ScrollReveal delay={100}>
