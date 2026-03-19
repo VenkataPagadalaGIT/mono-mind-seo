@@ -5,6 +5,8 @@ import SEO from "@/components/SEO";
 import PageSidebar, { TocItem } from "@/components/PageSidebar";
 
 import { aiContributors, SEGMENT_COLORS } from "@/data/aiContributors";
+import { contributorToRoadmap, contributorToEncyclopedia } from "@/data/crossLinks";
+import CrossLinks from "@/components/CrossLinks";
 import {
   ArrowLeft, ArrowRight, ExternalLink, GraduationCap, Award, MapPin,
   Quote, BookOpen, Link2, Play, Clock, Linkedin, Github, Share2, Copy, Check, Star, Users
