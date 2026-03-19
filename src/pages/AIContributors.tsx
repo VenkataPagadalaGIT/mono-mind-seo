@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import PageSidebar from "@/components/PageSidebar";
 
@@ -10,6 +10,7 @@ import CuratedReadingLists from "@/components/CuratedReadingLists";
 import AILearningRoadmap from "@/components/AILearningRoadmap";
 import AIEncyclopedia from "@/components/AIEncyclopedia";
 import { aiContributors } from "@/data/aiContributors";
+import { encyclopediaConcepts } from "@/data/aiEncyclopedia";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Linkedin, Mail } from "lucide-react";
 import authorPhoto from "@/assets/venkata-pagadala.jpeg";
