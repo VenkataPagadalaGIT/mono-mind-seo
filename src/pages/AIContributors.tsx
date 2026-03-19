@@ -156,7 +156,7 @@ const AIContributors = () => {
         url: "https://venkatapagadala.com",
       },
       datePublished: "2026-01-15",
-      dateModified: "2026-03-18",
+      dateModified: "2026-03-19",
       inLanguage: "en-US",
       isPartOf: {
         "@type": "WebSite",
@@ -179,9 +179,44 @@ const AIContributors = () => {
 
     jsonLd.textContent = JSON.stringify(ldData);
 
+    // BreadcrumbList JSON-LD
+    let breadcrumbLd = document.querySelector('script[data-breadcrumb-ld]');
+    if (!breadcrumbLd) {
+      breadcrumbLd = document.createElement("script");
+      breadcrumbLd.setAttribute("type", "application/ld+json");
+      breadcrumbLd.setAttribute("data-breadcrumb-ld", "true");
+      document.head.appendChild(breadcrumbLd);
+    }
+    const breadcrumbItems = [
+      { name: "Home", url: "https://venkatapagadala.com" },
+      { name: "Notebooks", url: "https://venkatapagadala.com/notebook" },
+      { name: topTab === "roadmap" ? "AI Roadmap" : topTab === "encyclopedia" ? "AI Encyclopedia" : "AI Contributors", url: meta.canonical },
+    ];
+    breadcrumbLd.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: breadcrumbItems.map((item, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: item.name,
+        item: item.url,
+      })),
+    });
+
+    // og:locale
+    let ogLocale = document.querySelector('meta[property="og:locale"]') as HTMLMetaElement;
+    if (!ogLocale) {
+      ogLocale = document.createElement("meta");
+      ogLocale.setAttribute("property", "og:locale");
+      document.head.appendChild(ogLocale);
+    }
+    ogLocale.setAttribute("content", "en_US");
+
     return () => {
       const el = document.querySelector('script[data-ai-notebook-ld]');
       if (el) el.remove();
+      const bc = document.querySelector('script[data-breadcrumb-ld]');
+      if (bc) bc.remove();
     };
   }, [topTab]);
 

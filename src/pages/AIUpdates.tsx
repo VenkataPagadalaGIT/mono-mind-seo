@@ -26,6 +26,10 @@ const AIUpdatesIndex = () => {
         title="AI Updates March 2026 — Latest AI News & Product Launches | Venkata Pagadala"
         description="Stay updated with the latest AI news — product launches from NVIDIA, Google, OpenAI, Meta, Cloudflare, and more. Curated AI updates for March 2026."
         canonical="https://venkatapagadala.com/ai-updates"
+        breadcrumbs={[
+          { name: "Home", url: "https://venkatapagadala.com" },
+          { name: "AI Updates", url: "https://venkatapagadala.com/ai-updates" },
+        ]}
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "CollectionPage",
@@ -33,7 +37,7 @@ const AIUpdatesIndex = () => {
           description: "Curated AI news covering product launches, research breakthroughs, and industry developments.",
           url: "https://venkatapagadala.com/ai-updates",
           author: { "@type": "Person", name: "Venkata Pagadala" },
-          dateModified: "2026-03-18",
+          dateModified: "2026-03-19",
         }}
       />
       <div className="max-w-7xl mx-auto px-6 lg:flex lg:gap-10">
