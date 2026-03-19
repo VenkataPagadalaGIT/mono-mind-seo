@@ -40,7 +40,7 @@ export const roadmapTopics: RoadmapTopic[] = ([
       { title: "What Is AI? — Simplilearn (Beginner-Friendly)", url: "https://www.youtube.com/watch?v=ad79nYk2keg" },
       { title: "What Is Artificial Intelligence? — Crash Course AI #1", url: "https://www.youtube.com/watch?v=a0_lo_GDcFw" },
       { title: "AI For Everyone — Andrew Ng (Full Course on Coursera)", url: "https://www.coursera.org/learn/ai-for-everyone" },
-      { title: "Introduction to AI — Microsoft AI for Beginners", url: "https://github.com/microsoft/AI-For-Beginners" },
+      { title: "Introduction to AI — Microsoft AI for Beginners", url: "https://www.youtube.com/watch?v=L0I_tGpBbxY" },
     ],
     bestCourses: [
       { title: "Elements of AI — Free Course by University of Helsinki", url: "https://www.elementsofai.com/" },
