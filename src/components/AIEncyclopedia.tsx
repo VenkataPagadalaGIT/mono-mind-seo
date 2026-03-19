@@ -109,6 +109,11 @@ const ConceptCard = ({ concept, isOpen, onToggle }: { concept: EncyclopediaConce
               </div>
             </div>
           )}
+
+          <CrossLinks
+            relatedTopics={encyclopediaToRoadmap[concept.id]}
+            relatedContributors={encyclopediaToContributors[concept.id]}
+          />
         </div>
       )}
     </div>
