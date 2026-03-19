@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import PageSidebar from "@/components/PageSidebar";
 
@@ -10,6 +10,7 @@ import CuratedReadingLists from "@/components/CuratedReadingLists";
 import AILearningRoadmap from "@/components/AILearningRoadmap";
 import AIEncyclopedia from "@/components/AIEncyclopedia";
 import { aiContributors } from "@/data/aiContributors";
+import { encyclopediaConcepts } from "@/data/aiEncyclopedia";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Linkedin, Mail } from "lucide-react";
 import authorPhoto from "@/assets/venkata-pagadala.jpeg";
@@ -156,7 +157,7 @@ const AIContributors = () => {
         url: "https://venkatapagadala.com",
       },
       datePublished: "2026-01-15",
-      dateModified: "2026-03-18",
+      dateModified: "2026-03-19",
       inLanguage: "en-US",
       isPartOf: {
         "@type": "WebSite",
@@ -177,11 +178,79 @@ const AIContributors = () => {
       ldData.hasCourseInstance = { "@type": "CourseInstance", courseMode: "online", courseWorkload: "PT18W" };
     }
 
+    // FAQPage schema for encyclopedia
+    if (topTab === "encyclopedia") {
+      ldData["@type"] = "Article";
+    }
+
     jsonLd.textContent = JSON.stringify(ldData);
+
+    // FAQPage JSON-LD for encyclopedia (separate script)
+    let faqLd = document.querySelector('script[data-faq-ld]');
+    if (topTab === "encyclopedia") {
+      if (!faqLd) {
+        faqLd = document.createElement("script");
+        faqLd.setAttribute("type", "application/ld+json");
+        faqLd.setAttribute("data-faq-ld", "true");
+        document.head.appendChild(faqLd);
+      }
+      const faqItems = encyclopediaConcepts.slice(0, 30).map((c) => ({
+        "@type": "Question",
+        name: `What is ${c.concept}?`,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: c.description,
+        },
+      }));
+      faqLd.textContent = JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqItems,
+      });
+    } else if (faqLd) {
+      faqLd.remove();
+    }
+
+    // BreadcrumbList JSON-LD
+    let breadcrumbLd = document.querySelector('script[data-breadcrumb-ld]');
+    if (!breadcrumbLd) {
+      breadcrumbLd = document.createElement("script");
+      breadcrumbLd.setAttribute("type", "application/ld+json");
+      breadcrumbLd.setAttribute("data-breadcrumb-ld", "true");
+      document.head.appendChild(breadcrumbLd);
+    }
+    const breadcrumbItems = [
+      { name: "Home", url: "https://venkatapagadala.com" },
+      { name: "Notebooks", url: "https://venkatapagadala.com/notebook" },
+      { name: topTab === "roadmap" ? "AI Roadmap" : topTab === "encyclopedia" ? "AI Encyclopedia" : "AI Contributors", url: meta.canonical },
+    ];
+    breadcrumbLd.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: breadcrumbItems.map((item, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: item.name,
+        item: item.url,
+      })),
+    });
+
+    // og:locale
+    let ogLocale = document.querySelector('meta[property="og:locale"]') as HTMLMetaElement;
+    if (!ogLocale) {
+      ogLocale = document.createElement("meta");
+      ogLocale.setAttribute("property", "og:locale");
+      document.head.appendChild(ogLocale);
+    }
+    ogLocale.setAttribute("content", "en_US");
 
     return () => {
       const el = document.querySelector('script[data-ai-notebook-ld]');
       if (el) el.remove();
+      const bc = document.querySelector('script[data-breadcrumb-ld]');
+      if (bc) bc.remove();
+      const fq = document.querySelector('script[data-faq-ld]');
+      if (fq) fq.remove();
     };
   }, [topTab]);
 
