@@ -249,6 +249,8 @@ const AIContributors = () => {
       if (el) el.remove();
       const bc = document.querySelector('script[data-breadcrumb-ld]');
       if (bc) bc.remove();
+      const fq = document.querySelector('script[data-faq-ld]');
+      if (fq) fq.remove();
     };
   }, [topTab]);
 
