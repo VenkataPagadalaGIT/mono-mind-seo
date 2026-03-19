@@ -33,6 +33,13 @@ const AIUpdateDetail = () => {
         description={update.summary}
         canonical={`https://venkatapagadala.com/ai-updates/${update.slug}`}
         ogType="article"
+        publishedTime={update.date}
+        modifiedTime={update.date}
+        breadcrumbs={[
+          { name: "Home", url: "https://venkatapagadala.com" },
+          { name: "AI Updates", url: "https://venkatapagadala.com/ai-updates" },
+          { name: update.title, url: `https://venkatapagadala.com/ai-updates/${update.slug}` },
+        ]}
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "NewsArticle",

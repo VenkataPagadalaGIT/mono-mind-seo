@@ -114,23 +114,22 @@ const AIContributorProfilePage = () => {
 
   const pageTitle = `${contributor.name} — #${contributor.rank} Top AI Contributor 2026 | AI Notebook`;
   const pageDescription = contributor.longBio || `${contributor.bio} ${contributor.keyInfluence}`;
-  const canonicalUrl = `https://mono-mind-seo.lovable.app/ai-contributors/${contributor.id}`;
+  const canonicalUrl = `https://venkatapagadala.com/ai-contributors/${contributor.id}`;
 
   return (
     <>
-      <Helmet>
-        <title>{pageTitle}</title>
-        <meta name="description" content={pageDescription.slice(0, 160)} />
-        <link rel="canonical" href={canonicalUrl} />
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={pageDescription.slice(0, 160)} />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content="profile" />
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content={pageTitle} />
-        <meta name="twitter:description" content={pageDescription.slice(0, 160)} />
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-      </Helmet>
+      <SEO
+        title={pageTitle}
+        description={pageDescription.slice(0, 160)}
+        canonical={canonicalUrl}
+        ogType="profile"
+        jsonLd={jsonLd}
+        breadcrumbs={[
+          { name: "Home", url: "https://venkatapagadala.com" },
+          { name: "AI Notebook", url: "https://venkatapagadala.com/notebook/ai" },
+          { name: contributor.name, url: canonicalUrl },
+        ]}
+      />
 
       <div className="min-h-screen bg-background pt-24 pb-20 px-6">
         <div className="max-w-6xl mx-auto">
