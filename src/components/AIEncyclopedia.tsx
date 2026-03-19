@@ -1,6 +1,8 @@
 import { useState, useMemo } from "react";
 import { encyclopediaConcepts, ENCYCLOPEDIA_CATEGORIES, type EncyclopediaConcept } from "@/data/aiEncyclopedia";
+import { encyclopediaToContributors, encyclopediaToRoadmap } from "@/data/crossLinks";
 import { Search, ChevronDown, ChevronUp, ExternalLink, Tag, BookOpen } from "lucide-react";
+import CrossLinks from "@/components/CrossLinks";
 
 const diffBadge: Record<string, string> = {
   beginner: "border-green-500/30 text-green-400",
@@ -107,6 +109,11 @@ const ConceptCard = ({ concept, isOpen, onToggle }: { concept: EncyclopediaConce
               </div>
             </div>
           )}
+
+          <CrossLinks
+            relatedTopics={encyclopediaToRoadmap[concept.id]}
+            relatedContributors={encyclopediaToContributors[concept.id]}
+          />
         </div>
       )}
     </div>

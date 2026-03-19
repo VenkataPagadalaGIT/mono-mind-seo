@@ -5,6 +5,8 @@ import SEO from "@/components/SEO";
 import PageSidebar, { TocItem } from "@/components/PageSidebar";
 
 import { aiContributors, SEGMENT_COLORS } from "@/data/aiContributors";
+import { contributorToRoadmap, contributorToEncyclopedia } from "@/data/crossLinks";
+import CrossLinks from "@/components/CrossLinks";
 import {
   ArrowLeft, ArrowRight, ExternalLink, GraduationCap, Award, MapPin,
   Quote, BookOpen, Link2, Play, Clock, Linkedin, Github, Share2, Copy, Check, Star, Users
@@ -636,6 +638,19 @@ const AIContributorProfilePage = () => {
                   <Award size={12} className="text-muted-foreground/30 mt-0.5 shrink-0" />
                   <span className="font-mono text-sm text-muted-foreground leading-relaxed">{contributor.awards}</span>
                 </div>
+              </div>
+            </ScrollReveal>
+          )}
+
+          {/* ── Related Content Cross-Links ── */}
+          {(contributorToRoadmap[contributor.id] || contributorToEncyclopedia[contributor.id]) && (
+            <ScrollReveal delay={100}>
+              <div id="related-content" className="border border-border p-5 mb-10 scroll-mt-24">
+                <h3 className="font-mono text-[10px] text-muted-foreground/30 uppercase tracking-widest mb-3">Explore Related Content</h3>
+                <CrossLinks
+                  relatedTopics={contributorToRoadmap[contributor.id]}
+                  relatedConcepts={contributorToEncyclopedia[contributor.id]}
+                />
               </div>
             </ScrollReveal>
           )}
