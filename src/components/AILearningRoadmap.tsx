@@ -1,7 +1,9 @@
 import { useState, useMemo } from "react";
 import { roadmapTopics, PHASES, type RoadmapTopic, type RoadmapResource } from "@/data/aiRoadmap";
+import { roadmapToEncyclopedia, roadmapToContributors } from "@/data/crossLinks";
 import { Search, ChevronDown, ChevronUp, Video, BookOpen, Github, Lightbulb, Wrench, GraduationCap, Flag } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
+import CrossLinks from "@/components/CrossLinks";
 
 const difficultyColors: Record<string, string> = {
   beginner: "border-green-500/30 text-green-400",
