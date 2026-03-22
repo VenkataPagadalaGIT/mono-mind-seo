@@ -5,6 +5,7 @@ import FloatingBlocks from "@/components/FloatingBlocks";
 import TypewriterText from "@/components/TypewriterText";
 import SolutionsGraph from "@/components/SolutionsGraph";
 import ScrollReveal from "@/components/ScrollReveal";
+import Holographic3DWrapper from "@/components/Holographic3DWrapper";
 import SEO from "@/components/SEO";
 
 const Home = () => {
