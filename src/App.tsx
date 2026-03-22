@@ -23,6 +23,7 @@ import Notebook from "./pages/Notebook";
 import BusinessNotebook from "./pages/BusinessNotebook";
 import AIUpdatesIndex from "./pages/AIUpdates";
 import AIUpdateDetail from "./pages/AIUpdateDetail";
+import Experience from "./pages/Experience";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
