@@ -49,6 +49,13 @@ const Experience = () => {
             <CinematicTransformer />
           </ScrollReveal>
         </div>
+
+        {/* Apiant-style 3D Platform */}
+        <div className="mt-32">
+          <ScrollReveal>
+            <ApiantStyle3D />
+          </ScrollReveal>
+        </div>
       </div>
     </div>
   );
