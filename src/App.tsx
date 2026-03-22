@@ -23,6 +23,7 @@ import Notebook from "./pages/Notebook";
 import BusinessNotebook from "./pages/BusinessNotebook";
 import AIUpdatesIndex from "./pages/AIUpdates";
 import AIUpdateDetail from "./pages/AIUpdateDetail";
+import Experience from "./pages/Experience";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -55,6 +56,7 @@ const App = () => (
           <Route path="/ai-updates/:slug" element={<AIUpdateDetail />} />
           <Route path="/ai-contributors" element={<AIContributors />} />
           <Route path="/ai-contributors/:id" element={<AIContributorProfilePage />} />
+          <Route path="/experience" element={<Experience />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
