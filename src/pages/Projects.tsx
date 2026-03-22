@@ -1,4 +1,5 @@
 import ScrollReveal from "@/components/ScrollReveal";
+import Holographic3DWrapper from "@/components/Holographic3DWrapper";
 import SEO from "@/components/SEO";
 
 const featuredProject = {
