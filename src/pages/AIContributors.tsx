@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
+import Holographic3DWrapper from "@/components/Holographic3DWrapper";
 import PageSidebar from "@/components/PageSidebar";
 
 import StateOfAIEssay from "@/components/StateOfAIEssay";
