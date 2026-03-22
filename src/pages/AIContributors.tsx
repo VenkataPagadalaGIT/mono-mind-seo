@@ -294,57 +294,59 @@ const AIContributors = () => {
           </div>
 
             {/* Author card */}
-            <div className="lg:w-64 shrink-0 border border-border/50 rounded-lg p-5">
-              <div className="flex items-center gap-3 mb-3">
-                <img
-                  src={authorPhoto}
-                  alt="Venkata Pagadala"
-                  className="w-12 h-12 rounded-full object-cover border border-border"
-                />
-                <div>
-                  <h3 className="font-display text-sm font-bold text-foreground">Venkata Pagadala</h3>
-                  <p className="font-mono text-[9px] text-muted-foreground/40">Curator</p>
+            <Holographic3DWrapper phase={0.7} intensity="subtle" className="lg:w-64 shrink-0">
+              <div className="border border-border/50 rounded-lg p-5">
+                <div className="flex items-center gap-3 mb-3">
+                  <img
+                    src={authorPhoto}
+                    alt="Venkata Pagadala"
+                    className="w-12 h-12 rounded-full object-cover border border-border"
+                  />
+                  <div>
+                    <h3 className="font-display text-sm font-bold text-foreground">Venkata Pagadala</h3>
+                    <p className="font-mono text-[9px] text-muted-foreground/40">Curator</p>
+                  </div>
+                </div>
+                <p className="font-mono text-[10px] text-muted-foreground/50 leading-relaxed mb-3">
+                  AI Product & Research. Search — SEO, GEO & Automation at enterprise level. 10M+ pages managed.
+                </p>
+                <div className="flex flex-wrap gap-3 mb-3">
+                  {[
+                    { value: "18K+", label: "Followers" },
+                    { value: "404K+", label: "Impressions" },
+                  ].map((s) => (
+                    <div key={s.label}>
+                      <p className="font-mono text-xs font-bold text-foreground">{s.value}</p>
+                      <p className="font-mono text-[8px] text-muted-foreground/30 uppercase tracking-widest">{s.label}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="space-y-1.5">
+                  <a
+                    href="https://www.linkedin.com/in/venkata-pagadala/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 font-mono text-[10px] text-muted-foreground/50 hover:text-foreground transition-colors"
+                  >
+                    <Linkedin size={10} /> Follow on LinkedIn
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/newsletters/7286801553498583041/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 font-mono text-[10px] text-muted-foreground/50 hover:text-foreground transition-colors"
+                  >
+                    <ArrowRight size={10} /> Subscribe Newsletter
+                  </a>
+                  <a
+                    href="mailto:vdepagadala@gmail.com"
+                    className="flex items-center gap-1.5 font-mono text-[10px] text-muted-foreground/50 hover:text-foreground transition-colors"
+                  >
+                    <Mail size={10} /> Get in Touch
+                  </a>
                 </div>
               </div>
-              <p className="font-mono text-[10px] text-muted-foreground/50 leading-relaxed mb-3">
-                AI Product & Research. Search — SEO, GEO & Automation at enterprise level. 10M+ pages managed.
-              </p>
-              <div className="flex flex-wrap gap-3 mb-3">
-                {[
-                  { value: "18K+", label: "Followers" },
-                  { value: "404K+", label: "Impressions" },
-                ].map((s) => (
-                  <div key={s.label}>
-                    <p className="font-mono text-xs font-bold text-foreground">{s.value}</p>
-                    <p className="font-mono text-[8px] text-muted-foreground/30 uppercase tracking-widest">{s.label}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="space-y-1.5">
-                <a
-                  href="https://www.linkedin.com/in/venkata-pagadala/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 font-mono text-[10px] text-muted-foreground/50 hover:text-foreground transition-colors"
-                >
-                  <Linkedin size={10} /> Follow on LinkedIn
-                </a>
-                <a
-                  href="https://www.linkedin.com/newsletters/7286801553498583041/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 font-mono text-[10px] text-muted-foreground/50 hover:text-foreground transition-colors"
-                >
-                  <ArrowRight size={10} /> Subscribe Newsletter
-                </a>
-                <a
-                  href="mailto:vdepagadala@gmail.com"
-                  className="flex items-center gap-1.5 font-mono text-[10px] text-muted-foreground/50 hover:text-foreground transition-colors"
-                >
-                  <Mail size={10} /> Get in Touch
-                </a>
-              </div>
-          </div>
+            </Holographic3DWrapper>
         </div>
 
         {/* Top-level tabs */}
