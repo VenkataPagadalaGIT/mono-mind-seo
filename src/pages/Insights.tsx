@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { pillarPages, getBlogsByPillar } from "@/data/insights";
 import ScrollReveal from "@/components/ScrollReveal";
+import Holographic3DWrapper from "@/components/Holographic3DWrapper";
 import PageSidebar from "@/components/PageSidebar";
 
 import { ArrowRight } from "lucide-react";
