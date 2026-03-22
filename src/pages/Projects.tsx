@@ -1,4 +1,5 @@
 import ScrollReveal from "@/components/ScrollReveal";
+import Holographic3DWrapper from "@/components/Holographic3DWrapper";
 import SEO from "@/components/SEO";
 
 const featuredProject = {
@@ -93,58 +94,62 @@ const Projects = () => {
 
         {/* Featured: Omniscite */}
         <ScrollReveal delay={100}>
-          <div className="border border-border p-8 sm:p-10 mb-12 border-glow-hover group transition-all hover:bg-secondary/20 relative overflow-hidden">
-            <div className="absolute top-4 right-4 font-mono text-[10px] border border-border px-3 py-1 text-muted-foreground/60 uppercase tracking-widest">
-              {featuredProject.status}
+          <Holographic3DWrapper phase={0.5} intensity="strong">
+            <div className="border border-border p-8 sm:p-10 mb-12 group transition-all hover:bg-secondary/20 relative overflow-hidden">
+              <div className="absolute top-4 right-4 font-mono text-[10px] border border-border px-3 py-1 text-muted-foreground/60 uppercase tracking-widest">
+                {featuredProject.status}
+              </div>
+              <p className="font-mono text-xs text-muted-foreground/40 mb-3 tracking-widest">{"{ FEATURED }"}</p>
+              <h3 className="font-display text-3xl sm:text-4xl font-bold text-foreground text-glow mb-2">
+                {featuredProject.title}
+              </h3>
+              <p className="font-mono text-xs text-muted-foreground/60 mb-4 tracking-wider uppercase">
+                {featuredProject.subtitle}
+              </p>
+              <p className="font-mono text-sm text-muted-foreground leading-relaxed mb-6 max-w-3xl">
+                {featuredProject.desc}
+              </p>
+              <div className="flex flex-wrap gap-2 mb-6">
+                {featuredProject.layers.map((layer) => (
+                  <span key={layer} className="font-mono text-[10px] bg-secondary/40 border border-border px-3 py-1.5 text-foreground/70">
+                    {layer}
+                  </span>
+                ))}
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {featuredProject.tags.map((tag) => (
+                  <span key={tag} className="font-mono text-[10px] border border-border px-2 py-1 text-muted-foreground/60">
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </div>
-            <p className="font-mono text-xs text-muted-foreground/40 mb-3 tracking-widest">{"{ FEATURED }"}</p>
-            <h3 className="font-display text-3xl sm:text-4xl font-bold text-foreground text-glow mb-2">
-              {featuredProject.title}
-            </h3>
-            <p className="font-mono text-xs text-muted-foreground/60 mb-4 tracking-wider uppercase">
-              {featuredProject.subtitle}
-            </p>
-            <p className="font-mono text-sm text-muted-foreground leading-relaxed mb-6 max-w-3xl">
-              {featuredProject.desc}
-            </p>
-            <div className="flex flex-wrap gap-2 mb-6">
-              {featuredProject.layers.map((layer) => (
-                <span key={layer} className="font-mono text-[10px] bg-secondary/40 border border-border px-3 py-1.5 text-foreground/70">
-                  {layer}
-                </span>
-              ))}
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {featuredProject.tags.map((tag) => (
-                <span key={tag} className="font-mono text-[10px] border border-border px-2 py-1 text-muted-foreground/60">
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
+          </Holographic3DWrapper>
         </ScrollReveal>
 
         <div className="grid md:grid-cols-2 gap-6">
           {projects.map((project, i) => (
             <ScrollReveal key={project.num} delay={i * 100}>
-              <div className="border border-border p-6 sm:p-8 h-full flex flex-col border-glow-hover group transition-all hover:bg-secondary/20">
-                <div className="font-mono text-xs text-muted-foreground/40 mb-4 tracking-widest">
-                  {"{" + project.num + "}"}
+              <Holographic3DWrapper phase={i / projects.length} intensity="medium">
+                <div className="border border-border p-6 sm:p-8 h-full flex flex-col group transition-all hover:bg-secondary/20">
+                  <div className="font-mono text-xs text-muted-foreground/40 mb-4 tracking-widest">
+                    {"{" + project.num + "}"}
+                  </div>
+                  <h3 className="font-display text-xl font-bold text-foreground mb-3 group-hover:text-glow transition-all">
+                    {project.title}
+                  </h3>
+                  <p className="font-mono text-xs text-muted-foreground leading-relaxed mb-6 flex-1">
+                    {project.desc}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tags.map((tag) => (
+                      <span key={tag} className="font-mono text-[10px] border border-border px-2 py-1 text-muted-foreground/60">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-                <h3 className="font-display text-xl font-bold text-foreground mb-3 group-hover:text-glow transition-all">
-                  {project.title}
-                </h3>
-                <p className="font-mono text-xs text-muted-foreground leading-relaxed mb-6 flex-1">
-                  {project.desc}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
-                    <span key={tag} className="font-mono text-[10px] border border-border px-2 py-1 text-muted-foreground/60">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
+              </Holographic3DWrapper>
             </ScrollReveal>
           ))}
         </div>
