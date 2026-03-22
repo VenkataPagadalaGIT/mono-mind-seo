@@ -427,17 +427,19 @@ const AIContributors = () => {
             <div className="lg:flex lg:gap-10">
               <div className="flex-1 min-w-0">
                 {activeSection === "explorer" && (
-                  <AIContributorsExplorer onExplore={handleExplore} />
+                  <div id="explorer" className="scroll-mt-28">
+                    <AIContributorsExplorer onExplore={handleExplore} />
+                  </div>
                 )}
                 {activeSection === "essay" && (
-                  <div>
+                  <div id="essay" className="scroll-mt-28">
                     <h2 className="font-display text-xl font-bold text-foreground mb-1">The State of AI, 2026</h2>
                     <p className="font-mono text-[10px] text-muted-foreground/25 uppercase tracking-widest mb-8">An introduction</p>
                     <StateOfAIEssay />
                   </div>
                 )}
                 {activeSection === "timeline" && (
-                  <div>
+                  <div id="timeline" className="scroll-mt-28">
                     <h2 className="font-display text-xl font-bold text-foreground mb-1">AI Timeline</h2>
                     <p className="font-mono text-[11px] text-muted-foreground/40 mb-8 max-w-2xl leading-relaxed">
                       Key milestones from 1986 to today.
@@ -446,7 +448,7 @@ const AIContributors = () => {
                   </div>
                 )}
                 {activeSection === "glossary" && (
-                  <div>
+                  <div id="glossary" className="scroll-mt-28">
                     <h2 className="font-display text-xl font-bold text-foreground mb-1">AI Concepts Glossary</h2>
                     <p className="font-mono text-[11px] text-muted-foreground/40 mb-8 max-w-2xl leading-relaxed">
                       20 essential AI concepts linked to the contributors who pioneered them.
@@ -455,7 +457,7 @@ const AIContributors = () => {
                   </div>
                 )}
                 {activeSection === "reading" && (
-                  <div>
+                  <div id="reading" className="scroll-mt-28">
                     <h2 className="font-display text-xl font-bold text-foreground mb-1">Curated Reading Lists</h2>
                     <p className="font-mono text-[11px] text-muted-foreground/40 mb-8 max-w-2xl leading-relaxed">
                       The papers, podcasts, and talks that matter most.

@@ -62,7 +62,16 @@ const PageSidebar = ({ sections, shareTitle, shareDescription, onSectionClick, c
                 <button
                   key={item.id}
                   onClick={() => {
-                    onSectionClick?.(item.id);
+                    if (onSectionClick) {
+                      onSectionClick(item.id);
+                    }
+                    // Always scroll to the element if it exists
+                    setTimeout(() => {
+                      const el = document.getElementById(item.id);
+                      if (el) {
+                        el.scrollIntoView({ behavior: "smooth", block: "start" });
+                      }
+                    }, 50);
                     setActiveId(item.id);
                   }}
                   className={`block w-full text-left font-mono text-[10px] py-1.5 border-l-2 pl-3 -ml-px transition-colors ${
