@@ -2,6 +2,7 @@ import HolographicCards from "@/components/HolographicCards";
 import WireframeGrid from "@/components/WireframeGrid";
 import ScrollReveal from "@/components/ScrollReveal";
 import CinematicTransformer from "@/components/CinematicTransformer";
+import Cinematic3DScene from "@/components/Cinematic3DScene";
 import SEO from "@/components/SEO";
 
 const Experience = () => {
@@ -33,6 +34,13 @@ const Experience = () => {
         </ScrollReveal>
 
         <HolographicCards />
+
+        {/* Cinematic 3D Scene */}
+        <div className="mt-32">
+          <ScrollReveal>
+            <Cinematic3DScene />
+          </ScrollReveal>
+        </div>
 
         {/* Cinematic Transformer Section */}
         <div className="mt-32">
