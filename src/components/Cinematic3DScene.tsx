@@ -4,7 +4,7 @@ import { Float, Environment, MeshTransmissionMaterial, Edges, Text } from "@reac
 import * as THREE from "three";
 
 // Floating mechanical core — a compound shape that slowly rotates and responds to mouse
-const MechanicalCore = ({ mouse }: { mouse: React.MutableRefObject<{ x: number; y: number }> }) => {
+const MechanicalCore = ({ mouse, onNavigate }: { mouse: React.MutableRefObject<{ x: number; y: number }>; onNavigate: (path: string) => void }) => {
   const groupRef = useRef<THREE.Group>(null);
   const innerRef = useRef<THREE.Group>(null);
   const ringRef1 = useRef<THREE.Mesh>(null);
