@@ -1,10 +1,10 @@
-import { useRef, useState, useMemo, Suspense } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Float, Environment, MeshTransmissionMaterial, Edges } from "@react-three/drei";
+import { useRef, useState, useMemo, Suspense, useCallback } from "react";
+import { Canvas, useFrame, useThree, ThreeEvent } from "@react-three/fiber";
+import { Float, Environment, MeshTransmissionMaterial, Edges, Text } from "@react-three/drei";
 import * as THREE from "three";
 
 // Floating mechanical core — a compound shape that slowly rotates and responds to mouse
-const MechanicalCore = ({ mouse }: { mouse: React.MutableRefObject<{ x: number; y: number }> }) => {
+const MechanicalCore = ({ mouse, onNavigate }: { mouse: React.MutableRefObject<{ x: number; y: number }>; onNavigate: (path: string) => void }) => {
   const groupRef = useRef<THREE.Group>(null);
   const innerRef = useRef<THREE.Group>(null);
   const ringRef1 = useRef<THREE.Mesh>(null);
@@ -109,13 +109,13 @@ const MechanicalCore = ({ mouse }: { mouse: React.MutableRefObject<{ x: number; 
             );
           })}
 
-          {/* Floating panels */}
-          {Array.from({ length: 6 }).map((_, i) => {
+          {/* Floating panels — linked to pages */}
+          {panelLinks.map((link, i) => {
             const angle = (i / 6) * Math.PI * 2 + 0.3;
             const radius = 1.8 + (i % 2) * 0.5;
             return (
               <FloatingPanel
-                key={`panel-${i}`}
+                key={`panel-${link.path}`}
                 position={[
                   Math.cos(angle) * radius,
                   Math.sin(i * 0.8) * 0.6,
@@ -123,6 +123,8 @@ const MechanicalCore = ({ mouse }: { mouse: React.MutableRefObject<{ x: number; 
                 ]}
                 rotation={[0, -angle + Math.PI / 2, 0]}
                 index={i}
+                label={link.label}
+                onClickPanel={() => onNavigate(link.path)}
               />
             );
           })}
@@ -160,17 +162,32 @@ const FloatingNode = ({ position, index }: { position: [number, number, number];
   );
 };
 
-// Floating holographic panel
+// Page link data for floating panels
+const panelLinks = [
+  { label: "Projects", path: "/projects" },
+  { label: "Solutions", path: "/solutions" },
+  { label: "Research", path: "/research" },
+  { label: "Notebook", path: "/notebook" },
+  { label: "Insights", path: "/insights" },
+  { label: "About", path: "/about" },
+];
+
+// Floating holographic panel — clickable, links to a page
 const FloatingPanel = ({
   position,
   rotation,
   index,
+  label,
+  onClickPanel,
 }: {
   position: [number, number, number];
   rotation: [number, number, number];
   index: number;
+  label: string;
+  onClickPanel: () => void;
 }) => {
-  const ref = useRef<THREE.Mesh>(null);
+  const ref = useRef<THREE.Group>(null);
+  const [hovered, setHovered] = useState(false);
 
   useFrame((state) => {
     if (ref.current) {
@@ -179,18 +196,52 @@ const FloatingPanel = ({
   });
 
   return (
-    <mesh ref={ref} position={position} rotation={rotation}>
-      <planeGeometry args={[0.4, 0.25]} />
-      <meshStandardMaterial
-        color="#0a1628"
-        emissive="#1a3a5c"
-        emissiveIntensity={0.3}
-        transparent
-        opacity={0.6}
-        side={THREE.DoubleSide}
-      />
-      <Edges color="#4a9eff33" lineWidth={0.5} />
-    </mesh>
+    <group
+      ref={ref}
+      position={position}
+      rotation={rotation}
+      onClick={(e) => { e.stopPropagation(); onClickPanel(); }}
+      onPointerOver={(e) => { e.stopPropagation(); setHovered(true); document.body.style.cursor = "pointer"; }}
+      onPointerOut={() => { setHovered(false); document.body.style.cursor = "auto"; }}
+    >
+      {/* Panel background */}
+      <mesh>
+        <planeGeometry args={[0.5, 0.3]} />
+        <meshStandardMaterial
+          color={hovered ? "#0f2a4a" : "#0a1628"}
+          emissive={hovered ? "#2a5aff" : "#1a3a5c"}
+          emissiveIntensity={hovered ? 0.8 : 0.3}
+          transparent
+          opacity={hovered ? 0.85 : 0.6}
+          side={THREE.DoubleSide}
+        />
+        <Edges color={hovered ? "#6aadff" : "#4a9eff33"} lineWidth={hovered ? 1.2 : 0.5} />
+      </mesh>
+
+      {/* Label text */}
+      <Text
+        position={[0, 0, 0.01]}
+        fontSize={0.06}
+        color={hovered ? "#ffffff" : "#7abaff"}
+        anchorX="center"
+        anchorY="middle"
+        font={undefined}
+      >
+        {label}
+      </Text>
+
+      {/* Small arrow indicator */}
+      <Text
+        position={[0.18, -0.09, 0.01]}
+        fontSize={0.04}
+        color={hovered ? "#ffffff" : "#4a7aaa"}
+        anchorX="center"
+        anchorY="middle"
+        font={undefined}
+      >
+        →
+      </Text>
+    </group>
   );
 };
 
@@ -264,7 +315,7 @@ const LightBeams = () => {
   );
 };
 
-const Scene = ({ mouse }: { mouse: React.MutableRefObject<{ x: number; y: number }> }) => {
+const Scene = ({ mouse, onNavigate }: { mouse: React.MutableRefObject<{ x: number; y: number }>; onNavigate: (path: string) => void }) => {
   return (
     <>
       {/* Lighting */}
@@ -281,7 +332,7 @@ const Scene = ({ mouse }: { mouse: React.MutableRefObject<{ x: number; y: number
       />
 
       {/* Main object */}
-      <MechanicalCore mouse={mouse} />
+      <MechanicalCore mouse={mouse} onNavigate={onNavigate} />
 
       {/* Ambient particles */}
       <Particles />
@@ -303,6 +354,10 @@ const Cinematic3DScene = () => {
     mouse.current.y = ((e.clientY - rect.top) / rect.height) * 2 - 1;
   };
 
+  const handleNavigate = useCallback((path: string) => {
+    window.location.href = path;
+  }, []);
+
   return (
     <div className="relative">
       {/* Header */}
@@ -314,7 +369,7 @@ const Cinematic3DScene = () => {
           Autonomous Core
         </h2>
         <p className="font-mono text-[10px] text-muted-foreground/40 max-w-md mx-auto leading-relaxed">
-          A self-organizing neural substrate. Move your cursor to interact with the dimensional field.
+          A self-organizing neural substrate. Click the floating panels to navigate. Move your cursor to interact.
         </p>
       </div>
 
@@ -342,7 +397,7 @@ const Cinematic3DScene = () => {
           style={{ background: "transparent" }}
         >
           <Suspense fallback={null}>
-            <Scene mouse={mouse} />
+            <Scene mouse={mouse} onNavigate={handleNavigate} />
           </Suspense>
         </Canvas>
 
