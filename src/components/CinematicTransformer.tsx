@@ -151,10 +151,10 @@ const Panel3D = ({
   const pos = mode === "car" ? config.car : config.robot;
 
   // Add mouse parallax
-  const parallaxX = useTransform(mouseX, [-0.5, 0.5], [-15, 15]);
-  const parallaxY = useTransform(mouseY, [-0.5, 0.5], [-10, 10]);
-  const smoothParallaxX = useSpring(parallaxX as unknown as number, { stiffness: 100, damping: 30 });
-  const smoothParallaxY = useSpring(parallaxY as unknown as number, { stiffness: 100, damping: 30 });
+  const parallaxX = useTransform(mouseX, (v: number) => (v + 0.5) * 30 - 15);
+  const parallaxY = useTransform(mouseY, (v: number) => (v + 0.5) * 20 - 10);
+  const smoothParallaxX = useSpring(parallaxX, { stiffness: 100, damping: 30 });
+  const smoothParallaxY = useSpring(parallaxY, { stiffness: 100, damping: 30 });
 
   return (
     <motion.div
