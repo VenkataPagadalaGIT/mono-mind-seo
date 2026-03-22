@@ -354,6 +354,10 @@ const Cinematic3DScene = () => {
     mouse.current.y = ((e.clientY - rect.top) / rect.height) * 2 - 1;
   };
 
+  const handleNavigate = useCallback((path: string) => {
+    window.location.href = path;
+  }, []);
+
   return (
     <div className="relative">
       {/* Header */}
@@ -365,7 +369,7 @@ const Cinematic3DScene = () => {
           Autonomous Core
         </h2>
         <p className="font-mono text-[10px] text-muted-foreground/40 max-w-md mx-auto leading-relaxed">
-          A self-organizing neural substrate. Move your cursor to interact with the dimensional field.
+          A self-organizing neural substrate. Click the floating panels to navigate. Move your cursor to interact.
         </p>
       </div>
 
@@ -393,7 +397,7 @@ const Cinematic3DScene = () => {
           style={{ background: "transparent" }}
         >
           <Suspense fallback={null}>
-            <Scene mouse={mouse} />
+            <Scene mouse={mouse} onNavigate={handleNavigate} />
           </Suspense>
         </Canvas>
 
