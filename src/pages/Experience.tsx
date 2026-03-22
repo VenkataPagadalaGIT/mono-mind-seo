@@ -35,6 +35,13 @@ const Experience = () => {
 
         <HolographicCards />
 
+        {/* Cinematic 3D Scene */}
+        <div className="mt-32">
+          <ScrollReveal>
+            <Cinematic3DScene />
+          </ScrollReveal>
+        </div>
+
         {/* Cinematic Transformer Section */}
         <div className="mt-32">
           <ScrollReveal>
