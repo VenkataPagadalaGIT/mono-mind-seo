@@ -1,6 +1,6 @@
-import { useRef, useState, useMemo, Suspense } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Float, Environment, MeshTransmissionMaterial, Edges } from "@react-three/drei";
+import { useRef, useState, useMemo, Suspense, useCallback } from "react";
+import { Canvas, useFrame, useThree, ThreeEvent } from "@react-three/fiber";
+import { Float, Environment, MeshTransmissionMaterial, Edges, Text } from "@react-three/drei";
 import * as THREE from "three";
 
 // Floating mechanical core — a compound shape that slowly rotates and responds to mouse
