@@ -1,4 +1,5 @@
 import HolographicCards from "@/components/HolographicCards";
+import TransformerMorph from "@/components/TransformerMorph";
 import WireframeGrid from "@/components/WireframeGrid";
 import ScrollReveal from "@/components/ScrollReveal";
 import SEO from "@/components/SEO";
@@ -32,6 +33,12 @@ const Experience = () => {
         </ScrollReveal>
 
         <HolographicCards />
+
+        <div className="mt-24">
+          <ScrollReveal delay={300}>
+            <TransformerMorph />
+          </ScrollReveal>
+        </div>
       </div>
     </div>
   );
