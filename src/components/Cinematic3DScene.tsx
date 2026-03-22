@@ -160,17 +160,32 @@ const FloatingNode = ({ position, index }: { position: [number, number, number];
   );
 };
 
-// Floating holographic panel
+// Page link data for floating panels
+const panelLinks = [
+  { label: "Projects", path: "/projects" },
+  { label: "Solutions", path: "/solutions" },
+  { label: "Research", path: "/research" },
+  { label: "Notebook", path: "/notebook" },
+  { label: "Insights", path: "/insights" },
+  { label: "About", path: "/about" },
+];
+
+// Floating holographic panel — clickable, links to a page
 const FloatingPanel = ({
   position,
   rotation,
   index,
+  label,
+  onClickPanel,
 }: {
   position: [number, number, number];
   rotation: [number, number, number];
   index: number;
+  label: string;
+  onClickPanel: () => void;
 }) => {
-  const ref = useRef<THREE.Mesh>(null);
+  const ref = useRef<THREE.Group>(null);
+  const [hovered, setHovered] = useState(false);
 
   useFrame((state) => {
     if (ref.current) {
@@ -179,18 +194,52 @@ const FloatingPanel = ({
   });
 
   return (
-    <mesh ref={ref} position={position} rotation={rotation}>
-      <planeGeometry args={[0.4, 0.25]} />
-      <meshStandardMaterial
-        color="#0a1628"
-        emissive="#1a3a5c"
-        emissiveIntensity={0.3}
-        transparent
-        opacity={0.6}
-        side={THREE.DoubleSide}
-      />
-      <Edges color="#4a9eff33" lineWidth={0.5} />
-    </mesh>
+    <group
+      ref={ref}
+      position={position}
+      rotation={rotation}
+      onClick={(e) => { e.stopPropagation(); onClickPanel(); }}
+      onPointerOver={(e) => { e.stopPropagation(); setHovered(true); document.body.style.cursor = "pointer"; }}
+      onPointerOut={() => { setHovered(false); document.body.style.cursor = "auto"; }}
+    >
+      {/* Panel background */}
+      <mesh>
+        <planeGeometry args={[0.5, 0.3]} />
+        <meshStandardMaterial
+          color={hovered ? "#0f2a4a" : "#0a1628"}
+          emissive={hovered ? "#2a5aff" : "#1a3a5c"}
+          emissiveIntensity={hovered ? 0.8 : 0.3}
+          transparent
+          opacity={hovered ? 0.85 : 0.6}
+          side={THREE.DoubleSide}
+        />
+        <Edges color={hovered ? "#6aadff" : "#4a9eff33"} lineWidth={hovered ? 1.2 : 0.5} />
+      </mesh>
+
+      {/* Label text */}
+      <Text
+        position={[0, 0, 0.01]}
+        fontSize={0.06}
+        color={hovered ? "#ffffff" : "#7abaff"}
+        anchorX="center"
+        anchorY="middle"
+        font={undefined}
+      >
+        {label}
+      </Text>
+
+      {/* Small arrow indicator */}
+      <Text
+        position={[0.18, -0.09, 0.01]}
+        fontSize={0.04}
+        color={hovered ? "#ffffff" : "#4a7aaa"}
+        anchorX="center"
+        anchorY="middle"
+        font={undefined}
+      >
+        →
+      </Text>
+    </group>
   );
 };
 
