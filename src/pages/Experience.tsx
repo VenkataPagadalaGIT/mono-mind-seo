@@ -3,6 +3,7 @@ import WireframeGrid from "@/components/WireframeGrid";
 import ScrollReveal from "@/components/ScrollReveal";
 import CinematicTransformer from "@/components/CinematicTransformer";
 import Cinematic3DScene from "@/components/Cinematic3DScene";
+import ApiantStyle3D from "@/components/ApiantStyle3D";
 import SEO from "@/components/SEO";
 
 const Experience = () => {
@@ -46,6 +47,13 @@ const Experience = () => {
         <div className="mt-32">
           <ScrollReveal>
             <CinematicTransformer />
+          </ScrollReveal>
+        </div>
+
+        {/* Apiant-style 3D Platform */}
+        <div className="mt-32">
+          <ScrollReveal>
+            <ApiantStyle3D />
           </ScrollReveal>
         </div>
       </div>
