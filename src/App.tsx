@@ -56,6 +56,7 @@ const App = () => (
           <Route path="/ai-updates/:slug" element={<AIUpdateDetail />} />
           <Route path="/ai-contributors" element={<AIContributors />} />
           <Route path="/ai-contributors/:id" element={<AIContributorProfilePage />} />
+          <Route path="/experience" element={<Experience />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
