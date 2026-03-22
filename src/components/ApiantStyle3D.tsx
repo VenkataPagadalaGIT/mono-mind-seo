@@ -131,14 +131,12 @@ const GridLines = () => {
 
   return (
     <group>
-      {lines.map((line, i) => {
-        const points = [line.start, line.end];
+      {lines.map((l, i) => {
+        const points = [l.start, l.end];
         const geometry = new THREE.BufferGeometry().setFromPoints(points);
-        return (
-          <line key={i} geometry={geometry}>
-            <lineBasicMaterial color="#1a1a1a" transparent opacity={0.6} />
-          </line>
-        );
+        const material = new THREE.LineBasicMaterial({ color: "#1a1a1a", transparent: true, opacity: 0.6 });
+        const lineObj = new THREE.Line(geometry, material);
+        return <primitive key={i} object={lineObj} />;
       })}
     </group>
   );
