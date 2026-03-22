@@ -109,13 +109,13 @@ const MechanicalCore = ({ mouse, onNavigate }: { mouse: React.MutableRefObject<{
             );
           })}
 
-          {/* Floating panels */}
-          {Array.from({ length: 6 }).map((_, i) => {
+          {/* Floating panels — linked to pages */}
+          {panelLinks.map((link, i) => {
             const angle = (i / 6) * Math.PI * 2 + 0.3;
             const radius = 1.8 + (i % 2) * 0.5;
             return (
               <FloatingPanel
-                key={`panel-${i}`}
+                key={`panel-${link.path}`}
                 position={[
                   Math.cos(angle) * radius,
                   Math.sin(i * 0.8) * 0.6,
@@ -123,6 +123,8 @@ const MechanicalCore = ({ mouse, onNavigate }: { mouse: React.MutableRefObject<{
                 ]}
                 rotation={[0, -angle + Math.PI / 2, 0]}
                 index={i}
+                label={link.label}
+                onClickPanel={() => onNavigate(link.path)}
               />
             );
           })}
