@@ -315,7 +315,7 @@ const LightBeams = () => {
   );
 };
 
-const Scene = ({ mouse }: { mouse: React.MutableRefObject<{ x: number; y: number }> }) => {
+const Scene = ({ mouse, onNavigate }: { mouse: React.MutableRefObject<{ x: number; y: number }>; onNavigate: (path: string) => void }) => {
   return (
     <>
       {/* Lighting */}
@@ -332,7 +332,7 @@ const Scene = ({ mouse }: { mouse: React.MutableRefObject<{ x: number; y: number
       />
 
       {/* Main object */}
-      <MechanicalCore mouse={mouse} />
+      <MechanicalCore mouse={mouse} onNavigate={onNavigate} />
 
       {/* Ambient particles */}
       <Particles />
