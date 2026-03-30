@@ -8,6 +8,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 import Holographic3DWrapper from "@/components/Holographic3DWrapper";
 import ServicesShowcase from "@/components/ServicesShowcase";
 import SEO from "@/components/SEO";
+import SystemAssemblyNav from "@/components/SystemAssemblyNav";
 
 const Home = () => {
 
@@ -120,33 +121,8 @@ const Home = () => {
         <SolutionsGraph />
       </div>
 
-      {/* AI Contributors Highlight — Bottom */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 mt-24 pb-20">
-        <ScrollReveal>
-          <Holographic3DWrapper phase={0.3} intensity="strong">
-            <Link
-              to="/ai-contributors"
-              className="block border border-border p-8 sm:p-10 hover:border-foreground/30 transition-all group"
-            >
-              <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/40 uppercase mb-3">
-                ★ Featured
-              </p>
-              <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground text-glow mb-2">
-                Top 100 AI Contributors
-              </h2>
-              <p className="font-mono text-xs text-muted-foreground/60 mb-4 tracking-wider uppercase">
-                2026 Edition · The Definitive AI Notebook
-              </p>
-              <p className="font-mono text-xs text-muted-foreground max-w-2xl leading-relaxed mb-4">
-                An interactive exploration of the people shaping AI — narrative chapters, learning paths, glossary, timeline, and curated reading lists.
-              </p>
-              <span className="inline-flex items-center gap-2 font-mono text-xs text-foreground group-hover:text-glow transition-all tracking-widest uppercase">
-                Explore <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
-              </span>
-            </Link>
-          </Holographic3DWrapper>
-        </ScrollReveal>
-      </div>
+      {/* System Assembly Navigation Hub */}
+      <SystemAssemblyNav />
     </div>
   );
 };
