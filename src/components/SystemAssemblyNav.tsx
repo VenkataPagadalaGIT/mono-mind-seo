@@ -224,7 +224,7 @@ const CreditCard = ({
               }}
             />
 
-            <div className="relative p-5 h-full flex flex-col justify-between">
+            <div className="relative p-3 h-full flex flex-col justify-between">
               {/* Row 1: Category + Network */}
               <div className="flex items-start justify-between">
                 <p
@@ -374,10 +374,10 @@ const SystemAssemblyNav = () => {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   return (
-    <div className="relative z-10 w-full max-w-7xl mx-auto px-6 mt-24 pb-20">
+    <div className="relative z-10 w-full max-w-7xl mx-auto px-6 mt-16 pb-12">
       {/* Header */}
       <ScrollReveal>
-        <div className="text-center mb-16">
+        <div className="text-center mb-8">
           <motion.p
             className="font-mono text-[9px] tracking-[0.5em] text-muted-foreground/25 uppercase mb-3"
             initial={{ opacity: 0 }}
@@ -387,7 +387,7 @@ const SystemAssemblyNav = () => {
             [ System Assembly ]
           </motion.p>
           <motion.h2
-            className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-3 tracking-tight"
+            className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-2 tracking-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, type: "spring" }}
@@ -404,14 +404,14 @@ const SystemAssemblyNav = () => {
           </motion.p>
 
           {/* Stats bar */}
-          <div className="flex items-center justify-center gap-10 mt-8">
+          <div className="flex items-center justify-center gap-8 mt-5">
             {[
               { label: "Modules", value: "10" },
               { label: "Concepts", value: "110" },
               { label: "Contributors", value: "100" },
             ].map((stat) => (
               <div key={stat.label} className="text-center">
-                <p className="font-mono text-lg font-semibold text-foreground/70">{stat.value}</p>
+                <p className="font-mono text-base font-semibold text-foreground/70">{stat.value}</p>
                 <p className="font-mono text-[8px] tracking-[0.3em] text-muted-foreground/20 uppercase mt-0.5">
                   {stat.label}
                 </p>
@@ -422,7 +422,7 @@ const SystemAssemblyNav = () => {
       </ScrollReveal>
 
       {/* Credit Card Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
         {navCards.map((card, i) => (
           <CreditCard
             key={card.id}
@@ -435,7 +435,7 @@ const SystemAssemblyNav = () => {
       </div>
 
       {/* Hovered description */}
-      <div className="h-14 flex items-center justify-center mt-8">
+      <div className="h-10 flex items-center justify-center mt-4">
         <AnimatePresence mode="wait">
           {hoveredId && (
             <motion.p
@@ -452,7 +452,7 @@ const SystemAssemblyNav = () => {
       </div>
 
       {/* Footer */}
-      <div className="mt-4 text-center">
+      <div className="mt-3 text-center">
         <p className="font-mono text-[9px] tracking-[0.3em] text-muted-foreground/15 uppercase">
           10 modules · Interconnected Knowledge System
         </p>
