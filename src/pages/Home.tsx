@@ -102,8 +102,26 @@ const Home = () => {
       {/* Services Showcase */}
       <ServicesShowcase />
 
-      {/* AI Contributors Highlight */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 mt-24">
+      {/* Interactive Capability Graph */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 mt-16">
+        <ScrollReveal>
+          <div className="text-center mb-12">
+            <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/40 uppercase mb-3">
+              Interactive Explorer
+            </p>
+            <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground text-glow mb-3">
+              The Full Capability Graph
+            </h2>
+            <p className="font-mono text-xs text-muted-foreground max-w-xl mx-auto">
+              36 capabilities across AI systems, search optimization, and growth engineering — explore the graph to see how they connect.
+            </p>
+          </div>
+        </ScrollReveal>
+        <SolutionsGraph />
+      </div>
+
+      {/* AI Contributors Highlight — Bottom */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 mt-24 pb-20">
         <ScrollReveal>
           <Holographic3DWrapper phase={0.3} intensity="strong">
             <Link
@@ -128,24 +146,6 @@ const Home = () => {
             </Link>
           </Holographic3DWrapper>
         </ScrollReveal>
-      </div>
-
-      {/* Interactive Capability Graph */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 mt-16 pb-20">
-        <ScrollReveal>
-          <div className="text-center mb-12">
-            <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/40 uppercase mb-3">
-              Interactive Explorer
-            </p>
-            <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground text-glow mb-3">
-              The Full Capability Graph
-            </h2>
-            <p className="font-mono text-xs text-muted-foreground max-w-xl mx-auto">
-              36 capabilities across AI systems, search optimization, and growth engineering — explore the graph to see how they connect.
-            </p>
-          </div>
-        </ScrollReveal>
-        <SolutionsGraph />
       </div>
     </div>
   );
