@@ -130,18 +130,18 @@ const Home = () => {
         </ScrollReveal>
       </div>
 
-      {/* Services Section */}
+      {/* Interactive Capability Graph */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 mt-16 pb-20">
         <ScrollReveal>
           <div className="text-center mb-12">
             <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/40 uppercase mb-3">
-              What I Do
+              Interactive Explorer
             </p>
             <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground text-glow mb-3">
-              Enterprise to Startup — Full-Stack SEO & AI
+              The Full Capability Graph
             </h2>
             <p className="font-mono text-xs text-muted-foreground max-w-xl mx-auto">
-              From Fortune 500 search programs to growth-stage consulting — strategy, execution, and everything in between.
+              36 capabilities across AI systems, search optimization, and growth engineering — explore the graph to see how they connect.
             </p>
           </div>
         </ScrollReveal>
