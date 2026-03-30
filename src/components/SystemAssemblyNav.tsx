@@ -247,7 +247,7 @@ const CreditCard = ({
                 </p>
               </div>
 
-              {/* Row 2: EMV Chip */}
+              {/* Row 2: EMV Chip + Schema type */}
               <div className="flex items-center gap-3 mt-2">
                 {/* Chip */}
                 <div
@@ -261,7 +261,6 @@ const CreditCard = ({
                     border: `1px solid ${isHovered ? "hsl(45, 40%, 45%)" : "hsl(45, 10%, 20%)"}`,
                   }}
                 >
-                  {/* Chip lines */}
                   <div className="absolute inset-[3px] border border-current opacity-20 rounded-sm" 
                     style={{ color: isHovered ? "hsl(45, 60%, 60%)" : "hsl(45, 10%, 35%)" }}
                   />
@@ -273,30 +272,43 @@ const CreditCard = ({
                   />
                 </div>
 
-                {/* Contactless icon */}
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="transition-opacity duration-300"
-                  style={{ opacity: isHovered ? 0.4 : 0.12 }}
+                {/* Schema type label */}
+                <p
+                  className="font-mono transition-colors duration-300"
+                  style={{
+                    fontSize: 8,
+                    color: isHovered ? "hsl(var(--primary) / 0.55)" : "hsl(var(--foreground) / 0.15)",
+                    letterSpacing: "0.1em",
+                  }}
                 >
-                  <path d="M8 18c4.4 0 8-3.6 8-8" stroke="hsl(var(--foreground))" strokeWidth="1.5" strokeLinecap="round" />
-                  <path d="M8 14c2.2 0 4-1.8 4-4" stroke="hsl(var(--foreground))" strokeWidth="1.5" strokeLinecap="round" />
-                  <path d="M8 10c0 0 0 0 0 0" stroke="hsl(var(--foreground))" strokeWidth="2" strokeLinecap="round" />
-                </svg>
+                  {card.schema}
+                </p>
               </div>
 
-              {/* Row 3: Card number */}
+              {/* Row 3: JSON-LD schemas as card number */}
               <p
-                className="font-mono tracking-[0.35em] mt-2 transition-colors duration-300"
+                className="font-mono tracking-[0.2em] mt-2 transition-colors duration-300"
                 style={{
-                  fontSize: 11,
-                  color: isHovered ? "hsl(var(--foreground) / 0.7)" : "hsl(var(--foreground) / 0.2)",
+                  fontSize: 10,
+                  color: isHovered ? "hsl(var(--foreground) / 0.6)" : "hsl(var(--foreground) / 0.18)",
                 }}
               >
                 {card.cardNumber}
               </p>
 
-              {/* Row 4: Card name + Valid Thru */}
+              {/* Row 4: Card name + SEO stats */}
               <div className="flex items-end justify-between mt-auto">
                 <div>
+                  <p
+                    className="font-mono transition-colors duration-300 mb-0.5"
+                    style={{
+                      fontSize: 7,
+                      color: isHovered ? "hsl(var(--foreground) / 0.35)" : "hsl(var(--foreground) / 0.12)",
+                      letterSpacing: "0.05em",
+                    }}
+                  >
+                    {card.keyword}
+                  </p>
                   <p
                     className="font-mono font-semibold tracking-wide transition-colors duration-300"
                     style={{
@@ -316,7 +328,7 @@ const CreditCard = ({
                       letterSpacing: "0.15em",
                     }}
                   >
-                    VALID THRU
+                    INDEXED PAGES
                   </p>
                   <p
                     className="font-mono transition-colors duration-300"
@@ -325,7 +337,7 @@ const CreditCard = ({
                       color: isHovered ? "hsl(var(--foreground) / 0.5)" : "hsl(var(--foreground) / 0.18)",
                     }}
                   >
-                    {card.validThru}
+                    {card.pages}
                   </p>
                 </div>
               </div>
