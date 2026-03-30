@@ -99,6 +99,9 @@ const Home = () => {
       </div>
       </div>
 
+      {/* Services Showcase */}
+      <ServicesShowcase />
+
       {/* AI Contributors Highlight */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 mt-24">
         <ScrollReveal>
