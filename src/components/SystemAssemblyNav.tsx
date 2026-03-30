@@ -1,39 +1,31 @@
 import { Link } from "react-router-dom";
-import { useState, useCallback, useRef } from "react";
-import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import ScrollReveal from "@/components/ScrollReveal";
 
-interface NavNode {
+interface NavCard {
   id: string;
   label: string;
   category: string;
   icon: string;
   path: string;
   description: string;
-  position: { x: number; y: number; z: number; scale: number };
-  delay: number;
+  cardNumber: string;
+  validThru: string;
+  network: string;
 }
 
-const navNodes: NavNode[] = [
+const navCards: NavCard[] = [
   {
     id: "notebook",
     label: "AI Notebook",
-    category: "CORE",
+    category: "CORE MODULE",
     icon: "◎",
     path: "/notebook/ai",
     description: "Complete AI knowledge hub — research, frameworks, and deep dives.",
-    position: { x: -38, y: 20, z: -60, scale: 0.88 },
-    delay: 0.05,
-  },
-  {
-    id: "roadmap",
-    label: "Free AI Roadmap",
-    category: "LEARNING",
-    icon: "△",
-    path: "/notebook/ai/roadmap",
-    description: "18-week zero-to-hero AI curriculum. Foundations to applied engineering.",
-    position: { x: -18, y: -15, z: -20, scale: 0.92 },
-    delay: 0.1,
+    cardNumber: "0001  0010  0100  1000",
+    validThru: "∞/26",
+    network: "MONO",
   },
   {
     id: "contributors",
@@ -42,8 +34,20 @@ const navNodes: NavNode[] = [
     icon: "◇",
     path: "/ai-contributors",
     description: "2026 Edition · The definitive index of AI researchers and leaders.",
-    position: { x: 0, y: 15, z: 40, scale: 1.05 },
-    delay: 0,
+    cardNumber: "0100  0010  0001  1010",
+    validThru: "∞/26",
+    network: "MIND",
+  },
+  {
+    id: "roadmap",
+    label: "Free AI Roadmap",
+    category: "LEARNING",
+    icon: "△",
+    path: "/notebook/ai/roadmap",
+    description: "18-week zero-to-hero AI curriculum. Foundations to applied engineering.",
+    cardNumber: "1000  0100  0010  0001",
+    validThru: "∞/26",
+    network: "MONO",
   },
   {
     id: "encyclopedia",
@@ -52,8 +56,9 @@ const navNodes: NavNode[] = [
     icon: "▽",
     path: "/notebook/ai/encyclopedia",
     description: "110 core AI concepts — attention mechanisms to zero-shot learning.",
-    position: { x: 18, y: -10, z: -10, scale: 0.94 },
-    delay: 0.15,
+    cardNumber: "0010  1000  0100  0001",
+    validThru: "∞/26",
+    network: "MIND",
   },
   {
     id: "solutions",
@@ -62,8 +67,9 @@ const navNodes: NavNode[] = [
     icon: "⬡",
     path: "/solutions",
     description: "Enterprise search optimization and AI-powered visibility strategies.",
-    position: { x: -20, y: 38, z: -30, scale: 0.86 },
-    delay: 0.12,
+    cardNumber: "1010  0101  1010  0101",
+    validThru: "∞/26",
+    network: "MONO",
   },
   {
     id: "experience",
@@ -72,8 +78,9 @@ const navNodes: NavNode[] = [
     icon: "◈",
     path: "/experience",
     description: "10+ years scaling organic search for Fortune 500 brands and startups.",
-    position: { x: 22, y: 35, z: -50, scale: 0.84 },
-    delay: 0.18,
+    cardNumber: "0101  1010  0101  1010",
+    validThru: "∞/26",
+    network: "MIND",
   },
   {
     id: "insights",
@@ -82,8 +89,9 @@ const navNodes: NavNode[] = [
     icon: "◆",
     path: "/insights",
     description: "Essays, case studies, and thought leadership on AI and search.",
-    position: { x: 38, y: 10, z: -70, scale: 0.82 },
-    delay: 0.2,
+    cardNumber: "1100  0011  1100  0011",
+    validThru: "∞/26",
+    network: "MONO",
   },
   {
     id: "research",
@@ -92,8 +100,9 @@ const navNodes: NavNode[] = [
     icon: "✦",
     path: "/research",
     description: "Published papers and ongoing research in AI systems and NLP.",
-    position: { x: -35, y: -5, z: -80, scale: 0.8 },
-    delay: 0.22,
+    cardNumber: "0011  1100  0011  1100",
+    validThru: "∞/26",
+    network: "MIND",
   },
   {
     id: "projects",
@@ -102,8 +111,9 @@ const navNodes: NavNode[] = [
     icon: "✧",
     path: "/projects",
     description: "Production AI systems, tools, and open-source contributions.",
-    position: { x: 36, y: -12, z: -90, scale: 0.78 },
-    delay: 0.25,
+    cardNumber: "1111  0000  1111  0000",
+    validThru: "∞/26",
+    network: "MONO",
   },
   {
     id: "contact",
@@ -112,136 +122,202 @@ const navNodes: NavNode[] = [
     icon: "○",
     path: "/contact",
     description: "Get in touch for collaborations, speaking, or consulting.",
-    position: { x: 0, y: 42, z: -40, scale: 0.85 },
-    delay: 0.16,
+    cardNumber: "0000  1111  0000  1111",
+    validThru: "∞/26",
+    network: "MIND",
   },
 ];
 
-const NavCard3D = ({
-  node,
-  mouseX,
-  mouseY,
+const CreditCard = ({
+  card,
+  index,
   hoveredId,
   setHoveredId,
 }: {
-  node: NavNode;
-  mouseX: ReturnType<typeof useMotionValue>;
-  mouseY: ReturnType<typeof useMotionValue>;
+  card: NavCard;
+  index: number;
   hoveredId: string | null;
   setHoveredId: (id: string | null) => void;
 }) => {
-  const pos = node.position;
-  const isHovered = hoveredId === node.id;
-
-  // Parallax based on card depth
-  const depthFactor = (100 + pos.z) / 200;
-  const parallaxX = useTransform(mouseX, (v: number) => v * 30 * depthFactor);
-  const parallaxY = useTransform(mouseY, (v: number) => v * 20 * depthFactor);
-  const smoothX = useSpring(parallaxX, { stiffness: 120, damping: 30 });
-  const smoothY = useSpring(parallaxY, { stiffness: 120, damping: 30 });
+  const isHovered = hoveredId === card.id;
 
   return (
     <motion.div
-      className="absolute"
-      style={{
-        left: `${50 + pos.x}%`,
-        top: `${45 + pos.y}%`,
-        x: smoothX,
-        y: smoothY,
-        zIndex: Math.round(pos.z + 100),
-      }}
-      initial={{ opacity: 0, scale: 0.8, y: 30 }}
-      animate={{ opacity: 1, scale: pos.scale, y: 0 }}
-      transition={{ type: "spring", stiffness: 60, damping: 18, delay: node.delay + 0.4 }}
+      initial={{ opacity: 0, y: 40, rotateY: -8 }}
+      animate={{ opacity: 1, y: 0, rotateY: 0 }}
+      transition={{ type: "spring", stiffness: 50, damping: 16, delay: index * 0.08 }}
     >
-      <Link to={node.path} className="block">
+      <Link to={card.path} className="block">
         <motion.div
-          className="relative cursor-pointer group/card"
-          style={{ width: 200, height: 140 }}
-          onMouseEnter={() => setHoveredId(node.id)}
+          className="relative cursor-pointer"
+          onMouseEnter={() => setHoveredId(card.id)}
           onMouseLeave={() => setHoveredId(null)}
-          whileHover={{ scale: 1.12, zIndex: 200, y: -6 }}
+          whileHover={{ scale: 1.04, y: -8, rotateY: 3, rotateX: -2 }}
           transition={{ type: "spring", stiffness: 300, damping: 25 }}
+          style={{ perspective: "800px" }}
         >
-          {/* Card body */}
+          {/* Credit card body — 86:54 aspect ratio */}
           <div
-            className="relative h-full rounded-lg overflow-hidden transition-all duration-500"
+            className="relative overflow-hidden rounded-xl transition-all duration-500"
             style={{
+              aspectRatio: "86 / 54",
               background: isHovered
-                ? "linear-gradient(135deg, hsl(var(--primary) / 0.08), hsl(var(--foreground) / 0.06))"
-                : "linear-gradient(135deg, hsl(var(--foreground) / 0.04), hsl(var(--foreground) / 0.02))",
-              border: `1px solid ${isHovered ? "hsl(var(--primary) / 0.3)" : "hsl(var(--foreground) / 0.08)"}`,
-              backdropFilter: "blur(12px)",
+                ? "linear-gradient(145deg, hsl(var(--foreground) / 0.10), hsl(var(--foreground) / 0.04), hsl(var(--primary) / 0.06))"
+                : "linear-gradient(145deg, hsl(var(--foreground) / 0.06), hsl(var(--foreground) / 0.02), hsl(var(--foreground) / 0.04))",
+              border: `1px solid ${isHovered ? "hsl(var(--primary) / 0.25)" : "hsl(var(--foreground) / 0.08)"}`,
+              backdropFilter: "blur(20px)",
               boxShadow: isHovered
-                ? "0 8px 32px -8px hsl(var(--primary) / 0.15), inset 0 1px 0 hsl(var(--foreground) / 0.06)"
-                : "inset 0 1px 0 hsl(var(--foreground) / 0.04)",
+                ? "0 20px 60px -15px hsl(var(--primary) / 0.12), 0 4px 20px -5px hsl(0 0% 0% / 0.4), inset 0 1px 0 hsl(var(--foreground) / 0.08)"
+                : "0 4px 20px -5px hsl(0 0% 0% / 0.3), inset 0 1px 0 hsl(var(--foreground) / 0.04)",
             }}
           >
-            {/* Top edge line */}
+            {/* Top highlight line */}
             <div
-              className="absolute top-0 left-0 right-0 h-[1px] transition-all duration-500"
+              className="absolute top-0 inset-x-0 h-[1px] transition-all duration-500"
               style={{
                 background: isHovered
-                  ? "linear-gradient(90deg, transparent 10%, hsl(var(--primary) / 0.4) 50%, transparent 90%)"
-                  : "linear-gradient(90deg, transparent 20%, hsl(var(--foreground) / 0.08) 50%, transparent 80%)",
+                  ? "linear-gradient(90deg, transparent 5%, hsl(var(--primary) / 0.4) 50%, transparent 95%)"
+                  : "linear-gradient(90deg, transparent 10%, hsl(var(--foreground) / 0.06) 50%, transparent 90%)",
               }}
             />
 
-            {/* Status dot */}
-            <motion.div
-              className="absolute top-3 right-3 rounded-full"
+            {/* Holographic stripe across top */}
+            <div
+              className="absolute top-0 right-0 w-[60%] h-[3px] transition-all duration-500"
               style={{
-                width: 6,
-                height: 6,
-                background: isHovered ? "hsl(160, 60%, 50%)" : "hsl(160, 40%, 40%)",
+                background: isHovered
+                  ? "linear-gradient(90deg, transparent, hsl(var(--primary) / 0.15), hsl(var(--primary) / 0.3), hsl(var(--primary) / 0.15), transparent)"
+                  : "linear-gradient(90deg, transparent, hsl(var(--foreground) / 0.03), transparent)",
               }}
-              animate={{ opacity: [0.4, 1, 0.4] }}
-              transition={{ duration: 2.5, repeat: Infinity, delay: node.delay * 3 }}
             />
 
-            {/* Content */}
-            <div className="relative p-4 h-full flex flex-col justify-between">
-              {/* Icon */}
-              <span
-                className="text-xl transition-all duration-300"
+            <div className="relative p-5 h-full flex flex-col justify-between">
+              {/* Row 1: Category + Network */}
+              <div className="flex items-start justify-between">
+                <p
+                  className="font-mono tracking-[0.3em] uppercase transition-colors duration-300"
+                  style={{
+                    fontSize: 7,
+                    color: isHovered ? "hsl(var(--primary) / 0.6)" : "hsl(var(--foreground) / 0.18)",
+                  }}
+                >
+                  {card.category}
+                </p>
+                <p
+                  className="font-mono font-bold tracking-[0.15em] transition-colors duration-300"
+                  style={{
+                    fontSize: 9,
+                    color: isHovered ? "hsl(var(--primary) / 0.5)" : "hsl(var(--foreground) / 0.12)",
+                  }}
+                >
+                  {card.network}
+                </p>
+              </div>
+
+              {/* Row 2: EMV Chip */}
+              <div className="flex items-center gap-3 mt-2">
+                {/* Chip */}
+                <div
+                  className="relative rounded-md transition-all duration-500 flex-shrink-0"
+                  style={{
+                    width: 32,
+                    height: 24,
+                    background: isHovered
+                      ? "linear-gradient(135deg, hsl(45, 60%, 55%), hsl(40, 50%, 40%))"
+                      : "linear-gradient(135deg, hsl(45, 20%, 30%), hsl(40, 15%, 22%))",
+                    border: `1px solid ${isHovered ? "hsl(45, 40%, 45%)" : "hsl(45, 10%, 20%)"}`,
+                  }}
+                >
+                  {/* Chip lines */}
+                  <div className="absolute inset-[3px] border border-current opacity-20 rounded-sm" 
+                    style={{ color: isHovered ? "hsl(45, 60%, 60%)" : "hsl(45, 10%, 35%)" }}
+                  />
+                  <div className="absolute top-1/2 left-[3px] right-[3px] h-[1px]" 
+                    style={{ background: isHovered ? "hsl(45, 40%, 50% / 0.3)" : "hsl(45, 10%, 30% / 0.2)" }}
+                  />
+                  <div className="absolute left-1/2 top-[3px] bottom-[3px] w-[1px]" 
+                    style={{ background: isHovered ? "hsl(45, 40%, 50% / 0.3)" : "hsl(45, 10%, 30% / 0.2)" }}
+                  />
+                </div>
+
+                {/* Contactless icon */}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="transition-opacity duration-300"
+                  style={{ opacity: isHovered ? 0.4 : 0.12 }}
+                >
+                  <path d="M8 18c4.4 0 8-3.6 8-8" stroke="hsl(var(--foreground))" strokeWidth="1.5" strokeLinecap="round" />
+                  <path d="M8 14c2.2 0 4-1.8 4-4" stroke="hsl(var(--foreground))" strokeWidth="1.5" strokeLinecap="round" />
+                  <path d="M8 10c0 0 0 0 0 0" stroke="hsl(var(--foreground))" strokeWidth="2" strokeLinecap="round" />
+                </svg>
+              </div>
+
+              {/* Row 3: Card number */}
+              <p
+                className="font-mono tracking-[0.35em] mt-2 transition-colors duration-300"
                 style={{
-                  color: isHovered ? "hsl(var(--primary))" : "hsl(var(--foreground) / 0.3)",
+                  fontSize: 11,
+                  color: isHovered ? "hsl(var(--foreground) / 0.7)" : "hsl(var(--foreground) / 0.2)",
                 }}
               >
-                {node.icon}
-              </span>
+                {card.cardNumber}
+              </p>
 
-              {/* Text */}
-              <div>
-                <p
-                  className="font-mono tracking-[0.25em] uppercase mb-1 transition-colors duration-300"
-                  style={{
-                    fontSize: 8,
-                    color: isHovered ? "hsl(var(--primary) / 0.6)" : "hsl(var(--foreground) / 0.2)",
-                  }}
-                >
-                  {node.category}
-                </p>
-                <p
-                  className="font-mono text-xs font-medium transition-colors duration-300"
-                  style={{
-                    color: isHovered ? "hsl(var(--foreground))" : "hsl(var(--foreground) / 0.55)",
-                  }}
-                >
-                  {node.label}
-                </p>
+              {/* Row 4: Card name + Valid Thru */}
+              <div className="flex items-end justify-between mt-auto">
+                <div>
+                  <p
+                    className="font-mono font-semibold tracking-wide transition-colors duration-300"
+                    style={{
+                      fontSize: 12,
+                      color: isHovered ? "hsl(var(--foreground) / 0.95)" : "hsl(var(--foreground) / 0.5)",
+                    }}
+                  >
+                    {card.label}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p
+                    className="font-mono uppercase transition-colors duration-300"
+                    style={{
+                      fontSize: 5,
+                      color: isHovered ? "hsl(var(--foreground) / 0.3)" : "hsl(var(--foreground) / 0.1)",
+                      letterSpacing: "0.15em",
+                    }}
+                  >
+                    VALID THRU
+                  </p>
+                  <p
+                    className="font-mono transition-colors duration-300"
+                    style={{
+                      fontSize: 10,
+                      color: isHovered ? "hsl(var(--foreground) / 0.5)" : "hsl(var(--foreground) / 0.18)",
+                    }}
+                  >
+                    {card.validThru}
+                  </p>
+                </div>
               </div>
             </div>
 
-            {/* Scan line */}
+            {/* Animated scan line */}
             <motion.div
               className="absolute inset-x-0 h-[1px] pointer-events-none"
               style={{
-                background: "linear-gradient(90deg, transparent, hsl(var(--foreground) / 0.06), transparent)",
+                background: "linear-gradient(90deg, transparent, hsl(var(--primary) / 0.08), transparent)",
               }}
               animate={{ top: ["0%", "100%"] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "linear", delay: node.delay * 5 }}
+              transition={{ duration: 5, repeat: Infinity, ease: "linear", delay: index * 0.5 }}
             />
+
+            {/* Corner icon watermark */}
+            <div
+              className="absolute bottom-4 right-5 transition-all duration-300"
+              style={{
+                fontSize: 28,
+                color: isHovered ? "hsl(var(--primary) / 0.12)" : "hsl(var(--foreground) / 0.03)",
+              }}
+            >
+              {card.icon}
+            </div>
           </div>
         </motion.div>
       </Link>
@@ -251,25 +327,12 @@ const NavCard3D = ({
 
 const SystemAssemblyNav = () => {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const handleMouseMove = useCallback(
-    (e: React.MouseEvent) => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
-      mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
-    },
-    [mouseX, mouseY]
-  );
 
   return (
-    <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-24 pb-20">
+    <div className="relative z-10 w-full max-w-7xl mx-auto px-6 mt-24 pb-20">
       {/* Header */}
       <ScrollReveal>
-        <div className="text-center mb-12">
+        <div className="text-center mb-16">
           <motion.p
             className="font-mono text-[9px] tracking-[0.5em] text-muted-foreground/25 uppercase mb-3"
             initial={{ opacity: 0 }}
@@ -313,53 +376,21 @@ const SystemAssemblyNav = () => {
         </div>
       </ScrollReveal>
 
-      {/* 3D Card Scene */}
-      <div
-        ref={containerRef}
-        onMouseMove={handleMouseMove}
-        className="relative mx-auto overflow-visible"
-        style={{ height: 520, perspective: "1000px", perspectiveOrigin: "50% 45%" }}
-      >
-        {/* Ambient glow */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[350px] rounded-full opacity-[0.03]"
-            style={{ background: "radial-gradient(ellipse, hsl(var(--primary)), transparent 70%)" }}
+      {/* Credit Card Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {navCards.map((card, i) => (
+          <CreditCard
+            key={card.id}
+            card={card}
+            index={i}
+            hoveredId={hoveredId}
+            setHoveredId={setHoveredId}
           />
-        </div>
-
-        {/* Connector lines */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.04]">
-          <line x1="30%" y1="50%" x2="50%" y2="55%" stroke="hsl(var(--foreground))" strokeWidth="0.5" />
-          <line x1="50%" y1="55%" x2="70%" y2="45%" stroke="hsl(var(--foreground))" strokeWidth="0.5" />
-          <line x1="40%" y1="35%" x2="55%" y2="55%" stroke="hsl(var(--foreground))" strokeWidth="0.5" />
-          <line x1="55%" y1="55%" x2="65%" y2="70%" stroke="hsl(var(--foreground))" strokeWidth="0.5" />
-          <line x1="25%" y1="60%" x2="50%" y2="75%" stroke="hsl(var(--foreground))" strokeWidth="0.5" />
-        </svg>
-
-        {/* Cards */}
-        <div className="relative w-full h-full" style={{ transformStyle: "preserve-3d" }}>
-          {navNodes.map((node) => (
-            <NavCard3D
-              key={node.id}
-              node={node}
-              mouseX={mouseX}
-              mouseY={mouseY}
-              hoveredId={hoveredId}
-              setHoveredId={setHoveredId}
-            />
-          ))}
-        </div>
-
-        {/* Ground line */}
-        <div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 w-[600px] h-[1px]"
-          style={{ background: "linear-gradient(90deg, transparent, hsl(var(--foreground) / 0.05), transparent)" }}
-        />
+        ))}
       </div>
 
       {/* Hovered description */}
-      <div className="h-12 flex items-center justify-center">
+      <div className="h-14 flex items-center justify-center mt-8">
         <AnimatePresence mode="wait">
           {hoveredId && (
             <motion.p
@@ -367,16 +398,16 @@ const SystemAssemblyNav = () => {
               initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -5 }}
-              className="font-mono text-[10px] text-muted-foreground/40 text-center max-w-md"
+              className="font-mono text-[11px] text-muted-foreground/40 text-center max-w-md"
             >
-              {navNodes.find((n) => n.id === hoveredId)?.description}
+              {navCards.find((n) => n.id === hoveredId)?.description}
             </motion.p>
           )}
         </AnimatePresence>
       </div>
 
       {/* Footer */}
-      <div className="mt-6 text-center">
+      <div className="mt-4 text-center">
         <p className="font-mono text-[9px] tracking-[0.3em] text-muted-foreground/15 uppercase">
           10 modules · Interconnected Knowledge System
         </p>
