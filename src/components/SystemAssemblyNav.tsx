@@ -13,6 +13,9 @@ interface NavCard {
   cardNumber: string;
   validThru: string;
   network: string;
+  schema: string;
+  pages: string;
+  keyword: string;
 }
 
 const navCards: NavCard[] = [
@@ -23,9 +26,12 @@ const navCards: NavCard[] = [
     icon: "◎",
     path: "/notebook/ai",
     description: "Complete AI knowledge hub — research, frameworks, and deep dives.",
-    cardNumber: "0001  0010  0100  1000",
+    cardNumber: "ART · COURSE · FAQ · BREAD",
     validThru: "∞/26",
     network: "MONO",
+    schema: "Article + Course",
+    pages: "50+",
+    keyword: "Best AI Notebook 2026",
   },
   {
     id: "contributors",
@@ -34,9 +40,12 @@ const navCards: NavCard[] = [
     icon: "◇",
     path: "/ai-contributors",
     description: "2026 Edition · The definitive index of AI researchers and leaders.",
-    cardNumber: "0100  0010  0001  1010",
+    cardNumber: "PROF · NEWS · BREAD · LIST",
     validThru: "∞/26",
     network: "MIND",
+    schema: "ProfilePage",
+    pages: "100",
+    keyword: "Best 100 AI Contributors 2026",
   },
   {
     id: "roadmap",
@@ -45,9 +54,12 @@ const navCards: NavCard[] = [
     icon: "△",
     path: "/notebook/ai/roadmap",
     description: "18-week zero-to-hero AI curriculum. Foundations to applied engineering.",
-    cardNumber: "1000  0100  0010  0001",
+    cardNumber: "COURSE · BREAD · HOW · FAQ",
     validThru: "∞/26",
     network: "MONO",
+    schema: "Course (Free)",
+    pages: "18 wks",
+    keyword: "Free AI Roadmap March 2026",
   },
   {
     id: "encyclopedia",
@@ -56,9 +68,12 @@ const navCards: NavCard[] = [
     icon: "▽",
     path: "/notebook/ai/encyclopedia",
     description: "110 core AI concepts — attention mechanisms to zero-shot learning.",
-    cardNumber: "0010  1000  0100  0001",
+    cardNumber: "FAQ · DEFN · BREAD · ART",
     validThru: "∞/26",
     network: "MIND",
+    schema: "FAQPage",
+    pages: "110",
+    keyword: "AI Encyclopedia Concepts",
   },
   {
     id: "solutions",
@@ -67,9 +82,12 @@ const navCards: NavCard[] = [
     icon: "⬡",
     path: "/solutions",
     description: "Enterprise search optimization and AI-powered visibility strategies.",
-    cardNumber: "1010  0101  1010  0101",
+    cardNumber: "SERV · OFFER · BREAD · ORG",
     validThru: "∞/26",
     network: "MONO",
+    schema: "Service + Offer",
+    pages: "8",
+    keyword: "AI SEO Solutions",
   },
   {
     id: "experience",
@@ -78,9 +96,12 @@ const navCards: NavCard[] = [
     icon: "◈",
     path: "/experience",
     description: "10+ years scaling organic search for Fortune 500 brands and startups.",
-    cardNumber: "0101  1010  0101  1010",
+    cardNumber: "PERSON · ORG · BREAD · EXP",
     validThru: "∞/26",
     network: "MIND",
+    schema: "Person + Org",
+    pages: "1",
+    keyword: "AI SEO Consultant",
   },
   {
     id: "insights",
@@ -89,9 +110,12 @@ const navCards: NavCard[] = [
     icon: "◆",
     path: "/insights",
     description: "Essays, case studies, and thought leadership on AI and search.",
-    cardNumber: "1100  0011  1100  0011",
+    cardNumber: "NEWS · ART · BREAD · BLOG",
     validThru: "∞/26",
     network: "MONO",
+    schema: "NewsArticle",
+    pages: "25+",
+    keyword: "AI SEO Insights Blog",
   },
   {
     id: "research",
@@ -100,9 +124,12 @@ const navCards: NavCard[] = [
     icon: "✦",
     path: "/research",
     description: "Published papers and ongoing research in AI systems and NLP.",
-    cardNumber: "0011  1100  0011  1100",
+    cardNumber: "SCHOL · ART · CITE · BREAD",
     validThru: "∞/26",
     network: "MIND",
+    schema: "ScholarlyArticle",
+    pages: "12",
+    keyword: "AI NLP Research Papers",
   },
   {
     id: "projects",
@@ -111,9 +138,12 @@ const navCards: NavCard[] = [
     icon: "✧",
     path: "/projects",
     description: "Production AI systems, tools, and open-source contributions.",
-    cardNumber: "1111  0000  1111  0000",
+    cardNumber: "SOFT · CODE · BREAD · REPO",
     validThru: "∞/26",
     network: "MONO",
+    schema: "SoftwareApp",
+    pages: "10",
+    keyword: "AI Open Source Projects",
   },
   {
     id: "contact",
@@ -122,9 +152,12 @@ const navCards: NavCard[] = [
     icon: "○",
     path: "/contact",
     description: "Get in touch for collaborations, speaking, or consulting.",
-    cardNumber: "0000  1111  0000  1111",
+    cardNumber: "CONTACT · ORG · LOCAL · BREAD",
     validThru: "∞/26",
     network: "MIND",
+    schema: "ContactPage",
+    pages: "1",
+    keyword: "Contact AI Consultant",
   },
 ];
 
