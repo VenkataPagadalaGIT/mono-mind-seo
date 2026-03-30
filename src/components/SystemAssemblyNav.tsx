@@ -114,7 +114,7 @@ const NavCard3D = ({
       }}
       transition={{ type: "spring", stiffness: 60, damping: 20, delay: node.delay + 0.3 }}
     >
-      <Link to={node.path}>
+      <Link to={node.path} className="block">
         <motion.div
           className="relative w-[220px] h-[150px] cursor-pointer group/card"
           onMouseEnter={() => setHoveredId(node.id)}
@@ -123,12 +123,12 @@ const NavCard3D = ({
           transition={{ type: "spring", stiffness: 300, damping: 25 }}
         >
           {/* Glow */}
-          <div className="absolute -inset-[1px] rounded-xl bg-gradient-to-br from-primary/10 to-accent/5 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 blur-sm" />
+          <div className="absolute -inset-[1px] rounded-xl bg-gradient-to-br from-primary/20 to-accent/10 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 blur-sm" />
 
           {/* Card body */}
-          <div className="relative h-full rounded-xl border border-border/20 bg-background/60 backdrop-blur-xl overflow-hidden group-hover/card:border-border/40 transition-colors duration-500">
+          <div className="relative h-full rounded-xl border border-border/20 bg-background/60 backdrop-blur-xl overflow-hidden group-hover/card:border-primary/30 group-hover/card:bg-primary/[0.06] transition-all duration-500">
             {/* Top shine */}
-            <div className="absolute inset-0 bg-gradient-to-br from-foreground/[0.04] via-transparent to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-br from-foreground/[0.04] via-transparent to-transparent pointer-events-none group-hover/card:from-primary/[0.08]" />
 
             {/* Scan line */}
             <motion.div
@@ -140,18 +140,18 @@ const NavCard3D = ({
             {/* Content */}
             <div className="relative p-5 h-full flex flex-col justify-between">
               <div className="flex items-start justify-between">
-                <span className="text-2xl opacity-50 group-hover/card:opacity-100 transition-opacity">{node.icon}</span>
+                <span className="text-2xl opacity-50 group-hover/card:opacity-100 group-hover/card:text-primary transition-all duration-300">{node.icon}</span>
                 <motion.div
-                  className="w-2 h-2 rounded-full bg-emerald-500/50"
+                  className="w-2 h-2 rounded-full bg-emerald-500/50 group-hover/card:bg-emerald-400"
                   animate={{ opacity: [0.3, 1, 0.3] }}
                   transition={{ duration: 2, repeat: Infinity, delay: node.delay * 3 }}
                 />
               </div>
               <div>
-                <p className="font-mono text-[9px] tracking-[0.25em] text-muted-foreground/30 uppercase mb-1">
+                <p className="font-mono text-[9px] tracking-[0.25em] text-muted-foreground/30 uppercase mb-1 group-hover/card:text-primary/50 transition-colors duration-300">
                   {node.category}
                 </p>
-                <p className="text-xs font-medium text-foreground/70 group-hover/card:text-foreground transition-colors">
+                <p className="text-xs font-medium text-foreground/70 group-hover/card:text-foreground transition-colors duration-300">
                   {node.label}
                 </p>
               </div>
@@ -159,7 +159,7 @@ const NavCard3D = ({
 
             {/* Bottom prismatic line */}
             <motion.div
-              className="absolute bottom-0 left-0 right-0 h-[1px]"
+              className="absolute bottom-0 left-0 right-0 h-[1px] group-hover/card:h-[2px] transition-all"
               style={{ background: "linear-gradient(90deg, transparent, hsl(var(--primary) / 0.3), hsl(var(--accent) / 0.2), transparent)" }}
               animate={{ opacity: [0.3, 0.8, 0.3] }}
               transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
