@@ -1,235 +1,120 @@
 import { Link } from "react-router-dom";
-import { useState, useCallback, useRef } from "react";
-import { BookOpen, Users, GraduationCap, Lightbulb, Search } from "lucide-react";
-import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { BookOpen, Users, GraduationCap, Brain, Search, ArrowRight, Briefcase, FileText, FlaskConical, FolderOpen, Mail } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import ScrollReveal from "@/components/ScrollReveal";
 
-interface NavNode {
+interface NavCard {
   id: string;
   label: string;
   category: string;
-  icon: string;
+  icon: React.ReactNode;
   path: string;
   description: string;
-  position: { x: number; y: number; z: number; rotateX: number; rotateY: number; rotateZ: number; scale: number };
-  delay: number;
+  tags: string[];
 }
 
-const navNodes: NavNode[] = [
+const navCards: NavCard[] = [
   {
     id: "notebook",
     label: "AI Notebook",
     category: "CORE",
-    icon: "◇",
+    icon: <BookOpen size={20} />,
     path: "/notebook/ai",
     description: "Complete AI knowledge hub — research, frameworks, and deep dives.",
-    position: { x: -180, y: -80, z: -40, rotateX: 20, rotateY: 25, rotateZ: -3, scale: 0.9 },
-    delay: 0.05,
+    tags: ["Research", "Frameworks", "Deep Dives"],
   },
   {
     id: "contributors",
     label: "Top 100 Contributors",
     category: "DIRECTORY",
-    icon: "⬡",
+    icon: <Users size={20} />,
     path: "/ai-contributors",
     description: "2026 Edition · The definitive index of AI researchers and leaders.",
-    position: { x: 0, y: 0, z: 50, rotateX: 15, rotateY: -10, rotateZ: 0, scale: 1.1 },
-    delay: 0,
+    tags: ["100 Profiles", "2026 Edition"],
   },
   {
     id: "roadmap",
     label: "Free AI Roadmap",
     category: "LEARNING",
-    icon: "△",
+    icon: <GraduationCap size={20} />,
     path: "/notebook/ai/roadmap",
     description: "18-week zero-to-hero AI curriculum. Foundations to applied engineering.",
-    position: { x: 180, y: -80, z: -40, rotateX: 20, rotateY: -25, rotateZ: 3, scale: 0.9 },
-    delay: 0.1,
+    tags: ["18 Weeks", "Zero to Hero"],
   },
   {
     id: "encyclopedia",
     label: "AI Encyclopedia",
     category: "REFERENCE",
-    icon: "◈",
+    icon: <Brain size={20} />,
     path: "/notebook/ai/encyclopedia",
     description: "110 core AI concepts — attention mechanisms to zero-shot learning.",
-    position: { x: -280, y: 60, z: -120, rotateX: 12, rotateY: 35, rotateZ: -5, scale: 0.78 },
-    delay: 0.15,
+    tags: ["110 Concepts", "A–Z"],
   },
   {
-    id: "seo",
-    label: "Best SEO",
-    category: "SEARCH",
-    icon: "◉",
+    id: "solutions",
+    label: "Solutions & SEO",
+    category: "SERVICES",
+    icon: <Search size={20} />,
     path: "/solutions",
     description: "Enterprise search optimization and AI-powered visibility strategies.",
-    position: { x: 280, y: 60, z: -120, rotateX: 12, rotateY: -35, rotateZ: 5, scale: 0.78 },
-    delay: 0.2,
+    tags: ["SEO", "AI Strategy"],
+  },
+  {
+    id: "experience",
+    label: "Experience",
+    category: "CAREER",
+    icon: <Briefcase size={20} />,
+    path: "/experience",
+    description: "10+ years scaling organic search for Fortune 500 brands and startups.",
+    tags: ["Fortune 500", "10+ Years"],
+  },
+  {
+    id: "insights",
+    label: "Insights & Blog",
+    category: "CONTENT",
+    icon: <FileText size={20} />,
+    path: "/insights",
+    description: "Essays, case studies, and thought leadership on AI and search.",
+    tags: ["Essays", "Case Studies"],
+  },
+  {
+    id: "research",
+    label: "Research",
+    category: "ACADEMIC",
+    icon: <FlaskConical size={20} />,
+    path: "/research",
+    description: "Published papers and ongoing research in AI systems and NLP.",
+    tags: ["Papers", "NLP"],
+  },
+  {
+    id: "projects",
+    label: "Projects",
+    category: "PORTFOLIO",
+    icon: <FolderOpen size={20} />,
+    path: "/projects",
+    description: "Production AI systems, tools, and open-source contributions.",
+    tags: ["AI Tools", "Open Source"],
+  },
+  {
+    id: "contact",
+    label: "Contact",
+    category: "CONNECT",
+    icon: <Mail size={20} />,
+    path: "/contact",
+    description: "Get in touch for collaborations, speaking, or consulting.",
+    tags: ["Consulting", "Speaking"],
   },
 ];
 
-const NavCard3D = ({
-  node,
-  mouseX,
-  mouseY,
-  hoveredId,
-  setHoveredId,
-}: {
-  node: NavNode;
-  mouseX: ReturnType<typeof useMotionValue>;
-  mouseY: ReturnType<typeof useMotionValue>;
-  hoveredId: string | null;
-  setHoveredId: (id: string | null) => void;
-}) => {
-  const pos = node.position;
-  const parallaxX = useTransform(mouseX, (v: number) => (v + 0.5) * 25 - 12.5);
-  const parallaxY = useTransform(mouseY, (v: number) => (v + 0.5) * 18 - 9);
-  const smoothX = useSpring(parallaxX, { stiffness: 100, damping: 30 });
-  const smoothY = useSpring(parallaxY, { stiffness: 100, damping: 30 });
-  const isHovered = hoveredId === node.id;
-
-  return (
-    <motion.div
-      className="absolute"
-      style={{ left: "50%", top: "50%", x: smoothX, y: smoothY }}
-      initial={{
-        translateX: pos.x - 110,
-        translateY: pos.y - 75,
-        translateZ: pos.z,
-        rotateX: pos.rotateX,
-        rotateY: pos.rotateY,
-        rotateZ: pos.rotateZ,
-        scale: pos.scale,
-        opacity: 0,
-      }}
-      animate={{
-        translateX: pos.x - 110,
-        translateY: pos.y - 75,
-        translateZ: pos.z,
-        rotateX: pos.rotateX,
-        rotateY: pos.rotateY,
-        rotateZ: pos.rotateZ,
-        scale: pos.scale,
-        opacity: 1,
-      }}
-      transition={{ type: "spring", stiffness: 60, damping: 20, delay: node.delay + 0.3 }}
-    >
-      <Link to={node.path} className="block">
-        <motion.div
-          className="relative w-[220px] h-[150px] cursor-pointer group/card"
-          onMouseEnter={() => setHoveredId(node.id)}
-          onMouseLeave={() => setHoveredId(null)}
-          whileHover={{ scale: 1.08, z: 60 }}
-          transition={{ type: "spring", stiffness: 300, damping: 25 }}
-        >
-          {/* Glow */}
-          <div className="absolute -inset-[1px] rounded-xl bg-gradient-to-br from-primary/20 to-accent/10 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 blur-sm" />
-
-          {/* Card body */}
-          <div className="relative h-full rounded-xl border border-border/20 bg-background/60 backdrop-blur-xl overflow-hidden group-hover/card:border-primary/30 group-hover/card:bg-primary/[0.06] transition-all duration-500">
-            {/* Top shine */}
-            <div className="absolute inset-0 bg-gradient-to-br from-foreground/[0.04] via-transparent to-transparent pointer-events-none group-hover/card:from-primary/[0.08]" />
-
-            {/* Scan line */}
-            <motion.div
-              className="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-foreground/10 to-transparent pointer-events-none"
-              animate={{ top: ["0%", "100%"] }}
-              transition={{ duration: 3.5, repeat: Infinity, ease: "linear", delay: node.delay * 5 }}
-            />
-
-            {/* Content */}
-            <div className="relative p-5 h-full flex flex-col justify-between">
-              <div className="flex items-start justify-between">
-                <span className="text-2xl opacity-50 group-hover/card:opacity-100 group-hover/card:text-primary transition-all duration-300">{node.icon}</span>
-                <motion.div
-                  className="w-2 h-2 rounded-full bg-emerald-500/50 group-hover/card:bg-emerald-400"
-                  animate={{ opacity: [0.3, 1, 0.3] }}
-                  transition={{ duration: 2, repeat: Infinity, delay: node.delay * 3 }}
-                />
-              </div>
-              <div>
-                <p className="font-mono text-[9px] tracking-[0.25em] text-muted-foreground/30 uppercase mb-1 group-hover/card:text-primary/50 transition-colors duration-300">
-                  {node.category}
-                </p>
-                <p className="text-xs font-medium text-foreground/70 group-hover/card:text-foreground transition-colors duration-300">
-                  {node.label}
-                </p>
-              </div>
-            </div>
-
-            {/* Bottom prismatic line */}
-            <motion.div
-              className="absolute bottom-0 left-0 right-0 h-[1px] group-hover/card:h-[2px] transition-all"
-              style={{ background: "linear-gradient(90deg, transparent, hsl(var(--primary) / 0.3), hsl(var(--accent) / 0.2), transparent)" }}
-              animate={{ opacity: [0.3, 0.8, 0.3] }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-            />
-
-            {/* Edge refraction on hover */}
-            <div
-              className="absolute inset-0 rounded-xl opacity-0 group-hover/card:opacity-100 transition-opacity duration-700 pointer-events-none"
-              style={{ boxShadow: "inset 1px 0 0 rgba(200,220,255,0.08), inset -1px 0 0 rgba(255,200,180,0.06), inset 0 1px 0 rgba(200,255,200,0.04)" }}
-            />
-          </div>
-        </motion.div>
-      </Link>
-    </motion.div>
-  );
-};
-
-// Floating energy particles
-const Particles = () => {
-  const particles = Array.from({ length: 20 }, (_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    size: Math.random() * 2.5 + 1,
-    duration: Math.random() * 4 + 3,
-    delay: Math.random() * 3,
-  }));
-
-  return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden">
-      {particles.map((p) => (
-        <motion.div
-          key={p.id}
-          className="absolute rounded-full"
-          style={{
-            left: `${p.x}%`,
-            top: `${p.y}%`,
-            width: p.size,
-            height: p.size,
-            background: `radial-gradient(circle, hsla(${200 + p.id * 15}, 70%, 65%, 0.5), transparent)`,
-          }}
-          animate={{ y: [0, -15, 0], opacity: [0.1, 0.4, 0.1] }}
-          transition={{ duration: p.duration, delay: p.delay, repeat: Infinity, ease: "easeInOut" }}
-        />
-      ))}
-    </div>
-  );
-};
-
 const SystemAssemblyNav = () => {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const handleMouseMove = useCallback(
-    (e: React.MouseEvent) => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
-      mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
-    },
-    [mouseX, mouseY]
-  );
 
   return (
     <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-24 pb-20">
       {/* Header */}
       <ScrollReveal>
-        <div className="text-center mb-12">
+        <div className="text-center mb-16">
           <motion.p
             className="font-mono text-[9px] tracking-[0.5em] text-muted-foreground/25 uppercase mb-3"
             initial={{ opacity: 0 }}
@@ -252,14 +137,13 @@ const SystemAssemblyNav = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
-            Five interconnected knowledge modules. Hover to inspect. Click to navigate.
-            Each node links to a self-contained intelligence system.
+            Ten interconnected modules. Click any card to explore.
           </motion.p>
 
           {/* Stats bar */}
           <div className="flex items-center justify-center gap-10 mt-8">
             {[
-              { label: "Modules", value: "05" },
+              { label: "Modules", value: "10" },
               { label: "Concepts", value: "110" },
               { label: "Contributors", value: "100" },
             ].map((stat) => (
@@ -274,78 +158,77 @@ const SystemAssemblyNav = () => {
         </div>
       </ScrollReveal>
 
-      {/* 3D Scene */}
-      <div
-        ref={containerRef}
-        onMouseMove={handleMouseMove}
-        className="relative mx-auto overflow-visible"
-        style={{ height: "480px", perspective: "1200px", perspectiveOrigin: "50% 40%" }}
-      >
-        {/* Ambient glow */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[350px] rounded-full opacity-[0.04]"
-            style={{ background: "radial-gradient(ellipse, hsl(220, 70%, 55%), transparent 70%)" }}
-          />
-        </div>
-
-        <Particles />
-
-        {/* 3D cards */}
-        <div className="relative w-full h-full" style={{ transformStyle: "preserve-3d" }}>
-          {navNodes.map((node) => (
-            <NavCard3D
-              key={node.id}
-              node={node}
-              mouseX={mouseX}
-              mouseY={mouseY}
-              hoveredId={hoveredId}
-              setHoveredId={setHoveredId}
-            />
-          ))}
-        </div>
-
-        {/* Ground reflection */}
-        <div
-          className="absolute bottom-12 left-1/2 -translate-x-1/2 w-[500px] h-[1px]"
-          style={{ background: "linear-gradient(90deg, transparent, hsl(var(--foreground) / 0.06), transparent)" }}
-        />
-
-        {/* Perspective grid */}
-        <div
-          className="absolute bottom-4 left-1/2 -translate-x-1/2 w-[700px] h-[70px] pointer-events-none opacity-[0.03]"
-          style={{
-            backgroundImage: `
-              repeating-linear-gradient(90deg, hsl(var(--foreground)) 0px, transparent 1px, transparent 60px),
-              repeating-linear-gradient(0deg, hsl(var(--foreground)) 0px, transparent 1px, transparent 20px)
-            `,
-            maskImage: "linear-gradient(to bottom, transparent, white 30%, white 70%, transparent)",
-            WebkitMaskImage: "linear-gradient(to bottom, transparent, white 30%, white 70%, transparent)",
-          }}
-        />
-      </div>
-
-      {/* Hovered description */}
-      <div className="h-12 flex items-center justify-center">
-        <AnimatePresence mode="wait">
-          {hoveredId && (
-            <motion.p
-              key={hoveredId}
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -5 }}
-              className="font-mono text-[10px] text-muted-foreground/40 text-center max-w-md"
+      {/* Card Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {navCards.map((card, index) => (
+          <motion.div
+            key={card.id}
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.06 + 0.3, type: "spring", stiffness: 80, damping: 20 }}
+          >
+            <Link
+              to={card.path}
+              className="block group"
+              onMouseEnter={() => setHoveredId(card.id)}
+              onMouseLeave={() => setHoveredId(null)}
             >
-              {navNodes.find((n) => n.id === hoveredId)?.description}
-            </motion.p>
-          )}
-        </AnimatePresence>
+              <div className="relative h-full rounded-xl border border-border/20 bg-background/60 backdrop-blur-sm overflow-hidden transition-all duration-400 hover:border-primary/40 hover:bg-primary/[0.04] hover:shadow-[0_0_30px_-10px_hsl(var(--primary)/0.15)]">
+                {/* Top accent line */}
+                <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-border/30 to-transparent group-hover:via-primary/40 transition-all duration-500" />
+
+                <div className="p-5 flex flex-col h-full min-h-[160px]">
+                  {/* Header row */}
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="text-muted-foreground/40 group-hover:text-primary transition-colors duration-300">
+                        {card.icon}
+                      </div>
+                      <span className="font-mono text-[8px] tracking-[0.25em] text-muted-foreground/25 uppercase group-hover:text-primary/50 transition-colors duration-300">
+                        {card.category}
+                      </span>
+                    </div>
+                    <ArrowRight
+                      size={14}
+                      className="text-muted-foreground/15 group-hover:text-primary/60 group-hover:translate-x-0.5 transition-all duration-300"
+                    />
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="text-sm font-semibold text-foreground/80 group-hover:text-foreground transition-colors duration-300 mb-2">
+                    {card.label}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="font-mono text-[10px] text-muted-foreground/35 leading-relaxed mb-4 group-hover:text-muted-foreground/55 transition-colors duration-300">
+                    {card.description}
+                  </p>
+
+                  {/* Tags */}
+                  <div className="mt-auto flex flex-wrap gap-1.5">
+                    {card.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="font-mono text-[8px] tracking-wider px-2 py-0.5 rounded-full border border-border/15 text-muted-foreground/25 group-hover:border-primary/20 group-hover:text-primary/40 transition-all duration-300"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Bottom accent */}
+                <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-transparent to-transparent group-hover:via-primary/30 transition-all duration-500" />
+              </div>
+            </Link>
+          </motion.div>
+        ))}
       </div>
 
       {/* Footer */}
-      <div className="mt-8 text-center">
+      <div className="mt-12 text-center">
         <p className="font-mono text-[9px] tracking-[0.3em] text-muted-foreground/15 uppercase">
-          5 modules · Interconnected Knowledge System
+          10 modules · Interconnected Knowledge System
         </p>
       </div>
     </div>
