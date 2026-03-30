@@ -452,7 +452,7 @@ const SystemAssemblyNav = () => {
       </div>
 
       {/* Footer */}
-      <div className="mt-4 text-center">
+      <div className="mt-3 text-center">
         <p className="font-mono text-[9px] tracking-[0.3em] text-muted-foreground/15 uppercase">
           10 modules · Interconnected Knowledge System
         </p>
