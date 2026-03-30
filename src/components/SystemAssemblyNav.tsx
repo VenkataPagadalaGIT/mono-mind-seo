@@ -10,9 +10,8 @@ const navNodes = [
     category: "CORE",
     icon: BookOpen,
     path: "/notebook/ai",
-    description: "The complete AI knowledge hub",
-    position: { x: 5, y: 15 },
-    size: "md" as const,
+    description: "The complete AI knowledge hub — curated research, frameworks, and deep dives into modern AI systems.",
+    tech: ["Research", "Frameworks", "Deep Dives"],
   },
   {
     id: "contributors",
@@ -20,9 +19,8 @@ const navNodes = [
     category: "DIRECTORY",
     icon: Users,
     path: "/ai-contributors",
-    description: "2026 Edition · Definitive AI index",
-    position: { x: 28, y: 5 },
-    size: "lg" as const,
+    description: "2026 Edition · The definitive index of researchers, engineers, and leaders shaping the AI landscape.",
+    tech: ["2026 Edition", "100 Profiles", "Ranked"],
   },
   {
     id: "roadmap",
@@ -30,9 +28,8 @@ const navNodes = [
     category: "LEARNING",
     icon: GraduationCap,
     path: "/notebook/ai/roadmap",
-    description: "18-week zero to hero curriculum",
-    position: { x: 55, y: 20 },
-    size: "md" as const,
+    description: "An 18-week zero-to-hero curriculum covering foundations, architecttic, and applied AI engineering.",
+    tech: ["18 Weeks", "Zero to Hero", "Free"],
   },
   {
     id: "encyclopedia",
@@ -40,9 +37,8 @@ const navNodes = [
     category: "REFERENCE",
     icon: Lightbulb,
     path: "/notebook/ai/encyclopedia",
-    description: "110 concepts explained",
-    position: { x: 18, y: 55 },
-    size: "md" as const,
+    description: "110 core AI concepts explained with precision — from attention mechanisms to zero-shot learning.",
+    tech: ["110 Concepts", "Searchable", "Cross-linked"],
   },
   {
     id: "seo",
@@ -50,161 +46,163 @@ const navNodes = [
     category: "SEARCH",
     icon: Search,
     path: "/solutions",
-    description: "Enterprise search optimization",
-    position: { x: 62, y: 50 },
-    size: "sm" as const,
+    description: "Enterprise search optimization and AI-powered visibility strategies for maximum organic growth.",
+    tech: ["Enterprise", "AI-Powered", "Growth"],
   },
 ];
 
-// Connection lines between nodes
-const connections = [
-  { from: 0, to: 1 },
-  { from: 1, to: 2 },
-  { from: 0, to: 3 },
-  { from: 2, to: 4 },
-  { from: 3, to: 4 },
-];
-
-const sizeClasses = {
-  sm: "w-44 sm:w-48",
-  md: "w-52 sm:w-60",
-  lg: "w-60 sm:w-72",
-};
-
 const SystemAssemblyNav = () => {
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [expandedId, setExpandedId] = useState<string | null>("contributors");
 
   return (
-    <div className="relative z-10 w-full max-w-7xl mx-auto px-6 mt-24 pb-20">
+    <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-24 pb-20">
+      {/* Section header */}
       <ScrollReveal>
-        <div className="text-center mb-12">
-          <p className="font-mono text-[10px] tracking-[0.5em] text-muted-foreground/30 uppercase mb-3">
-            [ System Assembly ]
-          </p>
-          <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground text-glow mb-3">
+        <div className="mb-20">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-8 h-[1px] bg-border/20" />
+            <p className="font-mono text-[9px] tracking-[0.5em] text-muted-foreground/25 uppercase">
+              System Assembly
+            </p>
+          </div>
+          <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground tracking-tight mb-4">
             Knowledge Architecture
           </h2>
-          <p className="font-mono text-[10px] text-muted-foreground/40 max-w-md mx-auto leading-relaxed">
-            Navigate the interconnected modules — AI research, learning paths, and search intelligence.
+          <p className="font-mono text-xs text-muted-foreground/40 max-w-lg leading-relaxed">
+            Navigate the interconnected modules — AI research, learning paths,
+            and search intelligence. Each node links to a self-contained knowledge system.
           </p>
+
+          {/* Stats bar */}
+          <div className="flex items-center gap-8 mt-8 pt-6 border-t border-border/10">
+            {[
+              { label: "Modules", value: String(navNodes.length).padStart(2, "0") },
+              { label: "Concepts", value: "110" },
+              { label: "Contributors", value: "100" },
+            ].map((stat) => (
+              <div key={stat.label}>
+                <p className="font-mono text-lg font-semibold text-foreground/80">{stat.value}</p>
+                <p className="font-mono text-[8px] tracking-[0.3em] text-muted-foreground/25 uppercase mt-0.5">
+                  {stat.label}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </ScrollReveal>
 
-      {/* Assembly grid */}
-      <div className="relative w-full" style={{ height: "420px" }}>
-        {/* SVG connection lines */}
-        <svg
-          className="absolute inset-0 w-full h-full pointer-events-none z-0"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-        >
-          {connections.map((conn, i) => {
-            const from = navNodes[conn.from];
-            const to = navNodes[conn.to];
-            const isActive = hoveredId === from.id || hoveredId === to.id;
-            return (
-              <line
-                key={i}
-                x1={from.position.x + 10}
-                y1={from.position.y + 10}
-                x2={to.position.x + 10}
-                y2={to.position.y + 10}
-                stroke={isActive ? "hsl(var(--foreground) / 0.2)" : "hsl(var(--foreground) / 0.06)"}
-                strokeWidth="0.15"
-                className="transition-all duration-500"
-              />
-            );
-          })}
-          {/* Dot nodes at intersections */}
-          {navNodes.map((node, i) => {
-            const isActive = hoveredId === node.id;
-            return (
-              <circle
-                key={i}
-                cx={node.position.x + 10}
-                cy={node.position.y + 10}
-                r={isActive ? "0.8" : "0.4"}
-                fill={isActive ? "hsl(var(--primary))" : "hsl(var(--foreground) / 0.3)"}
-                className="transition-all duration-300"
-              />
-            );
-          })}
-        </svg>
-
-        {/* Cards */}
-        {navNodes.map((node) => {
+      {/* Node list */}
+      <div className="space-y-16">
+        {navNodes.map((node, index) => {
           const Icon = node.icon;
-          const isHovered = hoveredId === node.id;
+          const isExpanded = expandedId === node.id;
 
           return (
-            <Link
-              key={node.id}
-              to={node.path}
-              className={`absolute z-10 group ${sizeClasses[node.size]}`}
-              style={{
-                left: `${node.position.x}%`,
-                top: `${node.position.y}%`,
-              }}
-              onMouseEnter={() => setHoveredId(node.id)}
-              onMouseLeave={() => setHoveredId(null)}
-            >
-              <div
-                className={`
-                  relative border rounded-lg p-5 sm:p-6 transition-all duration-500
-                  ${isHovered
-                    ? "bg-card/80 border-foreground/20 shadow-[0_0_40px_-10px_hsl(var(--primary)/0.15)]"
-                    : "bg-card/30 border-border/20 backdrop-blur-sm"
-                  }
-                `}
-              >
-                {/* Category label */}
-                <p className={`font-mono text-[8px] tracking-[0.4em] uppercase mb-3 transition-colors duration-300 ${
-                  isHovered ? "text-primary/70" : "text-muted-foreground/30"
-                }`}>
-                  {node.category}
-                </p>
+            <ScrollReveal key={node.id}>
+              <div className="relative">
+                {/* Connector line */}
+                {index > 0 && (
+                  <div className="absolute left-6 -top-10 w-[1px] h-10 bg-gradient-to-b from-transparent via-border/20 to-border/10" />
+                )}
 
-                {/* Icon */}
-                <Icon
-                  size={node.size === "lg" ? 22 : 18}
-                  className={`mb-3 transition-all duration-300 ${
-                    isHovered ? "text-foreground" : "text-muted-foreground/40"
-                  }`}
-                  strokeWidth={1.5}
-                />
+                {/* Node header */}
+                <div className="flex items-start gap-4 mb-6">
+                  {/* Index marker */}
+                  <div className="flex-shrink-0 w-12 h-12 border border-border/20 flex items-center justify-center font-mono text-[10px] text-muted-foreground/40">
+                    {String(index + 1).padStart(2, "0")}
+                  </div>
 
-                {/* Title */}
-                <h3 className={`font-display text-sm sm:text-base font-semibold mb-1 transition-colors duration-300 ${
-                  isHovered ? "text-foreground" : "text-foreground/70"
-                }`}>
-                  {node.label}
-                </h3>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-3 flex-wrap mb-1.5">
+                      <h3 className="font-display text-lg sm:text-xl font-semibold text-foreground tracking-tight">
+                        {node.label}
+                      </h3>
+                      <span className="font-mono text-[8px] tracking-[0.3em] text-muted-foreground/25 uppercase border border-border/15 px-2 py-0.5">
+                        {node.category}
+                      </span>
+                    </div>
+                    <p className="font-mono text-[10px] text-muted-foreground/40 leading-relaxed max-w-xl">
+                      {node.description}
+                    </p>
+                    <div className="flex items-center gap-2 mt-2 flex-wrap">
+                      {node.tech.map((t) => (
+                        <span
+                          key={t}
+                          className="font-mono text-[8px] tracking-wider text-muted-foreground/20 uppercase"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
 
-                {/* Description */}
-                <p className={`font-mono text-[9px] leading-relaxed transition-all duration-300 ${
-                  isHovered ? "text-muted-foreground/60 opacity-100" : "text-muted-foreground/30 opacity-0"
-                }`}>
-                  {node.description}
-                </p>
+                  {/* Toggle */}
+                  <button
+                    onClick={() => setExpandedId(isExpanded ? null : node.id)}
+                    className="flex-shrink-0 font-mono text-[9px] tracking-[0.2em] text-muted-foreground/30 hover:text-muted-foreground/60 transition-colors uppercase border border-border/10 px-3 py-1.5 hover:border-border/25"
+                  >
+                    {isExpanded ? "Collapse" : "Expand"}
+                  </button>
+                </div>
 
-                {/* Arrow */}
-                <ArrowRight
-                  size={12}
-                  className={`absolute bottom-4 right-4 transition-all duration-300 ${
-                    isHovered
-                      ? "text-foreground/50 translate-x-0 opacity-100"
-                      : "text-foreground/10 -translate-x-1 opacity-0"
-                  }`}
-                />
+                {/* Expanded card */}
+                {isExpanded && (
+                  <Link to={node.path} className="block group">
+                    <div className="relative border border-border/10 rounded-sm overflow-hidden">
+                      {/* Top bar */}
+                      <div className="flex items-center justify-between px-4 py-2 border-b border-border/10 bg-background/50">
+                        <div className="flex items-center gap-2">
+                          <div className="w-1.5 h-1.5 rounded-full bg-emerald-500/40" />
+                          <span className="font-mono text-[8px] tracking-[0.3em] text-muted-foreground/20 uppercase">
+                            {node.id}
+                          </span>
+                        </div>
+                        <span className="font-mono text-[8px] text-muted-foreground/15 uppercase">
+                          Navigate →
+                        </span>
+                      </div>
 
-                {/* Corner dot */}
-                <div className={`absolute top-3 right-3 w-1.5 h-1.5 rounded-full transition-all duration-300 ${
-                  isHovered ? "bg-primary/60" : "bg-muted-foreground/15"
-                }`} />
+                      {/* Content */}
+                      <div className="p-6 sm:p-8 flex items-center gap-6 group-hover:bg-card/30 transition-colors duration-300">
+                        <div className="flex-shrink-0 w-16 h-16 border border-border/15 flex items-center justify-center group-hover:border-foreground/20 transition-colors duration-300">
+                          <Icon
+                            size={24}
+                            className="text-muted-foreground/30 group-hover:text-foreground/60 transition-colors duration-300"
+                            strokeWidth={1.5}
+                          />
+                        </div>
+
+                        <div className="flex-1 min-w-0">
+                          <p className="font-mono text-[8px] tracking-[0.4em] text-muted-foreground/25 uppercase mb-2">
+                            {node.category}
+                          </p>
+                          <h4 className="font-display text-xl sm:text-2xl font-bold text-foreground/80 group-hover:text-foreground tracking-tight transition-colors duration-300 mb-1">
+                            {node.label}
+                          </h4>
+                          <p className="font-mono text-[10px] text-muted-foreground/35 leading-relaxed max-w-md">
+                            {node.description}
+                          </p>
+                        </div>
+
+                        <ArrowRight
+                          size={16}
+                          className="flex-shrink-0 text-muted-foreground/15 group-hover:text-foreground/40 group-hover:translate-x-1 transition-all duration-300"
+                        />
+                      </div>
+                    </div>
+                  </Link>
+                )}
               </div>
-            </Link>
+            </ScrollReveal>
           );
         })}
+      </div>
+
+      {/* Footer */}
+      <div className="mt-24 pt-8 border-t border-border/10 text-center">
+        <p className="font-mono text-[9px] tracking-[0.3em] text-muted-foreground/15 uppercase">
+          {navNodes.length} modules · Interconnected Knowledge System
+        </p>
       </div>
     </div>
   );
