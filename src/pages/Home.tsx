@@ -6,6 +6,7 @@ import TypewriterText from "@/components/TypewriterText";
 import SolutionsGraph from "@/components/SolutionsGraph";
 import ScrollReveal from "@/components/ScrollReveal";
 import Holographic3DWrapper from "@/components/Holographic3DWrapper";
+import ServicesShowcase from "@/components/ServicesShowcase";
 import SEO from "@/components/SEO";
 
 const Home = () => {
@@ -97,6 +98,9 @@ const Home = () => {
         ATLANTA, GA
       </div>
       </div>
+
+      {/* Services Showcase */}
+      <ServicesShowcase />
 
       {/* AI Contributors Highlight */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 mt-24">
