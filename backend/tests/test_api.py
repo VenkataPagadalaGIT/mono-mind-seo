@@ -1,6 +1,9 @@
 """
 Backend API Tests for Mono Mind SEO Portfolio
 Tests: health, contact, newsletter, stats endpoints
+
+NOTE: As of iteration 2, /api/contact/submissions and /api/newsletter/subscribers
+require authentication. Tests updated to use auth token.
 """
 import pytest
 import requests
@@ -12,6 +15,19 @@ BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', '').rstrip('/')
 if not BASE_URL:
     # Fallback for local testing
     BASE_URL = "https://github-checker-8.preview.emergentagent.com"
+
+# Admin credentials for protected endpoints
+ADMIN_EMAIL = "admin@monomind.com"
+ADMIN_PASSWORD = "MonoMind2026!"
+
+
+def get_auth_token():
+    """Helper to get auth token for protected endpoints"""
+    payload = {"email": ADMIN_EMAIL, "password": ADMIN_PASSWORD}
+    response = requests.post(f"{BASE_URL}/api/auth/login", json=payload)
+    if response.status_code == 200:
+        return response.json()["access_token"]
+    return None
 
 
 class TestHealthEndpoints:
@@ -151,18 +167,26 @@ class TestContactEndpoint:
 
 
 class TestContactSubmissionsList:
-    """Contact submissions list tests"""
+    """Contact submissions list tests (requires auth as of iteration 2)"""
 
-    def test_list_contacts_returns_list(self):
-        """GET /api/contact/submissions — returns list of ContactRecord"""
-        response = requests.get(f"{BASE_URL}/api/contact/submissions")
+    @pytest.fixture
+    def auth_headers(self):
+        """Get auth headers for protected endpoints"""
+        token = get_auth_token()
+        if not token:
+            pytest.skip("Could not obtain auth token")
+        return {"Authorization": f"Bearer {token}"}
+
+    def test_list_contacts_returns_list(self, auth_headers):
+        """GET /api/contact/submissions — returns list of ContactRecord (auth required)"""
+        response = requests.get(f"{BASE_URL}/api/contact/submissions", headers=auth_headers)
         assert response.status_code == 200
         
         data = response.json()
         assert isinstance(data, list)
         print(f"Contact submissions list OK: {len(data)} records")
 
-    def test_list_contacts_excludes_sensitive_fields(self):
+    def test_list_contacts_excludes_sensitive_fields(self, auth_headers):
         """GET /api/contact/submissions — excludes _id, ip, user_agent"""
         # First create a contact
         unique_email = f"test_{uuid.uuid4().hex[:8]}@example.com"
@@ -173,8 +197,8 @@ class TestContactSubmissionsList:
         }
         requests.post(f"{BASE_URL}/api/contact", json=payload)
         
-        # Now fetch and verify exclusion
-        response = requests.get(f"{BASE_URL}/api/contact/submissions?limit=10")
+        # Now fetch and verify exclusion (with auth)
+        response = requests.get(f"{BASE_URL}/api/contact/submissions?limit=10", headers=auth_headers)
         assert response.status_code == 200
         
         data = response.json()
@@ -191,9 +215,9 @@ class TestContactSubmissionsList:
             assert "created_at" in record
         print(f"Contact submissions excludes sensitive fields OK")
 
-    def test_list_contacts_with_limit(self):
+    def test_list_contacts_with_limit(self, auth_headers):
         """GET /api/contact/submissions — accepts ?limit=N"""
-        response = requests.get(f"{BASE_URL}/api/contact/submissions?limit=5")
+        response = requests.get(f"{BASE_URL}/api/contact/submissions?limit=5", headers=auth_headers)
         assert response.status_code == 200
         
         data = response.json()
@@ -201,9 +225,9 @@ class TestContactSubmissionsList:
         assert len(data) <= 5
         print(f"Contact submissions with limit OK: {len(data)} records")
 
-    def test_list_contacts_sorted_newest_first(self):
+    def test_list_contacts_sorted_newest_first(self, auth_headers):
         """GET /api/contact/submissions — returns newest first"""
-        response = requests.get(f"{BASE_URL}/api/contact/submissions?limit=10")
+        response = requests.get(f"{BASE_URL}/api/contact/submissions?limit=10", headers=auth_headers)
         assert response.status_code == 200
         
         data = response.json()
@@ -291,26 +315,34 @@ class TestNewsletterEndpoint:
 
 
 class TestNewsletterSubscribersList:
-    """Newsletter subscribers list tests"""
+    """Newsletter subscribers list tests (requires auth as of iteration 2)"""
 
-    def test_list_subscribers_returns_list(self):
-        """GET /api/newsletter/subscribers — returns list of NewsletterRecord"""
-        response = requests.get(f"{BASE_URL}/api/newsletter/subscribers")
+    @pytest.fixture
+    def auth_headers(self):
+        """Get auth headers for protected endpoints"""
+        token = get_auth_token()
+        if not token:
+            pytest.skip("Could not obtain auth token")
+        return {"Authorization": f"Bearer {token}"}
+
+    def test_list_subscribers_returns_list(self, auth_headers):
+        """GET /api/newsletter/subscribers — returns list of NewsletterRecord (auth required)"""
+        response = requests.get(f"{BASE_URL}/api/newsletter/subscribers", headers=auth_headers)
         assert response.status_code == 200
         
         data = response.json()
         assert isinstance(data, list)
         print(f"Newsletter subscribers list OK: {len(data)} records")
 
-    def test_list_subscribers_excludes_sensitive_fields(self):
+    def test_list_subscribers_excludes_sensitive_fields(self, auth_headers):
         """GET /api/newsletter/subscribers — excludes _id, ip"""
         # First create a subscriber
         unique_email = f"newsletter_{uuid.uuid4().hex[:8]}@example.com"
         payload = {"email": unique_email}
         requests.post(f"{BASE_URL}/api/newsletter", json=payload)
         
-        # Now fetch and verify exclusion
-        response = requests.get(f"{BASE_URL}/api/newsletter/subscribers?limit=10")
+        # Now fetch and verify exclusion (with auth)
+        response = requests.get(f"{BASE_URL}/api/newsletter/subscribers?limit=10", headers=auth_headers)
         assert response.status_code == 200
         
         data = response.json()
@@ -324,9 +356,9 @@ class TestNewsletterSubscribersList:
             assert "created_at" in record
         print(f"Newsletter subscribers excludes sensitive fields OK")
 
-    def test_list_subscribers_with_limit(self):
+    def test_list_subscribers_with_limit(self, auth_headers):
         """GET /api/newsletter/subscribers — accepts ?limit=N"""
-        response = requests.get(f"{BASE_URL}/api/newsletter/subscribers?limit=5")
+        response = requests.get(f"{BASE_URL}/api/newsletter/subscribers?limit=5", headers=auth_headers)
         assert response.status_code == 200
         
         data = response.json()
@@ -334,9 +366,9 @@ class TestNewsletterSubscribersList:
         assert len(data) <= 5
         print(f"Newsletter subscribers with limit OK: {len(data)} records")
 
-    def test_list_subscribers_sorted_newest_first(self):
+    def test_list_subscribers_sorted_newest_first(self, auth_headers):
         """GET /api/newsletter/subscribers — returns newest first"""
-        response = requests.get(f"{BASE_URL}/api/newsletter/subscribers?limit=10")
+        response = requests.get(f"{BASE_URL}/api/newsletter/subscribers?limit=10", headers=auth_headers)
         assert response.status_code == 200
         
         data = response.json()
@@ -367,9 +399,17 @@ class TestMongoDBIndexes:
 
 
 class TestEndToEndFlow:
-    """End-to-end flow tests"""
+    """End-to-end flow tests (requires auth for list endpoints as of iteration 2)"""
 
-    def test_full_contact_flow(self):
+    @pytest.fixture
+    def auth_headers(self):
+        """Get auth headers for protected endpoints"""
+        token = get_auth_token()
+        if not token:
+            pytest.skip("Could not obtain auth token")
+        return {"Authorization": f"Bearer {token}"}
+
+    def test_full_contact_flow(self, auth_headers):
         """E2E: Submit contact → verify in list → check stats"""
         # Get initial stats
         stats_before = requests.get(f"{BASE_URL}/api/stats").json()
@@ -387,8 +427,8 @@ class TestEndToEndFlow:
         assert submit_response.status_code == 200
         contact_id = submit_response.json()["id"]
         
-        # Verify in list
-        list_response = requests.get(f"{BASE_URL}/api/contact/submissions?limit=10")
+        # Verify in list (with auth)
+        list_response = requests.get(f"{BASE_URL}/api/contact/submissions?limit=10", headers=auth_headers)
         assert list_response.status_code == 200
         contacts = list_response.json()
         found = any(c["id"] == contact_id for c in contacts)
@@ -399,7 +439,7 @@ class TestEndToEndFlow:
         assert stats_after["contact_submissions"] == initial_contacts + 1
         print(f"E2E contact flow OK: created {contact_id}")
 
-    def test_full_newsletter_flow(self):
+    def test_full_newsletter_flow(self, auth_headers):
         """E2E: Subscribe → verify in list → check stats → re-subscribe (idempotent)"""
         # Get initial stats
         stats_before = requests.get(f"{BASE_URL}/api/stats").json()
@@ -412,8 +452,8 @@ class TestEndToEndFlow:
         assert sub_response.status_code == 200
         sub_id = sub_response.json()["id"]
         
-        # Verify in list
-        list_response = requests.get(f"{BASE_URL}/api/newsletter/subscribers?limit=10")
+        # Verify in list (with auth)
+        list_response = requests.get(f"{BASE_URL}/api/newsletter/subscribers?limit=10", headers=auth_headers)
         assert list_response.status_code == 200
         subs = list_response.json()
         found = any(s["id"] == sub_id for s in subs)
