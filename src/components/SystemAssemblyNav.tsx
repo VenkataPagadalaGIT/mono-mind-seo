@@ -1,6 +1,4 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import ScrollReveal from "@/components/ScrollReveal";
 
 interface NavCard {
@@ -150,156 +148,134 @@ const navCards: NavCard[] = [
   },
 ];
 
-const CreditCard = ({
-  card,
-  index,
-  hoveredId,
-  setHoveredId,
-}: {
-  card: NavCard;
-  index: number;
-  hoveredId: string | null;
-  setHoveredId: (id: string | null) => void;
-}) => {
-  const isHovered = hoveredId === card.id;
-
+const CreditCard = ({ card }: { card: NavCard }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ type: "spring", stiffness: 60, damping: 18, delay: index * 0.06 }}
+    <Link
+      to={card.path}
+      aria-label={`${card.label} — ${card.description}`}
+      title={card.description}
+      className="group block focus:outline-none focus-visible:ring-1 focus-visible:ring-foreground/40"
     >
-      <Link to={card.path} className="block">
-        <motion.div
-          className="relative cursor-pointer"
-          onMouseEnter={() => setHoveredId(card.id)}
-          onMouseLeave={() => setHoveredId(null)}
-          whileHover={{ scale: 1.03, y: -4 }}
-          transition={{ type: "spring", stiffness: 300, damping: 25 }}
-        >
-          {/* Card body — sharp corners, monochrome */}
-          <div
-            className="relative overflow-hidden transition-all duration-300"
-            style={{
-              aspectRatio: "86 / 54",
-              background: isHovered
-                ? "hsl(var(--card))"
-                : "hsl(0 0% 5%)",
-              border: `1px solid ${isHovered ? "hsl(var(--foreground) / 0.2)" : "hsl(var(--border) / 0.5)"}`,
-              boxShadow: isHovered
-                ? "0 8px 30px -10px hsl(0 0% 0% / 0.6), inset 0 1px 0 hsl(var(--foreground) / 0.06)"
-                : "inset 0 1px 0 hsl(var(--foreground) / 0.03)",
-            }}
-          >
-            {/* Top edge line */}
+      <article
+        className="relative overflow-hidden border border-border/50 bg-[hsl(0_0%_5%)] transition-colors duration-300 group-hover:bg-card group-hover:border-foreground/20 group-focus-visible:bg-card group-focus-visible:border-foreground/20"
+        style={{ aspectRatio: "86 / 54" }}
+      >
+        {/* Top edge line */}
+        <div
+          className="absolute top-0 inset-x-0 h-px opacity-40 group-hover:opacity-100 transition-opacity duration-300"
+          style={{
+            background:
+              "linear-gradient(90deg, transparent 5%, hsl(var(--foreground) / 0.25) 50%, transparent 95%)",
+          }}
+        />
+
+        <div className="relative p-3 h-full flex flex-col justify-between">
+          {/* Row 1: Category + Network */}
+          <div className="flex items-start justify-between">
+            <span
+              className="font-mono tracking-[0.3em] uppercase text-muted-foreground/40 group-hover:text-muted-foreground transition-colors duration-300"
+              style={{ fontSize: 7 }}
+            >
+              {card.category}
+            </span>
+            <span
+              className="font-mono font-bold tracking-[0.15em] text-muted-foreground/20 group-hover:text-muted-foreground/60 transition-colors duration-300"
+              style={{ fontSize: 8 }}
+            >
+              {card.network}
+            </span>
+          </div>
+
+          {/* Row 2: Chip + Schema */}
+          <div className="flex items-center gap-2 mt-1.5">
             <div
-              className="absolute top-0 inset-x-0 h-[1px] transition-all duration-300"
+              className="relative flex-shrink-0 border border-foreground/15 group-hover:border-foreground/30 transition-colors duration-300"
               style={{
-                background: isHovered
-                  ? "linear-gradient(90deg, transparent 5%, hsl(var(--foreground) / 0.25) 50%, transparent 95%)"
-                  : "linear-gradient(90deg, transparent 15%, hsl(var(--foreground) / 0.05) 50%, transparent 85%)",
+                width: 26,
+                height: 18,
+                background:
+                  "linear-gradient(135deg, hsl(0 0% 18%), hsl(0 0% 12%))",
               }}
-            />
-
-            <div className="relative p-3 h-full flex flex-col justify-between">
-              {/* Row 1: Category + Network */}
-              <div className="flex items-start justify-between">
-                <span className="font-mono tracking-[0.3em] uppercase text-muted-foreground/40 transition-colors duration-300"
-                  style={{ fontSize: 7, color: isHovered ? "hsl(var(--muted-foreground))" : undefined }}
-                >
-                  {card.category}
-                </span>
-                <span className="font-mono font-bold tracking-[0.15em] text-muted-foreground/20 transition-colors duration-300"
-                  style={{ fontSize: 8, color: isHovered ? "hsl(var(--muted-foreground) / 0.6)" : undefined }}
-                >
-                  {card.network}
-                </span>
-              </div>
-
-              {/* Row 2: Chip + Schema */}
-              <div className="flex items-center gap-2 mt-1.5">
-                {/* Monochrome chip */}
-                <div
-                  className="relative flex-shrink-0 transition-all duration-300"
-                  style={{
-                    width: 26,
-                    height: 18,
-                    background: isHovered
-                      ? "linear-gradient(135deg, hsl(0 0% 35%), hsl(0 0% 22%))"
-                      : "linear-gradient(135deg, hsl(0 0% 18%), hsl(0 0% 12%))",
-                    border: `1px solid hsl(0 0% ${isHovered ? 30 : 16}%)`,
-                  }}
-                >
-                  <div className="absolute inset-[2px] border border-foreground/10" />
-                  <div className="absolute top-1/2 left-[2px] right-[2px] h-[1px] bg-foreground/10" />
-                  <div className="absolute left-1/2 top-[2px] bottom-[2px] w-[1px] bg-foreground/10" />
-                </div>
-
-                <span className="font-mono text-muted-foreground/30 transition-colors duration-300"
-                  style={{ fontSize: 7, letterSpacing: "0.08em", color: isHovered ? "hsl(var(--muted-foreground) / 0.7)" : undefined }}
-                >
-                  {card.schema}
-                </span>
-              </div>
-
-              {/* Row 3: Schema codes */}
-              <p className="font-mono tracking-[0.2em] text-foreground/15 mt-1 transition-colors duration-300"
-                style={{ fontSize: 8, color: isHovered ? "hsl(var(--foreground) / 0.5)" : undefined }}
-              >
-                {card.cardNumber}
-              </p>
-
-              {/* Row 4: Name + Pages */}
-              <div className="flex items-end justify-between mt-auto">
-                <div className="min-w-0">
-                  <p className="font-mono text-foreground/10 truncate transition-colors duration-300 mb-px"
-                    style={{ fontSize: 6, letterSpacing: "0.04em", color: isHovered ? "hsl(var(--muted-foreground) / 0.5)" : undefined }}
-                  >
-                    {card.keyword}
-                  </p>
-                  <p className="font-mono font-semibold tracking-wide text-foreground/45 transition-colors duration-300"
-                    style={{ fontSize: 10, color: isHovered ? "hsl(var(--foreground) / 0.95)" : undefined }}
-                  >
-                    {card.label}
-                  </p>
-                </div>
-                <div className="text-right flex-shrink-0 ml-2">
-                  <p className="font-mono uppercase text-foreground/8 transition-colors duration-300"
-                    style={{ fontSize: 5, letterSpacing: "0.12em", color: isHovered ? "hsl(var(--foreground) / 0.25)" : undefined }}
-                  >
-                    PAGES
-                  </p>
-                  <p className="font-mono text-foreground/15 transition-colors duration-300"
-                    style={{ fontSize: 9, color: isHovered ? "hsl(var(--foreground) / 0.5)" : undefined }}
-                  >
-                    {card.pages}
-                  </p>
-                </div>
-              </div>
+            >
+              <div className="absolute inset-[2px] border border-foreground/10" />
+              <div className="absolute top-1/2 left-[2px] right-[2px] h-px bg-foreground/10" />
+              <div className="absolute left-1/2 top-[2px] bottom-[2px] w-px bg-foreground/10" />
             </div>
 
-            {/* Watermark icon */}
-            <div
-              className="absolute bottom-3 right-3 text-foreground/[0.02] transition-all duration-300 pointer-events-none"
-              style={{ fontSize: 22, color: isHovered ? "hsl(var(--foreground) / 0.06)" : undefined }}
+            <span
+              className="font-mono text-muted-foreground/30 group-hover:text-muted-foreground/70 transition-colors duration-300"
+              style={{ fontSize: 7, letterSpacing: "0.08em" }}
             >
-              {card.icon}
+              {card.schema}
+            </span>
+          </div>
+
+          {/* Row 3: Schema codes */}
+          <p
+            className="font-mono tracking-[0.2em] text-foreground/15 group-hover:text-foreground/50 mt-1 transition-colors duration-300"
+            style={{ fontSize: 8 }}
+          >
+            {card.cardNumber}
+          </p>
+
+          {/* Row 4: Name + Pages */}
+          <div className="flex items-end justify-between mt-auto">
+            <div className="min-w-0">
+              <p
+                className="font-mono text-foreground/10 group-hover:text-muted-foreground/50 truncate transition-colors duration-300 mb-px"
+                style={{ fontSize: 6, letterSpacing: "0.04em" }}
+              >
+                {card.keyword}
+              </p>
+              <h3
+                className="font-mono font-semibold tracking-wide text-foreground/45 group-hover:text-foreground/95 transition-colors duration-300"
+                style={{ fontSize: 10 }}
+              >
+                {card.label}
+              </h3>
+            </div>
+            <div className="text-right flex-shrink-0 ml-2">
+              <p
+                className="font-mono uppercase text-foreground/[0.08] group-hover:text-foreground/25 transition-colors duration-300"
+                style={{ fontSize: 5, letterSpacing: "0.12em" }}
+              >
+                PAGES
+              </p>
+              <p
+                className="font-mono text-foreground/15 group-hover:text-foreground/50 transition-colors duration-300"
+                style={{ fontSize: 9 }}
+              >
+                {card.pages}
+              </p>
             </div>
           </div>
-        </motion.div>
-      </Link>
-    </motion.div>
+        </div>
+
+        {/* Watermark icon */}
+        <div
+          aria-hidden="true"
+          className="absolute bottom-3 right-3 text-foreground/[0.02] group-hover:text-foreground/[0.06] transition-colors duration-300 pointer-events-none"
+          style={{ fontSize: 22 }}
+        >
+          {card.icon}
+        </div>
+
+        {/* SR-only description for crawlers + screen readers */}
+        <span className="sr-only">{card.description}</span>
+      </article>
+    </Link>
   );
 };
 
 const SystemAssemblyNav = () => {
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
-
   return (
-    <div className="relative z-10 w-full max-w-7xl mx-auto px-6 mt-16 pb-12">
+    <nav
+      aria-label="Knowledge Architecture"
+      className="relative z-10 w-full max-w-7xl mx-auto px-6 mt-16 pb-12"
+    >
       {/* Header */}
       <ScrollReveal>
-        <div className="text-center mb-8">
+        <header className="text-center mb-8">
           <p className="font-mono text-[9px] tracking-[0.5em] text-muted-foreground/25 uppercase mb-3">
             [ System Assembly ]
           </p>
@@ -311,60 +287,39 @@ const SystemAssemblyNav = () => {
           </p>
 
           {/* Stats bar */}
-          <div className="flex items-center justify-center gap-8 mt-5">
+          <ul className="flex items-center justify-center gap-8 mt-5 list-none">
             {[
               { label: "Modules", value: "10" },
               { label: "Concepts", value: "110" },
               { label: "Contributors", value: "100" },
             ].map((stat) => (
-              <div key={stat.label} className="text-center">
+              <li key={stat.label} className="text-center">
                 <p className="font-mono text-base font-semibold text-foreground/70">{stat.value}</p>
                 <p className="font-mono text-[8px] tracking-[0.3em] text-muted-foreground/20 uppercase mt-0.5">
                   {stat.label}
                 </p>
-              </div>
+              </li>
             ))}
-          </div>
-        </div>
+          </ul>
+        </header>
       </ScrollReveal>
 
-      {/* Credit Card Grid — 5 columns on xl */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-        {navCards.map((card, i) => (
-          <CreditCard
-            key={card.id}
-            card={card}
-            index={i}
-            hoveredId={hoveredId}
-            setHoveredId={setHoveredId}
-          />
+      {/* Credit Card Grid — pure CSS, fully crawlable */}
+      <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 list-none p-0 m-0">
+        {navCards.map((card) => (
+          <li key={card.id}>
+            <CreditCard card={card} />
+          </li>
         ))}
-      </div>
-
-      {/* Hovered description */}
-      <div className="h-10 flex items-center justify-center mt-4">
-        <AnimatePresence mode="wait">
-          {hoveredId && (
-            <motion.p
-              key={hoveredId}
-              initial={{ opacity: 0, y: 4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -4 }}
-              className="font-mono text-[10px] text-muted-foreground/40 text-center max-w-md"
-            >
-              {navCards.find((n) => n.id === hoveredId)?.description}
-            </motion.p>
-          )}
-        </AnimatePresence>
-      </div>
+      </ul>
 
       {/* Footer */}
-      <div className="mt-2 text-center">
+      <div className="mt-6 text-center">
         <p className="font-mono text-[9px] tracking-[0.3em] text-muted-foreground/15 uppercase">
           10 modules · Interconnected Knowledge System
         </p>
       </div>
-    </div>
+    </nav>
   );
 };
 
