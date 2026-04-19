@@ -1,0 +1,26 @@
+# System libs required for Puppeteer's bundled Chromium during the SSG build.
+# Railway's default Node image does not ship these and headless Chrome fails
+# at launch without them.
+[phases.setup]
+nixPkgs = [
+  "nodejs_20",
+  "nss",
+  "atk",
+  "cups",
+  "libdrm",
+  "libxkbcommon",
+  "xorg.libXcomposite",
+  "xorg.libXdamage",
+  "xorg.libXrandr",
+  "xorg.libXext",
+  "xorg.libXfixes",
+  "mesa",
+  "pango",
+  "cairo",
+  "alsa-lib",
+  "fontconfig",
+  "freetype",
+  "dbus",
+  "glib",
+  "gtk3",
+]

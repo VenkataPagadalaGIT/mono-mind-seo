@@ -52,7 +52,7 @@ const link = (href: string, text: string) =>
 
 // Build the per-route specs from local data --------------------------------
 
-async function buildRouteSpecs(): Promise<RouteSpec[]> {
+export async function buildRouteSpecs(): Promise<RouteSpec[]> {
   // Dynamic imports so this plugin file works even if data files change shape.
   const [{ roadmapTopics, PHASES }, { encyclopediaConcepts, ENCYCLOPEDIA_CATEGORIES }, { aiContributors }, { aiUpdates }, { pillarPages }] =
     await Promise.all([
