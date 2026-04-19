@@ -45,13 +45,25 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 - **Resend email**: on contact submission fires async email to `CONTACT_NOTIFICATION_EMAIL` (defaults to `vdepagadala@gmail.com`) via Resend. Gracefully no-ops when `RESEND_API_KEY` is empty (contact still saves)
 - **Backend tests iteration 2**: 64/64 pass (100%) including bcrypt format verification
 
+### Iteration 3 — SSG pre-rendering (2026-04-19 final)
+- Added `generateStaticParams` + `revalidate = 3600` (ISR) to all 5 slug routes: `/ai-contributors/[id]` (100), `/ai-updates/[slug]` (7), `/insights/[slug]` (6), `/insights/[slug]/[postSlug]` (21), `/solutions/[slug]` (6) — **140 slug pages pre-rendered as static HTML at build time**
+- `dynamicParams = true` on each so unknown slugs still render on-demand (no 404 for freshly-added content)
+- Wrapped `{children}` in root-layout Suspense + fixed router-shim `useLocation` to stop calling `useSearchParams()` — eliminates CSR bail-out that was breaking SSG
+- Renamed `src/pages/` → `src/views/` to prevent Next.js from auto-registering legacy Pages Router routes (removes duplicate `/About`, `/Home`, etc. URLs)
+- Fixed `BlogPostPage` param mismatch (`pillarSlug` → `slug` to match `/insights/[slug]/[postSlug]` route)
+- Production `next build` now completes cleanly: **163 static pages generated (140 SSG slug + 23 static)** with zero errors
+- Sitemap-aware ISR: every hour Next.js refreshes `sitemap.xml` + slug HTML from MongoDB, so new content propagates without redeploy
+
+
 ## Backlog / Future
 
 ### P1 — Enable email notifications in production
 Set `RESEND_API_KEY` in `/app/backend/.env` (get at https://resend.com/api-keys). If the `SENDER_EMAIL` domain isn't verified in Resend, emails only deliver to the verified owner's email — which is what we want here.
 
-### P1 — Pre-render slug routes with `generateStaticParams`
-Now that content is in MongoDB, add `generateStaticParams` to slug pages so Next.js can pre-render the HTML at build time → instant responses, CDN-cacheable, bots get perfect HTML.
+### P1 — Switch supervisor to `next start` for production
+Currently supervisor runs `next dev` (hot-reload). Once you're happy with the content, switch the `start` script in `package.json` to `next start -p 3000 -H 0.0.0.0` and deploy; you'll serve the pre-rendered static HTML from `.next/` for maximum speed + perfect crawlability.
+
+### P1 — Pre-render slug routes with `generateStaticParams` ✅ DONE (iteration 3)
 
 ### P2 — Admin CRUD for content
 Currently admin only reads submissions. Extend UI + endpoints to edit contributors/updates/posts so owner doesn't need to redeploy to publish.
