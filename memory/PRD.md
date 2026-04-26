@@ -23,6 +23,16 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 3 — Conference Notebook (2026-04-26)
+- Implemented SEO Week 2026 Conference Notebook template (user attending Apr 26–30, NYC)
+- Refactored `/notebook/conference` index → uses real `conferences.ts` data (featured + upcoming + field notes)
+- New SSG route `/notebook/conference/[slug]` with `generateStaticParams` (1 conference pre-rendered today, scales to N)
+- New view `ConferenceDetail.tsx`: hero + stats, Why It Matters, Venues, 5-day sticky-tab timeline (61 sessions), 39-speaker chip cloud with anchors back to sessions, JSON-LD `Event` schema with sub-events
+- Backend: collection `conference_notes`, unique index `(conference_slug, session_id)`, 3 admin-protected endpoints `GET/PUT/DELETE /api/notebook/notes/{slug}/{session_id}`
+- Frontend live note editor (admin-only): per-session inline textarea with 1.2s debounced autosave, status pills (attended/skipped/revisit), takeaway chip input, `Last saved` indicator
+- Public visitors see clean SSG agenda + JSON-LD; admin sees the editor on every non-structural session
+- Testing: 16/16 backend pytest pass, frontend Playwright verified (39 chips, 101 cards, 44 editor toggles, end-to-end PUT + reload persistence)
+
 ### Iteration 1 — Migration (2026-04-19 early)
 - Cloned source, wiped CRA, scaffolded Next.js 14 App Router with TypeScript
 - Migrated all 19 routes into `app/` (server components → client page bodies)
@@ -96,4 +106,9 @@ Current `/rss.xml` is static. Replace with dynamic route reading from `ai_update
 | `/app/frontend/src/lib/router-shim.tsx` | react-router-dom → next/navigation |
 | `/app/frontend/src/lib/helmet-shim.tsx` | react-helmet-async no-op (renders JSON-LD inline) |
 | `/app/frontend/src/lib/site.ts` | SITE_URL, BACKEND_URL constants |
+| `/app/frontend/src/data/conferences.ts` | SEO Week 2026 + future conferences (timeline, speakers, venues) |
+| `/app/frontend/src/views/ConferenceNotebook.tsx` | Index — featured + upcoming + field notes |
+| `/app/frontend/src/views/ConferenceDetail.tsx` | Detail template — agenda timeline + speakers + admin live note editor |
+| `/app/frontend/app/notebook/conference/[slug]/page.tsx` | Dynamic SSG route with `generateStaticParams` |
+| `/app/backend/tests/test_conference_notebook.py` | Pytest suite (16/16 passing) |
 | `/app/memory/test_credentials.md` | Admin credentials + auth endpoints reference |
