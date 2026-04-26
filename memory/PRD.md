@@ -23,6 +23,17 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 4 — Speaker profiles + publish toggle (2026-04-26)
+- New `/app/frontend/src/data/speakers.ts` — 39 SEO Week 2026 speakers with photo (hot-linked from seoweek.org), bio, role, company, day track, LinkedIn, podcast URL
+- New SSG route `/notebook/conference/speakers/[slug]` — 39 pre-rendered profile pages (Hero photo + bio + talks timeline + JSON-LD `Person`)
+- Speaker model is **reusable across conferences**: `getSpeakerTalks(name)` aggregates all sessions a speaker has across `conferences.ts`. Future conferences will surface speakers' full timelines automatically.
+- ConferenceDetail upgraded: speaker chip cloud → photo cards linking to profile pages; inline session speaker chip now also has photo + profile link
+- New Timeline / Grid view toggle in the agenda — Grid view shows day-by-day photo tiles
+- Backend: added `is_public` field to `conference_notes` + new public endpoint `GET /api/notebook/notes/public/{slug}` (no auth) returning only published notes
+- Note editor now has a **Public/Private toggle** — flip a session's notes to public and they render inline on the conference detail page AND on the speaker's profile page
+- PUT upsert preserves existing `is_public`/`status`/`takeaways` when those fields are omitted from payload (no accidental resets)
+- Testing: 23/23 backend pytests pass; frontend Playwright verified all flows including end-to-end publish + public render after logout
+
 ### Iteration 3 — Conference Notebook (2026-04-26)
 - Implemented SEO Week 2026 Conference Notebook template (user attending Apr 26–30, NYC)
 - Refactored `/notebook/conference` index → uses real `conferences.ts` data (featured + upcoming + field notes)
