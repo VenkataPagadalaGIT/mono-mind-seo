@@ -135,6 +135,27 @@ class AdminUser(BaseModel):
     role: str = "admin"
 
 
+class ConferenceNoteUpsert(BaseModel):
+    note: Optional[str] = Field(default="", max_length=20000)
+    takeaways: Optional[List[str]] = Field(default=None)
+    status: Optional[str] = Field(default=None, max_length=40)  # attended | skipped | revisit | ""
+
+    @field_validator("note")
+    @classmethod
+    def _strip_note(cls, v: Optional[str]) -> str:
+        return (v or "").strip()
+
+
+class ConferenceNoteRecord(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    conference_slug: str
+    session_id: str
+    note: str = ""
+    takeaways: List[str] = []
+    status: str = ""
+    updated_at: str
+
+
 # ================ Helpers ================
 
 def now_iso() -> str:
@@ -359,6 +380,52 @@ async def list_subs_protected(limit: int = 100, _: dict = Depends(get_current_ad
     return await admin_list_subscribers(limit, _)
 
 
+# ================ Conference Notes (admin-protected) ================
+
+@api.get("/notebook/notes/{conference_slug}", response_model=List[ConferenceNoteRecord])
+async def list_conference_notes(conference_slug: str, _: dict = Depends(get_current_admin)):
+    cursor = db.conference_notes.find(
+        {"conference_slug": conference_slug},
+        {"_id": 0},
+    )
+    return [ConferenceNoteRecord(**doc) async for doc in cursor]
+
+
+@api.put("/notebook/notes/{conference_slug}/{session_id}", response_model=ConferenceNoteRecord)
+async def upsert_conference_note(
+    conference_slug: str,
+    session_id: str,
+    payload: ConferenceNoteUpsert,
+    _: dict = Depends(get_current_admin),
+):
+    doc = {
+        "conference_slug": conference_slug,
+        "session_id": session_id,
+        "note": payload.note or "",
+        "takeaways": payload.takeaways or [],
+        "status": (payload.status or "").strip(),
+        "updated_at": now_iso(),
+    }
+    await db.conference_notes.update_one(
+        {"conference_slug": conference_slug, "session_id": session_id},
+        {"$set": doc},
+        upsert=True,
+    )
+    return ConferenceNoteRecord(**doc)
+
+
+@api.delete("/notebook/notes/{conference_slug}/{session_id}")
+async def delete_conference_note(
+    conference_slug: str,
+    session_id: str,
+    _: dict = Depends(get_current_admin),
+):
+    await db.conference_notes.delete_one(
+        {"conference_slug": conference_slug, "session_id": session_id},
+    )
+    return {"ok": True}
+
+
 # ================ Content API (public) ================
 
 def _strip_id(d: dict) -> dict:
@@ -517,6 +584,9 @@ async def on_startup():
         await db.pillars.create_index("slug", unique=True)
         await db.posts.create_index("slug", unique=True)
         await db.posts.create_index("pillarSlug")
+        await db.conference_notes.create_index(
+            [("conference_slug", 1), ("session_id", 1)], unique=True
+        )
         logger.info("Indexes ensured.")
     except Exception as e:
         logger.warning("Index creation warn: %s", e)
