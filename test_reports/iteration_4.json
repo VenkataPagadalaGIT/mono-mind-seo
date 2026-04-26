@@ -1,0 +1,52 @@
+{
+  "summary": "Iteration 4 (speaker profiles + is_public publish toggle + Timeline/Grid agenda + photo speaker cards) tested end-to-end. Backend: 23/23 pytest pass including 7 NEW is_public + public-endpoint tests. Frontend: SSG works for all 39 actual speaker slugs (random spot-checks return 200; 4 invalid slugs returned 404 as expected). Mike King profile renders correctly (name/role/company/track/photo loaded/linkedin/podcast/bio 261 chars/2 talks/JSON-LD Person/notes-status sidebar shows 'No published notes yet' when none). Conference detail regression passes: 39 photo speaker cards each linking to /notebook/conference/speakers/{slug}; agenda-view-toggle renders both grid+timeline buttons; Grid view renders 5 day-grids and 40 grid-speaker tiles; switching back to Timeline renders 101 sessions. Auth-gated publish flow works end-to-end: admin login, open editor, publish-toggle visible, typing triggers autosave PUT (is_public:false), clicking publish-toggle triggers second PUT with is_public:true (200). After logout + reload, the same session renders inline session-public-note- block with the published text. Cleanup DELETE 200; public endpoint no longer contains the test session.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_conference_notebook.py",
+    "/app/test_reports/pytest/iteration_4_notebook.xml"
+  ],
+  "action_items": [
+    "Optional: When a partial PUT body sends '\"note\":\"\"' (empty string after .strip()), upsert sets note='' even if existing had content. The autosave currently always sends note, takeaways, status, is_public together, so this is fine in practice. If future code sends purely partial payloads (e.g. only is_public), behaviour is correct because note has Optional default '' which is treated as 'set to empty'. Consider treating None-vs-'' differently for note to be fully consistent with the other fields' preserve-on-omit semantics.",
+    "Optional: Add explicit data-testid on the speaker-photo IMG element directly (currently testid is on the wrapping container with the IMG inside) to remove the .querySelector('img') indirection in tests."
+  ],
+  "critical_code_review_comments": [
+    "is_public correctly defaults to False on ConferenceNoteRecord; PUT preserves existing is_public/status/takeaways when omitted from payload (verified by test_put_partial_payload_preserves_existing_is_public).",
+    "Public endpoint /api/notebook/notes/public/{conference_slug} is correctly auth-free and filters to is_public=true only — verified no leak of private notes (test_public_endpoint_returns_only_published).",
+    "_id is correctly excluded from all responses (server.py uses {'_id': 0} projection).",
+    "39 SSG speaker pages generated; invalid slugs return 404 (Next.js dynamic route correctly typed against speaker data file).",
+    "Frontend correctly cleared React state after logout + reload — public-note loader fired against /api/notebook/notes/public/seo-week-2026 on mount and rendered the published note inline.",
+    "Speaker profile JSON-LD includes @type=Person, talk count, role, company — good for SEO and matches request spec.",
+    "Conference detail Grid view tile count (40) is one higher than 39 unique speakers — likely intended (multi-day repeats or a sentinel tile). Not a defect per spec but worth a glance."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_conference_notebook.py (added TestIsPublicAndPublicEndpoint class with 7 new tests)"
+  ],
+  "success_rate": {
+    "backend": "100% (23/23 pytest)",
+    "frontend": "100% — all critical flows pass including new publish-toggle + public-note rendering"
+  },
+  "test_credentials": {
+    "admin_email": "admin@monomind.com",
+    "admin_password": "MonoMind2026!",
+    "token_storage": "localStorage key 'mm_admin_token'"
+  },
+  "seed_data_creation": "All test data prefixed with TEST- and cleaned up via DELETE in finally blocks. Playwright publish-flow test uses real session_id 'monday-april-27-2026-8-45-am-welcome-opening-remarks' but DELETEs the note record at the end, so no residual data.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iteration 4 added: (1) is_public field on conference_notes + new public GET endpoint /api/notebook/notes/public/{slug}, (2) 39 SSG speaker profile pages at /notebook/conference/speakers/[slug] with photo/bio/talks/JSON-LD Person, (3) publish-toggle in note editor (testid publish-toggle-{sid}), (4) inline session-public-note-{anchor} render block + speaker-talk-note-{sid} on profile page, (5) Timeline/Grid agenda toggle (agenda-view-toggle, agenda-view-grid, agenda-view-timeline; grid renders day-grid-{i} containing grid-speaker-{anchor} tiles). Backend tests in /app/backend/tests/test_conference_notebook.py — 23 tests, all pass in ~6s. The PUT upsert preserves existing is_public/status/takeaways when those fields are omitted from the payload (None means preserve, explicit value means set). Public endpoint correctly filters to is_public:true only. Speaker slugs are defined in /app/frontend/src/data/speakers.ts (39 unique slugs). Inline session speaker chip uses testid 'session-speaker-{anchor}' (NOT 'session-speaker-chip-...').",
+  "tests_executed": {
+    "backend_pytest": "23/23 PASSED in 5.55s — TestNotebookAuthGating(4), TestNotebookCrud(6), TestIsPublicAndPublicEndpoint(7 NEW), TestRegressionSmoke(6)",
+    "frontend_ssg_curl": "/notebook/conference/speakers/mike-king 200 (40406 bytes, contains all 10 speaker-* testids, 1 JSON-LD Person, 5 ld+json scripts, name='Mike King', role='Founder & CEO', company='iPullRank', 2 speaker-talk- blocks); /notebook/conference/speakers/andrea-volpini 200; spot-check: alex-halliday/wil-reynolds/ross-simmonds/crystal-carter/zach-chahalis/brittan-king all 200; non-existent slugs (barry-adams etc) correctly return 404.",
+    "frontend_playwright_speaker_profile": "speaker-profile present; speaker-name='Mike King'; speaker-role='Founder & CEO'; speaker-company='iPullRank'; speaker-track='The Science'; speaker-photo IMG loaded (complete && naturalWidth>0); speaker-linkedin + speaker-podcast visible; speaker-bio 261 chars; 2 talk articles; JSON-LD Person present; per-talk note blocks=0 when no published; Notes Status sidebar shows 'No published notes yet for this speaker'.",
+    "frontend_playwright_conf_detail": "39 conference-speaker-* cards, ALL have <img> inside, ALL have href containing '/speakers/' (verified samples: /notebook/conference/speakers/mike-king, /krishna-madhavan, /andrea-volpini); agenda-view-toggle visible with both grid+timeline buttons; Grid view renders 5 day-grid containers + 40 grid-speaker tiles; Timeline switch back renders 101 session cards.",
+    "frontend_playwright_publish_flow": "Admin login → token len 244 stored in mm_admin_token. /notebook/conference/seo-week-2026 shows 44 session-notes-toggle buttons. Opened editor for 'monday-april-27-2026-8-45-am-welcome-opening-remarks' — publish-toggle-{sid} visible. Typed test text → PUT 1 captured with is_public:false. Clicked publish-toggle → PUT 2 captured with is_public:true. Cleared mm_admin_token + reloaded → 1 session-public-note- block visible inline with the test text 'TEST_E2E_PUBLIC_NOTE_iter4 — content for publish flow'. Cleanup: re-login + DELETE returned 200; subsequent /api/notebook/notes/public/seo-week-2026 contains 0 entries for that session_id."
+  }
+}

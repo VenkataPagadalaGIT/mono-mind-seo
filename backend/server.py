@@ -139,6 +139,7 @@ class ConferenceNoteUpsert(BaseModel):
     note: Optional[str] = Field(default="", max_length=20000)
     takeaways: Optional[List[str]] = Field(default=None)
     status: Optional[str] = Field(default=None, max_length=40)  # attended | skipped | revisit | ""
+    is_public: Optional[bool] = Field(default=None)
 
     @field_validator("note")
     @classmethod
@@ -153,6 +154,7 @@ class ConferenceNoteRecord(BaseModel):
     note: str = ""
     takeaways: List[str] = []
     status: str = ""
+    is_public: bool = False
     updated_at: str
 
 
@@ -398,12 +400,17 @@ async def upsert_conference_note(
     payload: ConferenceNoteUpsert,
     _: dict = Depends(get_current_admin),
 ):
+    existing = await db.conference_notes.find_one(
+        {"conference_slug": conference_slug, "session_id": session_id},
+        {"_id": 0},
+    )
     doc = {
         "conference_slug": conference_slug,
         "session_id": session_id,
         "note": payload.note or "",
-        "takeaways": payload.takeaways or [],
-        "status": (payload.status or "").strip(),
+        "takeaways": payload.takeaways if payload.takeaways is not None else (existing or {}).get("takeaways", []),
+        "status": (payload.status if payload.status is not None else (existing or {}).get("status", "")).strip(),
+        "is_public": payload.is_public if payload.is_public is not None else bool((existing or {}).get("is_public", False)),
         "updated_at": now_iso(),
     }
     await db.conference_notes.update_one(
@@ -424,6 +431,16 @@ async def delete_conference_note(
         {"conference_slug": conference_slug, "session_id": session_id},
     )
     return {"ok": True}
+
+
+# Public — returns only is_public=true notes for a conference (no auth required)
+@api.get("/notebook/notes/public/{conference_slug}", response_model=List[ConferenceNoteRecord])
+async def list_public_conference_notes(conference_slug: str):
+    cursor = db.conference_notes.find(
+        {"conference_slug": conference_slug, "is_public": True},
+        {"_id": 0},
+    )
+    return [ConferenceNoteRecord(**doc) async for doc in cursor]
 
 
 # ================ Content API (public) ================

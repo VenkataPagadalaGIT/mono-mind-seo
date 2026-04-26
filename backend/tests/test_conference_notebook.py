@@ -214,11 +214,169 @@ class TestNotebookCrud:
             assert data["note"] == ""
             assert data["takeaways"] == []
             assert data["status"] == ""
+            assert data["is_public"] is False
         finally:
             requests.delete(
                 f"{BASE_URL}/api/notebook/notes/{CONF_SLUG}/{session_id}",
                 headers=auth_headers,
             )
+
+
+# ---------------- is_public field + public endpoint (Iteration 4) ----------------
+
+class TestIsPublicAndPublicEndpoint:
+    def test_record_includes_is_public_default_false(self, auth_headers):
+        session_id = f"TEST-pub-default-{uuid.uuid4().hex[:8]}"
+        try:
+            r = requests.put(
+                f"{BASE_URL}/api/notebook/notes/{CONF_SLUG}/{session_id}",
+                json={"note": "hello"},
+                headers=auth_headers,
+            )
+            assert r.status_code == 200, r.text
+            data = r.json()
+            assert data.get("is_public") is False
+        finally:
+            requests.delete(
+                f"{BASE_URL}/api/notebook/notes/{CONF_SLUG}/{session_id}",
+                headers=auth_headers,
+            )
+
+    def test_put_can_set_is_public_true(self, auth_headers):
+        session_id = f"TEST-pub-true-{uuid.uuid4().hex[:8]}"
+        try:
+            r = requests.put(
+                f"{BASE_URL}/api/notebook/notes/{CONF_SLUG}/{session_id}",
+                json={"note": "I am public", "is_public": True},
+                headers=auth_headers,
+            )
+            assert r.status_code == 200, r.text
+            data = r.json()
+            assert data["is_public"] is True
+            assert data["note"] == "I am public"
+
+            # Authenticated GET shows it (with is_public field)
+            list_r = requests.get(
+                f"{BASE_URL}/api/notebook/notes/{CONF_SLUG}",
+                headers=auth_headers,
+            )
+            match = [x for x in list_r.json() if x["session_id"] == session_id]
+            assert len(match) == 1
+            assert match[0]["is_public"] is True
+        finally:
+            requests.delete(
+                f"{BASE_URL}/api/notebook/notes/{CONF_SLUG}/{session_id}",
+                headers=auth_headers,
+            )
+
+    def test_put_partial_payload_preserves_existing_is_public(self, auth_headers):
+        """PUT with only `note` must NOT reset is_public/status/takeaways back to defaults."""
+        session_id = f"TEST-pub-preserve-{uuid.uuid4().hex[:8]}"
+        try:
+            # Create with full data
+            r1 = requests.put(
+                f"{BASE_URL}/api/notebook/notes/{CONF_SLUG}/{session_id}",
+                json={
+                    "note": "v1",
+                    "takeaways": ["a", "b"],
+                    "status": "attended",
+                    "is_public": True,
+                },
+                headers=auth_headers,
+            )
+            assert r1.status_code == 200
+            d1 = r1.json()
+            assert d1["is_public"] is True
+            assert d1["status"] == "attended"
+            assert d1["takeaways"] == ["a", "b"]
+
+            # Partial update with only `note`
+            r2 = requests.put(
+                f"{BASE_URL}/api/notebook/notes/{CONF_SLUG}/{session_id}",
+                json={"note": "v2 only"},
+                headers=auth_headers,
+            )
+            assert r2.status_code == 200, r2.text
+            d2 = r2.json()
+            assert d2["note"] == "v2 only"
+            # These must be PRESERVED, not reset
+            assert d2["is_public"] is True, "is_public must be preserved on partial update"
+            assert d2["status"] == "attended", "status must be preserved on partial update"
+            assert d2["takeaways"] == ["a", "b"], "takeaways must be preserved on partial update"
+        finally:
+            requests.delete(
+                f"{BASE_URL}/api/notebook/notes/{CONF_SLUG}/{session_id}",
+                headers=auth_headers,
+            )
+
+    def test_put_can_flip_is_public_back_to_false(self, auth_headers):
+        session_id = f"TEST-pub-flip-{uuid.uuid4().hex[:8]}"
+        try:
+            requests.put(
+                f"{BASE_URL}/api/notebook/notes/{CONF_SLUG}/{session_id}",
+                json={"note": "x", "is_public": True},
+                headers=auth_headers,
+            )
+            r = requests.put(
+                f"{BASE_URL}/api/notebook/notes/{CONF_SLUG}/{session_id}",
+                json={"is_public": False},
+                headers=auth_headers,
+            )
+            assert r.status_code == 200
+            assert r.json()["is_public"] is False
+        finally:
+            requests.delete(
+                f"{BASE_URL}/api/notebook/notes/{CONF_SLUG}/{session_id}",
+                headers=auth_headers,
+            )
+
+    def test_public_endpoint_no_auth_required(self):
+        """GET /api/notebook/notes/public/{slug} works without auth."""
+        r = requests.get(f"{BASE_URL}/api/notebook/notes/public/{CONF_SLUG}")
+        assert r.status_code == 200, r.text
+        data = r.json()
+        assert isinstance(data, list)
+        # Every returned item must be is_public=true and have no _id
+        for d in data:
+            assert "_id" not in d
+            assert d.get("is_public") is True
+            assert d.get("conference_slug") == CONF_SLUG
+
+    def test_public_endpoint_returns_only_published(self, auth_headers):
+        public_sid = f"TEST-pub-yes-{uuid.uuid4().hex[:8]}"
+        private_sid = f"TEST-pub-no-{uuid.uuid4().hex[:8]}"
+        try:
+            requests.put(
+                f"{BASE_URL}/api/notebook/notes/{CONF_SLUG}/{public_sid}",
+                json={"note": "PUBLIC NOTE", "is_public": True},
+                headers=auth_headers,
+            )
+            requests.put(
+                f"{BASE_URL}/api/notebook/notes/{CONF_SLUG}/{private_sid}",
+                json={"note": "private", "is_public": False},
+                headers=auth_headers,
+            )
+            r = requests.get(f"{BASE_URL}/api/notebook/notes/public/{CONF_SLUG}")
+            assert r.status_code == 200
+            sids = {x["session_id"] for x in r.json()}
+            assert public_sid in sids, "Published note missing from public endpoint"
+            assert private_sid not in sids, "Private note leaked through public endpoint"
+        finally:
+            requests.delete(
+                f"{BASE_URL}/api/notebook/notes/{CONF_SLUG}/{public_sid}",
+                headers=auth_headers,
+            )
+            requests.delete(
+                f"{BASE_URL}/api/notebook/notes/{CONF_SLUG}/{private_sid}",
+                headers=auth_headers,
+            )
+
+    def test_public_endpoint_unknown_conference_returns_empty_list(self):
+        r = requests.get(
+            f"{BASE_URL}/api/notebook/notes/public/no-such-conference-xyz-{uuid.uuid4().hex[:6]}"
+        )
+        assert r.status_code == 200
+        assert r.json() == []
 
 
 # ---------------- Regression smoke checks ----------------
