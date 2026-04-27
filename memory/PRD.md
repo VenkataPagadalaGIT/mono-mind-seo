@@ -23,6 +23,14 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 12 — Tech SEO Connect 2024 + per-session time-jump (2026-04-26)
+- **NEW conference: Tech SEO Connect 2024** (Raleigh, NC). 18 sessions, 16 unique speakers. All sessions seeded with rich descriptions + my takeaways from the original Wix notes. Status: `attended`.
+- **12 new speaker profiles**: Aleyda Solis, Rick Viscomi, JR Oakes, Kevin Indig, Rachel Anderson, Fili Wiese, Kristin Tynski, Dan Hinckley, Lazarina Stoy, Victor Pan, Serge Bezborodov, Patrick Stox. Photos cached locally + holographic treatment applied.
+- Existing speakers (Mike King, Paul Shapiro, Noah Learner, Sam Torres, Jori Ford, Fabrice Canel) automatically pick up Tech SEO Connect appearances on their cross-conference timelines (`getSpeakerTalks`).
+- **Per-session time-jump strip** — added to `SessionDetail.tsx`. Sticky horizontal strip showing every same-day session's start time. Click any → SSG navigation to that session. Current session highlighted. Skips break/meal/registration noise.
+- Index page now shows: 3 conferences · 83 speakers · 48 hours of talks.
+- New `PhotoSource` enum value: `techseo` (with `Photo · 6xmedia.wixstudio.com` attribution path).
+
 ### Iteration 11 — Auth restored + inline login pill (2026-04-26)
 - **Backend auth restored** on `PUT/DELETE /api/notebook/notes/{slug}/{sid}` — anonymous writes return 401. Public GET now filters back to `is_public=true` only.
 - **Floating Take-Notes pill** (bottom-right, on every conference/session/speaker page) — shows "Take Notes" when anon, "Notes Unlocked" (emerald) when logged in. Click → inline login modal (email + password) with no page redirect. Auto-broadcasts a `notebook-auth-changed` window event so editors site-wide unlock instantly without reload.
