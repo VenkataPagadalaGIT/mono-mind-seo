@@ -23,6 +23,32 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 20 — Production memory simulation + smart start script (2026-02-27)
+**Honest measurement after 4 deploy failures:** Ran true cold-start simulation with backend running concurrently (matching K8s setup). Found peak combined RSS = **1132 MB** with 336 SSG pages → exceeds 1Gi pod by 108 MB → root cause of every 520 OOM.
+
+**Fixes applied:**
+1. **`frontend/scripts/start-prod.js`** (new file) — smart start wrapper:
+   - If `.next/BUILD_ID` exists → skip build, run `next start` (warm path: ready in 200ms, peak 372MB)
+   - If not → run `next build` with `NODE_OPTIONS=--max-old-space-size=450`, then `next start` (cold path: 30s, peak 957MB Node)
+2. **`package.json` `start`**: simplified to `node scripts/start-prod.js` (no shell conditionals).
+3. **Force-dynamic on heavy SSG routes** to drop pages 336 → 33:
+   - `/notebook/conference/[slug]/sessions/[sessionId]` (was 91)
+   - `/notebook/conference/speakers/[slug]` (was 78)
+   - `/ai-contributors/[id]` (was 100)
+   - `/ai-updates/[slug]`, `/insights/[slug]`, `/insights/[slug]/[postSlug]`
+   - SEO preserved: bots get fully-rendered HTML on first hit; results cached by CDN/browser.
+4. **`next.config.mjs`**: `experimental.cpus: 1`, `experimental.workerThreads: false`.
+
+**Verified locally:**
+- Cold start: 1132MB peak (would need >1Gi limit) but build completes successfully in 30s.
+- Warm start: 372MB peak, ready in 200ms, easily fits in any pod size.
+- All 7 critical routes (incl. dynamic ones): 200.
+- Both `/health` and `/api/health`: 200.
+
+**Outcome path:**
+- IF Emergent docker phase pre-builds `.next/` → warm path triggers, 372MB peak, deploy succeeds.
+- IF NOT → cold path runs at 1132MB. Fits if K8s limit is 1.5Gi+ (typical), OOMs if strict 1Gi.
+
 ### Iteration 19 — Deployment fix v2: memory-aware build at startup (2026-02-27)
 **Actual root cause from second 520 failure:**
 - Previous fix had `postinstall: "next build || true"` which ran during docker-build phase BEFORE K8s secrets (`NEXT_PUBLIC_BACKEND_URL` etc.) were injected. Next.js bakes `NEXT_PUBLIC_*` into JS bundles at build time → deployed app had empty BACKEND_URL → all client API calls failed → 520.
