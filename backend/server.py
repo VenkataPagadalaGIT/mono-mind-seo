@@ -389,7 +389,7 @@ async def list_conference_notes(conference_slug: str, _: dict = Depends(get_curr
     cursor = db.conference_notes.find(
         {"conference_slug": conference_slug},
         {"_id": 0},
-    )
+    ).limit(500)
     return [ConferenceNoteRecord(**doc) async for doc in cursor]
 
 
@@ -439,7 +439,7 @@ async def list_public_conference_notes(conference_slug: str):
     cursor = db.conference_notes.find(
         {"conference_slug": conference_slug, "is_public": True},
         {"_id": 0},
-    )
+    ).limit(500)
     return [ConferenceNoteRecord(**doc) async for doc in cursor]
 
 
@@ -492,7 +492,7 @@ async def get_update(slug: str):
 
 @api.get("/content/pillars")
 async def list_pillars():
-    cursor = db.pillars.find({}, {"_id": 0}).sort("title", 1)
+    cursor = db.pillars.find({}, {"_id": 0}).sort("title", 1).limit(200)
     return [doc async for doc in cursor]
 
 
@@ -501,7 +501,7 @@ async def get_pillar(slug: str):
     doc = await db.pillars.find_one({"slug": slug}, {"_id": 0})
     if not doc:
         raise HTTPException(status_code=404, detail="Pillar not found")
-    posts_cursor = db.posts.find({"pillarSlug": slug}, {"_id": 0, "content": 0}).sort("date", -1)
+    posts_cursor = db.posts.find({"pillarSlug": slug}, {"_id": 0, "content": 0}).sort("date", -1).limit(500)
     doc["posts"] = [p async for p in posts_cursor]
     return doc
 
@@ -526,10 +526,10 @@ async def get_post(slug: str):
 @api.get("/content/sitemap")
 async def content_sitemap():
     """Returns all slugs so the Next.js sitemap can include every detail page."""
-    contribs = [d async for d in db.contributors.find({}, {"_id": 0, "id": 1})]
-    updates = [d async for d in db.ai_updates.find({}, {"_id": 0, "slug": 1, "date": 1})]
-    pillars = [d async for d in db.pillars.find({}, {"_id": 0, "slug": 1})]
-    posts = [d async for d in db.posts.find({}, {"_id": 0, "slug": 1, "pillarSlug": 1, "date": 1})]
+    contribs = [d async for d in db.contributors.find({}, {"_id": 0, "id": 1}).limit(2000)]
+    updates = [d async for d in db.ai_updates.find({}, {"_id": 0, "slug": 1, "date": 1}).limit(2000)]
+    pillars = [d async for d in db.pillars.find({}, {"_id": 0, "slug": 1}).limit(500)]
+    posts = [d async for d in db.posts.find({}, {"_id": 0, "slug": 1, "pillarSlug": 1, "date": 1}).limit(5000)]
     return {"contributors": contribs, "updates": updates, "pillars": pillars, "posts": posts}
 
 
