@@ -23,6 +23,15 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 15 — "From:" attribution + "My Notes" labeling (2026-04-26)
+- **"From:" attribution always visible** in the SessionDetail "My notes" section — even in the empty state, before any note exists. Renders as: `From — [Conference Name + Edition] · [Session Title] · [Date] · [Speaker]`. Solves the "Mike King at 100 conferences, which one is this?" problem at every entry point.
+- **"My Notes" button on conference-detail session cards** (renamed from "Quick note"):
+  - When no note exists → `Add My Notes`
+  - When note exists → `My Notes · {wordCount}w` with emerald accent
+  - When note is published → also shows a globe icon
+  - Visual prominence bumped: emerald accent for notes-with-content, prominent border + bg color
+- All existing flows preserved: auth gate, autosave, publish toggle, markdown editor, time-jump strip.
+
 ### Iteration 14 — Markdown editor + media embeds (2026-04-26)
 - Installed `react-markdown` + `remark-gfm` + `rehype-raw`
 - **`<NoteContent>` upgraded to render full Markdown** with custom components matching the brand's terminal/glow aesthetic:
