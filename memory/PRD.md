@@ -23,6 +23,15 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 5 — Per-session pages + hero CTAs (2026-04-26)
+- New SSG dynamic route `/notebook/conference/[slug]/sessions/[sessionId]` — **61 pages pre-rendered**, one per speech
+- New view `SessionDetail.tsx` with: session hero (type pill, time, day, theme) + speaker hero (photo, bio, LinkedIn, podcast, "Open profile" link) + Abstract + Suggested takeaways + **My Notes** long-form editor (rows=16, autosave 1.2s, status pills, publish toggle, takeaway chips) + Prev/Next session nav + JSON-LD `Event` schema
+- Logged-out visitors see Notes Locked card (or published field notes if available)
+- Conference detail page hero now shows prominent CTAs: **VIEW AGENDA** · **BROWSE SPEAKERS · 39** · **SIGN IN TO TAKE NOTES** (changes to TAKE NOTES when logged in)
+- Every non-structural session card on the agenda has a clear **"Open session →"** button to its dedicated page (44 buttons total). The inline "Quick note" toggle is preserved alongside for fast capture.
+- Grid view tiles now link to the per-session page (was: speaker profile) — better fit for note-taking flow
+- Testing: 23/23 backend pytest pass · 100% frontend Playwright (autosave, publish, logout-public-render, prev/next, SSG, regression)
+
 ### Iteration 4 — Speaker profiles + publish toggle (2026-04-26)
 - New `/app/frontend/src/data/speakers.ts` — 39 SEO Week 2026 speakers with photo (hot-linked from seoweek.org), bio, role, company, day track, LinkedIn, podcast URL
 - New SSG route `/notebook/conference/speakers/[slug]` — 39 pre-rendered profile pages (Hero photo + bio + talks timeline + JSON-LD `Person`)
