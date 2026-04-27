@@ -23,6 +23,13 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 11 — Auth restored + inline login pill (2026-04-26)
+- **Backend auth restored** on `PUT/DELETE /api/notebook/notes/{slug}/{sid}` — anonymous writes return 401. Public GET now filters back to `is_public=true` only.
+- **Floating Take-Notes pill** (bottom-right, on every conference/session/speaker page) — shows "Take Notes" when anon, "Notes Unlocked" (emerald) when logged in. Click → inline login modal (email + password) with no page redirect. Auto-broadcasts a `notebook-auth-changed` window event so editors site-wide unlock instantly without reload.
+- **Editors are auth-gated again** — hidden for public visitors, visible+functional for the logged-in admin. Public visitors still see published field notes (read-only) on conference + session + speaker pages.
+- Sidebar "Live Notes" card simplified: "Click any session to take notes — saves automatically. Toggle Public to publish."
+- Existing admin credentials: `admin@monomind.com / MonoMind2026!` (stored in `/app/memory/test_credentials.md`). Token persists across reloads via localStorage.
+
 ### Iteration 10 — Open notes + simpler hero (2026-04-26)
 - **Auth removed from notes endpoints** (`PUT/DELETE /api/notebook/notes/{slug}/{sid}`). Anyone with the URL can now write/edit notes — designed for fast capture during conferences, no login UX. Public GET endpoint also returns ALL notes (drops `is_public` filter — the toggle still controls whether notes render on speaker profile pages, not whether they exist in the API).
 - **Hero CTAs simplified to 2 buttons**: `Agenda` + `Browse Speakers · {N}`. Removed "Sign in to take notes" entirely.
