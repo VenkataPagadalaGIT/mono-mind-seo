@@ -617,5 +617,17 @@ async def on_shutdown():
     client.close()
 
 
+# Root-level health endpoint for the deployment platform (Kubernetes / Cloudflare).
+# The platform polls /health (without /api prefix) on the backend pod.
+@app.get("/health")
+async def root_health():
+    try:
+        await db.command("ping")
+        mongo_ok = True
+    except Exception:
+        mongo_ok = False
+    return {"ok": True, "mongo": mongo_ok, "time": now_iso()}
+
+
 # Register router
 app.include_router(api)
