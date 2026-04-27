@@ -24,9 +24,9 @@ BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', '').rstrip('/')
 if not BASE_URL:
     raise RuntimeError("REACT_APP_BACKEND_URL must be set in environment to run tests")
 
-# Admin credentials from test_credentials.md
-ADMIN_EMAIL = "admin@monomind.com"
-ADMIN_PASSWORD = "MonoMind2026!"
+# Admin credentials from test_credentials.md (overridable via env)
+ADMIN_EMAIL = os.environ.get("TEST_ADMIN_EMAIL", "admin@monomind.com")
+ADMIN_PASSWORD = os.environ.get("TEST_ADMIN_PASSWORD", "MonoMind2026!")
 
 
 class TestAuthLogin:

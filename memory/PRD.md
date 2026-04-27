@@ -23,6 +23,15 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 18 — Code review fixes (a/b/c) (2026-02-27)
+Applied user-approved subset of code review:
+- **(a) Empty catch blocks** → 5 instances in `SpeakerProfile.tsx`, `SessionDetail.tsx`, `ConferenceDetail.tsx` now log via `console.warn` (silent failures previously hidden bugs).
+- **(b) Hardcoded test creds** → moved to `TEST_ADMIN_EMAIL` / `TEST_ADMIN_PASSWORD` env vars (with public defaults from `test_credentials.md`) across all 3 backend test files.
+- **(c) Array `key={index}`** → 5 dynamic-list keys in takeaways/notes editors now use stable `${id}-${i}-${value-prefix}` composites (prevents reconciliation bugs on remove/add).
+- **Skipped (d/e/f/g/h/i/j)** as documented: most were false positives (`is True` is idiomatic Python; `dangerouslySetInnerHTML` for JSON-LD is the standard SEO pattern; "72 missing hook deps" pointed to non-hook lines).
+
+**Verified:** `yarn build` succeeds (336 pages, 31s); all 23 backend conference notebook pytest cases pass; `/`, `/notebook/conference/seo-week-2026`, `/notebook/conference/speakers/mike-king`, `/admin/login` all return 200.
+
 ### Iteration 17 — REAL deployment fix (2026-02-27 / build logs analysis)
 **Actual root cause from deployment build logs:** Both frontend and backend health checks at `https://github-checker-8.emergent.host` returned HTTP 520 (container never responded) for all 3 attempts. The container started but `next dev` (development mode) was attempting on-demand compilation of 336 SSG pages on first request, exceeding the 60-second health-check window.
 

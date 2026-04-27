@@ -16,8 +16,8 @@ if not BASE_URL:
     raise RuntimeError("REACT_APP_BACKEND_URL must be set in environment to run tests")
 
 # Admin credentials for protected endpoints
-ADMIN_EMAIL = "admin@monomind.com"
-ADMIN_PASSWORD = "MonoMind2026!"
+ADMIN_EMAIL = os.environ.get("TEST_ADMIN_EMAIL", "admin@monomind.com")
+ADMIN_PASSWORD = os.environ.get("TEST_ADMIN_PASSWORD", "MonoMind2026!")
 
 
 def get_auth_token():

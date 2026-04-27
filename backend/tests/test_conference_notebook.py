@@ -18,8 +18,8 @@ BASE_URL = os.environ.get("REACT_APP_BACKEND_URL", "").rstrip("/")
 if not BASE_URL:
     raise RuntimeError("REACT_APP_BACKEND_URL must be set in environment to run tests")
 
-ADMIN_EMAIL = "admin@monomind.com"
-ADMIN_PASSWORD = "MonoMind2026!"
+ADMIN_EMAIL = os.environ.get("TEST_ADMIN_EMAIL", "admin@monomind.com")
+ADMIN_PASSWORD = os.environ.get("TEST_ADMIN_PASSWORD", "MonoMind2026!")
 CONF_SLUG = "seo-week-2026"
 
 
