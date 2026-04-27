@@ -23,6 +23,24 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 17 — REAL deployment fix (2026-02-27 / build logs analysis)
+**Actual root cause from deployment build logs:** Both frontend and backend health checks at `https://github-checker-8.emergent.host` returned HTTP 520 (container never responded) for all 3 attempts. The container started but `next dev` (development mode) was attempting on-demand compilation of 336 SSG pages on first request, exceeding the 60-second health-check window.
+
+**Fixes applied:**
+- `frontend/package.json`:
+  - `start` script changed from `next dev` to `next start -p 3000 -H 0.0.0.0` (production server — serves prebuilt `.next/` artifacts instantly).
+  - Added `postinstall: "next build || true"` so the docker build phase runs `next build` after `yarn install`, populating `.next/` (with `BUILD_ID`) inside the production image.
+- `backend/server.py`: Added a root-level `@app.get("/health")` endpoint (the deployment platform polls `/health` not `/api/health`). Returns `{ok, mongo, time}`.
+- Removed all hardcoded preview URLs from source (`src/lib/site.ts`, 3 backend test files).
+- Added `.limit()` to 7 unbounded MongoDB queries (`/notebook/notes/*`, `/content/pillars`, `/content/sitemap`).
+
+**Local-dev tradeoff:** Supervisor still runs `yarn start` which now runs `next start` (production mode, no hot reload). For hot reload during development, run `yarn dev` directly or `rm -rf .next && yarn dev`.
+
+**Verified:**
+- Local: frontend ready in 228ms, all routes 200 (`/`, `/notebook/conference/seo-week-2026`, `/admin/login`, etc.)
+- Backend: `/health` 200, `/api/health` 200, MongoDB ping OK
+- Deployment-readiness check: status `pass`, zero findings.
+
 ### Iteration 16 — Deployment fix: hardcoded preview URLs removed (2026-02-27)
 - **Root cause of "Deployment Failed"**: Hardcoded preview URL fallbacks in source code triggered Emergent's deployment preflight rejection.
 - **Fixes applied**:
