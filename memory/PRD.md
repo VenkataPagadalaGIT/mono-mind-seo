@@ -23,6 +23,42 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 22 — URL structure overhaul + JSON-LD enrichment (2026-02-27)
+**The "worst URL" report:** Conference sessions previously used hash anchors only (`/notebook/conference/seo-week-2026#monday-april-27-2026-9-00-am-the-invisible-converged-web-architecting-...` — 130+ chars, NOT crawlable as a separate URL).
+
+**Fixes applied:**
+1. **Dual-key session slug system** in `src/data/conferences.ts`:
+   - **Internal `sessionId`** (long form, kept for backward compat with existing notes in MongoDB).
+   - **Public `urlSlug`** (clean, derived from session title only) for `/notebook/conference/{conf}/sessions/{slug}` URLs.
+   - Collision-safe: appends start time then day index only if needed.
+   - Helpers: `getSessionId()`, `getSessionUrlSlug()`, `findSessionByUrlSlug()` (with legacy fallback), `listConferenceSessions()`.
+2. **ConferenceDetail.tsx** session cards:
+   - Title is now a `<Link>` to `/notebook/conference/{conf}/sessions/{urlSlug}` (real indexable URL).
+   - Anchor IDs use `urlSlug` so `#anchor` jumping still works on the conference page itself.
+   - GridSpeakerCard already linked correctly.
+3. **SessionDetail.tsx**: dayJumpSessions, prev/next, back-link, canonical all use `urlSlug`. Note storage still keyed by `sessionId` (no orphaned notes).
+4. **Session page**: legacy long URLs still resolve (`findSessionByUrlSlug` falls back). No 404s for old indexed URLs.
+
+**JSON-LD enrichment:**
+- **Conference page**: `Event` schema with `subEvent[]` (per session, with `performer`, `affiliation`), `location`, `organizer`, `startDate`/`endDate`. Plus `BreadcrumbList`.
+- **Session page**: `Event` schema with `superEvent` link to conference, `performer` person, ISO `startDate`/`endDate` parsed from human date label, `location`. Plus `BreadcrumbList`.
+- **Speaker profile**: `Person` schema with `jobTitle`, `worksFor`, `image`, `sameAs[]` (LinkedIn / website / podcast). Plus `BreadcrumbList`.
+
+**Meta-tag enrichment** on session pages:
+- Title format: `{Session Title} — {Speaker} · {Conference} {Edition}`
+- Description: from session description with fallback
+- Keywords: type, conference name, conference topic, speaker name, affiliation
+- OG image: speaker photo when available
+- Twitter card: summary_large_image with same image
+- Canonical: clean URL slug
+
+**Examples (all return 200, all have full SEO chrome):**
+- `/notebook/conference/seo-week-2026/sessions/welcome-opening-remarks` (was 130 chars → now 27)
+- `/notebook/conference/seo-week-2026/sessions/heo-the-hybrid-engine-score`
+- `/notebook/conference/seo-week-2026/sessions/earned-architecture-for-ai-visibility`
+
+Site-wide URL audit confirmed remaining routes are already clean: `/ai-updates/{slug}`, `/ai-contributors/{id}`, `/insights/{pillar}/{post}`, `/solutions/{slug}`, `/notebook/conference/speakers/{slug}`. Title template `%s · Venkata Pagadala` already applies suffix automatically.
+
 ### Iteration 21 — CMS for Posts with full SEO control (2026-02-27)
 **User goal:** Push content updates without redeploys + every SEO knob editable per post.
 
