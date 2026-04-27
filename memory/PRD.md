@@ -23,6 +23,31 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 21 — CMS for Posts with full SEO control (2026-02-27)
+**User goal:** Push content updates without redeploys + every SEO knob editable per post.
+
+**Backend (`/app/backend/server.py`):**
+- New Pydantic models `PostSeo`, `PostUpsert`, `PostRecord` with: metaTitle, metaDescription, h1, canonical, ogTitle, ogDescription, ogImage, twitterCard, robotsIndex, robotsFollow, jsonLdType, slug, coverImage, status (draft/published/scheduled), publishAt, tags, date.
+- 5 admin endpoints (JWT-protected): `GET/POST /admin/cms/posts`, `GET/PUT/DELETE /admin/cms/posts/{slug}`, `GET /admin/cms/pillars` (picker).
+- Public `/api/content/posts*` now filters by `status: published` so drafts don't leak.
+- Slug collision check returns 409.
+
+**Frontend admin UI:**
+- `/admin/cms/posts` (list) — search, filter by status & pillar, status pills, view-live + delete actions.
+- `/admin/cms/posts/[slug]` (editor) — `slug=new` opens blank create form.
+- 3 tabs: **Content** (excerpt + markdown body + 11-button toolbar incl. Image / Video / Quote / Task / Code), **Preview** (live render via `<NoteContent>`), **SEO** (full SEO form with character counts, OG image preview, SERP preview card).
+- Sidebar: Status / Date / Publish-At / Pillar selector / Slug (auto-derived URL display) / Tags / Featured Image preview.
+- Save Draft + Publish buttons in sticky toolbar.
+- New `/admin/layout.tsx`; `Navbar` + `Footer` now hide on `/admin/*` paths for clean CMS chrome.
+
+**SEO wiring (`app/insights/[slug]/[postSlug]/page.tsx`):**
+- `generateMetadata` reads `seo.*` block from DB and emits: meta title/description, canonical, OG title/desc/image, Twitter card, robots index/follow.
+- JSON-LD `@type` now driven by `seo.jsonLdType` (Article / BlogPosting / NewsArticle / WebPage / FAQPage); `image` field added.
+
+**Result:** Edit/publish a post → public page reflects content + meta + canonical + OG + JSON-LD instantly, no redeploy. Verified end-to-end via Playwright (login → list 21 posts → create → markdown preview with image + YouTube embed → SEO tab → save).
+
+**Test credentials:** `admin@monomind.com` / `MonoMind2026!` (unchanged).
+
 ### Iteration 20 — Production memory simulation + smart start script (2026-02-27)
 **Honest measurement after 4 deploy failures:** Ran true cold-start simulation with backend running concurrently (matching K8s setup). Found peak combined RSS = **1132 MB** with 336 SSG pages → exceeds 1Gi pod by 108 MB → root cause of every 520 OOM.
 

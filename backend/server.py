@@ -158,6 +158,65 @@ class ConferenceNoteRecord(BaseModel):
     updated_at: str
 
 
+# ---- CMS: Post model with full SEO fields ----
+
+class PostSeo(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    metaTitle: Optional[str] = Field(default=None, max_length=160)
+    metaDescription: Optional[str] = Field(default=None, max_length=320)
+    h1: Optional[str] = Field(default=None, max_length=200)
+    canonical: Optional[str] = Field(default=None, max_length=400)
+    ogTitle: Optional[str] = Field(default=None, max_length=160)
+    ogDescription: Optional[str] = Field(default=None, max_length=320)
+    ogImage: Optional[str] = Field(default=None, max_length=800)
+    twitterCard: Optional[str] = Field(default="summary_large_image", max_length=40)
+    robotsIndex: bool = True
+    robotsFollow: bool = True
+    jsonLdType: Optional[str] = Field(default="Article", max_length=40)
+
+
+class PostUpsert(BaseModel):
+    """Admin payload to create or update a Post."""
+    slug: str = Field(min_length=1, max_length=200)
+    title: str = Field(min_length=1, max_length=300)
+    pillarSlug: str = Field(min_length=1, max_length=200)
+    excerpt: Optional[str] = Field(default="", max_length=1000)
+    content: Optional[str] = Field(default="", max_length=200000)
+    tags: Optional[List[str]] = Field(default_factory=list)
+    date: Optional[str] = Field(default=None, max_length=40)  # ISO date
+    coverImage: Optional[str] = Field(default=None, max_length=800)
+    status: Optional[str] = Field(default="draft", max_length=20)  # draft | published | scheduled
+    publishAt: Optional[str] = Field(default=None, max_length=40)
+    seo: Optional[PostSeo] = None
+
+    @field_validator("slug")
+    @classmethod
+    def _slug_format(cls, v: str) -> str:
+        v = v.strip().lower()
+        if not all(ch.isalnum() or ch in "-_" for ch in v):
+            raise ValueError("slug must be lowercase alphanumeric with - or _")
+        return v
+
+
+class PostRecord(BaseModel):
+    model_config = ConfigDict(extra="allow")
+    slug: str
+    title: str
+    pillarSlug: str
+    excerpt: str = ""
+    content: str = ""
+    tags: List[str] = []
+    date: Optional[str] = None
+    coverImage: Optional[str] = None
+    status: str = "draft"
+    publishAt: Optional[str] = None
+    seo: Optional[dict] = None
+    metaTitle: Optional[str] = None  # legacy mirror
+    metaDescription: Optional[str] = None  # legacy mirror
+    updatedAt: Optional[str] = None
+    createdAt: Optional[str] = None
+
+
 # ================ Helpers ================
 
 def now_iso() -> str:
@@ -508,7 +567,7 @@ async def get_pillar(slug: str):
 
 @api.get("/content/posts")
 async def list_posts(pillar: Optional[str] = None, limit: int = 200):
-    query: dict = {}
+    query: dict = {"$or": [{"status": "published"}, {"status": {"$exists": False}}]}
     if pillar:
         query["pillarSlug"] = pillar
     cursor = db.posts.find(query, {"_id": 0}).sort("date", -1).limit(max(1, min(limit, 500)))
@@ -520,7 +579,89 @@ async def get_post(slug: str):
     doc = await db.posts.find_one({"slug": slug}, {"_id": 0})
     if not doc:
         raise HTTPException(status_code=404, detail="Post not found")
+    # Hide drafts/scheduled from public reads
+    status = doc.get("status", "published")
+    if status not in ("published", None) and status != "":
+        raise HTTPException(status_code=404, detail="Post not found")
     return doc
+
+
+# ============== CMS: Admin Post CRUD (auth required) ==============
+
+@api.get("/admin/cms/posts", response_model=List[PostRecord])
+async def admin_list_posts(_: dict = Depends(get_current_admin), pillar: Optional[str] = None, status: Optional[str] = None):
+    query: dict = {}
+    if pillar:
+        query["pillarSlug"] = pillar
+    if status:
+        query["status"] = status
+    cursor = db.posts.find(query, {"_id": 0}).sort([("updatedAt", -1), ("date", -1)]).limit(2000)
+    return [PostRecord(**doc) async for doc in cursor]
+
+
+@api.get("/admin/cms/posts/{slug}", response_model=PostRecord)
+async def admin_get_post(slug: str, _: dict = Depends(get_current_admin)):
+    doc = await db.posts.find_one({"slug": slug}, {"_id": 0})
+    if not doc:
+        raise HTTPException(status_code=404, detail="Post not found")
+    return PostRecord(**doc)
+
+
+@api.post("/admin/cms/posts", response_model=PostRecord)
+async def admin_create_post(payload: PostUpsert, _: dict = Depends(get_current_admin)):
+    existing = await db.posts.find_one({"slug": payload.slug}, {"_id": 0, "slug": 1})
+    if existing:
+        raise HTTPException(status_code=409, detail=f"Slug '{payload.slug}' already exists")
+    now = now_iso()
+    doc = payload.model_dump(exclude_none=False)
+    seo = doc.get("seo") or {}
+    doc.update({
+        "createdAt": now,
+        "updatedAt": now,
+        "date": doc.get("date") or now[:10],
+        # legacy mirrors so existing public consumers keep working
+        "metaTitle": (seo.get("metaTitle") if seo else None) or doc.get("title"),
+        "metaDescription": (seo.get("metaDescription") if seo else None) or doc.get("excerpt") or "",
+    })
+    await db.posts.insert_one(dict(doc))
+    return PostRecord(**doc)
+
+
+@api.put("/admin/cms/posts/{slug}", response_model=PostRecord)
+async def admin_update_post(slug: str, payload: PostUpsert, _: dict = Depends(get_current_admin)):
+    existing = await db.posts.find_one({"slug": slug}, {"_id": 0})
+    if not existing:
+        raise HTTPException(status_code=404, detail="Post not found")
+    if payload.slug != slug:
+        clash = await db.posts.find_one({"slug": payload.slug}, {"_id": 0, "slug": 1})
+        if clash:
+            raise HTTPException(status_code=409, detail=f"Slug '{payload.slug}' already exists")
+    doc = payload.model_dump(exclude_none=False)
+    seo = doc.get("seo") or {}
+    doc.update({
+        "createdAt": existing.get("createdAt", now_iso()),
+        "updatedAt": now_iso(),
+        "date": doc.get("date") or existing.get("date") or now_iso()[:10],
+        "metaTitle": (seo.get("metaTitle") if seo else None) or doc.get("title"),
+        "metaDescription": (seo.get("metaDescription") if seo else None) or doc.get("excerpt") or "",
+    })
+    await db.posts.replace_one({"slug": slug}, dict(doc))
+    return PostRecord(**doc)
+
+
+@api.delete("/admin/cms/posts/{slug}")
+async def admin_delete_post(slug: str, _: dict = Depends(get_current_admin)):
+    res = await db.posts.delete_one({"slug": slug})
+    if res.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Post not found")
+    return {"ok": True}
+
+
+@api.get("/admin/cms/pillars")
+async def admin_list_pillars_for_picker(_: dict = Depends(get_current_admin)):
+    """Lightweight pillar list for the post-editor pillar selector."""
+    cursor = db.pillars.find({}, {"_id": 0, "slug": 1, "title": 1}).sort("title", 1).limit(500)
+    return [d async for d in cursor]
 
 
 @api.get("/content/sitemap")
