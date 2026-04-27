@@ -23,6 +23,13 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 10 — Open notes + simpler hero (2026-04-26)
+- **Auth removed from notes endpoints** (`PUT/DELETE /api/notebook/notes/{slug}/{sid}`). Anyone with the URL can now write/edit notes — designed for fast capture during conferences, no login UX. Public GET endpoint also returns ALL notes (drops `is_public` filter — the toggle still controls whether notes render on speaker profile pages, not whether they exist in the API).
+- **Hero CTAs simplified to 2 buttons**: `Agenda` + `Browse Speakers · {N}`. Removed "Sign in to take notes" entirely.
+- **Venues section removed** from conference detail (also dropped from sidebar TOC). One less section to scroll past.
+- **All note editors visible to everyone**: inline quick-note toggle on agenda + full long-form editor on per-session pages. No more "Notes locked" or "Sign in" prompts. Sidebar Live Notes card now reads: "Click any session to take notes — saves automatically. Toggle Public to publish on the speaker's profile."
+- QA verified live: PUT works without Authorization header (200), 44 quick-note toggles visible without login, full editor opens on per-session page, autosave succeeds, all conference/profile/session pages 200.
+
 ### Iteration 9 — Consistent photo source + QA (2026-04-26)
 - **All 39 SEO Week 2026 photos resourced from seoweek.org/speakers** (replaced the LinkedIn/seoweek mix). Locally cached at `/app/frontend/public/speakers/`. Visually cohesive after holographic treatment.
 - **Botify Connect US 2024 photos** (28) sourced from 6xmedia.wixstudio.com (originally botify.com).

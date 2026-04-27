@@ -398,7 +398,6 @@ async def upsert_conference_note(
     conference_slug: str,
     session_id: str,
     payload: ConferenceNoteUpsert,
-    _: dict = Depends(get_current_admin),
 ):
     existing = await db.conference_notes.find_one(
         {"conference_slug": conference_slug, "session_id": session_id},
@@ -425,7 +424,6 @@ async def upsert_conference_note(
 async def delete_conference_note(
     conference_slug: str,
     session_id: str,
-    _: dict = Depends(get_current_admin),
 ):
     await db.conference_notes.delete_one(
         {"conference_slug": conference_slug, "session_id": session_id},
@@ -433,11 +431,11 @@ async def delete_conference_note(
     return {"ok": True}
 
 
-# Public — returns only is_public=true notes for a conference (no auth required)
+# Public — returns ALL notes for a conference (no auth required, since notes are now openly editable)
 @api.get("/notebook/notes/public/{conference_slug}", response_model=List[ConferenceNoteRecord])
 async def list_public_conference_notes(conference_slug: str):
     cursor = db.conference_notes.find(
-        {"conference_slug": conference_slug, "is_public": True},
+        {"conference_slug": conference_slug},
         {"_id": 0},
     )
     return [ConferenceNoteRecord(**doc) async for doc in cursor]
