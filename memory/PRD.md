@@ -23,6 +23,23 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 19 — Deployment fix v2: memory-aware build at startup (2026-02-27)
+**Actual root cause from second 520 failure:**
+- Previous fix had `postinstall: "next build || true"` which ran during docker-build phase BEFORE K8s secrets (`NEXT_PUBLIC_BACKEND_URL` etc.) were injected. Next.js bakes `NEXT_PUBLIC_*` into JS bundles at build time → deployed app had empty BACKEND_URL → all client API calls failed → 520.
+- Additionally: `next build` peak memory was **2.4GB RSS** for 336 SSG pages. Emergent K8s pod has 1Gi → OOM kill → CrashLoopBackOff → 17-min "stuck on Ready" gap → 520.
+
+**Fixes applied:**
+- `frontend/package.json`: `start` is now `NODE_OPTIONS='--max-old-space-size=700' next build && next start -p 3000 -H 0.0.0.0`. Build runs at container startup (when K8s secrets ARE in process.env), then serves. No more `postinstall`.
+- `frontend/next.config.mjs`: added `experimental.cpus: 1` and `experimental.workerThreads: false` to serialize SSG and reduce parallelism memory pressure.
+- `frontend/app/experience/page.tsx`: marked `dynamic = "force-dynamic"` (heavy three.js/R3F/framer-motion components no longer in SSG path).
+- Deleted Vite-era dead code: `src/App.tsx`, `src/main.tsx`.
+
+**Memory impact:** Peak Node RSS during build dropped from **2.4GB → 977MB** (~60% reduction). Now fits within typical 1Gi pod headroom.
+
+**Verified locally:**
+- Fresh `rm -rf .next` then `supervisorctl restart frontend` → builds in 37s, ready in 199ms, all routes 200.
+- Total cold-start time ~37s (well under K8s 17-min readiness window).
+
 ### Iteration 18 — Code review fixes (a/b/c) (2026-02-27)
 Applied user-approved subset of code review:
 - **(a) Empty catch blocks** → 5 instances in `SpeakerProfile.tsx`, `SessionDetail.tsx`, `ConferenceDetail.tsx` now log via `console.warn` (silent failures previously hidden bugs).
