@@ -23,6 +23,49 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 23 — Field-notes template + format toolbar (2026-02-27)
+**User goal:** A consistent, repeatable format for live conference notes (matching the published reading view's structure: Speaker H2 → Key thesis → H3 sub-sections → arrow takeaways → My take → Open questions).
+
+**What's new:**
+- **★ Template button** (emerald accent) in BOTH editors (inline `ConferenceDetail.tsx` + full-page `SessionDetail.tsx`).
+- One click scaffolds the entire field-notes structure pre-populated with the session's speaker name and title:
+  ```
+  ## {Speaker} — {Session Title}
+  
+  **Key thesis:** ...
+  
+  ### Context that matters
+  ### What {Speaker first name} actually said
+  ### Key takeaways
+  - takeaway one
+  - takeaway two
+  ### Quotes worth keeping
+  > "..." — {Speaker}
+  ### My take
+  ### Open questions
+  - [ ] ...
+  ```
+- Confirm dialog if existing content (won't accidentally overwrite).
+- Bullet list items render with `→` prefix automatically (already in `NoteContent.tsx` `li` styling).
+
+**Format toolbar additions:**
+- `H2`, `H3` (separated for clear hierarchy)
+- `→` (one-click takeaway bullet — auto-renders as → arrow)
+- `1.` (numbered list)
+- `☐` (task / action item)
+- `❝` (quote with attribution placeholder)
+- `🖼` (image URL prompt)
+- `▶` (YouTube/Vimeo URL prompt)
+- `🔗` (link with selected text)
+- `B` / `I` / `</>` (bold / italic / inline code)
+- All buttons have `data-testid` for QA.
+
+**Verified via Playwright:**
+- Template button renders in both inline + page editors
+- Click opens confirm → on accept, replaces textarea with full template
+- Toolbar buttons all visible and clickable
+- `Welcome & Opening Remarks` session for Mike King correctly resolves speaker info and bakes it into the template heading.
+
 ### Iteration 22 — URL structure overhaul + JSON-LD enrichment (2026-02-27)
 **The "worst URL" report:** Conference sessions previously used hash anchors only (`/notebook/conference/seo-week-2026#monday-april-27-2026-9-00-am-the-invisible-converged-web-architecting-...` — 130+ chars, NOT crawlable as a separate URL).
 
