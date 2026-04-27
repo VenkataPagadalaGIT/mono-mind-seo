@@ -13,8 +13,7 @@ import uuid
 # Use external URL from environment
 BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', '').rstrip('/')
 if not BASE_URL:
-    # Fallback for local testing
-    BASE_URL = "https://github-checker-8.preview.emergentagent.com"
+    raise RuntimeError("REACT_APP_BACKEND_URL must be set in environment to run tests")
 
 # Admin credentials for protected endpoints
 ADMIN_EMAIL = "admin@monomind.com"

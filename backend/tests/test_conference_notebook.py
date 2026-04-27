@@ -16,7 +16,7 @@ import requests
 
 BASE_URL = os.environ.get("REACT_APP_BACKEND_URL", "").rstrip("/")
 if not BASE_URL:
-    BASE_URL = "https://github-checker-8.preview.emergentagent.com"
+    raise RuntimeError("REACT_APP_BACKEND_URL must be set in environment to run tests")
 
 ADMIN_EMAIL = "admin@monomind.com"
 ADMIN_PASSWORD = "MonoMind2026!"

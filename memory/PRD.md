@@ -23,6 +23,14 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 16 — Deployment fix: hardcoded preview URLs removed (2026-02-27)
+- **Root cause of "Deployment Failed"**: Hardcoded preview URL fallbacks in source code triggered Emergent's deployment preflight rejection.
+- **Fixes applied**:
+  - `frontend/src/lib/site.ts` — `SITE_URL` fallback no longer points to `https://github-checker-8.preview.emergentagent.com`; now falls back to `NEXT_PUBLIC_BACKEND_URL` then empty string. Production env var must be set during deploy.
+  - `backend/tests/test_api.py`, `test_auth_content_admin.py`, `test_conference_notebook.py` — removed hardcoded preview URL fallbacks; tests now require `REACT_APP_BACKEND_URL` env var (raise `RuntimeError` if absent).
+- **Verified**: `yarn build` still succeeds, generates all 336 SSG pages cleanly. Frontend (HTTP 200) and backend (`/api/health` HTTP 200) healthy after restart.
+- App is now ready to redeploy on Emergent native deploy.
+
 ### Iteration 15 — "From:" attribution + "My Notes" labeling (2026-04-26)
 - **"From:" attribution always visible** in the SessionDetail "My notes" section — even in the empty state, before any note exists. Renders as: `From — [Conference Name + Edition] · [Session Title] · [Date] · [Speaker]`. Solves the "Mike King at 100 conferences, which one is this?" problem at every entry point.
 - **"My Notes" button on conference-detail session cards** (renamed from "Quick note"):
