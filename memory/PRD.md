@@ -23,6 +23,13 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 7 — Photo source + nav + cleanup (2026-04-26)
+- **Removed "Why It Matters"** section + sidebar TOC entry (was promotional copy)
+- **Replaced all SEO-Week-branded photos** with LinkedIn-sourced via `unavatar.io/linkedin/{username}`. 25 photos cached locally at `/app/frontend/public/speakers/{slug}.jpg` for perf + ownership; the 14 unavatar couldn't fetch (rate-limited) render as on-brand DiceBear initials cards
+- **Bigger photos**: HoloPhoto sizes bumped (sm 36→56px, md 48→80px, lg 64→112px, xl 128→160px) — applied across speakers grid, inline session chips, grid view tiles, profile heroes
+- **Time-slot jump strip**: a sticky horizontal strip below day tabs shows every talk start time for the active day (`8:45 AM`, `9:00 AM`, …). Click → smooth-scrolls to that session anchor (12 slots/day). Skips registration/break/meal noise.
+- All previous features preserved: JSON-LD `Event` + `Person` schemas, SSG (61 sessions + 39 speakers), per-session pages, publish toggle, etc.
+
 ### Iteration 6 — Holographic photo treatment (2026-04-26)
 - New reusable `<HoloPhoto>` component (`/app/frontend/src/components/HoloPhoto.tsx`) — neutralizes vendor-branded image halos and applies the brand's terminal/glow aesthetic
 - Effects (CSS in `app/globals.css`): grayscale + low-saturation base, cyan ambient glow + magenta accent gradient corners, animated scanlines, terminal corner brackets that grow on hover, hover state lifts the card and reveals full-color photo with cyan halo + chromatic-aberration on the speaker name
