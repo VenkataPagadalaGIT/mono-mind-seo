@@ -23,6 +23,12 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 6 — Holographic photo treatment (2026-04-26)
+- New reusable `<HoloPhoto>` component (`/app/frontend/src/components/HoloPhoto.tsx`) — neutralizes vendor-branded image halos and applies the brand's terminal/glow aesthetic
+- Effects (CSS in `app/globals.css`): grayscale + low-saturation base, cyan ambient glow + magenta accent gradient corners, animated scanlines, terminal corner brackets that grow on hover, hover state lifts the card and reveals full-color photo with cyan halo + chromatic-aberration on the speaker name
+- Applied site-wide to every speaker image: conference detail speakers grid (39 cards), inline session speaker chips (40), Grid view tiles (40 large hologram squares), SpeakerProfile hero (square 260px), SessionDetail speaker hero (square 120px)
+- All existing flows untouched — same hrefs, same testids; pure visual upgrade
+
 ### Iteration 5 — Per-session pages + hero CTAs (2026-04-26)
 - New SSG dynamic route `/notebook/conference/[slug]/sessions/[sessionId]` — **61 pages pre-rendered**, one per speech
 - New view `SessionDetail.tsx` with: session hero (type pill, time, day, theme) + speaker hero (photo, bio, LinkedIn, podcast, "Open profile" link) + Abstract + Suggested takeaways + **My Notes** long-form editor (rows=16, autosave 1.2s, status pills, publish toggle, takeaway chips) + Prev/Next session nav + JSON-LD `Event` schema
