@@ -23,6 +23,21 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 13 — Long-form note rendering + conference attribution (2026-04-26)
+- **NEW reusable `<NoteContent>` component** at `/app/frontend/src/components/NoteContent.tsx` — handles 200–3000+ word published notes with magazine-quality typography:
+  - Reading width: `max-w-[68ch]`, line-height 1.85, 5-unit paragraph spacing
+  - Auto word count + reading time (`748 words · 3 min read`)
+  - **Conference attribution header** — "From: [Conference Name + Edition] · [Session Title] · [Date]" rendered as a clickable link → solves the "speaker at 100 conferences, which talk is this from?" problem
+  - `preview` prop truncates to first ~200 words + "Read full notes →" CTA pointing to dedicated session page
+  - Status badge + last-updated indicator
+  - Takeaways block at the end (only in full mode)
+- **Used in 3 contexts**:
+  - ConferenceDetail session card → `preview` mode (200-word teaser + read-full link)
+  - SpeakerProfile talk card → `preview` mode (avoids cluttering the timeline of all talks)
+  - SessionDetail → full long-form rendering (the canonical reading experience)
+- **Note editor** in SessionDetail bumped to `rows={26}`, line-height 1.85, font-size 13.5px, with live word/character counter beneath
+- Tested with a real 748-word note on Mike King's Tech SEO Connect 2024 keynote — renders as a magazine article, not jammed mono-text
+
 ### Iteration 12 — Tech SEO Connect 2024 + per-session time-jump (2026-04-26)
 - **NEW conference: Tech SEO Connect 2024** (Raleigh, NC). 18 sessions, 16 unique speakers. All sessions seeded with rich descriptions + my takeaways from the original Wix notes. Status: `attended`.
 - **12 new speaker profiles**: Aleyda Solis, Rick Viscomi, JR Oakes, Kevin Indig, Rachel Anderson, Fili Wiese, Kristin Tynski, Dan Hinckley, Lazarina Stoy, Victor Pan, Serge Bezborodov, Patrick Stox. Photos cached locally + holographic treatment applied.
