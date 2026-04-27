@@ -23,6 +23,13 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 9 — Consistent photo source + QA (2026-04-26)
+- **All 39 SEO Week 2026 photos resourced from seoweek.org/speakers** (replaced the LinkedIn/seoweek mix). Locally cached at `/app/frontend/public/speakers/`. Visually cohesive after holographic treatment.
+- **Botify Connect US 2024 photos** (28) sourced from 6xmedia.wixstudio.com (originally botify.com).
+- Photo-source attribution beneath profile photo: `Photo · seoweek.org` for SEO Week, `Photo · botify.com` for Botify.
+- New `PhotoSource` type + `photoSourceFor(slug)` helper in `speakers.ts`.
+- QA verified live: 39/39 photos render, 12 time-slot jump buttons per day, holographic treatment consistent.
+
 ### Iteration 8 — All photos sourced + Botify Connect US 2024 conference (2026-04-26)
 - **All 39 SEO Week 2026 photos sourced**: 25 from LinkedIn (via unavatar.io), 14 from seoweek.org. Photos cached locally at `/app/frontend/public/speakers/{slug}.{jpg|png|webp}`. New `localPhotoFiles` map in `speakers.ts` handles mixed extensions; `photoSourceFor(slug)` returns `linkedin | seoweek | fallback` for attribution display.
 - **Photo source attribution** rendered under speaker hero photo on profile pages: `Photo · LinkedIn` or `Photo · seoweek.org`
