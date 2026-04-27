@@ -23,6 +23,21 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 14 — Markdown editor + media embeds (2026-04-26)
+- Installed `react-markdown` + `remark-gfm` + `rehype-raw`
+- **`<NoteContent>` upgraded to render full Markdown** with custom components matching the brand's terminal/glow aesthetic:
+  - Headings (H1→H2 / H2→H3 styled), `**bold**`, `*italic*`, `> blockquote`, `` `code` ``, code blocks, GFM tables, GFM strikethrough, GFM task lists
+  - Bullet lists rendered with `→` prefix (matches `Suggested takeaways` style); ordered lists keep numerals
+  - Images via `![](url)` rendered full-width with optional alt-caption
+  - **Auto-embed for bare URLs**: YouTube → iframe, Vimeo → iframe, X/Twitter → link card, raw image URL → image
+- **Editor toolbar in SessionDetail** with 9 quick-insert buttons: `B I H • " </> 🔗 🖼 ▶`
+  - 🖼 prompts for image URL → inserts `![](url)` block
+  - ▶ prompts for YouTube/Vimeo/X URL → inserts as auto-embed
+  - 🔗 wraps selection as `[text](url)`
+  - Standard markdown shortcuts wrap selection / insert at line start
+- **Edit / Preview toggle** — click "Preview" to see fully-rendered markdown including embedded images and YouTube videos before publishing
+- Tested live with a 313-word markdown note containing H2/H3, blockquote, bold, italic, bullet list, ordered list, code block, image, YouTube embed — all rendering correctly across SessionDetail full + ConferenceDetail preview + SpeakerProfile preview
+
 ### Iteration 13 — Long-form note rendering + conference attribution (2026-04-26)
 - **NEW reusable `<NoteContent>` component** at `/app/frontend/src/components/NoteContent.tsx` — handles 200–3000+ word published notes with magazine-quality typography:
   - Reading width: `max-w-[68ch]`, line-height 1.85, 5-unit paragraph spacing
