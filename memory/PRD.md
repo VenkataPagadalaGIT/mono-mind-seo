@@ -23,6 +23,14 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 8 — All photos sourced + Botify Connect US 2024 conference (2026-04-26)
+- **All 39 SEO Week 2026 photos sourced**: 25 from LinkedIn (via unavatar.io), 14 from seoweek.org. Photos cached locally at `/app/frontend/public/speakers/{slug}.{jpg|png|webp}`. New `localPhotoFiles` map in `speakers.ts` handles mixed extensions; `photoSourceFor(slug)` returns `linkedin | seoweek | fallback` for attribution display.
+- **Photo source attribution** rendered under speaker hero photo on profile pages: `Photo · LinkedIn` or `Photo · seoweek.org`
+- **NEW conference: Botify Connect US 2024** (Austin, TX). Added to `conferences.ts` with all 11 sessions, full descriptions, my takeaways per session, and 28 speakers. Status: `attended`. Renders at `/notebook/conference/botify-connect-us-2024` (SSG).
+- **27 new speaker profiles** added to `speakers.ts` with bios, roles, LinkedIn, photos. New SSG count: **66 speaker profile pages** (39 SEO Week + 27 Botify, plus Zach Chahalis dedupes).
+- **11 new session pages** auto-generated for Botify (`/notebook/conference/botify-connect-us-2024/sessions/[sessionId]`)
+- Index page (`/notebook/conference`) now correctly shows: 2 conferences · 67 speakers · 40 hours of talks. Botify appears in "Field Notes" (attended) section.
+
 ### Iteration 7 — Photo source + nav + cleanup (2026-04-26)
 - **Removed "Why It Matters"** section + sidebar TOC entry (was promotional copy)
 - **Replaced all SEO-Week-branded photos** with LinkedIn-sourced via `unavatar.io/linkedin/{username}`. 25 photos cached locally at `/app/frontend/public/speakers/{slug}.jpg` for perf + ownership; the 14 unavatar couldn't fetch (rate-limited) render as on-brand DiceBear initials cards
