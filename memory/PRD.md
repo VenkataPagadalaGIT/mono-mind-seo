@@ -23,6 +23,21 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 30 — CRITICAL: Mobile notes invisibility bug fixed (2026-04-28)
+**User report:** George Nguyen reported via DM: *"@Venkata Pagadala I see the preview but the notes on your domain aren't populating for Jori for me (viewing on mobile)"* — production site, mobile Safari/Android.
+
+**Root cause:** `/app/frontend/src/components/ScrollReveal.tsx` used `IntersectionObserver` with `threshold: 0.1` to fade in note sections on scroll. With long notes (~9,300 px tall), the *maximum* possible intersection ratio on a 852-px-tall mobile viewport is **9.1%** — *below* the 10% threshold. The observer **never fires**, so the wrapper stays at `opacity: 0` and the entire note body is invisible. On taller desktop viewports (1080+) the ratio just barely crosses 10%, so the bug was invisible to the developer.
+
+**Fix:** `/app/frontend/src/components/ScrollReveal.tsx`
+1. Changed `threshold: 0.1` → `threshold: 0` with `rootMargin: "0px 0px -10% 0px"` — any visible pixel triggers reveal, regardless of element height.
+2. Added a `tallerThanViewport` short-circuit: if the element is taller than the viewport at mount, reveal immediately. This is the bulletproof safety net — any element that can't physically fit in the viewport will never be progressively revealed; just show it.
+
+**Bonus fix:** `/app/frontend/src/components/NoteContent.tsx` `p:` handler now unwraps any single-block-media child (figure/img/iframe/custom component) so we never emit invalid `<p><figure></figure></p>` HTML. Browsers auto-close `<p>` before block elements, which can cause subtle layout shifts on mobile.
+
+**Verified on local preview build** (rebuilt `.next`, restarted frontend). Mobile viewport (393×852, iPhone UA): note content, embedded slide images, and figcaptions all render cleanly through the entire scroll length.
+
+**ACTION REQUIRED FROM USER:** Redeploy `venkatapagadala.com` (Save to GitHub → Emergent native deploy). The fix only ships in the next deploy; my edit only updated the source.
+
 ### Iteration 29 — Wil Reynolds Day 2 keynote published (2026-04-28)
 **User goal:** Publish Wil Reynolds' Day 2 (Tuesday April 28, 9:00 AM) opening keynote — "Visibility Is Not Enough: Seen, Believed, Chosen" — agenda title `"SEO is a Performance Channel, GEO Isn't. How Do You Pivot?"` with 2 image artifacts (speaker on stage in Wu-Tang shirt + the SEO Math vs. GEO Math 4-quadrant slide).
 
