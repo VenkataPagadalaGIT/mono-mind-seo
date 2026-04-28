@@ -23,6 +23,21 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 26 — Scott Stouffer centroid/clusters note published (2026-04-28)
+**User goal:** Publish Scott Stouffer's "Your Brand Is a Mathematical Object: Centroids, Clusters, and the Retrieval Boundary" (Day 1 · 4:00 PM, agenda title "Is AI Seeing the Brand You Think You've Built?") with his 2 image artifacts (speaker on stage + the "stabilize your centroid" closing slide).
+
+**What's new:**
+- Production note: 1,752 words / 8 min read at session ID `monday-april-27-2026-4-00-pm-is-ai-seeing-the-brand-you-think-you-ve-built` (`is_public: true`, `status: Published`).
+- 7 takeaways (centroid is what AI calculates, retrieval before ranking, "not retrieved equals does not exist", cluster collision, distinct centroid wins, continuous-control loop, "was I eligible?" replaces "why didn't I rank?").
+- 2 contextually-placed images after content-verification:
+  - Scott on stage (`b762bz2a_IMG_2608.jpg`) → top, after key thesis
+  - "You must STABILIZE your centroid / Not just OPTIMIZE pages" slide (`bymy73ez_IMG_2609.jpg`) → in "What actually wins" section
+- Skipped the user's notes-doc screenshot (s7owdtlr_image.png) — already transcribed.
+
+**URL slug note:** the urlSlug is generated from `_slug(s.title)` where apostrophes split into dashes — so `You've` becomes `you-ve`, not `youve`. Correct production URL: `/sessions/is-ai-seeing-the-brand-you-think-you-ve-built` (not `youve-built`). Saving to test-credentials notes for future publishes.
+
+**Verified:** Page renders at production with both images, takeaways, and all 9 sections.
+
 ### Iteration 25 — Metehan Yeşilyurt entropy-game note published (2026-04-28)
 **User goal:** Publish Metehan Yeşilyurt's "Everything Is an Entropy Game: What Dies Between Retrieval and Citation" (Session 9, Day 1 · 3:30 PM) with all 5 image artifacts placed contextually.
 
