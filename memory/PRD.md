@@ -23,6 +23,26 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 28 — Image performance fix: WebP CDN proxy (2026-04-28)
+**User goal:** "image lets cache or do something its taking lot of time to load"
+
+**Problem:** Every embedded slide artifact was a 3–5 MB raw JPEG with **NO Cache-Control header**. On 4G mobile, each slide took 5–8s to download. Day 1 has 31 slide images across 9 notes — page-load time on mobile was unacceptable.
+
+**Why Next.js Image API didn't work:** Tried routing through `/_next/image` first. The 1Gi K8s production pod returned 520 errors on multi-MB sources — image processing OOMs the pod. Cloudflare returns generic 520 to the user. Confirmed via `curl -sI https://venkatapagadala.com/_next/image?url=...` returning HTTP 520 with text/html body.
+
+**Fix:** Routed all external markdown image URLs through **wsrv.nl** (free, FOSS image proxy by Andries Hiemstra, edge-cached on Cloudflare). Two-part rollout:
+1. **Migration script** (`/tmp/migrate_image_urls.py`) — rewrote the markdown stored in MongoDB so every `![alt](https://customer-assets.../*.jpg)` became `![alt](https://wsrv.nl/?url=<enc>&w=1080&q=70&output=webp)`. Idempotent (skips already-proxied URLs). Migrated **31 image URLs across 9 published notes** to production. **No redeploy required** — change is in DB content, applied immediately.
+2. **`NoteContent.tsx`** (`/app/frontend/src/components/NoteContent.tsx`) — added `optimizedImgProps()` helper that wraps any non-proxied URL on the fly and adds a responsive `srcSet` (640w / 828w / 1080w / 1920w) plus `sizes` for mobile. Belt-and-suspenders: works on future notes even if author forgets to use the CDN URL.
+
+**Results:**
+- Original raw JPEG: 4,163,485 bytes (4.1 MB)
+- Optimized 1080w WebP: 113,328 bytes (110 KB) — **37× smaller**
+- Optimized 640w WebP (mobile srcSet): 43,692 bytes (43 KB) — **95× smaller**
+- Cache-Control: `public, max-age=31536000` (1-year edge cache via Cloudflare)
+- All 31 images render at full clarity (1080px natural width) on production page-load tests.
+
+**Mobile menu re-tested:** burger button at `aria="Toggle menu"` is functional; click expands the menu with Home/Notebook/etc. links. Previous fork's fix from Iteration 23 (44×44 tap target, `useLocation` infinite-render fix in `router-shim.tsx`) is intact.
+
 ### Iteration 27 — Jeff Coyle "From Showing Up to Winning" + Day 1 complete (2026-04-28)
 **User goal:** Publish the Day 1 closing keynote — Jeff Coyle's "From Showing Up to Winning: An IR & Systems-Level View of AI Search" (4:30 PM) with 5 image artifacts (speaker on stage + 4 slides: AI search pipeline, What winning content looks like, 01–06 diagnostic ladder, 2-page reference guide QR).
 
