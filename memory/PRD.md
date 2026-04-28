@@ -23,6 +23,22 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 27 — Jeff Coyle "From Showing Up to Winning" + Day 1 complete (2026-04-28)
+**User goal:** Publish the Day 1 closing keynote — Jeff Coyle's "From Showing Up to Winning: An IR & Systems-Level View of AI Search" (4:30 PM) with 5 image artifacts (speaker on stage + 4 slides: AI search pipeline, What winning content looks like, 01–06 diagnostic ladder, 2-page reference guide QR).
+
+**What's new:**
+- Production note: 2,357 words / 10 min read at session ID `monday-april-27-2026-4-30-pm-from-showing-up-to-winning-an-ir-systems-level-view-of-ai-search` (`is_public: true`, `status: Published`).
+- 7 takeaways stored on the record.
+- 5 contextually-placed images:
+  - Jeff on stage (`xx16gerj_IMG_2610.jpg`) → top, after key thesis
+  - "The AI search pipeline" Crawl→Cite diagram (`j1ejtook_IMG_2613.jpg`) → in "Stop measuring outputs" reframe
+  - "What winning content looks like" 5-pillar slide (`bw6dahff_IMG_2614.jpg`) → in editorial-excellence section
+  - "01 Eligibility → 06 Outcome" diagnostic ladder (`f8opv7zr_IMG_2615.jpg`) → in "Where you actually lose, in order"
+  - "Download the 2-page reference guide" QR slide (`vr1v8hpv_IMG_2616.jpg`) → in resource section at bottom
+- Skipped IMG_2611/2612 (not uploaded — only 5 of 7 ordinals provided).
+
+**Day 1 of SEO Week 2026 is complete on production** — 11 sessions published (Welcome + Mike King ×2, Krishna Madhavan, Andrea Volpini, Annie Cushing, Dale Bertrand, Jori Ford, Metehan Yeşilyurt, Scott Stouffer, Jeff Coyle). Total ~17,000 words of long-form field notes, fully indexed, with JSON-LD `Event` schema per session and clean URL slugs.
+
 ### Iteration 26 — Scott Stouffer centroid/clusters note published (2026-04-28)
 **User goal:** Publish Scott Stouffer's "Your Brand Is a Mathematical Object: Centroids, Clusters, and the Retrieval Boundary" (Day 1 · 4:00 PM, agenda title "Is AI Seeing the Brand You Think You've Built?") with his 2 image artifacts (speaker on stage + the "stabilize your centroid" closing slide).
 
