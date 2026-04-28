@@ -23,6 +23,22 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 25 — Metehan Yeşilyurt entropy-game note published (2026-04-28)
+**User goal:** Publish Metehan Yeşilyurt's "Everything Is an Entropy Game: What Dies Between Retrieval and Citation" (Session 9, Day 1 · 3:30 PM) with all 5 image artifacts placed contextually.
+
+**What's new:**
+- Production note: 1,776 words / 8 min read at session ID `monday-april-27-2026-3-30-pm-everything-is-an-entropy-game-what-dies-between-retrieval-and-citation` (`is_public: true`, `status: Published`).
+- 7 takeaways stored on the record.
+- Full structure: TL;DR → SEOs as entropy managers → Do AI engines read every page? → Retrieval flow → Tokenizers → Embeddings/Rerankers (with Reranker Weights table breakdown + Made-Up Brand Competition results) → Common Crawl → Quotes → My take → Open questions → Action items → People to follow up.
+- 4 of 5 images embedded after content-verifying each artifact (lesson learned from the prior bug):
+  - Title slide (`qj362kdl_IMG_2602.jpg`) → top of note
+  - Speaker on stage (`61mkqzeh_IMG_2603.jpg`) → after the framing intro
+  - Reranker Weights slide (`8ohcw1lf_IMG_2606.jpg`) → in Embeddings/Rerankers section (the wider/clearer angle of the two duplicate angles)
+  - Made-Up Brand Competition results (`8mc7n0m5_IMG_2607.jpg`) → entity authority subsection
+  - Skipped duplicate angle of reranker slide (`lzp13iua_IMG_2605.jpg`) since IMG_2606 was clearer.
+
+**Verified:** Page renders at production with all 4 images correctly placed, takeaways list, TOC entries, and 1,776-word body.
+
 ### Iteration 24 — Jori Ford HEO note published + image-URL bug fix (2026-04-28)
 **User goal:** Publish Jori Ford's "HEO: The Hybrid Engine Score" notes from the Monday afternoon block at SEO Week 2026, with speaker photo + key slide ("Two Overrides That Beat the Aggregate Score") embedded inline.
 
