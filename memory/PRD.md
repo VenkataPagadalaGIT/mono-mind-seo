@@ -23,6 +23,21 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 29 — Wil Reynolds Day 2 keynote published (2026-04-28)
+**User goal:** Publish Wil Reynolds' Day 2 (Tuesday April 28, 9:00 AM) opening keynote — "Visibility Is Not Enough: Seen, Believed, Chosen" — agenda title `"SEO is a Performance Channel, GEO Isn't. How Do You Pivot?"` with 2 image artifacts (speaker on stage in Wu-Tang shirt + the SEO Math vs. GEO Math 4-quadrant slide).
+
+**What's new:**
+- Production note: 2,367 words / 10 min read at session ID `tuesday-april-28-2026-9-00-am-seo-is-a-performance-channel-geo-isn-t-how-do-you-pivot` (`is_public: true`, `status: Published`).
+- 7 takeaways stored on the record.
+- 2 contextually-placed images, **pre-routed through wsrv.nl WebP CDN at publish time** (so they're already 100 KB instead of 4 MB on first load):
+  - Wil on stage (`cpz6zgk3_IMG_2620.jpg`) → top, after key thesis
+  - SEO Math vs. GEO Math 4-quadrant slide (`0mrtad1m_IMG_2621.jpg`) → in core framework section
+- Personal note included (Wil shared the entire deck/transcript/audio publicly in exchange for Covenant House donations — relevant editorial framing).
+
+**Day 2 ("The Psychology") is now live with Wil's keynote — first Day 2 session published.** Total 12 sessions across both days (~37,500 words of long-form notes).
+
+**New ergonomic for image embedding:** all *new* notes published from this iteration forward will pre-route external image URLs through `https://wsrv.nl/?url=...&w=1080&q=70&output=webp` at the markdown level, so the optimization doesn't depend on the migration script being re-run after every publish.
+
 ### Iteration 28 — Image performance fix: WebP CDN proxy (2026-04-28)
 **User goal:** "image lets cache or do something its taking lot of time to load"
 
