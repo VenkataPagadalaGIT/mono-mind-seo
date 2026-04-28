@@ -23,6 +23,25 @@ User explicitly chose **Option A: Next.js + FastAPI + MongoDB** so AI bots (GPTB
 
 ## What's Been Implemented
 
+### Iteration 24 — Jori Ford HEO note published + image-URL bug fix (2026-04-28)
+**User goal:** Publish Jori Ford's "HEO: The Hybrid Engine Score" notes from the Monday afternoon block at SEO Week 2026, with speaker photo + key slide ("Two Overrides That Beat the Aggregate Score") embedded inline.
+
+**What's new:**
+- Production note created for session ID `monday-april-27-2026-2-30-pm-heo-the-hybrid-engine-score` (`is_public: true`, `status: Published`).
+- 1,675 words / 7 min read, full structure: TL;DR → Reframe → Tooling noise → Scorecard design principles → Crawler PSA → Five signals → Seed-question set → Worked example (Presence math) → Strategic profiles → Monday-morning diagnostic loop → Two overrides → Worked case → Quotes → My take → Open questions → Action items.
+- 7 takeaways stored on the note record.
+- Two contextual images embedded:
+  - Speaker on-stage photo at top, after "Key thesis" → `9yd1c5yq_IMG_2600.jpg`
+  - "Two Overrides That Beat the Aggregate Score" slide under the Monday-morning diagnostic loop → `wpetmcjr_IMG_2601.jpg`
+
+**Bug fixed during this iteration:**
+- Initial publish accidentally used the wrong image URL pair — the asset CDN labels (`ygs908re_image.png`, `9yd1c5yq_IMG_2600.jpg`, `wpetmcjr_IMG_2601.jpg`) didn't match their visual content. The note doc screenshot was being rendered at the top, and the on-stage photo was being rendered under "Two Overrides". User reported the bug at `https://venkatapagadala.com/notebook/conference/seo-week-2026/sessions/heo-the-hybrid-engine-score`. Fix: re-mapped URLs after content-verifying each artifact via `analyze_file_tool` and re-pushed via PUT to `/api/notebook/notes/{slug}/{session_id}`.
+- Lesson for future image embedding: always verify artifact contents via image analysis before assuming filename/label matches actual content — the user's labels in the upload message are often correct, but auto-generated CDN slugs (e.g., `image.png` files) need visual confirmation.
+
+**Verified:** Page renders correctly at production domain `venkatapagadala.com` with both images at correct positions (manual screenshot verification at top + at "Override 1" anchor).
+
+
+
 ### Iteration 23 — Field-notes template + format toolbar (2026-02-27)
 **User goal:** A consistent, repeatable format for live conference notes (matching the published reading view's structure: Speaker H2 → Key thesis → H3 sub-sections → arrow takeaways → My take → Open questions).
 
